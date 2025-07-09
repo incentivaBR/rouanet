@@ -589,11 +589,108 @@ const AssistenteTINA = () => {
     }
   };
 
-  const handleSendMessage = () => {
-    if (inputValue.trim()) {
-      const userMessage = inputValue;
-      addMessage(userMessage);
-      setInputValue('');
+ // Substitua a função handleSendMessage no seu arquivo src/App.js por esta versão:
+
+const handleSendMessage = () => {
+  if (inputValue.trim()) {
+    const userMessage = inputValue;
+    addMessage(userMessage);
+    setInputValue('');
+    
+    // DETECÇÃO INTELIGENTE DE VALOR DO IR DEVIDO
+    const numeroDigitado = inputValue.replace(/[^\d]/g, '');
+    if (numeroDigitado && numeroDigitado.length >= 3) {
+      const valorIR = parseInt(numeroDigitado);
+      
+      // Validação básica do valor
+      if (valorIR < 100 || valorIR > 1000000) {
+        simulateTyping(() => {
+          addMessage(
+            '⚠️ **Valor parece incorreto!**\n\nO Imposto Devido normalmente fica entre R$ 100 e R$ 1.000.000.\n\nVerifique se digitou corretamente o valor que encontrou na sua declaração.\n\n**📋 Exemplo:**\n• Para R$ 7.500,00 → digite: 7500\n• Para R$ 12.350,00 → digite: 12350',
+            'bot',
+            [
+              { text: '🔍 Ajuda para encontrar IR', action: 'ajuda_encontrar' },
+              { text: '🧮 Usar calculadora virtual', action: 'calculadora_virtual' },
+              { text: '🔢 Tentar outro valor', action: 'aguardar_valor' }
+            ]
+          );
+        });
+        return;
+      }
+      
+      // Cálculo automático dos 6%
+      const destinacao = Math.round(valorIR * 0.06);
+      
+      // Exemplos de impacto dinâmicos
+      const exemplos = [];
+      if (destinacao >= 100) exemplos.push(`• **${Math.floor(destinacao/10)} crianças** com material escolar completo`);
+      if (destinacao >= 250) exemplos.push(`• **${Math.floor(destinacao/25)} consultas médicas** gratuitas`);
+      if (destinacao >= 500) exemplos.push(`• **1 biblioteca escolar** equipada`);
+      if (destinacao >= 1000) exemplos.push(`• **${Math.floor(destinacao/100)} jovens** em cursos profissionalizantes`);
+      if (destinacao >= 2000) exemplos.push(`• **1 laboratório de informática** para escola`);
+      
+      const impactoText = exemplos.slice(0, 4).join('\n');
+      
+      simulateTyping(() => {
+        addMessage(
+          `🎯 **CÁLCULO TINA - Baseado na Sua Declaração:**\n\n` +
+          `**💰 Imposto Devido (sua declaração):** ${formatCurrency(valorIR)}\n` +
+          `**🎯 Destinação Possível (6%):** ${formatCurrency(destinacao)}\n` +
+          `**✅ Tipo de Declaração:** COMPLETA\n` +
+          `**🔒 Segurança:** 100% Legal e Dedutível\n\n` +
+          `**🚀 COM ${formatCurrency(destinacao)} VOCÊ PODE:**\n${impactoText}\n\n` +
+          `**💡 DICA TINA:** Esse valor será 100% deduzido do seu IR!\n\n` +
+          `**⚡ PRÓXIMOS PASSOS:**\n` +
+          `1. Escolher projetos alinhados com seus valores\n` +
+          `2. Fazer destinação com total segurança\n` +
+          `3. Acompanhar impacto em tempo real`,
+          'bot',
+          [
+            { text: `🎯 Projetos para ${formatCurrency(destinacao)}`, action: 'projetos_valor_especifico' },
+            { text: '📋 Como fazer destinação', action: 'como_fazer' },
+            { text: '💡 Estratégia de diversificação', action: 'estrategia' },
+            { text: '🔄 Calcular outro valor', action: 'aguardar_valor' }
+          ]
+        );
+      });
+      return;
+    }
+    
+    // Buscar na base de conhecimento
+    const knowledgeResult = searchKnowledge(userMessage);
+    
+    simulateTyping(() => {
+      if (knowledgeResult.found) {
+        addMessage(
+          knowledgeResult.answer,
+          'bot',
+          [
+            { text: '🧮 Calcular meu potencial', action: 'calcular' },
+            { text: '🎯 Ver projetos', action: 'projetos' },
+            { text: '💬 Fazer outra pergunta', action: 'perguntar_mais' }
+          ]
+        );
+      } else {
+        const input = userMessage.toLowerCase();
+        if (input.includes('calcul') || input.includes('quanto')) {
+          handleQuickAction('calcular');
+        } else if (input.includes('projeto')) {
+          handleQuickAction('projetos');
+        } else {
+          addMessage(
+            '🤔 **Não encontrei essa informação específica!**\n\n💡 **Dicas:**\n• Se tem o valor do Imposto Devido, digite apenas o número\n• Exemplo: para R$ 7.500,00 digite: 7500\n• Para perguntas, use frases completas\n\n✨ **Ou escolha uma opção:**',
+            'bot',
+            [
+              { text: '🧮 Calcular potencial', action: 'calcular' },
+              { text: '🎯 Ver projetos', action: 'projetos' },
+              { text: '❓ Perguntas frequentes', action: 'perguntas_frequentes' }
+            ]
+          );
+        }
+      }
+    });
+  }
+};
       
       // Resposta simples baseada em palavras-chave
       const input = userMessage.toLowerCase();
