@@ -3,6 +3,7 @@
 [![INPI Software](https://img.shields.io/badge/INPI%20Software-BR512025000647--0-blue?style=for-the-badge)](LICENSE)
 [![INPI Marca NCL35](https://img.shields.io/badge/INPI%20Marca%20NCL35-939403005-green?style=for-the-badge)](LICENSE)
 [![INPI Marca NCL42](https://img.shields.io/badge/INPI%20Marca%20NCL42-939403110-green?style=for-the-badge)](LICENSE)
+[![Cartório RTD](https://img.shields.io/badge/Cartório%20RTD-2º%20Ofício%20Brasília-purple?style=for-the-badge)](LICENSE)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)](LICENSE)
 [![Protected](https://img.shields.io/badge/Protected-Copyright-orange?style=for-the-badge)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Demo%20Version-yellow?style=for-the-badge)](#versão-demonstrativa)
@@ -222,33 +223,49 @@ FDCA/DF: BRB (070) | Ag: 100  | CC: 044149-8 | CNPJ: 15.558.339/0001-85
 
 ## 🔒 **Propriedade Intelectual e Licenciamento**
 
-### **📋 Registro e Proteção Completa**
-- **Registro INPI Software:** BR512025000647-0
-- **Registro INPI Marca (Classe 35):** 939403005 - Serviços administrativos e consultoria
-- **Registro INPI Marca (Classe 42):** 939403110 - Serviços científicos e tecnológicos
-- **Título Software:** INCENTIVA BR Sistema Integrado de Gestão de Incentivos Fiscais
-- **Marca Registrada:** INCENTIVA BR (mista - nominativa + figurativa)
-- **Versão registrada:** 3.0
-- **Data registro software:** 25 de fevereiro de 2025
-- **Data depósito marcas:** 02 de junho de 2025
-- **Proprietário:** ADACTO ARTUR DORNAS DE OLIVEIRA
-- **CPF:** [CPF removido]
+### **🏛️ PROTEÇÃO JURÍDICA QUÁDRUPLA - MÁXIMA SEGURANÇA LEGAL**
 
-### **🔐 Hashes Criptográficos de Integridade**
+Este sistema possui a **mais robusta proteção legal possível** no Brasil:
+
+#### **📋 Registros Oficiais Completos:**
+- **📊 Software INPI:** BR512025000647-0 (Lei 9.609/98)
+- **🏷️ Marca NCL35:** 939403005 - Serviços administrativos e consultoria
+- **🏷️ Marca NCL42:** 939403110 - Serviços científicos e tecnológicos  
+- **🏛️ Cartório RTD:** 2º Ofício de Registro Civil, Títulos e Documentos de Brasília-DF
+
+#### **📅 Cronologia de Proteção:**
+- **25/02/2025:** Registro INPI Software
+- **02/06/2025:** Depósito INPI Marcas (Classes 35 e 42)
+- **26/02/2025:** Registro Cartorial com data certa
+
+#### **⚖️ Base Legal Integral:**
+- **Lei 9.609/98** - Lei do Software (proteção 50 anos)
+- **Lei 9.279/96** - Lei de Propriedade Industrial (marca 10 anos renováveis)
+- **Lei 9.610/98** - Lei de Direitos Autorais (70 anos pós-morte)
+- **Art. 221 CC + Art. 127 Lei 6.015/73** - Data certa cartorial
+
+#### **🛡️ Garantias Jurídicas:**
+- ✅ **Evidência forense** irrefutável em processos judiciais
+- ✅ **Data certa** comprovada por cartório oficial
+- ✅ **Proteção internacional** via tratados (Berna, TRIPS, Paris)
+- ✅ **Base sólida** para licenciamento e franquias
+- ✅ **Valor patrimonial** documentado e protegido
+
+### **🔐 Hashes Criptográficos de Integridade Forense**
 ```
 SOFTWARE: 26CA401F73DF6C7356762FBCBA4E6EBBBF036C276EE1D32494024B974894DE1D
 MARCA35:  E7F9C4A8B5D3E1F2A6B8C9D7E4F1A3B5C8D2E9F6A1B4C7D5E8F2A9B6C3D1E7F4
 MARCA42:  A2B9C6D4E7F1A8B5C3D9E6F2A4B7C1D8E5F9A3B6C2D7E1F4A9B8C5D3E6F7A1B2
 DOC:      957B18CEB300EB337B06CC5F0A013D522EC3FB93C1A629DBAC68031CB48B7307
-CARTÓRIO: A97BE922C9325D69FED266DE2973E431E8CC137F348C9C780A15DADF6282A2C7
+CARTÓRIO: A97BE922C9325D69FED266DE2973E431E8CC137F348C9C780A15DADF6282A2C7 ✅
 ```
+🏛️ **Hash CARTÓRIO**: Registrado no 2º Ofício RTD Brasília-DF
 
-### **⚖️ Base Legal de Proteção**
-- **Lei 9.609/98** (Lei de Software) - Proteção do código-fonte
-- **Lei 9.610/98** (Lei de Direitos Autorais) - Proteção da obra intelectual
-- **Lei 9.279/96** (Lei de Propriedade Industrial) - Proteção da marca registrada
-- **Art. 221** do Código Civil Brasileiro
-- **Art. 127** da Lei 6.015/73
+### **⚖️ Base Legal de Proteção Quádrupla**
+- **Lei 9.609/98** (Lei de Software) - Proteção do código-fonte (50 anos)
+- **Lei 9.610/98** (Lei de Direitos Autorais) - Proteção da obra intelectual (70 anos)
+- **Lei 9.279/96** (Lei de Propriedade Industrial) - Proteção da marca registrada (10 anos renováveis)
+- **Art. 221 CC + Lei 6.015/73** - Data certa cartorial (2º Ofício RTD Brasília-DF)
 
 ### **🏷️ Proteção Marcária Específica**
 A marca **"INCENTIVA BR"** está registrada nas seguintes classes:
@@ -385,6 +402,7 @@ Estamos abertos a discussões sobre:
 **© 2025 ADACTO ARTUR DORNAS DE OLIVEIRA - Todos os direitos reservados**  
 **Registro INPI Software: BR512025000647-0**  
 **Registro INPI Marca: 939403005 (NCL35) e 939403110 (NCL42)**  
+**Registro Cartorial: 2º Ofício RTD Brasília-DF**  
 **Marca Registrada: INCENTIVA BR® - Incentivos Fiscais Simplificados**
 
 [![GitHub](https://img.shields.io/badge/GitHub-INCENTIVABR-black?logo=github&style=for-the-badge)](https://github.com/casdftest/incentivaBR-GDF)
