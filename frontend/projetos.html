@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projetos - IncentivaBR</title>
+  <meta name="description" content="Explore projetos sociais para destinar seu Imposto de Renda.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <style>
+    body {
+      background: var(--background-light);
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      color: white;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      opacity: 0.9;
+    }
+
+    .filters-bar {
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-group label {
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .filter-group select,
+    .filter-group input {
+      padding: 10px 14px;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      min-width: 150px;
+    }
+
+    .filter-group select:focus,
+    .filter-group input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px 10px 40px;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .results-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .results-count {
+      color: var(--text-secondary);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .project-image {
+      height: 180px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 48px;
+      position: relative;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--secondary-color);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .project-content {
+      padding: 20px;
+    }
+
+    .project-org {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .project-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .project-title a {
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .project-title a:hover {
+      color: var(--primary-color);
+    }
+
+    .progress-section {
+      margin: 16px 0;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary-color), var(--warning-color));
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .progress-amount {
+      font-weight: 600;
+      color: var(--success-color);
+    }
+
+    .progress-goal {
+      color: var(--text-secondary);
+    }
+
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-light);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .project-meta i {
+      margin-right: 4px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 40px;
+    }
+
+    .pagination button {
+      padding: 10px 16px;
+      border: 2px solid var(--border-color);
+      background: white;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .pagination button:hover {
+      border-color: var(--primary-color);
+    }
+
+    .pagination button.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state i {
+      font-size: 64px;
+      color: var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .loading-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .skeleton-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      height: 380px;
+    }
+
+    .skeleton-image {
+      height: 180px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    .skeleton-content {
+      padding: 20px;
+    }
+
+    .skeleton-line {
+      height: 16px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .skeleton-line.short {
+      width: 60%;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @media (max-width: 768px) {
+      .filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+
+      .filter-group select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="logo-link">
+      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img">
+    </a>
+    <nav>
+      <a href="projetos.html" style="color:var(--primary-color)">Projetos</a>
+      <a href="calculadora-escolha.html">Calculadora</a>
+      <a href="#" id="navAuth">Entrar</a>
+    </nav>
+  </header>
+
+  <div class="page-header">
+    <h1><i class="fas fa-hand-holding-heart"></i> Projetos Sociais</h1>
+    <p>Escolha onde destinar seu imposto de renda e transforme vidas</p>
+  </div>
+
+  <div class="container" style="padding-top: 32px; padding-bottom: 60px;">
+    <!-- Filtros -->
+    <div class="filters-bar">
+      <div class="filter-group">
+        <label>Fundo:</label>
+        <select id="filterFund">
+          <option value="">Todos os fundos</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Tipo:</label>
+        <select id="filterType">
+          <option value="">Todos</option>
+          <option value="children">Crianca e Adolescente</option>
+          <option value="elderly">Idoso</option>
+          <option value="sports">Esporte</option>
+          <option value="culture">Cultura</option>
+          <option value="audiovisual">Audiovisual</option>
+          <option value="health_oncology">Oncologia</option>
+          <option value="health_pcd">PCD</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>
+          <input type="checkbox" id="filterFeatured"> Apenas destaques
+        </label>
+      </div>
+
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Buscar projetos...">
+      </div>
+    </div>
+
+    <!-- Info resultados -->
+    <div class="results-info">
+      <span class="results-count" id="resultsCount">Carregando...</span>
+    </div>
+
+    <!-- Grid de projetos -->
+    <div id="projectsContainer">
+      <div class="loading-grid">
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+      </div>
+    </div>
+
+    <!-- Paginacao -->
+    <div class="pagination" id="pagination" style="display:none"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <a href="index.html" class="logo-link">
+      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img logo-white">
+    </a>
+    <p class="tagline">Incentivos Fiscais Simplificados</p>
+    <div style="margin: 1.5rem 0;">
+      <a href="passo-a-passo.html" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">Passo a Passo</a>
+      <a href="faq.html" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">FAQ</a>
+    </div>
+    <div class="footer-bottom">
+      <p>
+        <a href="politica-privacidade.html" style="color: rgba(255,255,255,0.8);">Politica de Privacidade</a> |
+        <a href="termos-uso.html" style="color: rgba(255,255,255,0.8);">Termos de Uso</a>
+      </p>
+      <p style="margin-top: 12px;">&copy; 2026 IncentivaBR. Todos os direitos reservados.</p>
+      <p style="margin-top: 8px; font-size: 12px;">INPI: BR512025000647-0</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/mobile-menu.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/tina.js"></script>
+  <script>
+    // Update nav
+    const navAuth = document.getElementById('navAuth');
+    if (auth.isLoggedIn()) {
+      const user = auth.getUser();
+      navAuth.textContent = user.nome ? user.nome.split(' ')[0] : 'Minha Conta';
+      navAuth.href = 'dashboard.html';
+    } else {
+      navAuth.href = 'login.html';
+    }
+
+    // State
+    let currentPage = 0;
+    const limit = 20;
+    let totalProjects = 0;
+
+    // Fund colors
+    const fundColors = {
+      children: '#00A859',
+      elderly: '#2B5A9E',
+      culture: '#9C27B0',
+      sports: '#F7941D',
+      audiovisual: '#E91E63',
+      recycling: '#00BCD4',
+      health_oncology: '#E74C3C',
+      health_pcd: '#3F51B5'
+    };
+
+    // Load funds for filter
+    async function loadFunds() {
+      try {
+        const response = await api.getFunds();
+        const select = document.getElementById('filterFund');
+        response.funds.forEach(fund => {
+          const option = document.createElement('option');
+          option.value = fund.id;
+          option.textContent = fund.name;
+          select.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Erro ao carregar fundos:', error);
+      }
+    }
+
+    // Load projects
+    async function loadProjects() {
+      const container = document.getElementById('projectsContainer');
+
+      // Show loading
+      container.innerHTML = `
+        <div class="loading-grid">
+          <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+        </div>
+      `;
+
+      const filters = {
+        fund_id: document.getElementById('filterFund').value,
+        fund_type: document.getElementById('filterType').value,
+        is_featured: document.getElementById('filterFeatured').checked ? 'true' : '',
+        limit,
+        offset: currentPage * limit
+      };
+
+      try {
+        const response = await api.getProjects(filters);
+        totalProjects = response.total;
+
+        document.getElementById('resultsCount').textContent =
+          `${response.total} projeto${response.total !== 1 ? 's' : ''} encontrado${response.total !== 1 ? 's' : ''}`;
+
+        if (response.projects.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-search"></i>
+              <h3>Nenhum projeto encontrado</h3>
+              <p>Tente ajustar os filtros de busca</p>
+            </div>
+          `;
+          document.getElementById('pagination').style.display = 'none';
+          return;
+        }
+
+        container.innerHTML = `<div class="projects-grid">${response.projects.map(renderProjectCard).join('')}</div>`;
+
+        // Pagination
+        renderPagination();
+
+      } catch (error) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>Erro ao carregar projetos</h3>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    // Render project card
+    function renderProjectCard(project) {
+      const color = fundColors[project.fund.fund_type] || '#607D8B';
+      const daysLeft = utils.daysRemaining(project.end_date);
+
+      return `
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, ${color} 0%, ${color}99 100%)">
+            ${project.cover_image_url
+              ? `<img src="${project.cover_image_url}" alt="${project.title}">`
+              : `<i class="fas fa-hand-holding-heart"></i>`
+            }
+            <span class="project-badge" style="background:${color}">${project.fund.name}</span>
+            ${project.is_featured ? '<span class="featured-badge"><i class="fas fa-star"></i> Destaque</span>' : ''}
+          </div>
+          <div class="project-content">
+            <div class="project-org">
+              <i class="fas fa-building"></i> ${project.organization.name}
+            </div>
+            <h3 class="project-title">
+              <a href="projeto-detalhes.html?id=${project.id}">${project.title}</a>
+            </h3>
+
+            <div class="progress-section">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: ${Math.min(project.percentage_raised, 100)}%"></div>
+              </div>
+              <div class="progress-info">
+                <span class="progress-amount">${utils.formatCurrency(project.current_amount)}</span>
+                <span class="progress-goal">de ${utils.formatCurrency(project.goal_amount)}</span>
+              </div>
+            </div>
+
+            <div class="project-meta">
+              <span><i class="fas fa-users"></i> ${project.total_donors} apoiadores</span>
+              <span><i class="fas fa-clock"></i> ${daysLeft !== null ? daysLeft + ' dias' : 'Sem prazo'}</span>
+            </div>
+
+            <a href="projeto-detalhes.html?id=${project.id}" class="btn btn-primary" style="width:100%;margin-top:16px">
+              Ver Detalhes
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render pagination
+    function renderPagination() {
+      const totalPages = Math.ceil(totalProjects / limit);
+      if (totalPages <= 1) {
+        document.getElementById('pagination').style.display = 'none';
+        return;
+      }
+
+      const pagination = document.getElementById('pagination');
+      pagination.style.display = 'flex';
+      pagination.innerHTML = '';
+
+      // Prev button
+      const prevBtn = document.createElement('button');
+      prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+      prevBtn.disabled = currentPage === 0;
+      prevBtn.onclick = () => { currentPage--; loadProjects(); };
+      pagination.appendChild(prevBtn);
+
+      // Page numbers
+      for (let i = 0; i < totalPages; i++) {
+        if (totalPages > 7 && i > 1 && i < totalPages - 2 && Math.abs(i - currentPage) > 1) {
+          if (i === 2 || i === totalPages - 3) {
+            const dots = document.createElement('span');
+            dots.textContent = '...';
+            dots.style.padding = '10px';
+            pagination.appendChild(dots);
+          }
+          continue;
+        }
+
+        const pageBtn = document.createElement('button');
+        pageBtn.textContent = i + 1;
+        pageBtn.className = i === currentPage ? 'active' : '';
+        pageBtn.onclick = () => { currentPage = i; loadProjects(); };
+        pagination.appendChild(pageBtn);
+      }
+
+      // Next button
+      const nextBtn = document.createElement('button');
+      nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+      nextBtn.disabled = currentPage >= totalPages - 1;
+      nextBtn.onclick = () => { currentPage++; loadProjects(); };
+      pagination.appendChild(nextBtn);
+    }
+
+    // Filter events
+    document.getElementById('filterFund').addEventListener('change', () => { currentPage = 0; loadProjects(); });
+    document.getElementById('filterType').addEventListener('change', () => { currentPage = 0; loadProjects(); });
+    document.getElementById('filterFeatured').addEventListener('change', () => { currentPage = 0; loadProjects(); });
+
+    // Search with debounce
+    let searchTimeout;
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        currentPage = 0;
+        loadProjects();
+      }, 500);
+    });
+
+    // Init
+    loadFunds();
+    loadProjects();
+  </script>
+  <script src="js/tenant.js"></script>
+</body>
+</html>
