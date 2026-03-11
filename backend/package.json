@@ -1,7 +1,7 @@
 {
-  "name": "incentivabr-backend",
+  "name": "incentivabr-rouanet",
   "version": "1.0.0",
-  "description": "Backend API para o sistema INCENTIVABR",
+  "description": "Backend API para destinação via Lei Rouanet (Lei 8.313/1991)",
   "main": "server.js",
   "type": "module",
   "scripts": {

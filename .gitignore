@@ -1,0 +1,31 @@
+# Dependências
+node_modules/
+backend/node_modules/
+
+# Variáveis de ambiente (NUNCA commitar)
+.env
+backend/.env
+*.env.local
+
+# Uploads gerados (PDFs de comprovantes)
+backend/uploads/receipts/*.pdf
+backend/uploads/documents/*.pdf
+backend/uploads/temp/
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Build
+dist/
+build/
