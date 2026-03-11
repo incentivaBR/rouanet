@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entrar - IncentivaBR</title>
-  <meta name="description" content="Entre na sua conta IncentivaBR.">
+  <title>Entrar - Lei Rouanet</title>
+  <meta name="description" content="Entre na sua conta e destine seu IR para a cultura brasileira.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -227,9 +227,9 @@
   <div class="login-container">
     <div class="login-header">
       <a href="index.html" class="logo-link">
-        <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img logo-white" style="height: 50px; margin-bottom: 8px;">
+        <img id="brandLogo" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img logo-white" style="height: 50px; margin-bottom: 8px;">
       </a>
-      <p>Transforme seu imposto em impacto social</p>
+      <p>Destine seu IR para a cultura brasileira</p>
     </div>
 
     <div class="tabs">
@@ -338,7 +338,15 @@
   <script src="js/api.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/toast.js"></script>
-  <script src="js/tina.js"></script>
+  <script>
+    // Dynamic brand
+    fetch('/api/config/brand').then(r => r.json()).then(brand => {
+      if (brand.logo_url) document.getElementById('brandLogo').src = brand.logo_url;
+      if (brand.name) document.getElementById('brandLogo').alt = brand.name;
+      if (brand.color_primary) document.documentElement.style.setProperty('--primary-color', brand.color_primary);
+      if (brand.color_accent) document.documentElement.style.setProperty('--accent-color', brand.color_accent);
+    }).catch(() => {});
+  </script>
   <script>
     // Se ja logado, redirecionar
     if (auth.isLoggedIn()) {
@@ -440,7 +448,7 @@
               user: {
                 id: 1,
                 nome: cpfEmail.includes('@') ? cpfEmail.split('@')[0] : 'Usuario Demo',
-                email: cpfEmail.includes('@') ? cpfEmail : 'demo@incentivabr.com.br',
+                email: cpfEmail.includes('@') ? cpfEmail : 'demo@destinai.com.br',
                 cpf: cpfEmail.includes('@') ? '00000000000' : utils.cleanCPF(cpfEmail),
                 total_donated: 0,
                 is_admin: isAdminDemo
@@ -518,7 +526,7 @@
       try {
         await api.register({ nome, cpf, email, phone, senha, accepted_terms: true });
 
-        Toast.success('Sua conta foi criada com sucesso! Faca login para continuar.', 'Bem-vindo ao IncentivaBR!');
+        Toast.success('Sua conta foi criada com sucesso! Faca login para continuar.', 'Bem-vindo!');
 
         // Switch to login tab
         setTimeout(() => {

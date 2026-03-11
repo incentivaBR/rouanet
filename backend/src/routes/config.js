@@ -91,4 +91,23 @@ router.get('/organizations', async (req, res) => {
   }
 });
 
+/**
+ * GET /api/config/brand
+ * Retorna configurações de marca para o frontend (white-label).
+ * Prioridade: organização do tenant → variáveis de ambiente → padrão.
+ */
+router.get('/brand', (req, res) => {
+  const org = req.organization;
+
+  const brand = {
+    name:          org?.name          || process.env.BRAND_NAME          || 'Destinai',
+    logo_url:      org?.logo_url      || process.env.BRAND_LOGO_URL      || '/assets/logo-incentivabr.png',
+    color_primary: org?.primary_color || process.env.BRAND_COLOR_PRIMARY || '#1E3A5F',
+    color_accent:  org?.secondary_color || process.env.BRAND_COLOR_ACCENT || '#2B5A9E',
+    domain:        process.env.BRAND_DOMAIN || 'destinai.com.br',
+  };
+
+  res.json(brand);
+});
+
 export default router;

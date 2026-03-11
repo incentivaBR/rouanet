@@ -3,46 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perguntas Frequentes - IncentivaBR</title>
-  <meta name="description" content="Tire suas duvidas sobre destinacao de Imposto de Renda para projetos sociais.">
+  <title>Perguntas Frequentes - Lei Rouanet</title>
+  <meta name="description" content="Tire suas duvidas sobre destinacao de IR para projetos culturais via Lei Rouanet (Lei 8.313/1991).">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/incentivabr-theme.css">
   <style>
-    body {
-      background: var(--background-light);
-    }
+    body { background: var(--background-light); }
 
     .hero {
-      background: linear-gradient(135deg, #1E3A5F 0%, #2B5A9E 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color, #2B5A9E) 100%);
       padding: 3rem 2rem;
       text-align: center;
       color: white;
     }
 
-    .hero h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-    }
+    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .hero p { font-size: 1.2rem; opacity: 0.95; }
 
-    .hero p {
-      font-size: 1.2rem;
-      opacity: 0.95;
-    }
+    .faq-container { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
 
-    .faq-container {
-      max-width: 900px;
-      margin: 3rem auto;
-      padding: 0 1.5rem;
-    }
-
-    .faq-search {
-      margin-bottom: 2rem;
-    }
-
+    .faq-search { margin-bottom: 2rem; }
     .faq-search input {
       width: 100%;
       padding: 16px 24px;
@@ -51,7 +34,6 @@
       font-size: 16px;
       transition: all 0.3s;
     }
-
     .faq-search input:focus {
       outline: none;
       border-color: var(--primary-color);
@@ -64,7 +46,6 @@
       flex-wrap: wrap;
       margin-bottom: 2rem;
     }
-
     .faq-category-btn {
       padding: 10px 20px;
       border: 2px solid var(--border-color);
@@ -75,18 +56,13 @@
       cursor: pointer;
       transition: all 0.3s;
     }
-
-    .faq-category-btn:hover,
-    .faq-category-btn.active {
+    .faq-category-btn:hover, .faq-category-btn.active {
       background: var(--primary-color);
       border-color: var(--primary-color);
       color: white;
     }
 
-    .faq-section {
-      margin-bottom: 2rem;
-    }
-
+    .faq-section { margin-bottom: 2rem; }
     .faq-section-title {
       font-size: 1.3rem;
       font-weight: 700;
@@ -97,10 +73,6 @@
       gap: 10px;
     }
 
-    .faq-section-title i {
-      color: var(--secondary-color);
-    }
-
     .faq-item {
       background: white;
       border-radius: 12px;
@@ -109,11 +81,7 @@
       overflow: hidden;
       transition: all 0.3s;
     }
-
-    .faq-item:hover {
-      box-shadow: var(--shadow-md);
-    }
-
+    .faq-item:hover { box-shadow: var(--shadow-md); }
     .faq-question {
       padding: 20px 24px;
       cursor: pointer;
@@ -124,51 +92,19 @@
       color: var(--text-primary);
       transition: all 0.3s;
     }
-
-    .faq-question:hover {
-      background: rgba(30, 58, 95, 0.03);
-    }
-
-    .faq-question i {
-      color: var(--secondary-color);
-      transition: transform 0.3s;
-    }
-
-    .faq-item.open .faq-question i {
-      transform: rotate(180deg);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .faq-item.open .faq-answer {
-      max-height: 500px;
-    }
-
+    .faq-question i { color: var(--secondary-color); transition: transform 0.3s; }
+    .faq-item.open .faq-question i { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-item.open .faq-answer { max-height: 600px; }
     .faq-answer-content {
-      padding: 0 24px 20px;
+      padding: 16px 24px 20px;
       color: var(--text-secondary);
       line-height: 1.7;
       border-top: 1px solid var(--border-color);
-      padding-top: 16px;
     }
-
-    .faq-answer-content ul {
-      margin: 12px 0;
-      padding-left: 20px;
-    }
-
-    .faq-answer-content li {
-      margin-bottom: 8px;
-    }
-
-    .faq-answer-content strong {
-      color: var(--text-primary);
-    }
-
+    .faq-answer-content ul { margin: 12px 0; padding-left: 20px; }
+    .faq-answer-content li { margin-bottom: 8px; }
+    .faq-answer-content strong { color: var(--text-primary); }
     .faq-answer-content .highlight-box {
       background: rgba(0, 168, 89, 0.1);
       border-left: 4px solid var(--success-color);
@@ -176,10 +112,9 @@
       border-radius: 0 8px 8px 0;
       margin: 12px 0;
     }
-
-    .faq-answer-content .warning-box {
-      background: rgba(247, 148, 29, 0.1);
-      border-left: 4px solid var(--secondary-color);
+    .faq-answer-content .info-box {
+      background: rgba(30, 58, 95, 0.07);
+      border-left: 4px solid var(--primary-color);
       padding: 12px 16px;
       border-radius: 0 8px 8px 0;
       margin: 12px 0;
@@ -193,84 +128,32 @@
       margin-top: 3rem;
       box-shadow: var(--shadow-md);
     }
+    .faq-cta h3 { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 1rem; }
+    .faq-cta p { color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .faq-cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
-    .faq-cta h3 {
-      font-size: 1.5rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
-
-    .faq-cta p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-    }
-
-    .faq-cta-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .no-results {
-      text-align: center;
-      padding: 3rem;
-      color: var(--text-secondary);
-      display: none;
-    }
-
-    .no-results i {
-      font-size: 3rem;
-      color: var(--border-color);
-      margin-bottom: 1rem;
-    }
+    .no-results { text-align: center; padding: 3rem; color: var(--text-secondary); display: none; }
+    .no-results i { font-size: 3rem; color: var(--border-color); margin-bottom: 1rem; display: block; }
 
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 1.8rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
-
-      .faq-container {
-        padding: 0 1rem;
-        margin: 2rem auto;
-      }
-
-      .faq-categories {
-        justify-content: center;
-      }
-
-      .faq-question {
-        padding: 16px 18px;
-        font-size: 15px;
-      }
-
-      .faq-answer-content {
-        padding: 0 18px 16px;
-        font-size: 14px;
-      }
-
-      .faq-cta {
-        padding: 2rem 1.5rem;
-      }
-
-      .faq-cta-buttons {
-        flex-direction: column;
-      }
+      .hero h1 { font-size: 1.8rem; }
+      .hero p { font-size: 1rem; }
+      .faq-container { padding: 0 1rem; margin: 2rem auto; }
+      .faq-question { padding: 16px 18px; font-size: 15px; }
+      .faq-answer-content { padding: 16px 18px; font-size: 14px; }
+      .faq-cta { padding: 2rem 1.5rem; }
+      .faq-cta-buttons { flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <header class="header">
     <a href="index.html" class="logo-link">
-      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img">
+      <img id="brandLogo" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img">
     </a>
     <nav>
-      <a href="projetos.html">Projetos</a>
-      <a href="calculadora-escolha.html">Calculadora IR</a>
+      <a href="projetos-rouanet.html">Nosso Projeto</a>
+      <a href="calculadora.html">Calculadora IR</a>
       <a href="#" id="navAuth" class="btn btn-primary btn-sm">Entrar</a>
     </nav>
     <button class="menu-toggle" id="menuToggle">
@@ -280,33 +163,30 @@
 
   <section class="hero">
     <h1><i class="fas fa-question-circle"></i> Perguntas Frequentes</h1>
-    <p>Tire suas duvidas sobre destinacao de IR</p>
+    <p>Tudo sobre Lei Rouanet e destinacao de IR para cultura</p>
   </section>
 
   <div class="faq-container">
-    <!-- Busca -->
     <div class="faq-search">
       <input type="text" id="faqSearch" placeholder="Buscar pergunta..." oninput="filterFAQ()">
     </div>
 
-    <!-- Categorias -->
     <div class="faq-categories">
-      <button class="faq-category-btn active" onclick="filterCategory('all')">Todas</button>
-      <button class="faq-category-btn" onclick="filterCategory('destinacao')">Sobre a Destinacao</button>
-      <button class="faq-category-btn" onclick="filterCategory('processo')">Processo</button>
-      <button class="faq-category-btn" onclick="filterCategory('fundos')">Fundos e Prazos</button>
+      <button class="faq-category-btn active" onclick="filterCategory('all', this)">Todas</button>
+      <button class="faq-category-btn" onclick="filterCategory('lei', this)">Lei Rouanet</button>
+      <button class="faq-category-btn" onclick="filterCategory('processo', this)">Processo</button>
+      <button class="faq-category-btn" onclick="filterCategory('declaracao', this)">Declaracao IR</button>
     </div>
 
-    <!-- Sem resultados -->
     <div class="no-results" id="noResults">
       <i class="fas fa-search"></i>
       <h3>Nenhuma pergunta encontrada</h3>
-      <p>Tente buscar com outras palavras ou fale com a TINA.</p>
+      <p>Tente buscar com outras palavras.</p>
     </div>
 
-    <!-- SOBRE A DESTINACAO -->
-    <div class="faq-section" data-category="destinacao">
-      <h2 class="faq-section-title"><i class="fas fa-lightbulb"></i> Sobre a Destinacao</h2>
+    <!-- LEI ROUANET -->
+    <div class="faq-section" data-category="lei">
+      <h2 class="faq-section-title"><i class="fas fa-landmark"></i> Lei Rouanet</h2>
 
       <div class="faq-item" data-keywords="perder dinheiro prejuizo custo pagar mais">
         <div class="faq-question" onclick="toggleFAQ(this)">
@@ -315,34 +195,51 @@
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p><strong>NAO!</strong> O valor destinado volta na restituicao ou reduz o imposto a pagar. E custo ZERO para voce.</p>
+            <p><strong>NAO!</strong> O valor destinado e deduzido integralmente do IR devido. Ou seja, voce redireciona dinheiro que ja iria para o governo para um projeto cultural. Custo adicional: zero.</p>
+            <div class="highlight-box">
+              Exemplo: IR devido R$ 10.000 → destina R$ 600 (6%) → paga so R$ 9.400 ao governo. A diferenca vai para cultura.
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="faq-item" data-keywords="seguro confiavel golpe fake verdade verificar conferir dados bancarios">
+      <div class="faq-item" data-keywords="lei rouanet o que e como funciona cultura MinC SALIC FNC">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          O que e a Lei Rouanet?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p>A <strong>Lei 8.313/1991</strong> (Lei Rouanet) permite que pessoas fisicas destinem ate <strong>6% do seu IR devido</strong> para projetos culturais aprovados pelo Ministerio da Cultura (MinC) e cadastrados no sistema <strong>SALIC</strong>.</p>
+            <p>O dinheiro vai para o <strong>Fundo Nacional de Cultura (FNC)</strong>, gerido pelo Banco do Brasil, e e repassado ao projeto escolhido.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-keywords="seguro confiavel golpe fake verdade SALIC MinC FNC Banco do Brasil">
         <div class="faq-question" onclick="toggleFAQ(this)">
           E seguro? Como verifico os dados?
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p><strong>100% seguro.</strong> Dados bancarios sao os mesmos dos sites oficiais dos conselhos. Cada destinacao tem protocolo rastreavel e recibo conforme Art. 6.</p>
-            <div class="highlight-box">
-              <strong>Dica:</strong> Clique em "Ver site oficial do conselho" ao lado dos dados bancarios para conferir.
+            <p><strong>100% seguro.</strong> Os projetos sao aprovados e publicados no SALIC (salic.cultura.gov.br), sistema oficial do governo federal. O FNC e gerido pelo Banco do Brasil.</p>
+            <div class="info-box">
+              Voce pode verificar qualquer projeto diretamente em <strong>salic.cultura.gov.br</strong> pelo numero PRONAC.
             </div>
           </div>
         </div>
       </div>
 
-      <div class="faq-item" data-keywords="contador contabilidade declaracao informar">
+      <div class="faq-item" data-keywords="limite 6 porcento quanto posso destinar IR devido">
         <div class="faq-question" onclick="toggleFAQ(this)">
-          Preciso avisar meu contador?
+          Qual o limite que posso destinar?
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p><strong>Sim, recomendado.</strong> Ele precisara incluir a destinacao na declaracao e anexar o comprovante oficial. Compartilhe nosso link <a href="como-funciona.html">Como Funciona</a> com ele.</p>
+            <p>O limite e <strong>6% do IR devido</strong> (nao do salario, mas do imposto calculado). Use nossa calculadora para saber o valor exato com base no seu rendimento.</p>
+            <p>Destinar acima do limite nao gera beneficio fiscal — o excedente nao e deduzivel.</p>
           </div>
         </div>
       </div>
@@ -352,82 +249,128 @@
     <div class="faq-section" data-category="processo">
       <h2 class="faq-section-title"><i class="fas fa-list-ol"></i> Processo</h2>
 
-      <div class="faq-item" data-keywords="comprovante upload enviar anexar formato pix transferencia deposito">
+      <div class="faq-item" data-keywords="comprovante upload enviar formato pix transferencia TED deposito">
         <div class="faq-question" onclick="toggleFAQ(this)">
-          Que comprovante preciso enviar? Posso usar PIX?
+          Como faco a transferencia? Posso usar PIX?
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p><strong>Sim, PIX, TED ou transferencia.</strong> Envie comprovante em PDF, JPG ou PNG (ate 5MB) mostrando data, valor e destinatario.</p>
+            <p>Sim! Voce pode usar <strong>PIX, TED ou transferencia bancaria</strong> para a conta do FNC no Banco do Brasil:</p>
+            <ul>
+              <li><strong>Banco:</strong> Banco do Brasil (001)</li>
+              <li><strong>Agencia:</strong> 3902-5</li>
+              <li><strong>Conta:</strong> 170500-8</li>
+              <li><strong>Favorecido:</strong> Fundo Nacional de Cultura</li>
+            </ul>
             <div class="highlight-box">
-              <strong>Dica:</strong> Print do aplicativo do banco funciona perfeitamente!
+              No campo descricao/referencia, informe o <strong>PRONAC do projeto</strong> (fornecido no sistema apos registrar a destinacao).
             </div>
           </div>
         </div>
       </div>
 
-      <div class="faq-item" data-keywords="erro errei corrigir valor errado">
+      <div class="faq-item" data-keywords="comprovante enviar foto print upload formato">
         <div class="faq-question" onclick="toggleFAQ(this)">
-          E se eu errar o valor ou os dados?
+          Que comprovante preciso enviar?
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p>Antes do deposito: refaca o processo. Apos o deposito: entre em contato em ate <strong>48 horas</strong> pelo email ou WhatsApp.</p>
+            <p>Envie o comprovante da transferencia em <strong>PDF, JPG ou PNG</strong> (ate 5MB). O comprovante deve mostrar data, valor e destinatario (FNC).</p>
+            <div class="highlight-box">
+              Print da tela do aplicativo do banco funciona perfeitamente!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-keywords="erro errei corrigir valor errado dados bancarios">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          E se eu errar o valor ou os dados bancarios?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>Antes do deposito:</strong> simplesmente corrija no sistema e refaca o processo.</p>
+            <p><strong>Apos o deposito:</strong> entre em contato em ate 48 horas para orientacao. Transferencias para o FNC podem ser estornadas dependendo do banco.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-keywords="contador contabilidade declaracao informar avisar">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Preciso avisar meu contador?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>Sim, recomendado.</strong> Ele precisara incluir a destinacao na declaracao e o comprovante da transferencia. Compartilhe o link <a href="como-funciona.html" style="color: var(--primary-color);">Como Funciona</a> com ele.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- FUNDOS E PRAZOS -->
-    <div class="faq-section" data-category="fundos">
-      <h2 class="faq-section-title"><i class="fas fa-hand-holding-heart"></i> Fundos e Prazos</h2>
+    <!-- DECLARACAO IR -->
+    <div class="faq-section" data-category="declaracao">
+      <h2 class="faq-section-title"><i class="fas fa-file-invoice-dollar"></i> Declaracao do IR</h2>
 
-      <div class="faq-item" data-keywords="fdi fdca idoso crianca diferenca qual escolher dividir">
+      <div class="faq-item" data-keywords="prazo quando ate limite data 31 dezembro ano">
         <div class="faq-question" onclick="toggleFAQ(this)">
-          Qual a diferenca entre FDI e FDCA? Posso dividir?
+          Ate quando posso fazer a destinacao?
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p><strong>FDI</strong> apoia idosos (60+), <strong>FDCA</strong> apoia criancas e adolescentes. Sim, voce pode dividir entre fundos diferentes, respeitando o limite total de 6-9%.</p>
+            <p>A transferencia deve ser feita <strong>dentro do exercicio fiscal</strong> — ou seja, entre 1 de janeiro e 31 de dezembro do ano-base.</p>
+            <p>Para entrar na declaracao de 2026 (ano-base 2025), o deposito deve ser feito ate <strong>31 de dezembro de 2025</strong>.</p>
           </div>
         </div>
       </div>
 
-      <div class="faq-item" data-keywords="projeto escolher qual melhor geral">
+      <div class="faq-item" data-keywords="declarar como informar DIRPF ficha codigo 41">
         <div class="faq-question" onclick="toggleFAQ(this)">
-          Como escolher o projeto?
+          Como declaro a destinacao no IR?
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p>Todos os projetos sao <strong>pre-aprovados pelos conselhos</strong>. Cada um mostra descricao, publico e valores. A opcao "Destinacao Geral" deixa o conselho decidir a melhor alocacao.</p>
+            <p>Na DIRPF, informe a destinacao em:</p>
+            <ul>
+              <li><strong>Ficha:</strong> Doacoes Efetuadas</li>
+              <li><strong>Codigo:</strong> 41 — Lei Rouanet / Atividade Cultural e Artistica</li>
+            </ul>
+            <div class="highlight-box">
+              Guarde o comprovante da transferencia bancaria — a Receita Federal pode solicitar como prova.
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="faq-item" data-keywords="prazo quando ate limite data">
+      <div class="faq-item" data-keywords="recibo comprovante oficial prazo 60 dias declaracao">
         <div class="faq-question" onclick="toggleFAQ(this)">
-          Ate quando posso destinar?
+          Quando recebo o recibo oficial?
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p>A qualquer momento do ano. Para entrar na declaracao de 2026 (ano-base 2025), o deposito deve ser feito ate <strong>31 de dezembro de 2025</strong>.</p>
+            <p>O recibo oficial e emitido pelo proprio projeto/proponente ou pelo MinC em ate <strong>60 dias</strong> (prazo legal). Voce recebe notificacao por email assim que disponivel.</p>
+            <div class="info-box">
+              Nosso comprovante e apenas para seu controle pessoal. O documento com valor fiscal e o recibo oficial emitido pelo proponente do projeto.
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="faq-item" data-keywords="recibo comprovante oficial demora 60 dias declaracao">
+      <div class="faq-item" data-keywords="isento nao pago IR posso destinar restituicao">
         <div class="faq-question" onclick="toggleFAQ(this)">
-          Quando recebo o recibo e como uso na declaracao?
+          Sou isento de IR. Posso destinar?
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p>O recibo oficial sai em <strong>15-30 dias</strong> (prazo legal: ate 60 dias). Voce recebe notificacao por email/WhatsApp. Na declaracao seguinte, informe a destinacao e anexe o recibo - o valor sera deduzido automaticamente.</p>
+            <p><strong>Infelizmente nao.</strong> A destinacao via Lei Rouanet e um percentual do <em>IR devido</em>. Quem e isento tem IR devido = R$ 0, entao nao ha base para a deducao.</p>
+            <p>Para verificar se voce e isento, use nossa calculadora — ela calcula o IR devido com base no seu rendimento anual.</p>
           </div>
         </div>
       </div>
@@ -436,16 +379,16 @@
     <!-- CTA -->
     <div class="faq-cta">
       <h3>Ainda tem duvidas?</h3>
-      <p>Fale com a TINA, nossa assistente virtual, ou entre em contato pelo WhatsApp!</p>
+      <p>Fale conosco pelo WhatsApp ou consulte nosso guia completo.</p>
       <div class="faq-cta-buttons">
-        <button class="btn btn-primary" onclick="TINA.open()">
-          <i class="fas fa-robot"></i> Falar com TINA
-        </button>
-        <a href="https://wa.me/5561999682929?text=Olá! Tenho dúvidas sobre destinação de IR." class="btn btn-outline" target="_blank">
+        <a href="https://wa.me/5561999682929?text=Ola!%20Tenho%20duvidas%20sobre%20a%20Lei%20Rouanet." class="btn btn-primary" target="_blank">
           <i class="fab fa-whatsapp"></i> WhatsApp
         </a>
         <a href="como-funciona.html" class="btn btn-outline">
           <i class="fas fa-book"></i> Como Funciona
+        </a>
+        <a href="calculadora.html" class="btn btn-outline">
+          <i class="fas fa-calculator"></i> Calculadora IR
         </a>
       </div>
     </div>
@@ -453,28 +396,46 @@
 
   <footer class="footer">
     <a href="index.html" class="logo-link">
-      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img logo-white">
+      <img id="footerLogo" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img logo-white">
     </a>
-    <p class="tagline">Incentivos Fiscais Simplificados</p>
-    <div style="margin: 1.5rem 0;">
-      <a href="passo-a-passo.html" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">Passo a Passo</a>
-      <a href="projetos.html" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">Projetos</a>
+    <p class="tagline">Lei Rouanet Simplificada</p>
+    <div class="footer-nav">
+      <a href="como-funciona.html">Como Funciona</a>
+      <a href="projetos-rouanet.html">Nosso Projeto</a>
+      <a href="calculadora.html">Calculadora</a>
     </div>
     <div class="footer-bottom">
       <p>
-        <a href="politica-privacidade.html" style="color: rgba(255,255,255,0.8);">Politica de Privacidade</a> |
-        <a href="termos-uso.html" style="color: rgba(255,255,255,0.8);">Termos de Uso</a>
+        <a href="politica-privacidade.html" class="footer-legal-link">Politica de Privacidade</a> |
+        <a href="termos-uso.html" class="footer-legal-link">Termos de Uso</a>
       </p>
-      <p style="margin-top: 12px;">&copy; 2026 IncentivaBR. Todos os direitos reservados.</p>
-      <p style="margin-top: 8px; font-size: 12px;">INPI: BR512025000647-0</p>
+      <p class="footer-copyright" id="footerBrandName">&copy; 2026 Destinai. Todos os direitos reservados.</p>
+      <p style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px;">
+        Powered by <a href="https://incentivabr.com.br" target="_blank" style="color: rgba(255,255,255,0.6);">IncentivaBR</a>
+      </p>
     </div>
   </footer>
 
   <script src="js/auth.js"></script>
   <script src="js/mobile-menu.js"></script>
-  <script src="js/tina.js"></script>
   <script>
-    // Update nav auth
+    // Dynamic brand
+    fetch('/api/config/brand').then(r => r.json()).then(brand => {
+      if (brand.logo_url) {
+        document.getElementById('brandLogo').src = brand.logo_url;
+        document.getElementById('footerLogo').src = brand.logo_url;
+      }
+      if (brand.name) {
+        document.getElementById('brandLogo').alt = brand.name;
+        document.getElementById('footerLogo').alt = brand.name;
+        document.getElementById('footerBrandName').textContent = `© 2026 ${brand.name}. Todos os direitos reservados.`;
+        document.title = `Perguntas Frequentes - ${brand.name}`;
+      }
+      if (brand.color_primary) document.documentElement.style.setProperty('--primary-color', brand.color_primary);
+      if (brand.color_accent) document.documentElement.style.setProperty('--accent-color', brand.color_accent);
+    }).catch(() => {});
+
+    // Nav auth
     const navAuth = document.getElementById('navAuth');
     if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
       const user = auth.getUser();
@@ -485,79 +446,41 @@
       navAuth.href = 'login.html';
     }
 
-    // Toggle FAQ item
     function toggleFAQ(element) {
       const item = element.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
-
-      // Fecha todos
       document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-
-      // Abre o clicado se nao estava aberto
-      if (!wasOpen) {
-        item.classList.add('open');
-      }
+      if (!wasOpen) item.classList.add('open');
     }
 
-    // Filter by category
-    function filterCategory(category) {
-      // Update buttons
-      document.querySelectorAll('.faq-category-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      event.target.classList.add('active');
-
-      // Show/hide sections
+    function filterCategory(category, btn) {
+      document.querySelectorAll('.faq-category-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
       document.querySelectorAll('.faq-section').forEach(section => {
-        if (category === 'all' || section.dataset.category === category) {
-          section.style.display = 'block';
-        } else {
-          section.style.display = 'none';
-        }
+        section.style.display = (category === 'all' || section.dataset.category === category) ? 'block' : 'none';
       });
-
-      // Clear search
       document.getElementById('faqSearch').value = '';
       document.getElementById('noResults').style.display = 'none';
     }
 
-    // Search FAQ
     function filterFAQ() {
       const query = document.getElementById('faqSearch').value.toLowerCase().trim();
       let hasResults = false;
-
-      document.querySelectorAll('.faq-section').forEach(section => {
-        section.style.display = 'block';
-      });
-
+      document.querySelectorAll('.faq-section').forEach(s => s.style.display = 'block');
       document.querySelectorAll('.faq-item').forEach(item => {
         const keywords = item.dataset.keywords || '';
         const question = item.querySelector('.faq-question').textContent.toLowerCase();
         const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
-
-        const matches = keywords.includes(query) ||
-                       question.includes(query) ||
-                       answer.includes(query) ||
-                       query === '';
-
+        const matches = !query || keywords.includes(query) || question.includes(query) || answer.includes(query);
         item.style.display = matches ? 'block' : 'none';
         if (matches) hasResults = true;
       });
-
-      // Hide empty sections
       document.querySelectorAll('.faq-section').forEach(section => {
-        const visibleItems = section.querySelectorAll('.faq-item[style="display: block"], .faq-item:not([style])');
-        const hasVisible = Array.from(visibleItems).some(item => item.style.display !== 'none');
-        section.style.display = hasVisible ? 'block' : 'none';
+        const visible = Array.from(section.querySelectorAll('.faq-item')).some(i => i.style.display !== 'none');
+        section.style.display = visible ? 'block' : 'none';
       });
-
-      // Show no results message
-      document.getElementById('noResults').style.display = hasResults || query === '' ? 'none' : 'block';
-
-      // Reset category buttons
-      document.querySelectorAll('.faq-category-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
+      document.getElementById('noResults').style.display = (!hasResults && query) ? 'block' : 'none';
+      document.querySelectorAll('.faq-category-btn').forEach(b => b.classList.remove('active'));
       document.querySelector('.faq-category-btn').classList.add('active');
     }
   </script>
