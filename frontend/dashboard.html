@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minha Conta - IncentivaBR</title>
-  <meta name="description" content="Painel do usuario IncentivaBR.">
+  <title>Minha Conta - Lei Rouanet</title>
+  <meta name="description" content="Acompanhe suas destinações culturais via Lei Rouanet.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -380,11 +380,11 @@
   <!-- Header -->
   <header class="header">
     <a href="index.html" class="logo-link">
-      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img">
+      <img id="brandLogo" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img">
     </a>
     <nav>
-      <a href="projetos.html">Projetos</a>
-      <a href="calculadora-escolha.html">Calculadora</a>
+      <a href="projetos-rouanet.html">Nosso Projeto</a>
+      <a href="calculadora.html">Calculadora IR</a>
     </nav>
     <div class="user-menu">
       <div class="user-avatar" id="userAvatar">?</div>
@@ -398,8 +398,8 @@
   <div class="container" style="padding-top: 32px; padding-bottom: 60px;">
     <!-- Welcome Section -->
     <div class="welcome-section">
-      <h1 id="welcomeTitle">Ola!</h1>
-      <p>Acompanhe suas destinacoes e impacto social</p>
+      <h1 id="welcomeTitle">Olá!</h1>
+      <p>Acompanhe suas destinações culturais via Lei Rouanet</p>
 
       <!-- Link Admin (visivel apenas para admins) -->
       <div id="adminLinkContainer" style="margin: 1.5rem 0; display: none;">
@@ -439,7 +439,7 @@
           </div>
           <div class="ir-item">
             <div class="value" id="irLimite">-</div>
-            <div class="label">Limite Destinacao (<span class="max-percentage">9%</span>)</div>
+            <div class="label">Limite Rouanet (6%)</div>
           </div>
           <div class="ir-item">
             <div class="value" id="irDisponivel">-</div>
@@ -452,9 +452,9 @@
     <!-- Minhas Destinacoes -->
     <div class="section">
       <div class="section-header">
-        <h2 class="section-title"><i class="fas fa-hand-holding-heart"></i> Minhas Destinacoes</h2>
-        <a href="projetos.html" class="btn btn-outline">
-          <i class="fas fa-plus"></i> Nova Destinacao
+        <h2 class="section-title"><i class="fas fa-theater-masks"></i> Minhas Destinações Rouanet</h2>
+        <a href="projetos-rouanet.html" class="btn btn-outline">
+          <i class="fas fa-plus"></i> Nova Destinação
         </a>
       </div>
 
@@ -473,22 +473,22 @@
       <h2 class="section-title"><i class="fas fa-rocket"></i> Continue Destinando</h2>
 
       <div class="actions-grid">
-        <a href="calculadora-escolha.html" class="action-card">
+        <a href="calculadora.html" class="action-card">
           <i class="fas fa-calculator"></i>
           <h3>Calcular IR 2026</h3>
-          <p>Descubra quanto pode destinar</p>
+          <p>Descubra quanto pode destinar via Lei Rouanet</p>
         </a>
 
-        <a href="projetos.html" class="action-card">
-          <i class="fas fa-search"></i>
-          <h3>Explorar Projetos</h3>
-          <p>Encontre causas para apoiar</p>
+        <a href="projetos-rouanet.html" class="action-card">
+          <i class="fas fa-theater-masks"></i>
+          <h3>Nosso Projeto Cultural</h3>
+          <p>Veja o projeto aprovado pelo MinC e destine</p>
         </a>
 
-        <a href="projetos.html?is_featured=true" class="action-card">
-          <i class="fas fa-star"></i>
-          <h3>Projetos em Destaque</h3>
-          <p>Os mais apoiados do momento</p>
+        <a href="como-funciona.html" class="action-card">
+          <i class="fas fa-landmark"></i>
+          <h3>Lei Rouanet</h3>
+          <p>Entenda como funciona a destinação cultural</p>
         </a>
       </div>
     </div>
@@ -497,16 +497,18 @@
   <!-- Footer -->
   <footer class="footer">
     <a href="index.html" class="logo-link">
-      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img logo-white">
+      <img src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img logo-white">
     </a>
-    <p class="tagline">Incentivos Fiscais Simplificados</p>
+    <p class="tagline">Lei Rouanet Simplificada</p>
     <div class="footer-bottom">
       <p>
-        <a href="politica-privacidade.html" style="color: rgba(255,255,255,0.8);">Politica de Privacidade</a> |
-        <a href="termos-uso.html" style="color: rgba(255,255,255,0.8);">Termos de Uso</a>
+        <a href="politica-privacidade.html" style="color:rgba(255,255,255,0.8)">Política de Privacidade</a> |
+        <a href="termos-uso.html" style="color:rgba(255,255,255,0.8)">Termos de Uso</a>
       </p>
-      <p style="margin-top: 12px;">&copy; 2026 IncentivaBR. Todos os direitos reservados.</p>
-      <p style="margin-top: 8px; font-size: 12px;">INPI: BR512025000647-0</p>
+      <p style="margin-top:12px">&copy; 2026 Destinai. Todos os direitos reservados.</p>
+      <p style="margin-top:8px;font-size:12px;opacity:0.7">
+        Powered by <a href="https://www.incentivabr.com.br" target="_blank" style="color:inherit">IncentivaBR</a>
+      </p>
     </div>
   </footer>
 
@@ -515,7 +517,6 @@
   <script src="js/api.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/toast.js"></script>
-  <script src="js/tina.js"></script>
   <script>
     // Require auth
     if (!auth.requireAuth()) {
@@ -560,11 +561,9 @@
         document.getElementById('statIRDue').textContent = utils.formatCurrency(irData.ir_devido);
         document.getElementById('irRendimentos').textContent = utils.formatCurrency(irData.rendimentos_total);
         document.getElementById('irDevido').textContent = utils.formatCurrency(irData.ir_devido);
-        document.getElementById('irLimite').textContent = utils.formatCurrency(irData.limites_doacao?.total_maximo || 0);
-
-        // Calculate available (limite - total donated this year)
-        // For now, show the limit
-        document.getElementById('irDisponivel').textContent = utils.formatCurrency(irData.limites_doacao?.total_maximo || 0);
+        const limiteRouanet = irData.limites_doacao?.rouanet ?? irData.limites_doacao?.total_maximo ?? 0;
+        document.getElementById('irLimite').textContent    = utils.formatCurrency(limiteRouanet);
+        document.getElementById('irDisponivel').textContent = utils.formatCurrency(limiteRouanet);
       }
     }
 
@@ -629,11 +628,11 @@
         if (response.donations.length === 0) {
           container.innerHTML = `
             <div class="empty-state">
-              <i class="fas fa-hand-holding-heart"></i>
-              <h3>Nenhuma destinacao ainda</h3>
-              <p>Comece a transformar seu imposto em impacto social!</p>
-              <a href="projetos.html" class="btn btn-primary" style="margin-top:20px">
-                Ver Projetos
+              <i class="fas fa-theater-masks"></i>
+              <h3>Nenhuma destinação ainda</h3>
+              <p>Comece a apoiar a cultura brasileira via Lei Rouanet!</p>
+              <a href="projetos-rouanet.html" class="btn btn-primary" style="margin-top:20px">
+                Ver Projeto Cultural
               </a>
             </div>
           `;
@@ -643,12 +642,12 @@
         container.innerHTML = response.donations.map(donation => `
           <div class="donation-item">
             <div class="donation-icon">
-              <i class="fas fa-heart"></i>
+              <i class="fas fa-theater-masks"></i>
             </div>
             <div class="donation-info">
-              <div class="donation-title">${donation.project.title}</div>
+              <div class="donation-title">${donation.projeto_titulo || (donation.pronac ? 'PRONAC ' + donation.pronac : (donation.project?.title || '—'))}</div>
               <div class="donation-meta">
-                ${donation.fund.name} &bull;
+                ${donation.pronac ? 'PRONAC ' + donation.pronac + ' &bull; ' : ''}Lei Rouanet &bull;
                 <span class="badge badge-${donation.status}">${getStatusLabel(donation.status)}</span>
               </div>
               ${donation.status === 'confirmed' ? `
@@ -674,7 +673,8 @@
 
         // Update available amount
         if (irData && irData.limites_doacao) {
-          const available = irData.limites_doacao.total_maximo - response.summary.total_donated;
+          const limRou = irData.limites_doacao.rouanet ?? irData.limites_doacao.total_maximo ?? 0;
+          const available = limRou - response.summary.total_donated;
           document.getElementById('irDisponivel').textContent = utils.formatCurrency(Math.max(0, available));
         }
 
@@ -688,6 +688,11 @@
         `;
       }
     }
+
+    // Brand dinâmica
+    fetch('/api/config/brand').then(r => r.json()).then(cfg => {
+      if (cfg?.brand?.logo_url) document.getElementById('brandLogo').src = cfg.brand.logo_url;
+    }).catch(() => {});
 
     // Init
     updateUserUI();
