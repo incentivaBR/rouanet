@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IncentivaBR - Incentivos Fiscais Simplificados</title>
-  <meta name="description" content="Transforme seu Imposto de Renda em impacto social. Destine at&eacute; 9% do seu IR para projetos sociais verificados.">
+  <title id="pageTitle">Destinai - Lei Rouanet Simplificada</title>
+  <meta name="description" content="Destine até 6% do seu Imposto de Renda para projetos culturais aprovados pelo MinC. Simples, seguro e sem custo adicional.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,15 +12,16 @@
   <link rel="stylesheet" href="css/incentivabr-theme.css">
 </head>
 <body>
+
   <!-- Header -->
   <header class="header">
     <a href="index.html" class="logo-link">
-      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img">
+      <img id="brandLogo" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img">
     </a>
     <nav>
-      <a href="projetos.html">Projetos</a>
-      <a href="projetos-rouanet.html">Lei Rouanet</a>
-      <a href="calculadora-escolha.html">Calculadora IR</a>
+      <a href="projetos-rouanet.html"><i class="fas fa-search"></i> Projetos Culturais</a>
+      <a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora IR</a>
+      <a href="como-funciona.html">Como Funciona</a>
       <a href="#" id="navAuth" class="btn btn-primary btn-sm">Entrar</a>
     </nav>
     <button class="menu-toggle" id="menuToggle">
@@ -28,43 +29,50 @@
     </button>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="hero-home">
-    <h1>Transforme seu Imposto<br>em <span class="highlight">Impacto Social</span></h1>
-    <p>Destine at&eacute; <span class="max-percentage">9%</span> do seu IR devido para projetos que transformam vidas. Sem custo adicional para voc&ecirc;.</p>
-
+    <h1>Seu IR vira<br><span class="highlight">Cultura Brasileira</span></h1>
+    <p>
+      Destine até <strong>6%</strong> do seu IR devido para projetos culturais aprovados pelo Ministério da Cultura.<br>
+      Lei Rouanet (Lei 8.313/1991) — sem custo adicional para você.
+    </p>
     <div class="hero-buttons">
-      <a href="calculadora-escolha.html" class="btn btn-white">
+      <a href="calculadora.html" class="btn btn-white">
         <i class="fas fa-calculator"></i> Calcular meu IR
       </a>
-      <a href="projetos.html" class="btn btn-outline-white">
-        <i class="fas fa-hand-holding-heart"></i> Ver Projetos
+      <a href="projetos-rouanet.html" class="btn btn-outline-white">
+        <i class="fas fa-music"></i> Ver Projetos Culturais
       </a>
     </div>
-
   </section>
 
-  <!-- Como Funciona - Resumo -->
+  <!-- Como Funciona -->
   <section class="section" id="como-funciona">
     <div class="container">
       <div class="section-header">
         <h2>Como Funciona?</h2>
+        <p>Em 4 passos simples você destina seu IR para a cultura brasileira</p>
       </div>
       <div class="steps-grid">
         <div class="card step-card">
           <div class="step-emoji">1️⃣</div>
           <h3 class="text-primary">Calcule seu IR</h3>
-          <p>Descubra quanto você pode destinar (até <span class="max-percentage">9%</span>)</p>
+          <p>Descubra quanto você pode destinar — até <strong>6%</strong> do IR devido via Lei Rouanet</p>
         </div>
         <div class="card step-card">
           <div class="step-emoji">2️⃣</div>
-          <h3 class="text-secondary-color">Escolha projetos</h3>
-          <p>Apoie causas que transformam vidas</p>
+          <h3 class="text-secondary-color">Escolha o Projeto</h3>
+          <p>Busque entre milhares de projetos culturais aprovados pelo MinC via SALIC</p>
         </div>
         <div class="card step-card">
           <div class="step-emoji">3️⃣</div>
-          <h3 class="text-success">Receba de volta</h3>
-          <p>Valor volta na restituição ou reduz imposto</p>
+          <h3 class="text-accent">Faça a Transferência</h3>
+          <p>Transfira diretamente para o Fundo Nacional de Cultura (FNC) e envie o comprovante</p>
+        </div>
+        <div class="card step-card">
+          <div class="step-emoji">4️⃣</div>
+          <h3 class="text-success">Receba de Volta</h3>
+          <p>O valor é deduzido do seu IR na declaração — sem custo extra</p>
         </div>
       </div>
       <div class="section-link">
@@ -75,68 +83,86 @@
     </div>
   </section>
 
+  <!-- O que é a Lei Rouanet -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>O que é a Lei Rouanet?</h2>
+        <p>Mecanismo oficial do Governo Federal para financiar a cultura brasileira</p>
+      </div>
+      <div class="steps-grid">
+        <div class="card step-card">
+          <div class="help-card-icon icon-secondary">
+            <i class="fas fa-landmark"></i>
+          </div>
+          <h3>Lei 8.313/1991</h3>
+          <p>Criada em 1991, permite que pessoas físicas destinem parte do IR a projetos culturais aprovados pelo MinC</p>
+        </div>
+        <div class="card step-card">
+          <div class="help-card-icon icon-accent">
+            <i class="fas fa-percent"></i>
+          </div>
+          <h3>Até 6% do IR Devido</h3>
+          <p>Patrocínios têm dedução integral (100%). O valor sai do que você já pagaria ao governo</p>
+        </div>
+        <div class="card step-card">
+          <div class="help-card-icon icon-success">
+            <i class="fas fa-theater-masks"></i>
+          </div>
+          <h3>Projetos Verificados</h3>
+          <p>Todos os projetos passam por aprovação do Ministério da Cultura e ficam disponíveis no SALIC</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Depoimentos -->
   <section class="testimonials-section">
     <div class="container">
       <div class="section-header">
-        <h2>Quem J&aacute; Destinou Recomenda</h2>
-        <p>Veja o que dizem os contribuintes que transformaram seu imposto em impacto</p>
+        <h2>Quem Já Destinou Recomenda</h2>
+        <p>Contribuintes que transformaram seu IR em cultura</p>
       </div>
-
       <div class="testimonials-grid">
         <div class="testimonial-card">
           <div class="testimonial-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
           <p class="testimonial-content">
-            "Sempre quis ajudar, mas n&atilde;o sabia como. Descobri que podia destinar parte do meu IR sem pagar nada a mais.
-            J&aacute; s&atilde;o 3 anos consecutivos apoiando projetos para crian&ccedil;as."
+            "Sempre quis apoiar a cultura brasileira, mas não sabia como. Descobri que posso destinar parte do meu IR sem pagar nada a mais. Já são 3 anos consecutivos apoiando projetos."
           </p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">MF</div>
             <div class="testimonial-info">
               <h4>Marcos F.</h4>
-              <p>Servidor P&uacute;blico Federal</p>
+              <p>Servidor Público Federal</p>
             </div>
           </div>
         </div>
-
         <div class="testimonial-card">
           <div class="testimonial-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
           <p class="testimonial-content">
-            "Minha contadora indicou o IncentivaBR. O processo foi simples e recebi o recibo certinho para incluir
-            na declara&ccedil;&atilde;o. Recomendo a todos os meus colegas."
+            "Minha contadora indicou a plataforma. O processo foi simples e recebi o comprovante certinho para incluir na declaração. Apoiei um projeto de teatro que adorei."
           </p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">AS</div>
             <div class="testimonial-info">
               <h4>Ana S.</h4>
-              <p>Analista Judici&aacute;rio - TRF</p>
+              <p>Analista Judiciário - TRF</p>
             </div>
           </div>
         </div>
-
         <div class="testimonial-card">
           <div class="testimonial-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
           <p class="testimonial-content">
-            "Como contador, indico para todos os meus clientes que fazem declara&ccedil;&atilde;o completa.
-            &Eacute; uma forma inteligente de direcionar recursos que j&aacute; seriam pagos ao governo."
+            "Como contador, indico para todos os clientes que fazem declaração completa. É uma forma inteligente de direcionar recursos que já seriam pagos ao governo para a cultura."
           </p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">RC</div>
@@ -164,14 +190,14 @@
         <span class="trust-badge-detail">SSL/TLS</span>
       </div>
       <div class="trust-badge">
-        <i class="fas fa-certificate"></i>
-        <span>Registro INPI</span>
-        <span class="trust-badge-detail">BR512025000647-0</span>
+        <i class="fas fa-landmark"></i>
+        <span>Projetos Oficiais</span>
+        <span class="trust-badge-detail">MinC / SALIC</span>
       </div>
       <div class="trust-badge">
-        <i class="fas fa-landmark"></i>
-        <span>Fundos Oficiais</span>
-        <span class="trust-badge-detail">Gov. Federal e Distrital</span>
+        <i class="fas fa-university"></i>
+        <span>FNC Oficial</span>
+        <span class="trust-badge-detail">Banco do Brasil</span>
       </div>
       <div class="trust-badge">
         <i class="fas fa-calculator"></i>
@@ -181,77 +207,48 @@
     </div>
   </section>
 
-  <!-- CTA Para Organiza&ccedil;&otilde;es -->
-  <section class="org-cta-section">
-    <h2><i class="fas fa-building"></i> Sua Organiza&ccedil;&atilde;o Quer Oferecer Isso aos Associados?</h2>
-    <p>
-      Plataforma personalizada com sua marca para facilitar a destina&ccedil;&atilde;o de IR dos seus membros.
-    </p>
-    <div class="org-features">
-      <div class="org-feature">
-        <i class="fas fa-palette"></i>
-        <span>Sua marca e identidade visual</span>
-      </div>
-      <div class="org-feature">
-        <i class="fas fa-filter"></i>
-        <span>Projetos direcionados ao seu nicho</span>
-      </div>
-      <div class="org-feature">
-        <i class="fas fa-chart-line"></i>
-        <span>Dashboard de impacto</span>
-      </div>
-      <div class="org-feature">
-        <i class="fas fa-headset"></i>
-        <span>Suporte dedicado</span>
-      </div>
-    </div>
-    <a href="para-organizacoes.html" class="btn btn-white-secondary">
-      <i class="fas fa-arrow-right"></i> Quero saber mais
-    </a>
-  </section>
-
   <!-- Precisa de Ajuda -->
-  <section class="section section-alt">
+  <section class="section">
     <div class="container">
       <div class="section-header">
         <h2>Precisa de Ajuda?</h2>
-        <p>Estamos aqui para esclarecer suas dúvidas</p>
+        <p>Estamos aqui para esclarecer suas dúvidas sobre a Lei Rouanet</p>
       </div>
       <div class="help-grid">
-        <a href="passo-a-passo.html" class="card help-card">
+        <a href="como-funciona.html" class="card help-card">
           <div class="help-card-icon icon-secondary">
             <i class="fas fa-route"></i>
           </div>
-          <h3>Passo a Passo</h3>
-          <p>Guia visual completo do processo de destinação</p>
+          <h3>Como Funciona</h3>
+          <p>Entenda o processo completo de destinação via Lei Rouanet</p>
         </a>
         <a href="faq.html" class="card help-card">
           <div class="help-card-icon icon-accent">
             <i class="fas fa-question-circle"></i>
           </div>
           <h3>Perguntas Frequentes</h3>
-          <p>Respostas para as dúvidas mais comuns</p>
+          <p>Respostas para as dúvidas mais comuns sobre a Lei Rouanet</p>
         </a>
-        <div class="card help-card" onclick="if(typeof TINA !== 'undefined') TINA.open();">
+        <a href="projetos-rouanet.html" class="card help-card">
           <div class="help-card-icon icon-success">
-            <i class="fas fa-robot"></i>
+            <i class="fas fa-theater-masks"></i>
           </div>
-          <h3>Fale com a TINA</h3>
-          <p>Nossa assistente virtual responde na hora</p>
-        </div>
+          <h3>Buscar Projetos</h3>
+          <p>Explore projetos culturais aprovados pelo Ministério da Cultura</p>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA Final -->
   <section class="cta">
-    <h2>Pronto para fazer a diferen&ccedil;a?</h2>
-    <p>Seu imposto pode transformar vidas. Comece agora!</p>
+    <h2>Pronto para apoiar a cultura brasileira?</h2>
+    <p>Seu IR pode financiar teatro, música, cinema e muito mais. Comece agora!</p>
     <div class="cta-buttons">
-      <a href="calculadora-escolha.html" class="btn btn-white">
+      <a href="calculadora.html" class="btn btn-white">
         <i class="fas fa-calculator"></i> Calcular meu IR
       </a>
-      <a href="projetos.html" class="btn btn-outline-white">
+      <a href="projetos-rouanet.html" class="btn btn-outline-white">
         <i class="fas fa-search"></i> Explorar Projetos
       </a>
     </div>
@@ -260,9 +257,9 @@
   <!-- Footer -->
   <footer class="footer">
     <a href="index.html" class="logo-link">
-      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img logo-white">
+      <img id="brandLogoFooter" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img logo-white">
     </a>
-    <p class="tagline">Incentivos Fiscais Simplificados</p>
+    <p class="tagline" id="brandTagline">Lei Rouanet Simplificada</p>
 
     <div class="footer-social">
       <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -272,24 +269,22 @@
 
     <div class="footer-grid">
       <div class="footer-col">
-        <h4>Navega&ccedil;&atilde;o</h4>
-        <a href="index.html">In&iacute;cio</a>
-        <a href="projetos.html">Projetos</a>
-        <a href="calculadora-escolha.html">Calculadora IR</a>
+        <h4>Navegação</h4>
+        <a href="index.html">Início</a>
+        <a href="projetos-rouanet.html">Projetos Culturais</a>
+        <a href="calculadora.html">Calculadora IR</a>
         <a href="login.html">Entrar</a>
       </div>
       <div class="footer-col">
         <h4>Recursos</h4>
-        <a href="passo-a-passo.html">Passo a Passo</a>
+        <a href="como-funciona.html">Como Funciona</a>
         <a href="faq.html">Perguntas Frequentes</a>
-        <a href="para-organizacoes.html">Para Organiza&ccedil;&otilde;es</a>
-        <a href="para-contadores.html">Para Contadores</a>
+        <a href="passo-a-passo.html">Passo a Passo</a>
       </div>
       <div class="footer-col">
         <h4>Contato</h4>
-        <a href="mailto:contato@incentivabr.com.br"><i class="fas fa-envelope"></i> contato@incentivabr.com.br</a>
-        <a href="#"><i class="fab fa-instagram"></i> @incentivabr</a>
-        <a href="#"><i class="fab fa-linkedin"></i> IncentivaBR</a>
+        <a href="#" id="footerEmail"><i class="fas fa-envelope"></i> contato@destinai.com.br</a>
+        <a href="#"><i class="fab fa-instagram"></i> @destinai</a>
       </div>
     </div>
 
@@ -298,18 +293,19 @@
         <a href="politica-privacidade.html" class="footer-legal-link">Política de Privacidade</a> |
         <a href="termos-uso.html" class="footer-legal-link">Termos de Uso</a>
       </p>
-      <p class="footer-copyright">&copy; 2026 IncentivaBR. Todos os direitos reservados.</p>
-      <p class="footer-inpi">INPI: BR512025000647-0</p>
+      <p class="footer-copyright" id="footerCopyright">&copy; 2026 Destinai. Todos os direitos reservados.</p>
+      <p style="font-size:0.75rem;opacity:0.6;margin-top:4px;">
+        Powered by <a href="https://www.incentivabr.com.br" target="_blank" style="color:inherit">IncentivaBR</a>
+      </p>
     </div>
   </footer>
 
   <script src="js/auth.js"></script>
   <script src="js/mobile-menu.js"></script>
-  <script src="js/tina.js"></script>
   <script>
-    // Update nav based on auth status
+    // Auth nav
     const navAuth = document.getElementById('navAuth');
-    if (auth.isLoggedIn()) {
+    if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
       const user = auth.getUser();
       navAuth.textContent = user.nome ? user.nome.split(' ')[0] : 'Minha Conta';
       navAuth.href = 'dashboard.html';
@@ -317,6 +313,32 @@
     } else {
       navAuth.href = 'login.html';
     }
+
+    // Carregar brand via API
+    fetch('/api/config/brand')
+      .then(r => r.json())
+      .then(cfg => {
+        if (!cfg || cfg.status === 'error') return;
+        const b = cfg.brand || {};
+        if (b.name) {
+          document.getElementById('pageTitle').textContent = `${b.name} - Lei Rouanet Simplificada`;
+          document.getElementById('brandTagline').textContent = b.tagline || 'Lei Rouanet Simplificada';
+          document.getElementById('footerCopyright').textContent = `© ${new Date().getFullYear()} ${b.name}. Todos os direitos reservados.`;
+          document.querySelectorAll('[alt="Destinai"]').forEach(el => el.alt = b.name);
+        }
+        if (b.logo_url) {
+          document.getElementById('brandLogo').src = b.logo_url;
+          document.getElementById('brandLogoFooter').src = b.logo_url;
+        }
+        if (b.contact_email) {
+          const emailEl = document.getElementById('footerEmail');
+          emailEl.href = `mailto:${b.contact_email}`;
+          emailEl.innerHTML = `<i class="fas fa-envelope"></i> ${b.contact_email}`;
+        }
+        if (b.primary_color) {
+          document.documentElement.style.setProperty('--color-primary', b.primary_color);
+        }
+      }).catch(() => {});
   </script>
   <script src="js/tenant.js"></script>
 </body>

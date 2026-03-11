@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Destinar ao Projeto - IncentivaBR</title>
-  <meta name="description" content="Destine seu Imposto de Renda ao projeto cultural da sua organização via Lei Rouanet.">
+  <title id="pageTitle">Destinar via Lei Rouanet</title>
+  <meta name="description" content="Destine até 6% do seu IR para projetos culturais aprovados pelo Ministério da Cultura via Lei Rouanet.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -679,10 +679,10 @@
   <!-- Header nav -->
   <header class="header" style="background:var(--rouanet-dark)">
     <a href="index.html" class="logo-link">
-      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img logo-white">
+      <img id="brandLogo" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img logo-white">
     </a>
     <nav>
-      <a href="projetos-rouanet.html" style="color:rgba(255,255,255,.85)">Projetos</a>
+      <a href="projetos-rouanet.html" style="color:rgba(255,255,255,.85)">Nosso Projeto</a>
       <a href="dashboard.html"        style="color:rgba(255,255,255,.85)">Minha Conta</a>
     </nav>
   </header>
@@ -1335,7 +1335,11 @@
       if (!document.getElementById('termsCheck').checked) {
         toast('Aceite os termos para continuar', 'error'); return;
       }
-      if (!state.org?.pronac) { toast('Organização sem PRONAC configurado', 'error'); return; }
+      // Pronac: URL params > projeto carregado > org config
+      const pronacFinal = urlParams.get('pronac') || state.projeto?.pronac || state.org?.pronac;
+      const tituloFinal = urlParams.get('titulo')  || state.projeto?.nome  || state.org?.pronac_titulo;
+
+      if (!pronacFinal) { toast('PRONAC não encontrado. Volte e selecione o projeto.', 'error'); return; }
 
       showLoading('Registrando destinação...');
       try {
@@ -1344,7 +1348,8 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json', ...authHeader() },
           body: JSON.stringify({
-            pronac:          state.org.pronac,
+            pronac:          pronacFinal,
+            projeto_titulo:  tituloFinal,
             ir_total:        state.ir_devido,
             donation_amount: state.valor,
             fiscal_year:     new Date().getFullYear()
@@ -1388,7 +1393,7 @@
       }
 
       // Referência
-      const pronac = state.org?.pronac || '—';
+      const pronac = urlParams.get('pronac') || state.projeto?.pronac || state.org?.pronac || '—';
       const cpf    = user?.cpf ? formatCPF(user.cpf) : (user?.nome || '');
       document.getElementById('pgReferencia').textContent =
         `PRONAC ${pronac} - ${cpf} - Lei Rouanet`;
@@ -1474,7 +1479,7 @@
 
         // Header
         document.getElementById('orgNameHeader').textContent = state.org.name;
-        document.title = `Destinar — ${state.org.name} | IncentivaBR`;
+        document.getElementById('pageTitle').textContent = `Destinar — ${state.org.name}`;
 
         // Cores da org
         if (state.org.primary_color) {
@@ -1485,9 +1490,17 @@
         }
 
         if (projData.status !== 'success') {
-          // Org sem PRONAC
-          document.getElementById('projectTitle').textContent = 'Projeto não configurado';
-          document.getElementById('projectProponente').textContent = 'Entre em contato com a organização.';
+          // Fallback: tentar PRONAC da URL
+          const pronacUrl = urlParams.get('pronac');
+          const tituloUrl = urlParams.get('titulo');
+          if (pronacUrl) {
+            document.getElementById('pronacChip').textContent   = `PRONAC ${pronacUrl}`;
+            document.getElementById('projectTitle').textContent = decodeURIComponent(tituloUrl || pronacUrl);
+            state.org.pronac = pronacUrl;
+          } else {
+            document.getElementById('projectTitle').textContent = 'Projeto não configurado';
+            document.getElementById('projectProponente').textContent = 'Entre em contato com o administrador.';
+          }
           hideLoading();
           return;
         }
@@ -1569,6 +1582,15 @@
       if (sl.includes('conclu'))    return 'situacao-concluido';
       return 'situacao-outro';
     }
+
+    // ── Brand dinâmica ───────────────────────────────────────
+    fetch('/api/config/brand').then(r => r.json()).then(cfg => {
+      if (!cfg?.brand) return;
+      const b = cfg.brand;
+      if (b.logo_url)       document.getElementById('brandLogo').src = b.logo_url;
+      if (b.primary_color)  document.documentElement.style.setProperty('--rouanet', b.primary_color);
+      if (b.secondary_color) document.documentElement.style.setProperty('--rouanet-dark', b.secondary_color);
+    }).catch(() => {});
 
     // ── Init ─────────────────────────────────────────────────
     init();

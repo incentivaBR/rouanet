@@ -16,86 +16,22 @@ const TABELA_IR_2026 = [
 const DEDUCAO_DEPENDENTE = 2275.08;
 const DEDUCAO_EDUCACAO_MAX = 3561.50;
 
-// Limites de destinação por grupo (% do IR devido) - valores padrão
-const LIMITE_GRUPO_1_SEM_ESPORTE = 0.06; // 6% - FDI + FDCA
-const LIMITE_GRUPO_1_COM_ESPORTE = 0.07; // 7% - com esporte
-const LIMITE_PRONON = 0.01; // 1%
-const LIMITE_PRONAS = 0.01; // 1%
-const LIMITE_TOTAL_MAXIMO = 0.09; // 9% total
+// Lei Rouanet (Lei 8.313/1991) — limite fixo de 6% do IR devido
+const LIMITE_ROUANET = 0.06;
 
 /**
- * Obtém limite máximo baseado na organização/tenant
- * Se organização específica, usa seu max_percentage
- * Se www (geral), usa o total máximo padrão
+ * Retorna limite de destinação via Lei Rouanet.
+ * Permite customização via max_percentage da organização (padrão: 6%).
  */
 function getOrganizationLimits(org) {
-  if (!org || org.slug === 'www') {
-    return {
-      grupo_1_sem_esporte: LIMITE_GRUPO_1_SEM_ESPORTE,
-      grupo_1_com_esporte: LIMITE_GRUPO_1_COM_ESPORTE,
-      pronon: LIMITE_PRONON,
-      pronas_pcd: LIMITE_PRONAS,
-      total_maximo: LIMITE_TOTAL_MAXIMO
-    };
-  }
+  const maxPercent = org?.max_percentage
+    ? parseFloat(org.max_percentage) / 100
+    : LIMITE_ROUANET;
 
-  // Organização específica - usar max_percentage dela
-  const maxPercent = parseFloat(org.max_percentage) / 100 || 0.06;
-
-  // Ajustar limites baseado no tipo de fundo da organização
-  switch (org.fund_type) {
-    case 'fia':
-    case 'fdi':
-      return {
-        grupo_1_sem_esporte: maxPercent,
-        grupo_1_com_esporte: maxPercent,
-        pronon: 0,
-        pronas_pcd: 0,
-        total_maximo: maxPercent
-      };
-    case 'esporte':
-      return {
-        grupo_1_sem_esporte: 0.06,
-        grupo_1_com_esporte: maxPercent,
-        pronon: 0,
-        pronas_pcd: 0,
-        total_maximo: maxPercent
-      };
-    case 'pronon':
-      return {
-        grupo_1_sem_esporte: 0,
-        grupo_1_com_esporte: 0,
-        pronon: maxPercent,
-        pronas_pcd: 0,
-        total_maximo: maxPercent
-      };
-    case 'pronas':
-      return {
-        grupo_1_sem_esporte: 0,
-        grupo_1_com_esporte: 0,
-        pronon: 0,
-        pronas_pcd: maxPercent,
-        total_maximo: maxPercent
-      };
-    case 'rouanet':
-      // Lei 8.313/1991 — até 6% do IR devido via patrocínio (dedução integral)
-      return {
-        grupo_1_sem_esporte: 0,
-        grupo_1_com_esporte: 0,
-        pronon: 0,
-        pronas_pcd: 0,
-        rouanet: maxPercent,        // 6% via Rouanet
-        total_maximo: maxPercent
-      };
-    default:
-      return {
-        grupo_1_sem_esporte: Math.min(maxPercent, LIMITE_GRUPO_1_SEM_ESPORTE),
-        grupo_1_com_esporte: Math.min(maxPercent, LIMITE_GRUPO_1_COM_ESPORTE),
-        pronon: Math.min(maxPercent, LIMITE_PRONON),
-        pronas_pcd: Math.min(maxPercent, LIMITE_PRONAS),
-        total_maximo: maxPercent
-      };
-  }
+  return {
+    rouanet: Math.min(maxPercent, LIMITE_ROUANET),
+    total_maximo: Math.min(maxPercent, LIMITE_ROUANET)
+  };
 }
 
 function calcularIRDevido(baseCalculo) {
@@ -180,12 +116,9 @@ router.post('/ir', async (req, res) => {
     // Obter limites baseado na organização/tenant
     const limites = getOrganizationLimits(req.organization);
 
-    // Calcular limites de doação (sempre disponível - declaração completa)
+    // Calcular limites de doação via Lei Rouanet (6% IR)
     const limitesDoacao = {
-      grupo_1_sem_esporte: Math.round(ir_devido * limites.grupo_1_sem_esporte * 100) / 100,
-      grupo_1_com_esporte: Math.round(ir_devido * limites.grupo_1_com_esporte * 100) / 100,
-      pronon: Math.round(ir_devido * limites.pronon * 100) / 100,
-      pronas_pcd: Math.round(ir_devido * limites.pronas_pcd * 100) / 100,
+      rouanet: Math.round(ir_devido * limites.rouanet * 100) / 100,
       total_maximo: Math.round(ir_devido * limites.total_maximo * 100) / 100
     };
 
@@ -242,12 +175,9 @@ router.post('/limites-rapido', async (req, res) => {
     // Obter limites baseado na organização/tenant
     const limites = getOrganizationLimits(req.organization);
 
-    // Calcular limites baseado no IR informado
+    // Calcular limites via Lei Rouanet (6% IR)
     const limitesDoacao = {
-      grupo_1_sem_esporte: Math.round(ir_devido * limites.grupo_1_sem_esporte * 100) / 100,
-      grupo_1_com_esporte: Math.round(ir_devido * limites.grupo_1_com_esporte * 100) / 100,
-      pronon: Math.round(ir_devido * limites.pronon * 100) / 100,
-      pronas_pcd: Math.round(ir_devido * limites.pronas_pcd * 100) / 100,
+      rouanet: Math.round(ir_devido * limites.rouanet * 100) / 100,
       total_maximo: Math.round(ir_devido * limites.total_maximo * 100) / 100
     };
 
@@ -298,81 +228,29 @@ router.post('/distribuir', async (req, res) => {
       });
     }
 
-    // Buscar informações dos fundos
-    const fundIds = distribuicao.map(d => d.fund_id);
-    const fundsResult = await pool.query(`
-      SELECT
-        f.id,
-        f.code,
-        f.name,
-        f.is_active,
-        ig.code AS group_code,
-        ig.max_percentage
-      FROM official_funds f
-      LEFT JOIN incentive_groups ig ON f.incentive_group_id = ig.id
-      WHERE f.id = ANY($1)
-    `, [fundIds]);
-
-    const fundsMap = {};
-    for (const fund of fundsResult.rows) {
-      fundsMap[fund.id] = fund;
-    }
-
-    // Validar e agrupar distribuição
+    // Validar itens da distribuição
     const errors = [];
-    const byGroup = {
-      GRUPO1: { total: 0, funds: [] },
-      GRUPO2: { total: 0, funds: [] },
-      GRUPO3: { total: 0, funds: [] }
-    };
     let totalDistribuido = 0;
+    const projetos = [];
 
     for (const item of distribuicao) {
-      const fund = fundsMap[item.fund_id];
-
-      if (!fund) {
-        errors.push(`Fundo ${item.fund_id} não encontrado.`);
+      if (!item.pronac || !/^\d{6,7}$/.test(item.pronac)) {
+        errors.push(`PRONAC inválido: ${item.pronac}`);
         continue;
       }
-
-      if (!fund.is_active) {
-        errors.push(`Fundo ${fund.name} não está ativo.`);
-        continue;
-      }
-
       if (!item.valor || item.valor <= 0) {
-        errors.push(`Valor para ${fund.name} deve ser maior que zero.`);
+        errors.push(`Valor para PRONAC ${item.pronac} deve ser maior que zero.`);
         continue;
       }
-
-      const groupCode = fund.group_code;
-      if (byGroup[groupCode]) {
-        byGroup[groupCode].total += item.valor;
-        byGroup[groupCode].funds.push({
-          id: fund.id,
-          code: fund.code,
-          name: fund.name,
-          valor: item.valor
-        });
-      }
-
       totalDistribuido += item.valor;
+      projetos.push({ pronac: item.pronac, valor: item.valor });
     }
 
-    // Calcular limites
-    const limiteGrupo1 = ir_devido * LIMITE_GRUPO_1_COM_ESPORTE;
-    const limiteGrupo3Pronon = ir_devido * LIMITE_PRONON;
-    const limiteGrupo3Pronas = ir_devido * LIMITE_PRONAS;
-    const limiteTotal = ir_devido * LIMITE_TOTAL_MAXIMO;
+    // Limite Lei Rouanet: 6% do IR devido
+    const limiteRouanet = Math.round(ir_devido * LIMITE_ROUANET * 100) / 100;
 
-    // Validar limites por grupo
-    if (byGroup.GRUPO1.total > limiteGrupo1) {
-      errors.push(`Grupo 1 (Fundos Controlados): limite de ${limiteGrupo1.toFixed(2)} excedido. Valor: ${byGroup.GRUPO1.total.toFixed(2)}`);
-    }
-
-    // Validar limite total
-    if (totalDistribuido > limiteTotal) {
-      errors.push(`Limite total de ${limiteTotal.toFixed(2)} (9% do IR) excedido. Valor: ${totalDistribuido.toFixed(2)}`);
+    if (totalDistribuido > limiteRouanet) {
+      errors.push(`Limite Rouanet de R$ ${limiteRouanet.toFixed(2)} (6% do IR) excedido. Valor: R$ ${totalDistribuido.toFixed(2)}`);
     }
 
     const isValid = errors.length === 0;
@@ -383,28 +261,8 @@ router.post('/distribuir', async (req, res) => {
       valid: isValid,
       total: Math.round(totalDistribuido * 100) / 100,
       percentage_of_ir: percentageOfIR,
-      limites: {
-        grupo_1: Math.round(limiteGrupo1 * 100) / 100,
-        pronon: Math.round(limiteGrupo3Pronon * 100) / 100,
-        pronas_pcd: Math.round(limiteGrupo3Pronas * 100) / 100,
-        total: Math.round(limiteTotal * 100) / 100
-      },
-      by_group: {
-        GRUPO1: {
-          total: Math.round(byGroup.GRUPO1.total * 100) / 100,
-          limite: Math.round(limiteGrupo1 * 100) / 100,
-          dentro_limite: byGroup.GRUPO1.total <= limiteGrupo1,
-          funds: byGroup.GRUPO1.funds
-        },
-        GRUPO2: {
-          total: Math.round(byGroup.GRUPO2.total * 100) / 100,
-          funds: byGroup.GRUPO2.funds
-        },
-        GRUPO3: {
-          total: Math.round(byGroup.GRUPO3.total * 100) / 100,
-          funds: byGroup.GRUPO3.funds
-        }
-      },
+      limite_rouanet: limiteRouanet,
+      projetos,
       errors
     });
 

@@ -10,15 +10,12 @@ import { initEmailService, getEmailStatus } from './src/services/emailService.js
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import authRoutes from './src/routes/auth.js';
-import fundsRoutes from './src/routes/funds.js';
 import projectsRoutes from './src/routes/projects.js';
 import organizationsRoutes from './src/routes/organizations.js';
 import calculatorRoutes from './src/routes/calculator.js';
 import donationsRoutes from './src/routes/donations.js';
 import uploadsRoutes from './src/routes/uploads.js';
-import adminRoutes from './src/routes/admin.js';
 import configRoutes from './src/routes/config.js';
-import orgDashboardRoutes from './src/routes/orgDashboard.js';
 import salicRoutes from './src/routes/salic.js';
 import tenantMiddleware from './src/middleware/tenant.js';
 
@@ -39,8 +36,9 @@ app.use(express.json());
 // Redirect domínio sem www para www
 app.use((req, res, next) => {
   const host = req.get('host');
-  if (host === 'incentivabr.com.br') {
-    return res.redirect(301, `https://www.incentivabr.com.br${req.originalUrl}`);
+  const brandDomain = process.env.BRAND_DOMAIN;
+  if (brandDomain && host === brandDomain) {
+    return res.redirect(301, `https://www.${brandDomain}${req.originalUrl}`);
   }
   next();
 });
@@ -134,15 +132,12 @@ app.get('/diagnostico', async (req, res) => {
 
 // Rotas da API
 app.use('/api/auth', authRoutes);
-app.use('/api/funds', fundsRoutes);
 app.use('/api/projects', projectsRoutes);
 app.use('/api/organizations', organizationsRoutes);
 app.use('/api/calculator', calculatorRoutes);
 app.use('/api/donations', donationsRoutes);
 app.use('/api/uploads', uploadsRoutes);
-app.use('/api/admin', adminRoutes);
 app.use('/api/config', configRoutes);
-app.use('/api/org-dashboard', orgDashboardRoutes);
 app.use('/api/salic', salicRoutes); // Lei Rouanet — proxy SALIC API
 
 // Servir arquivos de upload
