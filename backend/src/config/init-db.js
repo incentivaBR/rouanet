@@ -146,6 +146,7 @@ async function initDatabase() {
   console.log('   npm run dev  →  http://localhost:3000\n');
 
   await pool.end();
+  process.exit(0);
 }
 
 initDatabase().catch(async err => {
