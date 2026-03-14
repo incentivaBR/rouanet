@@ -34,13 +34,7 @@ CREATE TABLE IF NOT EXISTS organizations (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
--- 2. INSERIR ORGANIZAÇÕES DE EXEMPLO
-INSERT INTO organizations (name, slug, fund_type, fund_name, legal_basis, max_percentage, bank_name, bank_code, bank_agency, bank_account, pix_key, pix_key_type, beneficiary_name, beneficiary_cnpj) VALUES
-('IncentivaBR', 'www', 'geral', 'Todos os Fundos', 'Diversos', 9.00, 'BRB', '070', '0001', '12345-6', 'contato@incentivabr.com.br', 'email', 'IncentivaBR', '00.000.000/0001-00'),
-('AJUFER - Associação dos Magistrados', 'ajufer', 'esporte', 'Lei de Incentivo ao Esporte', 'Lei 11.438/2006', 7.00, 'BRB', '070', '0001', '11111-1', 'esporte@ajufer.org.br', 'email', 'AJUFER', '01.234.567/0001-89'),
-('FIA-DF', 'fia', 'fia', 'Fundo da Criança e Adolescente', 'Art. 260 do ECA', 6.00, 'BRB', '070', '0001', '98765-4', '00394684000107', 'cnpj', 'FDCA-DF', '00.394.684/0001-07'),
-('CRM-DF', 'crm', 'pronon', 'PRONON - Oncologia', 'Lei 12.715/2012', 1.00, 'BB', '001', '1234-5', '67890-1', 'pronon@hospitalcancer.org.br', 'email', 'Hospital do Câncer', '12.345.678/0001-90')
-ON CONFLICT (slug) DO NOTHING;
+-- 2. Organização inserida via migration 010 (Destinai)
 
 -- 3. ADICIONAR ORGANIZATION_ID NOS PROJETOS
 ALTER TABLE projects ADD COLUMN IF NOT EXISTS organization_id UUID REFERENCES organizations(id);
