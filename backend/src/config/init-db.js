@@ -25,11 +25,23 @@ const __dirname  = path.dirname(__filename);
 
 let poolConfig;
 if (process.env.DATABASE_URL) {
+  console.log('📦 init-db: usando DATABASE_URL');
   poolConfig = {
     connectionString: process.env.DATABASE_URL,
     ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
   };
+} else if (process.env.PGHOST) {
+  console.log('📦 init-db: usando variáveis PG* (Railway)');
+  poolConfig = {
+    host:     process.env.PGHOST,
+    port:     parseInt(process.env.PGPORT) || 5432,
+    user:     process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    database: process.env.PGDATABASE,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  };
 } else {
+  console.log('📦 init-db: usando variáveis DB_* (local)');
   poolConfig = {
     host:     process.env.DB_HOST     || 'localhost',
     port:     parseInt(process.env.DB_PORT) || 5432,
