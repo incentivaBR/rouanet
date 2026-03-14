@@ -43,15 +43,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Multi-tenant middleware (detecta organização pelo subdomínio/query param)
-app.use(tenantMiddleware);
-
-// Servir arquivos estáticos do frontend
-const frontendPath = path.join(__dirname, '../frontend');
-app.use(express.static(frontendPath));
-console.log('Frontend path:', frontendPath);
-
-// Rota de health check
+// Rota de health check — antes do tenant middleware para não depender do banco
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -59,6 +51,14 @@ app.get('/health', (req, res) => {
     uptime: process.uptime()
   });
 });
+
+// Multi-tenant middleware (detecta organização pelo subdomínio/query param)
+app.use(tenantMiddleware);
+
+// Servir arquivos estáticos do frontend
+const frontendPath = path.join(__dirname, '../frontend');
+app.use(express.static(frontendPath));
+console.log('Frontend path:', frontendPath);
 
 // Rota de teste do banco de dados
 app.get('/db-test', async (req, res) => {
