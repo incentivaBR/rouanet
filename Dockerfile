@@ -18,4 +18,4 @@ COPY frontend/ /frontend/
 EXPOSE 3000
 
 # Iniciar
-CMD ["/bin/sh", "-c", "node src/config/init-db.js && node server.js"]
+CMD ["node", "server.js"]
