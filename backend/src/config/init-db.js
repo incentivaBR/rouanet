@@ -104,6 +104,7 @@ async function initDatabase() {
     { file: path.join(migrationsDir, '007_whatsapp_fields.sql'),  label: 'Migration 007 — WhatsApp' },
     { file: path.join(migrationsDir, '008_rouanet.sql'),          label: 'Migration 008 — Lei Rouanet (FNC)' },
     { file: path.join(migrationsDir, '009_rouanet_tenant.sql'),   label: 'Migration 009 — Rouanet tenant (pronac)' },
+    { file: path.join(migrationsDir, '010_destinai_org.sql'),     label: 'Migration 010 — Organização Destinai' },
   ];
 
   for (const { file, label } of migrations) {
