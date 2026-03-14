@@ -4,6 +4,6 @@ builder = "dockerfile"
 [deploy]
 startCommand = "node src/config/init-db.js && node server.js"
 healthcheckPath = "/health"
-healthcheckTimeout = 30
+healthcheckTimeout = 120
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
