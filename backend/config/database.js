@@ -9,14 +9,22 @@ const { Pool } = pg;
 let poolConfig;
 
 if (process.env.DATABASE_URL) {
-  // Railway e outros serviços fornecem DATABASE_URL
   poolConfig = {
     connectionString: process.env.DATABASE_URL,
     ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
   };
   console.log('📦 Usando DATABASE_URL para conexão');
+} else if (process.env.PGHOST) {
+  poolConfig = {
+    host:     process.env.PGHOST,
+    port:     process.env.PGPORT || 5432,
+    user:     process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    database: process.env.PGDATABASE,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  };
+  console.log('📦 Usando variáveis PG* para conexão (Railway)');
 } else {
-  // Desenvolvimento local com variáveis separadas
   poolConfig = {
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,
