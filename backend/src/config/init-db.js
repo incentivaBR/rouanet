@@ -23,13 +23,22 @@ const { Pool } = pg;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
-const pool = new Pool({
-  host:     process.env.DB_HOST     || 'localhost',
-  port:     parseInt(process.env.DB_PORT) || 5432,
-  user:     process.env.DB_USER     || 'postgres',
-  password: process.env.DB_PASSWORD || 'postgres',
-  database: process.env.DB_NAME     || 'incentivabr',
-});
+let poolConfig;
+if (process.env.DATABASE_URL) {
+  poolConfig = {
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  };
+} else {
+  poolConfig = {
+    host:     process.env.DB_HOST     || 'localhost',
+    port:     parseInt(process.env.DB_PORT) || 5432,
+    user:     process.env.DB_USER     || 'postgres',
+    password: process.env.DB_PASSWORD || 'postgres',
+    database: process.env.DB_NAME     || 'incentivabr',
+  };
+}
+const pool = new Pool(poolConfig);
 
 async function runFile(filePath, label) {
   console.log(`\n📄 ${label}...`);
@@ -62,7 +71,11 @@ async function initDatabase() {
   console.log(`✅ Conexão: ${process.env.DB_HOST || 'localhost'}:${process.env.DB_PORT || 5432}/${process.env.DB_NAME || 'incentivabr'}`);
   client.release();
 
-  await dropAllTables();
+  if (process.env.RESET_DB === 'true') {
+    await dropAllTables();
+  } else {
+    console.log('\n⏭️  RESET_DB não definido — pulando drop de tabelas');
+  }
 
   const configDir     = __dirname;
   const migrationsDir = path.join(__dirname, '../migrations');
