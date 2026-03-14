@@ -5,7 +5,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- TABELA 1: jurisdictions (entes federativos)
-CREATE TABLE jurisdictions (
+CREATE TABLE IF NOT EXISTS jurisdictions (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name VARCHAR(100) NOT NULL,
   uf CHAR(2) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE jurisdictions (
 );
 
 -- TABELA 2: incentive_groups (grupos de incentivo fiscal)
-CREATE TABLE incentive_groups (
+CREATE TABLE IF NOT EXISTS incentive_groups (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   code VARCHAR(20) UNIQUE NOT NULL,
   name VARCHAR(200) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE incentive_groups (
 );
 
 -- TABELA 3: official_funds (fundos oficiais de incentivo)
-CREATE TABLE official_funds (
+CREATE TABLE IF NOT EXISTS official_funds (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   jurisdiction_id UUID REFERENCES jurisdictions(id),
   incentive_group_id UUID REFERENCES incentive_groups(id),
@@ -50,7 +50,7 @@ CREATE TABLE official_funds (
 );
 
 -- TABELA 4: intermediary_organizations (organizações intermediárias)
-CREATE TABLE intermediary_organizations (
+CREATE TABLE IF NOT EXISTS intermediary_organizations (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   jurisdiction_id UUID REFERENCES jurisdictions(id),
   official_fund_id UUID REFERENCES official_funds(id),
@@ -70,7 +70,7 @@ CREATE TABLE intermediary_organizations (
 );
 
 -- TABELA 5: projects (projetos específicos)
-CREATE TABLE projects (
+CREATE TABLE IF NOT EXISTS projects (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   intermediary_org_id UUID REFERENCES intermediary_organizations(id),
   official_fund_id UUID REFERENCES official_funds(id),
@@ -90,7 +90,7 @@ CREATE TABLE projects (
 );
 
 -- TABELA 6: users (usuários/doadores)
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   jurisdiction_id UUID REFERENCES jurisdictions(id),
   cpf VARCHAR(11) UNIQUE NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE users (
 );
 
 -- TABELA 7: donations (doações)
-CREATE TABLE donations (
+CREATE TABLE IF NOT EXISTS donations (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID REFERENCES users(id),
   project_id UUID REFERENCES projects(id),
@@ -120,7 +120,7 @@ CREATE TABLE donations (
 );
 
 -- TABELA 8: accountability_reports (prestação de contas)
-CREATE TABLE accountability_reports (
+CREATE TABLE IF NOT EXISTS accountability_reports (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   project_id UUID REFERENCES projects(id),
   report_type VARCHAR(20) CHECK (report_type IN ('progress', 'financial', 'completion')),
@@ -132,11 +132,11 @@ CREATE TABLE accountability_reports (
 );
 
 -- Índices para otimização
-CREATE INDEX idx_official_funds_jurisdiction ON official_funds(jurisdiction_id);
-CREATE INDEX idx_official_funds_incentive_group ON official_funds(incentive_group_id);
-CREATE INDEX idx_projects_fund ON projects(official_fund_id);
-CREATE INDEX idx_projects_status ON projects(status);
-CREATE INDEX idx_donations_user ON donations(user_id);
-CREATE INDEX idx_donations_fiscal_year ON donations(fiscal_year);
-CREATE INDEX idx_users_cpf ON users(cpf);
-CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_official_funds_jurisdiction ON official_funds(jurisdiction_id);
+CREATE INDEX IF NOT EXISTS idx_official_funds_incentive_group ON official_funds(incentive_group_id);
+CREATE INDEX IF NOT EXISTS idx_projects_fund ON projects(official_fund_id);
+CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
+CREATE INDEX IF NOT EXISTS idx_donations_user ON donations(user_id);
+CREATE INDEX IF NOT EXISTS idx_donations_fiscal_year ON donations(fiscal_year);
+CREATE INDEX IF NOT EXISTS idx_users_cpf ON users(cpf);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
