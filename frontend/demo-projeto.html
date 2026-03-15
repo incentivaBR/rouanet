@@ -520,16 +520,16 @@
           <span>62 servidores já apoiaram</span>
         </div>
 
-        <!-- PASSO 1: SALÁRIO -->
+        <!-- PASSO 1: IR DEVIDO -->
         <div class="sidebar-valor-label" style="margin-bottom:5px">
-          <i class="fas fa-calculator" style="margin-right:4px;color:#7C3AED"></i>
-          Passo 1 — Descubra seu limite
+          <i class="fas fa-file-invoice-dollar" style="margin-right:4px;color:#7C3AED"></i>
+          Passo 1 — Informe seu IR devido
         </div>
         <div style="position:relative;margin-bottom:8px">
           <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:#64748B">R$</span>
           <input id="calc-salario"
             type="text"
-            placeholder="Salário bruto mensal (ex: 8.000)"
+            placeholder="IR devido na declaração (ex: 12.000)"
             inputmode="numeric"
             style="width:100%;padding:11px 12px 11px 36px;border:2px solid #E2E8F0;border-radius:10px;font-size:14px;font-weight:600;color:#1A237E;outline:none;transition:border .2s"
             onfocus="this.style.borderColor='#7C3AED'"
@@ -541,14 +541,14 @@
         <!-- hint antes de digitar -->
         <div id="calc-hint" style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:11px;margin-bottom:14px;font-size:12px;color:#92400E">
           <i class="fas fa-lightbulb" style="margin-right:5px;color:#F59E0B"></i>
-          Digite seu salário e descubra <strong>exatamente quanto você pode destinar</strong> — você decide o valor.
+          Informe o <strong>valor do IR devido</strong> da sua declaração completa — calcularemos os 6% do seu limite automaticamente.
         </div>
 
         <!-- resultado do cálculo -->
         <div id="calc-resultado" style="display:none">
           <div style="background:#F0F4FF;border:1px solid #C7D2FE;border-radius:10px;padding:12px;margin-bottom:14px">
             <div style="display:flex;justify-content:space-between;margin-bottom:5px">
-              <span style="font-size:11px;color:#64748B">IR anual estimado (~27,5%)</span>
+              <span style="font-size:11px;color:#64748B">IR devido informado</span>
               <span id="calc-ir" style="font-size:11px;font-weight:700;color:#1A237E"></span>
             </div>
             <div style="height:1px;background:#E2E8F0;margin-bottom:5px"></div>
@@ -606,7 +606,7 @@
           const hint = document.getElementById('calc-hint');
           const res  = document.getElementById('calc-resultado');
 
-          if (num < 500) {
+          if (num < 100) {
             hint.style.display = 'block';
             res.style.display  = 'none';
             _limiteCalc = 0;
@@ -614,10 +614,9 @@
             return;
           }
 
-          const irAnual = num * 12 * 0.275;
-          _limiteCalc   = Math.round(irAnual * 0.06);
+          _limiteCalc = Math.round(num * 0.06);
 
-          document.getElementById('calc-ir').textContent     = fmt(irAnual);
+          document.getElementById('calc-ir').textContent     = fmt(num);
           document.getElementById('calc-limite').textContent = fmt(_limiteCalc);
 
           // atalhos: 25%, 50%, 75%, 100%
