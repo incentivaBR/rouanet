@@ -669,6 +669,39 @@
           aviso.textContent = '✓ Dentro do seu limite — dedução garantida';
           btn.textContent   = 'Destinar ' + fmt(valor) + ' ao Themis';
         }
+
+        // Se veio da calculadora, pré-preenche o IR devido e abre o resultado automaticamente
+        window.addEventListener('DOMContentLoaded', function() {
+          var irDevido = sessionStorage.getItem('irDevido');
+          if (!irDevido) return;
+
+          var irNum = parseFloat(irDevido);
+          if (irNum <= 0) return;
+
+          // Formata e preenche o campo
+          var irFormatado = irNum.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+          var campo = document.getElementById('calc-salario');
+          campo.value = irFormatado;
+
+          // Dispara o cálculo
+          calcLimite(irFormatado);
+
+          // Rola suavemente até a sidebar após 400ms
+          setTimeout(function() {
+            campo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Destaca o campo brevemente
+            campo.style.borderColor = '#7C3AED';
+            campo.style.boxShadow = '0 0 0 3px rgba(124,58,237,0.2)';
+            setTimeout(function() {
+              campo.style.borderColor = '#E2E8F0';
+              campo.style.boxShadow = '';
+            }, 2000);
+          }, 400);
+
+          // Limpa sessionStorage para não pré-preencher numa próxima visita comum
+          sessionStorage.removeItem('irDevido');
+          sessionStorage.removeItem('limiteRouanet');
+        });
         </script>
       </div>
     </div>
