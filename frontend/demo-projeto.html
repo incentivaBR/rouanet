@@ -520,22 +520,79 @@
           <span>62 servidores já apoiaram</span>
         </div>
 
-        <div class="sidebar-valor-label">Valor sugerido para você</div>
-        <div class="sidebar-valor">R$ 2.000</div>
-        <div class="sidebar-valor-note">100% dedutível do seu IR — custo real: R$ 0</div>
+        <!-- MINI CALCULADORA -->
+        <div style="margin-bottom:6px">
+          <div class="sidebar-valor-label">Qual é o seu salário bruto mensal?</div>
+          <div style="position:relative;margin-bottom:8px">
+            <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:#64748B">R$</span>
+            <input id="calc-salario"
+              type="text"
+              placeholder="ex: 8.000"
+              inputmode="numeric"
+              style="width:100%;padding:11px 12px 11px 36px;border:2px solid #E2E8F0;border-radius:10px;font-size:15px;font-weight:700;color:#1A237E;outline:none;transition:border .2s"
+              onfocus="this.style.borderColor='#7C3AED'"
+              onblur="this.style.borderColor='#E2E8F0'"
+              oninput="calcLimite(this.value)"
+            >
+          </div>
 
-        <div class="sidebar-nota-ir">
-          <i class="fas fa-info-circle" style="margin-top:2px;flex-shrink:0"></i>
-          <span>Seu limite Rouanet é de <strong>R$ 2.340</strong>. Ao destinar R$ 2.000, sobram <strong>R$ 340</strong> disponíveis.</span>
+          <!-- resultado oculto até digitar -->
+          <div id="calc-resultado" style="display:none;background:#F0F4FF;border:1px solid #C7D2FE;border-radius:10px;padding:12px;margin-bottom:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:11px;color:#64748B">IR anual estimado (alíquota ~25%)</span>
+              <span id="calc-ir" style="font-size:12px;font-weight:700;color:#1A237E"></span>
+            </div>
+            <div style="height:1px;background:#E2E8F0;margin-bottom:6px"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:12px;font-weight:700;color:#4A148C">Seu limite Rouanet (6%)</span>
+              <span id="calc-limite" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#4A148C"></span>
+            </div>
+            <div id="calc-note" style="margin-top:6px;font-size:11px;color:#059669;font-weight:600"></div>
+          </div>
+
+          <!-- placeholder antes de digitar -->
+          <div id="calc-hint" style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px;margin-bottom:14px;font-size:12px;color:#92400E">
+            <i class="fas fa-lightbulb" style="margin-right:6px;color:#F59E0B"></i>
+            Digite seu salário e veja <strong>exatamente quanto você pode destinar</strong> — sem custo adicional.
+          </div>
         </div>
 
-        <a href="demo-dashboard.html" class="btn-destinar">
-          <i class="fas fa-music"></i> Destinar R$ 2.000 ao Themis
+        <a id="btn-destinar-link" href="demo-dashboard.html" class="btn-destinar">
+          <i class="fas fa-music"></i> <span id="btn-destinar-txt">Quero destinar ao Themis</span>
         </a>
 
         <div style="text-align:center;font-size:11px;color:#94A3B8">
-          <i class="fas fa-lock"></i> Transferência direta ao FNC · Banco do Brasil
+          <i class="fas fa-lock"></i> 100% dedutível · custo real R$ 0 · Banco do Brasil
         </div>
+
+        <script>
+        function calcLimite(raw) {
+          const num = parseFloat(raw.replace(/\./g,'').replace(',','.')) || 0;
+          const hint = document.getElementById('calc-hint');
+          const res  = document.getElementById('calc-resultado');
+          const btn  = document.getElementById('btn-destinar-txt');
+
+          if (num < 100) {
+            hint.style.display = 'block';
+            res.style.display  = 'none';
+            btn.textContent    = 'Quero destinar ao Themis';
+            return;
+          }
+
+          // Cálculo simplificado: IR anual ≈ salário × 12 × 0.275 (tabela progressiva ~27,5%)
+          const irAnual  = Math.round(num * 12 * 0.275);
+          const limite   = Math.round(irAnual * 0.06);
+          const fmt = v  => 'R$ ' + v.toLocaleString('pt-BR');
+
+          document.getElementById('calc-ir').textContent     = fmt(irAnual);
+          document.getElementById('calc-limite').textContent = fmt(limite);
+          document.getElementById('calc-note').textContent   = '✓ 100% dedutível — custo efetivo: R$ 0';
+
+          hint.style.display = 'none';
+          res.style.display  = 'block';
+          btn.textContent    = 'Destinar ' + fmt(limite) + ' ao Themis';
+        }
+        </script>
       </div>
     </div>
   </div>
@@ -702,9 +759,9 @@
     <!-- CTA EMOCIONAL -->
     <div class="cta-emocional">
       <h2>80 jovens estão esperando.<br><span class="gold">Seu IR já está decidido</span> — só falta você.</h2>
-      <p>R$ 2.000 do seu IR — dinheiro que você já pagaria ao governo — podem garantir que 3 jovens de Ceilândia tenham aulas de música por um ano inteiro. E você ainda recebe a dedução completa na declaração.</p>
-      <a href="demo-dashboard.html" class="btn-cta-gold">
-        <i class="fas fa-music"></i> Destinar R$ 2.000 agora — sem custo adicional
+      <p>Até <strong>6% do seu IR devido</strong> — dinheiro que você já pagaria ao governo — podem garantir que jovens de Ceilândia tenham aulas de música por um ano inteiro. Descubra seu limite e destine. Custo real: R$ 0.</p>
+      <a href="#calc-salario" onclick="document.getElementById('calc-salario').scrollIntoView({behavior:'smooth'});document.getElementById('calc-salario').focus();return false;" class="btn-cta-gold">
+        <i class="fas fa-calculator"></i> Calcular meu limite e destinar ao Themis
       </a>
     </div>
 
