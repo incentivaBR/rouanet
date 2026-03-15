@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Painel — Dr. Carlos Eduardo Mendes | Destinai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #F0F4FF; color: #1E293B; line-height: 1.6; }
+
+    :root {
+      --j-primary: #1A237E;
+      --j-gold: #C8A951;
+      --j-dark: #0D1B2A;
+      --j-purple: #4A148C;
+      --j-wine: #880E4F;
+    }
+
+    /* NAVBAR */
+    .navbar-custom {
+      background: white;
+      padding: 14px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(26,35,126,0.08);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .destinai-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--j-primary); letter-spacing: -0.5px;
+    }
+    .destinai-wordmark span { color: var(--j-gold); }
+    .user-chip {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .user-av {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--j-primary), #3949AB);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800; font-size: 13px;
+    }
+    .user-name { font-size: 13px; font-weight: 700; color: var(--j-dark); }
+    .user-role { font-size: 11px; color: #64748B; }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: #475569; font-size: 13px; text-decoration: none;
+      padding: 8px 14px; border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .nav-back:hover { background: #F0F4FF; color: var(--j-primary); }
+
+    /* WELCOME HEADER */
+    .welcome-header {
+      background: linear-gradient(135deg, #0D1B2A 0%, #1A237E 60%, #283593 100%);
+      color: white;
+      padding: 48px 40px;
+      position: relative; overflow: hidden;
+    }
+    .welcome-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(200,169,81,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 10%, rgba(57,73,171,0.25) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .welcome-inner {
+      max-width: 1100px; margin: 0 auto;
+      position: relative;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
+    }
+    .welcome-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(200,169,81,0.15);
+      border: 1px solid rgba(200,169,81,0.4);
+      color: var(--j-gold);
+      padding: 5px 14px; border-radius: 50px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .welcome-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900; line-height: 1.2; margin-bottom: 6px;
+    }
+    .welcome-text h1 .gold { color: var(--j-gold); }
+    .welcome-text p { font-size: 15px; opacity: 0.8; max-width: 500px; }
+    .welcome-meta { text-align: right; }
+    .welcome-meta .cargo { font-size: 12px; opacity: 0.65; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .welcome-meta .tribunal { font-size: 14px; font-weight: 600; color: var(--j-gold); }
+
+    /* ALERTA COMPROVANTE */
+    .alert-comprovante {
+      background: #ECFDF5;
+      border: 1px solid #6EE7B7;
+      border-left: 4px solid #10B981;
+      border-radius: 12px; padding: 16px 20px;
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 24px;
+    }
+    .alert-comprovante i { font-size: 20px; color: #10B981; flex-shrink: 0; }
+    .alert-comprovante .alert-text { flex: 1; font-size: 14px; color: #065F46; }
+    .alert-comprovante .alert-text strong { font-weight: 700; }
+    .btn-comprovante {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #10B981; color: white;
+      padding: 10px 18px; border-radius: 10px;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+      white-space: nowrap; transition: background 0.2s;
+    }
+    .btn-comprovante:hover { background: #059669; color: white; }
+
+    /* LAYOUT PRINCIPAL */
+    .dashboard-body {
+      max-width: 1100px; margin: 0 auto;
+      padding: 32px 40px;
+    }
+
+    /* STAT CARDS */
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: white; border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 12px rgba(26,35,126,0.06);
+      border: 1px solid #E8EDF8;
+      position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--j-primary), #3949AB);
+    }
+    .stat-card.amber::before {
+      background: linear-gradient(90deg, #D97706, #F59E0B);
+    }
+    .stat-card .icon-wrap {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; margin-bottom: 14px;
+    }
+    .stat-card .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 800; color: var(--j-dark);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .stat-card.amber .stat-value { color: #D97706; }
+    .stat-card .stat-label { font-size: 12px; color: #64748B; font-weight: 500; }
+    .stat-card .stat-sub { font-size: 11px; color: #94A3B8; margin-top: 4px; }
+
+    /* DISPONIVEL BANNER */
+    .disponivel-banner {
+      background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+      border: 1px solid #FDE68A;
+      border-radius: 16px; padding: 20px 24px;
+      margin-bottom: 28px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .disponivel-banner .disp-icon { font-size: 28px; color: #D97706; flex-shrink: 0; }
+    .disponivel-banner .disp-text { flex: 1; }
+    .disponivel-banner .disp-title { font-size: 15px; font-weight: 700; color: #92400E; margin-bottom: 2px; }
+    .disponivel-banner .disp-sub { font-size: 13px; color: #78350F; opacity: 0.8; }
+    .disponivel-banner .disp-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 800; color: #D97706; text-align: right; }
+    .disponivel-banner .disp-value-label { font-size: 11px; color: #92400E; text-align: right; opacity: 0.7; }
+
+    /* IMPACT CARD */
+    .impact-card {
+      background: white; border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(26,35,126,0.1);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .impact-card-header {
+      background: linear-gradient(135deg, var(--j-primary) 0%, var(--j-purple) 50%, var(--j-wine) 100%);
+      padding: 28px 32px;
+      color: white;
+      position: relative; overflow: hidden;
+    }
+    .impact-card-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(200,169,81,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .impact-header-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 16px; position: relative;
+    }
+    .impact-project-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(200,169,81,0.2);
+      border: 1px solid rgba(200,169,81,0.5);
+      color: var(--j-gold);
+      padding: 5px 12px; border-radius: 50px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .impact-card-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 900; margin-bottom: 4px;
+    }
+    .impact-card-header h2 .gold { color: var(--j-gold); }
+    .impact-project-sub { font-size: 13px; opacity: 0.75; margin-bottom: 20px; }
+    .impact-progress-label {
+      display: flex; justify-content: space-between;
+      font-size: 12px; opacity: 0.8; margin-bottom: 6px;
+    }
+    .impact-progress-bar-wrap {
+      background: rgba(255,255,255,0.15);
+      border-radius: 50px; height: 10px; overflow: hidden;
+    }
+    .impact-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--j-gold), #F0C040);
+      border-radius: 50px;
+      width: 43%;
+    }
+    .impact-header-badge { text-align: right; }
+    .badge-confirmado {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(110,231,183,0.2);
+      border: 1px solid rgba(110,231,183,0.5);
+      color: #6EE7B7;
+      padding: 5px 12px; border-radius: 50px;
+      font-size: 11px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .impact-header-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 800; color: var(--j-gold);
+    }
+    .impact-header-amount-label { font-size: 11px; opacity: 0.7; }
+
+    /* UPDATE EMOCIONAL */
+    .impact-update {
+      background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+      border: 1px solid #FDE68A;
+      border-left: 4px solid var(--j-gold);
+      border-radius: 12px; padding: 20px 24px;
+      margin: 24px 32px;
+    }
+    .impact-update-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: #92400E; margin-bottom: 10px;
+    }
+    .impact-update-text {
+      font-size: 15px; color: #78350F; line-height: 1.8;
+      font-style: italic; font-weight: 500;
+    }
+    .impact-update-text strong { color: #451A03; font-style: normal; }
+    .impact-update-date { font-size: 11px; color: #92400E; opacity: 0.7; margin-top: 10px; }
+
+    /* BREAKDOWN */
+    .impact-breakdown {
+      padding: 24px 32px;
+      border-top: 1px solid #F1F5F9;
+    }
+    .breakdown-title {
+      font-size: 13px; font-weight: 700; color: #64748B;
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .breakdown-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    }
+    .breakdown-item {
+      background: #F8F9FF; border-radius: 12px; padding: 14px; text-align: center;
+    }
+    .breakdown-item .b-icon { font-size: 20px; margin-bottom: 6px; }
+    .breakdown-item .b-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 800; color: var(--j-primary);
+    }
+    .breakdown-item .b-label { font-size: 11px; color: #64748B; margin-top: 2px; line-height: 1.3; }
+
+    /* FOOTER DO CARD */
+    .impact-card-footer {
+      padding: 20px 32px;
+      background: #F8F9FF;
+      border-top: 1px solid #E8EDF8;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .impact-card-footer-left {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .badge-ok {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #ECFDF5; border: 1px solid #6EE7B7;
+      color: #065F46; padding: 6px 12px; border-radius: 8px;
+      font-size: 12px; font-weight: 700;
+    }
+    .btn-comprovante-card {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--j-primary); color: white;
+      padding: 10px 18px; border-radius: 10px;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-comprovante-card:hover { background: #283593; color: white; }
+    .btn-ver-concerto {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 2px solid var(--j-primary); color: var(--j-primary);
+      padding: 10px 18px; border-radius: 10px;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ver-concerto:hover { background: var(--j-primary); color: white; }
+
+    /* IMPACTO EM NUMEROS */
+    .impact-numeros {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin-bottom: 28px;
+    }
+    .impact-num-card {
+      background: white; border-radius: 16px;
+      padding: 24px; text-align: center;
+      box-shadow: 0 2px 12px rgba(26,35,126,0.06);
+      border: 1px solid #E8EDF8;
+    }
+    .impact-num-card .num-icon { font-size: 28px; margin-bottom: 12px; }
+    .impact-num-card .num-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 800; color: var(--j-primary);
+      margin-bottom: 4px;
+    }
+    .impact-num-card .num-desc { font-size: 13px; color: #64748B; line-height: 1.5; }
+
+    /* SECAO TITULO */
+    .section-title {
+      font-size: 18px; font-weight: 700; color: var(--j-dark);
+      margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    }
+    .section-title i { color: var(--j-gold); }
+
+    /* ACOES RAPIDAS */
+    .acoes-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin-bottom: 32px;
+    }
+    .acao-card {
+      background: white; border-radius: 16px;
+      padding: 24px; text-align: center;
+      box-shadow: 0 2px 12px rgba(26,35,126,0.06);
+      border: 1px solid #E8EDF8;
+      text-decoration: none; color: var(--j-dark);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .acao-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(26,35,126,0.12);
+      border-color: var(--j-primary); color: var(--j-dark);
+    }
+    .acao-card .acao-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin: 0 auto 16px;
+    }
+    .acao-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .acao-card p { font-size: 13px; color: #64748B; line-height: 1.5; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--j-dark);
+      color: white; text-align: center;
+      padding: 36px 20px;
+    }
+    .footer .tagline { font-size: 13px; opacity: 0.6; margin-bottom: 8px; }
+    .footer-copyright { font-size: 12px; opacity: 0.4; }
+
+    @media (max-width: 900px) {
+      .stat-cards { grid-template-columns: repeat(2, 1fr); }
+      .breakdown-grid { grid-template-columns: repeat(2, 1fr); }
+      .impact-numeros { grid-template-columns: 1fr; }
+      .acoes-grid { grid-template-columns: 1fr; }
+      .dashboard-body { padding: 24px 20px; }
+      .navbar-custom { padding: 12px 20px; }
+      .welcome-header { padding: 36px 20px; }
+      .impact-card-header { padding: 20px; }
+      .impact-update { margin: 16px 20px; }
+      .impact-breakdown { padding: 20px; }
+      .impact-card-footer { padding: 16px 20px; flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 600px) {
+      .stat-cards { grid-template-columns: 1fr 1fr; }
+      .welcome-inner { flex-direction: column; }
+      .welcome-meta { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom">
+  <div style="display:flex;align-items:center;gap:16px">
+    <a href="justica-df.html" class="nav-back"><i class="fas fa-arrow-left"></i> ASJDF</a>
+    <div class="destinai-wordmark">Destinai<span>.</span></div>
+  </div>
+  <div class="user-chip">
+    <div class="user-av">CE</div>
+    <div>
+      <div class="user-name">Dr. Carlos Eduardo Mendes</div>
+      <div class="user-role">Analista Judiciário · TRF 1ª Região</div>
+    </div>
+  </div>
+</nav>
+
+<!-- WELCOME HEADER -->
+<div class="welcome-header">
+  <div class="welcome-inner">
+    <div class="welcome-text">
+      <div class="welcome-eyebrow"><i class="fas fa-star"></i> Painel do contribuinte</div>
+      <h1>Olá, Carlos Eduardo.<br><span class="gold">Seu IR está fazendo história.</span></h1>
+      <p>Você direcionou R$ 2.000 do seu imposto de renda para o Projeto Themis — e isso está mudando vidas em Ceilândia.</p>
+    </div>
+    <div class="welcome-meta">
+      <div class="cargo">Cargo</div>
+      <div class="tribunal">Analista Judiciário</div>
+      <div style="font-size:12px;opacity:0.6;margin-top:2px">TRF 1ª Região · Brasília</div>
+    </div>
+  </div>
+</div>
+
+<!-- CORPO DO DASHBOARD -->
+<div class="dashboard-body">
+
+  <!-- STAT CARDS -->
+  <div class="stat-cards">
+    <div class="stat-card">
+      <div class="icon-wrap" style="background:#EEF2FF"><i class="fas fa-hand-holding-heart" style="color:var(--j-primary)"></i></div>
+      <div class="stat-value">R$ 2.000</div>
+      <div class="stat-label">Total destinado</div>
+      <div class="stat-sub">Lei Rouanet · 2025</div>
+    </div>
+    <div class="stat-card">
+      <div class="icon-wrap" style="background:#F5F0FF"><i class="fas fa-music" style="color:var(--j-purple)"></i></div>
+      <div class="stat-value">1</div>
+      <div class="stat-label">Projeto apoiado</div>
+      <div class="stat-sub">Projeto Themis</div>
+    </div>
+    <div class="stat-card">
+      <div class="icon-wrap" style="background:#ECFDF5"><i class="fas fa-file-invoice" style="color:#10B981"></i></div>
+      <div class="stat-value">R$ 2.000</div>
+      <div class="stat-label">Dedução garantida no IR</div>
+      <div class="stat-sub">Declaração 2026</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="icon-wrap" style="background:#FFFBEB"><i class="fas fa-clock" style="color:#D97706"></i></div>
+      <div class="stat-value">R$ 340</div>
+      <div class="stat-label">Ainda disponível</div>
+      <div class="stat-sub">Limite restante 2025</div>
+    </div>
+  </div>
+
+  <!-- ALERTA COMPROVANTE -->
+  <div class="alert-comprovante">
+    <i class="fas fa-check-circle"></i>
+    <div class="alert-text">
+      <strong>Comprovante disponível</strong> — use na sua declaração de IR 2026. Documento gerado e assinado digitalmente.
+    </div>
+    <a href="#" class="btn-comprovante">
+      <i class="fas fa-download"></i> Baixar comprovante
+    </a>
+  </div>
+
+  <!-- DISPONIVEL BANNER -->
+  <div class="disponivel-banner">
+    <div class="disp-icon"><i class="fas fa-coins"></i></div>
+    <div class="disp-text">
+      <div class="disp-title">Você ainda tem R$ 340 disponíveis no seu limite Rouanet 2025</div>
+      <div class="disp-sub">Seu limite total é de R$ 2.340 (6% do seu IR). Você utilizou R$ 2.000 com o Projeto Themis.</div>
+    </div>
+    <div>
+      <div class="disp-value">R$ 340</div>
+      <div class="disp-value-label">disponível</div>
+    </div>
+  </div>
+
+  <!-- IMPACT CARD PRINCIPAL -->
+  <div class="section-title"><i class="fas fa-heart"></i> Seu projeto apoiado</div>
+
+  <div class="impact-card">
+
+    <div class="impact-card-header">
+      <div class="impact-header-top">
+        <div style="flex:1">
+          <div class="impact-project-badge"><i class="fas fa-music"></i> Música · Transformação Social</div>
+          <h2>Projeto Themis — <span class="gold">Da Rua ao Palco</span></h2>
+          <div class="impact-project-sub">Orquestra Social do DF · Ceilândia · Samambaia · Santa Maria</div>
+          <div class="impact-progress-label">
+            <span>R$ 87.500 captados</span>
+            <span>Meta: R$ 200.000</span>
+          </div>
+          <div class="impact-progress-bar-wrap">
+            <div class="impact-progress-fill"></div>
+          </div>
+          <div style="font-size:12px;color:var(--j-gold);font-weight:700;margin-top:4px">43% captado · 62 contribuintes</div>
+        </div>
+        <div class="impact-header-badge" style="min-width:140px">
+          <div class="badge-confirmado"><i class="fas fa-check-circle"></i> Confirmada</div>
+          <div style="font-size:11px;opacity:0.7;margin-bottom:4px;text-align:right">Sua contribuição</div>
+          <div class="impact-header-amount">R$ 2.000</div>
+          <div class="impact-header-amount-label" style="text-align:right">100% dedutível no IR</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPDATE EMOCIONAL EM DESTAQUE -->
+    <div class="impact-update">
+      <div class="impact-update-label">
+        <i class="fas fa-star"></i>
+        Ultima atualização do projeto
+      </div>
+      <div class="impact-update-text">
+        "Primeiro concerto no TJDFT. Sobre o palco do tribunal onde você trabalha, <strong>12 jovens de Ceilândia tocaram Vivaldi na última sexta-feira</strong>. 800 pessoas na plateia. Você fez parte disso."
+      </div>
+      <div class="impact-update-date"><i class="fas fa-calendar-alt"></i> 15 de Março de 2025</div>
+    </div>
+
+    <!-- BREAKDOWN DOS R$2.000 -->
+    <div class="impact-breakdown">
+      <div class="breakdown-title">Seus R$ 2.000 foram para</div>
+      <div class="breakdown-grid">
+        <div class="breakdown-item">
+          <div class="b-icon" style="color:var(--j-primary)"><i class="fas fa-music"></i></div>
+          <div class="b-value">R$ 800</div>
+          <div class="b-label">Produção musical</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="b-icon" style="color:var(--j-purple)"><i class="fas fa-chalkboard-teacher"></i></div>
+          <div class="b-value">R$ 600</div>
+          <div class="b-label">Professores</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="b-icon" style="color:var(--j-wine)"><i class="fas fa-guitar"></i></div>
+          <div class="b-value">R$ 340</div>
+          <div class="b-label">Instrumentos</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="b-icon" style="color:#D97706"><i class="fas fa-bullhorn"></i></div>
+          <div class="b-value">R$ 260</div>
+          <div class="b-label">Comunicação</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER DO CARD -->
+    <div class="impact-card-footer">
+      <div class="impact-card-footer-left">
+        <span class="badge-ok"><i class="fas fa-check-circle"></i> Destinação confirmada</span>
+        <a href="#" class="btn-comprovante-card">
+          <i class="fas fa-file-pdf"></i> Comprovante IR
+        </a>
+        <a href="demo-projeto.html" class="btn-ver-concerto">
+          Ver concerto <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      <div style="font-size:11px;color:#94A3B8">
+        Transferido ao FNC · BB em 10/01/2025
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPACTO EM NÚMEROS -->
+  <div class="section-title" style="margin-top:32px"><i class="fas fa-chart-bar"></i> Seu impacto em números</div>
+
+  <div class="impact-numeros">
+    <div class="impact-num-card">
+      <div class="num-icon" style="color:var(--j-primary)"><i class="fas fa-child"></i></div>
+      <div class="num-value">3</div>
+      <div class="num-desc">jovens financiados<br><span style="color:#94A3B8;font-size:11px">Cada R$ 667 do seu IR financia 1 jovem por 1 mês de aulas de música</span></div>
+    </div>
+    <div class="impact-num-card">
+      <div class="num-icon" style="color:var(--j-purple)"><i class="fas fa-drum"></i></div>
+      <div class="num-value">4</div>
+      <div class="num-desc">ensaios custeados<br><span style="color:#94A3B8;font-size:11px">Seu IR financiou 4 ensaios completos da orquestra em Ceilândia</span></div>
+    </div>
+    <div class="impact-num-card">
+      <div class="num-icon" style="color:var(--j-gold)"><i class="fas fa-star"></i></div>
+      <div class="num-value">1</div>
+      <div class="num-desc">concerto no TJDFT<br><span style="color:#94A3B8;font-size:11px">Você foi parte do primeiro concerto realizado no Tribunal — 800 pessoas presentes</span></div>
+    </div>
+  </div>
+
+  <!-- ACOES RAPIDAS -->
+  <div class="section-title"><i class="fas fa-bolt"></i> Ações rápidas</div>
+
+  <div class="acoes-grid">
+    <a href="calculadora.html" class="acao-card">
+      <div class="acao-icon" style="background:#EEF2FF"><i class="fas fa-calculator" style="color:var(--j-primary)"></i></div>
+      <h3>Calcular limite restante</h3>
+      <p>Você ainda tem R$ 340 disponíveis para destinar em 2025</p>
+    </a>
+    <a href="projetos.html" class="acao-card">
+      <div class="acao-icon" style="background:#F5F0FF"><i class="fas fa-search" style="color:var(--j-purple)"></i></div>
+      <h3>Explorar projetos</h3>
+      <p>Conheça outros projetos culturais aprovados para destinar seus R$ 340 restantes</p>
+    </a>
+    <a href="demo-projeto.html" class="acao-card">
+      <div class="acao-icon" style="background:linear-gradient(135deg,#EEF2FF,#F5F0FF)"><i class="fas fa-music" style="color:var(--j-wine)"></i></div>
+      <h3>Acompanhar Themis</h3>
+      <p>Veja as últimas atualizações, fotos e vídeos do Projeto Themis</p>
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:white;margin-bottom:8px">
+    Destinai<span style="color:var(--j-gold)">.</span>
+  </div>
+  <p class="tagline">Lei Rouanet Simplificada · Powered by IncentivaBR</p>
+  <p class="footer-copyright">&copy; 2026 Destinai · IncentivaBR · Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>
