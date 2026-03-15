@@ -282,9 +282,9 @@ const CONTENT = {
   capa: {
     context:  "FGV MBA — Inteligência Artificial & Analytics Aplicadas a Negócios · Projeto Aplicado I · 2026",
     logo:     "IncentivaBR · DestineAI.com.br",
-    h1:       ["Você já paga o Imposto de Renda.", " Agora você escolhe ", "PARA ONDE", " ele vai."],
-    // h1[0] texto normal, h1[1] dourado, h1[2] texto normal, h1[3] azul
-    sub:      "Somente declaração completa · até 6% do IR devido · R$0 custo para o servidor",
+    h1:       ["R$14,9 bilhões do Imposto de Renda", " disponíveis para a cultura — todo ano.", "", "99% dos servidores nunca destinaram nada."],
+    // h1[0] texto normal, h1[1] dourado, h1[2] vazio, h1[3] azul
+    sub:      "Declaração Completa · até 6% do IR devido · R$0 custo para o servidor",
     tagline:  "Plataforma digital B2B2C que conecta servidores públicos a fundos sociais e projetos culturais aprovados — eliminando burocracia, garantindo conformidade e transformando destinação fiscal em identidade cidadã.",
     autores: [
       { nome: "Adacto Artur Dornas de Oliveira", papel: "Fundador · Analytics Translator" },
@@ -582,7 +582,7 @@ slide(1, 'active', null, `
   <div class="cover-float">${floats}</div>
   <div class="cover-top">${C.capa.context}</div>
   <div class="cover-logo">${C.capa.logo}</div>
-  <h1 class="cover-h1">${C.capa.h1[0]}<em class="hl">${C.capa.h1[1]}</em><br>${C.capa.h1[2]}<br><em class="hl-blue">${C.capa.h1[3]}</em></h1>
+  <h1 class="cover-h1">${C.capa.h1[0]}<br><em class="hl">${C.capa.h1[1]}</em><br><em class="hl-blue">${C.capa.h1[3]}</em></h1>
   <p class="cover-sub">${C.capa.sub}</p>
   <p class="cover-tagline">${C.capa.tagline}</p>
   <div class="cover-meta">${autores}</div>
