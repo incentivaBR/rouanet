@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Incentivos Fiscais — ASJDF · DestineAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #F0F4FF; color: #1E293B; line-height: 1.6; }
+
+    :root {
+      --j-primary: #1A237E;
+      --j-gold: #C8A951;
+      --j-dark: #0D1B2A;
+      --j-purple: #4A148C;
+      --j-wine: #880E4F;
+      --j-green: #059669;
+    }
+
+    /* NAVBAR */
+    .navbar-custom {
+      background: white;
+      padding: 16px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 12px rgba(26,35,126,0.08);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .destineai-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--j-primary); letter-spacing: -0.5px;
+    }
+    .destineai-wordmark span { color: var(--j-gold); }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { color: #475569; font-size: 14px; font-weight: 500; text-decoration: none; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--j-primary); }
+    .btn-nav {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--j-primary); color: white;
+      padding: 10px 20px; border-radius: 10px;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+    }
+
+    /* HERO */
+    .calc-hero {
+      background: linear-gradient(135deg, #1A237E 0%, #4A148C 60%, #880E4F 100%);
+      color: white; padding: 48px 40px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .calc-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(200,169,81,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-hero-inner { max-width: 700px; margin: 0 auto; position: relative; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(200,169,81,0.2); border: 1px solid rgba(200,169,81,0.4);
+      color: var(--j-gold); padding: 6px 16px; border-radius: 50px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .calc-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .calc-hero h1 .gold { color: var(--j-gold); }
+    .calc-hero p { font-size: 15px; opacity: 0.85; max-width: 520px; margin: 0 auto; }
+
+    /* TABS DE LEI (futuro: LFE, PRONON, etc.) */
+    .lei-tabs {
+      max-width: 860px; margin: -20px auto 0; padding: 0 24px;
+      position: relative; z-index: 10;
+      display: flex; gap: 8px;
+    }
+    .lei-tab {
+      padding: 12px 20px; border-radius: 12px 12px 0 0;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      border: none; transition: all .2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .lei-tab.active {
+      background: white; color: var(--j-primary);
+      box-shadow: 0 -4px 12px rgba(26,35,126,0.1);
+    }
+    .lei-tab.inactive {
+      background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6);
+      cursor: not-allowed;
+    }
+    .lei-tab.inactive .tab-badge {
+      background: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.5);
+      font-size: 9px; padding: 2px 6px; border-radius: 4px;
+      font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+
+    /* MAIN CONTAINER */
+    .calc-main {
+      max-width: 860px; margin: 0 auto;
+      background: white;
+      border-radius: 0 16px 16px 16px;
+      box-shadow: 0 20px 60px rgba(26,35,126,0.12);
+      overflow: hidden;
+    }
+
+    /* STEPPER */
+    .stepper {
+      display: flex; background: #F8FAFF;
+      border-bottom: 1px solid #E8EDF8;
+    }
+    .step {
+      flex: 1; padding: 16px 12px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      border-right: 1px solid #E8EDF8; cursor: pointer;
+      transition: background .2s;
+    }
+    .step:last-child { border-right: none; }
+    .step.done { background: #F0FDF4; }
+    .step.active { background: #EEF2FF; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800;
+    }
+    .step.pending .step-num { background: #E2E8F0; color: #94A3B8; }
+    .step.active .step-num { background: var(--j-primary); color: white; }
+    .step.done .step-num { background: var(--j-green); color: white; }
+    .step-label { font-size: 11px; font-weight: 600; color: #64748B; }
+    .step.active .step-label { color: var(--j-primary); }
+    .step.done .step-label { color: var(--j-green); }
+
+    /* SECTIONS */
+    .calc-section { padding: 36px 40px; display: none; }
+    .calc-section.active { display: block; }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 800; color: var(--j-dark);
+      margin-bottom: 6px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title i { color: var(--j-gold); font-size: 1.2rem; }
+    .section-sub { font-size: 14px; color: #64748B; margin-bottom: 28px; line-height: 1.6; }
+    .section-sub strong { color: var(--j-primary); }
+
+    /* FORM */
+    .field-group { margin-bottom: 20px; }
+    .field-label {
+      display: block; font-size: 13px; font-weight: 700;
+      color: var(--j-dark); margin-bottom: 6px;
+    }
+    .field-hint { font-size: 11px; color: #94A3B8; margin-top: 4px; display: block; }
+    .input-wrap { position: relative; }
+    .input-prefix {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 13px; font-weight: 700; color: #64748B; pointer-events: none;
+    }
+    .field-input {
+      width: 100%; padding: 13px 14px 13px 40px;
+      border: 2px solid #E2E8F0; border-radius: 10px;
+      font-size: 15px; font-weight: 600; color: var(--j-primary);
+      outline: none; transition: border .2s; background: #FAFBFF;
+    }
+    .field-input:focus { border-color: var(--j-primary); background: white; }
+    .field-input.no-prefix { padding-left: 14px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* DEDUÇÕES TOGGLE */
+    .deducoes-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px;
+      background: #F0F4FF; border: 1px solid #C7D2FE; border-radius: 10px;
+      cursor: pointer; margin-bottom: 20px;
+      font-size: 14px; font-weight: 600; color: var(--j-primary);
+      transition: background .2s;
+    }
+    .deducoes-toggle:hover { background: #E0E7FF; }
+    .deducoes-toggle i.arrow { transition: transform .3s; }
+    .deducoes-toggle.open i.arrow { transform: rotate(180deg); }
+    .deducoes-body { display: none; }
+    .deducoes-body.open { display: block; }
+
+    /* BOTÕES */
+    .btn-calc {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--j-purple), var(--j-wine));
+      color: white; border: none; border-radius: 12px;
+      font-size: 16px; font-weight: 800; cursor: pointer;
+      box-shadow: 0 8px 24px rgba(74,20,140,0.3);
+      transition: transform .2s, box-shadow .2s;
+      margin-top: 8px;
+    }
+    .btn-calc:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(74,20,140,0.4); }
+    .btn-calc:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 10px;
+      border: 2px solid #E2E8F0; background: white;
+      font-size: 14px; font-weight: 600; color: #64748B; cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-secondary:hover { border-color: var(--j-primary); color: var(--j-primary); }
+
+    /* RESULTADO */
+    .result-header {
+      background: linear-gradient(135deg, var(--j-dark), var(--j-primary));
+      color: white; padding: 32px 40px; text-align: center;
+      border-radius: 0; margin: -36px -40px 32px;
+    }
+    .result-header .check-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(5,150,105,0.2); border: 2px solid rgba(5,150,105,0.5);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 24px; color: #6EE7B7;
+    }
+    .result-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 900; margin-bottom: 6px;
+    }
+    .result-header h2 .gold { color: var(--j-gold); }
+    .result-header p { font-size: 14px; opacity: 0.8; }
+
+    .result-cards {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      margin-bottom: 28px;
+    }
+    .res-card {
+      background: #F8FAFF; border: 1px solid #E8EDF8; border-radius: 12px;
+      padding: 16px; text-align: center;
+    }
+    .res-card .val {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 800; color: var(--j-primary);
+      display: block; margin-bottom: 4px;
+    }
+    .res-card .lbl { font-size: 11px; color: #94A3B8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* LIMITE ROUANET — DESTAQUE */
+    .limite-rouanet-box {
+      background: linear-gradient(135deg, #4A148C, #880E4F);
+      border-radius: 16px; padding: 28px 32px;
+      color: white; margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .lim-left {}
+    .lim-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      opacity: 0.75; margin-bottom: 6px;
+    }
+    .lim-label {
+      font-size: 15px; font-weight: 600; opacity: 0.9; margin-bottom: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .lim-sub { font-size: 12px; opacity: 0.65; }
+    .lim-right { text-align: right; }
+    .lim-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem; font-weight: 900; color: var(--j-gold);
+      display: block; line-height: 1;
+    }
+    .lim-zero-note {
+      font-size: 11px; color: #6EE7B7; margin-top: 6px; font-weight: 600;
+    }
+
+    /* FUTUROS LIMITES (desabilitados) */
+    .future-limits {
+      background: #F8FAFF; border: 1px dashed #C7D2FE; border-radius: 12px;
+      padding: 20px; margin-bottom: 28px;
+    }
+    .future-title {
+      font-size: 12px; font-weight: 700; color: #94A3B8;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .future-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid #E8EDF8;
+      font-size: 13px;
+    }
+    .future-item:last-child { border-bottom: none; }
+    .future-item .name { color: #94A3B8; display: flex; align-items: center; gap: 8px; }
+    .future-item .coming { font-size: 10px; background: #EEF2FF; color: var(--j-primary); padding: 2px 8px; border-radius: 4px; font-weight: 700; }
+
+    /* ISENTO */
+    .isento-box {
+      background: #FFF7ED; border: 2px solid #FED7AA;
+      border-radius: 16px; padding: 28px; text-align: center; margin-bottom: 28px;
+    }
+    .isento-box .icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .isento-box h3 { font-size: 18px; font-weight: 700; color: #92400E; margin-bottom: 8px; }
+    .isento-box p { font-size: 14px; color: #78350F; line-height: 1.7; }
+
+    /* CTA */
+    .result-cta {
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .btn-destinar {
+      flex: 1; min-width: 200px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--j-purple), var(--j-wine));
+      color: white; font-size: 15px; font-weight: 800; text-decoration: none;
+      box-shadow: 0 8px 24px rgba(74,20,140,0.3);
+      transition: transform .2s, box-shadow .2s;
+      border: none; cursor: pointer;
+    }
+    .btn-destinar:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(74,20,140,0.4); color: white; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--j-dark); color: white;
+      text-align: center; padding: 36px 20px; margin-top: 40px;
+    }
+    .footer .tagline { font-size: 13px; opacity: 0.6; margin-bottom: 6px; }
+    .footer-copyright { font-size: 12px; opacity: 0.4; }
+
+    /* ALERTA DECLARAÇÃO COMPLETA */
+    .alert-completa {
+      background: rgba(200,169,81,0.1); border: 1px solid rgba(200,169,81,0.4);
+      border-radius: 10px; padding: 14px 16px;
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: #78350F; margin-bottom: 28px;
+    }
+    .alert-completa i { color: var(--j-gold); margin-top: 2px; flex-shrink: 0; }
+
+    @media (max-width: 700px) {
+      .navbar-custom { padding: 14px 20px; }
+      .calc-hero { padding: 40px 20px 60px; }
+      .lei-tabs { padding: 0 12px; }
+      .lei-tab { padding: 10px 14px; font-size: 12px; }
+      .calc-section { padding: 24px 20px; }
+      .result-header { margin: -24px -20px 24px; padding: 24px 20px; }
+      .result-cards { grid-template-columns: 1fr 1fr; }
+      .limite-rouanet-box { flex-direction: column; text-align: center; }
+      .lim-right { text-align: center; }
+      .field-row { grid-template-columns: 1fr; }
+      .stepper { overflow-x: auto; }
+      .step { min-width: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom">
+  <div class="destineai-wordmark">DestineAI<span>.</span></div>
+  <div class="nav-links">
+    <a href="justica-df.html"><i class="fas fa-arrow-left"></i> ASJDF</a>
+    <a href="demo-projeto.html"><i class="fas fa-music"></i> Projeto Themis</a>
+    <a href="demo-calculadora.html" class="active"><i class="fas fa-calculator"></i> Calculadora</a>
+    <a href="demo-dashboard.html" class="btn-nav"><i class="fas fa-user"></i> Minha Conta</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="calc-hero">
+  <div class="calc-hero-inner">
+    <div class="hero-badge"><i class="fas fa-shield-alt"></i> Exclusivo ASJDF · Lei Rouanet</div>
+    <h1>Descubra quanto seu<br>IR pode <span class="gold">fazer pela Cultura</span></h1>
+    <p>Calcule o IR devido da sua declaração completa e saiba exatamente até quanto pode destinar — sem custo adicional.</p>
+  </div>
+</section>
+
+<!-- TABS DE LEI -->
+<div class="calc-hero" style="padding:0 40px;background:linear-gradient(135deg,#1A237E,#4A148C 60%,#880E4F)">
+  <div class="lei-tabs">
+    <button class="lei-tab active">
+      <i class="fas fa-theater-masks"></i> Lei Rouanet
+    </button>
+    <button class="lei-tab inactive" title="Em breve">
+      <i class="fas fa-running"></i> Lei de Incentivo ao Esporte
+      <span class="tab-badge">em breve</span>
+    </button>
+    <button class="lei-tab inactive" title="Em breve">
+      <i class="fas fa-heartbeat"></i> PRONON / PRONAS
+      <span class="tab-badge">em breve</span>
+    </button>
+  </div>
+</div>
+
+<!-- CALCULADORA -->
+<div style="max-width:860px;margin:0 auto;padding:0 24px 60px;">
+<div class="calc-main">
+
+  <!-- STEPPER -->
+  <div class="stepper">
+    <div class="step active" id="step1-indicator" onclick="goStep(1)">
+      <div class="step-num" id="sn1">1</div>
+      <span class="step-label">Rendimentos</span>
+    </div>
+    <div class="step pending" id="step2-indicator" onclick="goStep(2)">
+      <div class="step-num" id="sn2">2</div>
+      <span class="step-label">Deduções</span>
+    </div>
+    <div class="step pending" id="step3-indicator" onclick="goStep(3)">
+      <div class="step-num" id="sn3">3</div>
+      <span class="step-label">Resultado</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: RENDIMENTOS -->
+  <div class="calc-section active" id="sec1">
+    <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Seus Rendimentos</h2>
+    <p class="section-sub">
+      Informe os rendimentos tributáveis anuais. Se recebe 13º, inclua separado para calcular o IR com precisão.<br>
+      <strong>Não sabe o valor exato?</strong> Use sua ficha de rendimentos da Receita Federal (disponível no e-CAC).
+    </p>
+
+    <div class="alert-completa">
+      <i class="fas fa-info-circle"></i>
+      <span>A Lei Rouanet exige <strong>Declaração Completa</strong>. O limite de até 6% incide sobre o <strong>IR devido</strong> — não sobre o salário bruto.</span>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Rendimentos Tributáveis (salários + outras rendas — anual)</label>
+      <div class="input-wrap">
+        <span class="input-prefix">R$</span>
+        <input type="text" id="f-rendimentos" class="field-input" placeholder="0,00" inputmode="numeric" oninput="mask(this)">
+      </div>
+      <span class="field-hint">Some todos os contracheques do ano + outras rendas tributáveis</span>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">13º Salário (bruto)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">R$</span>
+          <input type="text" id="f-13" class="field-input" placeholder="0,00" inputmode="numeric" oninput="mask(this)">
+        </div>
+        <span class="field-hint">Deixe em branco se não recebeu</span>
+      </div>
+      <div class="field-group">
+        <label class="field-label">IR Retido na Fonte (anual)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">R$</span>
+          <input type="text" id="f-irrf" class="field-input" placeholder="0,00" inputmode="numeric" oninput="mask(this)">
+        </div>
+        <span class="field-hint">Opcional — usado para calcular IR a pagar/restituir</span>
+      </div>
+    </div>
+
+    <button class="btn-calc" onclick="goStep(2)">
+      <i class="fas fa-arrow-right"></i> Continuar para Deduções
+    </button>
+  </div>
+
+  <!-- STEP 2: DEDUÇÕES -->
+  <div class="calc-section" id="sec2">
+    <h2 class="section-title"><i class="fas fa-receipt"></i> Deduções da Declaração</h2>
+    <p class="section-sub">
+      Quanto mais deduções você informar, mais preciso é o cálculo do IR devido — e mais justo é o limite Rouanet calculado.<br>
+      <strong>Todos os campos são opcionais.</strong>
+    </p>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Número de Dependentes</label>
+        <input type="number" id="f-dep" class="field-input no-prefix" placeholder="0" min="0" max="20" value="0">
+        <span class="field-hint">R$ 2.275,08 por dependente/ano (tabela 2025)</span>
+      </div>
+      <div class="field-group">
+        <label class="field-label">INSS Retido (anual)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">R$</span>
+          <input type="text" id="f-inss" class="field-input" placeholder="0,00" inputmode="numeric" oninput="mask(this)">
+        </div>
+        <span class="field-hint">INSS mensal + INSS do 13º</span>
+      </div>
+    </div>
+
+    <!-- DEDUÇÕES OPCIONAIS -->
+    <div class="deducoes-toggle" id="dtogle" onclick="toggleDeducoes()">
+      <span><i class="fas fa-plus-circle" style="margin-right:8px;color:var(--j-gold)"></i>Saúde, Educação e Previdência Privada</span>
+      <i class="fas fa-chevron-down arrow"></i>
+    </div>
+    <div class="deducoes-body" id="dbody">
+      <div class="field-row" style="margin-bottom:0">
+        <div class="field-group">
+          <label class="field-label">Despesas com Saúde</label>
+          <div class="input-wrap">
+            <span class="input-prefix">R$</span>
+            <input type="text" id="f-saude" class="field-input" placeholder="0,00" inputmode="numeric" oninput="mask(this)">
+          </div>
+          <span class="field-hint">Sem limite — médicos, dentistas, hospitais</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Despesas com Educação</label>
+          <div class="input-wrap">
+            <span class="input-prefix">R$</span>
+            <input type="text" id="f-edu" class="field-input" placeholder="0,00" inputmode="numeric" oninput="mask(this)">
+          </div>
+          <span class="field-hint">Limite: R$ 3.561,50/pessoa</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Previdência Privada PGBL</label>
+        <div class="input-wrap">
+          <span class="input-prefix">R$</span>
+          <input type="text" id="f-prev" class="field-input" placeholder="0,00" inputmode="numeric" oninput="mask(this)">
+        </div>
+        <span class="field-hint">Limite: 12% dos rendimentos tributáveis</span>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:8px">
+      <button class="btn-secondary" onclick="goStep(1)"><i class="fas fa-arrow-left"></i> Voltar</button>
+      <button class="btn-calc" style="flex:1" onclick="calcular()">
+        <i class="fas fa-calculator"></i> Calcular meu limite Rouanet
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3: RESULTADO -->
+  <div class="calc-section" id="sec3">
+
+    <div class="result-header">
+      <div class="check-icon"><i class="fas fa-check"></i></div>
+      <h2>Cálculo <span class="gold">concluído</span></h2>
+      <p id="res-subtitle">Veja abaixo seu IR devido e o limite para destinar via Lei Rouanet</p>
+    </div>
+
+    <!-- IR ZERADO -->
+    <div class="isento-box" id="isento-box" style="display:none">
+      <div class="icon">🎉</div>
+      <h3>Você está na faixa de isenção!</h3>
+      <p>Com as deduções informadas, seu IR devido é R$ 0 ou negativo.<br>
+      Não há limite Rouanet a destinar — mas você pode ter restituição a receber.</p>
+    </div>
+
+    <!-- CARDS IR -->
+    <div class="result-cards" id="res-cards">
+      <div class="res-card">
+        <span class="val" id="r-rendimentos">—</span>
+        <span class="lbl">Rendimentos</span>
+      </div>
+      <div class="res-card">
+        <span class="val" id="r-base">—</span>
+        <span class="lbl">Base de Cálculo</span>
+      </div>
+      <div class="res-card">
+        <span class="val" id="r-ir">—</span>
+        <span class="lbl">IR Devido</span>
+      </div>
+      <div class="res-card">
+        <span class="val" id="r-aliquota">—</span>
+        <span class="lbl">Alíquota Efetiva</span>
+      </div>
+    </div>
+
+    <!-- LIMITE ROUANET -->
+    <div class="limite-rouanet-box" id="limite-box">
+      <div class="lim-left">
+        <div class="lim-tag"><i class="fas fa-theater-masks"></i> Lei Rouanet — Seu Limite</div>
+        <div class="lim-label">
+          <i class="fas fa-check-circle" style="color:#6EE7B7"></i>
+          Valor máximo que pode destinar ao Projeto Themis
+        </div>
+        <div class="lim-sub">6% do IR devido · 100% dedutível · Custo real: R$ 0</div>
+      </div>
+      <div class="lim-right">
+        <span class="lim-value" id="r-limite">—</span>
+        <div class="lim-zero-note">✓ Não sai do seu bolso</div>
+      </div>
+    </div>
+
+    <!-- OUTROS LIMITES (futuros) -->
+    <div class="future-limits">
+      <div class="future-title"><i class="fas fa-clock"></i> Outros incentivos (em breve nesta calculadora)</div>
+      <div class="future-item">
+        <span class="name"><i class="fas fa-running" style="color:#C7D2FE"></i> Lei de Incentivo ao Esporte (1%)</span>
+        <span class="coming">Em breve</span>
+      </div>
+      <div class="future-item">
+        <span class="name"><i class="fas fa-heartbeat" style="color:#C7D2FE"></i> PRONON / PRONAS (1% cada)</span>
+        <span class="coming">Em breve</span>
+      </div>
+      <div class="future-item">
+        <span class="name"><i class="fas fa-child" style="color:#C7D2FE"></i> Fundo da Criança e do Adolescente (3%)</span>
+        <span class="coming">Em breve</span>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="result-cta" id="res-cta">
+      <a href="demo-projeto.html" class="btn-destinar" id="btn-ir-projeto">
+        <i class="fas fa-music"></i> Usar meu limite no Projeto Themis
+      </a>
+      <button class="btn-secondary" onclick="goStep(1);limpar()">
+        <i class="fas fa-redo"></i> Novo cálculo
+      </button>
+    </div>
+
+  </div><!-- /sec3 -->
+</div><!-- /calc-main -->
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:white;margin-bottom:8px">
+    DestineAI<span style="color:var(--j-gold)">.</span>
+  </div>
+  <p class="tagline">Calculadora de Incentivos Fiscais · Exclusivo ASJDF</p>
+  <p class="footer-copyright">&copy; 2026 DestineAI · IncentivaBR · Todos os direitos reservados</p>
+</footer>
+
+<script>
+// ─── TABELA IR 2025 ───────────────────────────────────────────────
+const FAIXAS = [
+  { ate: 26963.20,  aliq: 0,     parcela: 0        },
+  { ate: 33919.80,  aliq: 0.075, parcela: 2022.24  },
+  { ate: 45012.60,  aliq: 0.15,  parcela: 4566.23  },
+  { ate: 55976.16,  aliq: 0.225, parcela: 7942.17  },
+  { ate: Infinity,  aliq: 0.275, parcela: 10738.99 },
+];
+const DEP_ANUAL = 2275.08;
+const EDU_LIMITE = 3561.50;
+
+function calcIR(base) {
+  for (const f of FAIXAS) {
+    if (base <= f.ate) return Math.max(0, base * f.aliq - f.parcela);
+  }
+}
+
+// ─── MÁSCARAS ─────────────────────────────────────────────────────
+function mask(el) {
+  let v = el.value.replace(/\D/g, '');
+  if (!v) { el.value = ''; return; }
+  v = (parseInt(v) / 100).toFixed(2);
+  el.value = parseFloat(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+}
+
+function parse(id) {
+  const v = document.getElementById(id)?.value || '';
+  return parseFloat(v.replace(/\./g, '').replace(',', '.')) || 0;
+}
+
+function fmt(v) {
+  return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+// ─── STEPPER ──────────────────────────────────────────────────────
+function goStep(n) {
+  [1, 2, 3].forEach(i => {
+    document.getElementById('sec' + i).classList.remove('active');
+    const ind = document.getElementById('step' + i + '-indicator');
+    ind.className = 'step ' + (i < n ? 'done' : i === n ? 'active' : 'pending');
+    const sn = document.getElementById('sn' + i);
+    sn.innerHTML = i < n ? '<i class="fas fa-check" style="font-size:11px"></i>' : i;
+  });
+  document.getElementById('sec' + n).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── DEDUÇÕES TOGGLE ──────────────────────────────────────────────
+function toggleDeducoes() {
+  const toggle = document.getElementById('dtogle');
+  const body   = document.getElementById('dbody');
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ─── CÁLCULO ──────────────────────────────────────────────────────
+function calcular() {
+  const rend    = parse('f-rendimentos');
+  const r13     = parse('f-13');
+  const irrf    = parse('f-irrf');
+  const dep     = parseInt(document.getElementById('f-dep').value) || 0;
+  const inss    = parse('f-inss');
+  const saude   = parse('f-saude');
+  const eduRaw  = parse('f-edu');
+  const prev    = parse('f-prev');
+
+  if (rend <= 0) {
+    alert('Informe os rendimentos tributáveis para calcular.');
+    goStep(1);
+    return;
+  }
+
+  const eduLimitado = Math.min(eduRaw, EDU_LIMITE * (dep + 1));
+  const prevLim     = Math.min(prev, rend * 0.12);
+  const deducoes    = dep * DEP_ANUAL + inss + saude + eduLimitado + prevLim;
+
+  const totalRend = rend + r13;
+  const base      = Math.max(0, totalRend - deducoes);
+  const irDevido  = calcIR(base);
+  const limite    = Math.round(irDevido * 0.06 * 100) / 100;
+  const aliquota  = base > 0 ? ((irDevido / base) * 100).toFixed(1) : 0;
+
+  // Preencher resultado
+  document.getElementById('r-rendimentos').textContent = fmt(totalRend);
+  document.getElementById('r-base').textContent        = fmt(base);
+  document.getElementById('r-ir').textContent          = fmt(irDevido);
+  document.getElementById('r-aliquota').textContent    = aliquota + '%';
+  document.getElementById('r-limite').textContent      = fmt(limite);
+
+  if (irDevido <= 0 || limite <= 0) {
+    document.getElementById('res-subtitle').textContent = 'Você está na faixa de isenção — sem IR a destinar.';
+    document.getElementById('isento-box').style.display  = 'block';
+    document.getElementById('limite-box').style.display  = 'none';
+    document.getElementById('res-cta').style.display     = 'none';
+  } else {
+    document.getElementById('res-subtitle').textContent  = 'Veja abaixo seu IR devido e o limite para destinar via Lei Rouanet';
+    document.getElementById('isento-box').style.display  = 'none';
+    document.getElementById('limite-box').style.display  = 'flex';
+    document.getElementById('res-cta').style.display     = 'flex';
+    // Passa limite para a página do projeto via sessionStorage
+    sessionStorage.setItem('limiteRouanet', limite);
+    sessionStorage.setItem('irDevido', irDevido);
+  }
+
+  goStep(3);
+}
+
+function limpar() {
+  ['f-rendimentos','f-13','f-irrf','f-inss','f-saude','f-edu','f-prev'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('f-dep').value = '0';
+}
+
+// Pré-preenche se vier da landing ASJDF com limite já calculado
+(function() {
+  const ir = sessionStorage.getItem('irDevido');
+  if (ir) {
+    const fmt2 = (v) => parseFloat(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    document.getElementById('f-rendimentos').value = '';
+  }
+})();
+</script>
+</body>
+</html>
