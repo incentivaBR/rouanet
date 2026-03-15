@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DestineAI × ASJDF — Pitch FGV MBA 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  /* ── PALETA ─────────────────────────────────────────────────── */
+  :root{
+    --gold:#FBBF24; --gold-light:#FDE68A;
+    --white:#FFFFFF;
+    /* Slide gradients — ASJDF edition */
+    --g1a:#0D1B2A; --g1b:#1A237E;   /* capa: navy profundo → azul real */
+    --g2a:#1a0a0a; --g2b:#7f1d1d;   /* dor: preto-carmim → vinho */
+    --g3a:#064e3b; --g3b:#065f46;   /* decisão: verde esmeralda */
+    --g4a:#1e1b4b; --g4b:#4c1d95;   /* pergunta/KPIs: índigo → violeta */
+    --g5a:#134e4a; --g5b:#0f766e;   /* dados: teal escuro */
+    --g6a:#1e293b; --g6b:#334155;   /* lacunas: slate */
+    --g7a:#3b0764; --g7b:#581c87;   /* lgpd: púrpura profundo */
+    --g8a:#78350f; --g8b:#92400e;   /* solução: âmbar/dourado */
+    --g9a:#1e3a5f; --g9b:#1e40af;   /* validação: azul confiante */
+    --g10a:#064e3b;--g10b:#065f46;  /* roadmap: verde crescimento */
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;color:#fff;overflow:hidden;height:100vh;width:100vw;}
+  .deck{width:100vw;height:100vh;position:relative;}
+
+  /* ── SLIDES ── */
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .45s ease,transform .45s ease;transform:translateX(36px);overflow:hidden;}
+  .slide.active{opacity:1;pointer-events:all;transform:translateX(0);}
+  .slide.prev{opacity:0;transform:translateX(-36px);}
+
+  /* ── NAV ── */
+  .nav-bar{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.35);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);border-radius:50px;padding:9px 18px;z-index:1000;}
+  .nav-bar button{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:16px;padding:3px 7px;border-radius:7px;transition:all .2s;}
+  .nav-bar button:hover{color:#fff;background:rgba(255,255,255,.15);}
+  .nav-bar button:disabled{opacity:.2;cursor:default;}
+  .nav-dots{display:flex;gap:6px;align-items:center;}
+  .nav-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s;}
+  .nav-dot.active{background:var(--gold);width:18px;border-radius:3px;}
+  .slide-counter{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);min-width:36px;text-align:center;}
+  .nav-badge{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);border-radius:20px;padding:3px 10px;white-space:nowrap;}
+
+  /* ── TAGS ── */
+  .slide-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 13px;border-radius:20px;margin-bottom:14px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);backdrop-filter:blur(4px);}
+
+  /* ── TIPOGRAFIA ── */
+  .slide-h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);font-weight:700;line-height:1.2;margin-bottom:10px;}
+  .slide-lead{font-size:clamp(15px,1.3vw,19px);color:rgba(255,255,255,.80);line-height:1.6;max-width:640px;}
+  em.hl{color:var(--gold);font-style:normal;font-weight:700;}
+  em.hl-blue{color:#BAE6FD;font-style:normal;font-weight:700;}
+  em.hl-green{color:#BBF7D0;font-style:normal;font-weight:700;}
+  em.hl-red{color:#FCA5A5;font-style:normal;font-weight:700;}
+
+  /* ── CARDS ── */
+  .card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:22px 26px;backdrop-filter:blur(6px);}
+  .card-accent-gold{border-left:4px solid var(--gold);}
+  .card-accent-blue{border-left:4px solid #60A5FA;}
+  .card-accent-green{border-left:4px solid #34D399;}
+  .gap-section-title{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;}
+
+  /* ── STATS ── */
+  .stat-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .stat-item{flex:1;min-width:100px;background:rgba(255,255,255,.12);border-radius:14px;padding:16px 18px;border:1px solid rgba(255,255,255,.2);}
+  .stat-n{font-family:'Playfair Display',serif;font-size:clamp(36px,3.2vw,56px);font-weight:700;color:var(--gold);line-height:1;}
+  .stat-label{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;}
+
+  /* ── BADGES ── */
+  .badge{display:inline-block;padding:3px 10px;border-radius:9px;font-size:10px;font-weight:700;}
+  .badge-gold{background:rgba(251,191,36,.25);color:#FDE68A;}
+  .badge-green{background:rgba(52,211,153,.2);color:#A7F3D0;}
+  .badge-red{background:rgba(239,68,68,.25);color:#FCA5A5;}
+  .badge-blue{background:rgba(96,165,250,.2);color:#BFDBFE;}
+  .badge-purple{background:rgba(167,139,250,.2);color:#DDD6FE;}
+  .badge-gray{background:rgba(255,255,255,.1);color:rgba(255,255,255,.55);}
+
+  /* ── DATA CARDS (slide 5) ── */
+  .data-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .data-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:20px 22px;backdrop-filter:blur(6px);}
+  .dc-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;}
+  .dc-badge-row{margin-bottom:8px;}
+  .dc-uso{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5;}
+
+  /* ── LAYOUT ── */
+  .slide-inner{flex:1;display:flex;flex-direction:column;padding:clamp(18px,2.5vh,38px) clamp(28px,4.5vw,80px) 72px;max-width:1280px;margin:0 auto;width:100%;overflow:hidden;}
+  .slide-inner.wide{max-width:1420px;}
+  .slide-header{margin-bottom:16px;}
+  .slide-content{flex:1;display:flex;flex-direction:column;justify-content:center;overflow:hidden;}
+  .key-hint{position:fixed;top:16px;right:20px;font-size:10px;color:rgba(255,255,255,.25);display:flex;align-items:center;gap:6px;z-index:999;}
+  .key-hint kbd{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:2px 7px;font-size:10px;color:rgba(255,255,255,.35);}
+
+  /* ── DIVISOR ── */
+  .section-divider{height:1px;background:rgba(255,255,255,.12);margin:14px 0;}
+
+  /* ── SLIDE 1 — CAPA ── */
+  #slide-1{background:linear-gradient(135deg,var(--g1a) 0%,var(--g1b) 100%);justify-content:center;align-items:center;text-align:center;}
+  #slide-1::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 35%,rgba(26,35,126,.5) 0%,transparent 60%),radial-gradient(ellipse at 15% 75%,rgba(59,130,246,.3) 0%,transparent 50%);pointer-events:none;}
+  .cover-top{font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:24px;}
+  .cover-logo{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+  .cover-h1{font-family:'Playfair Display',serif;font-size:clamp(36px,4.5vw,62px);font-weight:800;line-height:1.1;margin-bottom:22px;max-width:820px;position:relative;}
+  .cover-sub{display:inline-block;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.3);padding:6px 18px;border-radius:30px;margin-bottom:18px;position:relative;}
+  .cover-meta{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;position:relative;}
+  .cover-meta-item{font-size:12px;color:rgba(255,255,255,.45);}
+  .cover-meta-item strong{display:block;font-size:13px;color:rgba(255,255,255,.85);margin-bottom:1px;}
+  .cover-float{position:absolute;inset:0;pointer-events:none;}
+  .float-card{position:absolute;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:12px 18px;backdrop-filter:blur(12px);font-size:13px;font-weight:600;}
+  .fc1{top:16%;left:3%;}  .fc2{top:20%;right:3%;}  .fc3{bottom:20%;left:4%;}  .fc4{bottom:20%;right:4%;}
+
+  /* ── SLIDE 2 — DOR ── */
+  #slide-2{background:linear-gradient(135deg,var(--g2a) 0%,var(--g2b) 100%);}
+  #slide-2::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 15%,rgba(239,68,68,.35) 0%,transparent 55%);pointer-events:none;}
+  .dor-main{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+  .big-number{font-family:'Playfair Display',serif;font-size:clamp(52px,5.5vw,80px);font-weight:800;color:var(--gold);line-height:1;}
+  .big-label{font-size:14px;color:rgba(255,255,255,.7);margin-top:6px;max-width:280px;line-height:1.5;}
+  .dor-quote{margin-top:18px;padding:16px 20px;background:rgba(239,68,68,.2);border-left:4px solid #F87171;border-radius:0 12px 12px 0;font-size:13px;font-style:italic;color:rgba(255,255,255,.9);line-height:1.6;}
+  .barriers{display:flex;flex-direction:column;gap:8px;}
+  .barrier-item{display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,255,255,.1);border-radius:12px;border:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.92);}
+  .b-num{width:26px;height:26px;border-radius:50%;background:rgba(239,68,68,.4);color:#FCA5A5;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+  /* ── SLIDE 3 — STAKEHOLDERS ── */
+  #slide-3{background:linear-gradient(135deg,var(--g3a) 0%,var(--g3b) 100%);}
+  #slide-3::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 80%,rgba(52,211,153,.2) 0%,transparent 50%);pointer-events:none;}
+  .b2b2c-diagram{display:flex;align-items:center;margin:10px 0 18px;}
+  .b2b2c-node{flex:1;text-align:center;padding:14px 9px;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);}
+  .node-icon{font-size:22px;margin-bottom:5px;}
+  .node-name{font-size:13px;font-weight:700;margin-bottom:3px;}
+  .node-sub{font-size:10px;color:rgba(255,255,255,.55);line-height:1.4;}
+  .b2b2c-node.highlight-node{background:rgba(96,165,250,.25);border-color:rgba(96,165,250,.5);}
+  .b2b2c-arrow{flex-shrink:0;width:32px;text-align:center;color:var(--gold);font-size:16px;}
+  .stakeholder-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+  .sh-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:13px;text-align:center;}
+  .sh-icon{font-size:18px;margin-bottom:5px;}
+  .sh-name{font-size:11px;font-weight:700;margin-bottom:3px;}
+  .sh-role{font-size:10px;color:rgba(255,255,255,.5);line-height:1.4;}
+  .pilot-box{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.35);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .pilot-icon{font-size:28px;}
+  .pilot-label{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;}
+  .pilot-name{font-size:15px;font-weight:700;color:var(--gold);}
+  .pilot-sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px;}
+
+  /* ── SLIDE 4 — KPIs ── */
+  #slide-4{background:linear-gradient(135deg,var(--g4a) 0%,var(--g4b) 100%);}
+  #slide-4::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 75% 25%,rgba(167,139,250,.3) 0%,transparent 55%);pointer-events:none;}
+  .pn-versions{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+  .pn-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:10px;border:1px solid transparent;font-size:13px;line-height:1.4;color:rgba(255,255,255,.5);overflow:hidden;}
+  .pn-item.selected{background:rgba(96,165,250,.2);border-color:rgba(96,165,250,.4);color:rgba(255,255,255,.95);font-size:14px;}
+  .pn-badge{flex-shrink:0;font-size:10px;font-weight:800;padding:4px 10px;border-radius:6px;margin-top:2px;white-space:nowrap;}
+  .kpi-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .kpi-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:20px 18px;text-align:center;backdrop-filter:blur(4px);}
+  .kpi-card.primary-kpi{background:rgba(96,165,250,.2);border-color:rgba(96,165,250,.45);}
+  .kpi-icon{font-size:20px;margin-bottom:8px;}
+  .kpi-value{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;color:var(--gold);}
+  .kpi-label{font-size:12px;color:rgba(255,255,255,.7);margin-top:5px;}
+  .kpi-baseline{font-size:10px;color:rgba(255,255,255,.38);margin-top:5px;}
+  .hypothesis-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+  .hyp-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px 18px;}
+  .hyp-tag{font-size:10px;font-weight:800;color:#C4B5FD;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+  .hyp-text{font-size:13px;color:rgba(255,255,255,.85);line-height:1.55;}
+  .hyp-metric{font-size:12px;color:var(--gold-light);margin-top:8px;font-weight:700;}
+
+  /* ── SLIDE 5 — DADOS ── */
+  #slide-5{background:linear-gradient(135deg,var(--g5a) 0%,var(--g5b) 100%);}
+  #slide-5::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%,rgba(52,211,153,.2) 0%,transparent 50%);pointer-events:none;}
+
+  /* ── SLIDE 6 — LACUNAS ── */
+  #slide-6{background:linear-gradient(135deg,var(--g6a) 0%,var(--g6b) 100%);}
+  #slide-6::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 30%,rgba(96,165,250,.15) 0%,transparent 50%);pointer-events:none;}
+  .gap-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .gap-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:13px;color:rgba(255,255,255,.85);line-height:1.5;}
+  .gap-ico{flex-shrink:0;margin-top:2px;font-size:14px;}
+  .mitig-card{background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);border-radius:12px;padding:14px 16px;font-size:13px;color:rgba(255,255,255,.85);line-height:1.55;margin-top:8px;}
+  .mitig-card strong{color:#6EE7B7;}
+
+  /* ── SLIDE 7 — LGPD ── */
+  #slide-7{background:linear-gradient(135deg,var(--g7a) 0%,var(--g7b) 100%);}
+  #slide-7::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 30%,rgba(139,92,246,.3) 0%,transparent 50%);pointer-events:none;}
+  .risk-matrix{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .risk-item{background:rgba(255,255,255,.09);border-radius:14px;padding:18px 20px;border:1px solid rgba(255,255,255,.14);}
+  .risk-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .risk-name{font-size:13px;font-weight:700;color:#fff;}
+  .risk-chips{display:flex;gap:5px;}
+  .risk-mitig{font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;}
+  .risk-mitig strong{color:#6EE7B7;font-weight:600;}
+  .lgpd-principles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;}
+  .lgpd-p{background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.3);border-radius:12px;padding:14px;text-align:center;font-size:11px;color:rgba(255,255,255,.8);}
+  .lgpd-icon{font-size:20px;margin-bottom:6px;}
+  .lgpd-name{font-weight:800;color:#BAE6FD;display:block;margin-bottom:3px;}
+
+  /* ── SLIDE 8 — SOLUÇÃO ── */
+  #slide-8{background:linear-gradient(135deg,var(--g8a) 0%,var(--g8b) 100%);}
+  #slide-8::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 60%,rgba(251,191,36,.15) 0%,transparent 55%);pointer-events:none;}
+  .arch-layers{display:flex;flex-direction:column;gap:6px;}
+  .arch-layer{display:flex;align-items:center;gap:12px;padding:10px 15px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:13px;color:rgba(255,255,255,.85);}
+  .al-icon{font-size:15px;flex-shrink:0;width:24px;text-align:center;}
+  .al-name{font-weight:700;color:#fff;width:190px;flex-shrink:0;}
+  .al-detail{color:rgba(255,255,255,.55);font-size:12px;}
+  .why-not-ecac{background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:14px;padding:16px 18px;}
+  .why-not-title{font-size:11px;font-weight:800;color:#6EE7B7;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+  .why-row{display:flex;flex-wrap:wrap;gap:7px;}
+  .why-chip{background:rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.18);}
+  .ai-row{display:flex;flex-direction:column;gap:8px;margin-top:13px;}
+  .ai-item{display:flex;align-items:center;gap:10px;font-size:13px;padding:11px 14px;background:rgba(255,255,255,.07);border-radius:10px;border:1px solid rgba(255,255,255,.12);}
+  .ai-type{font-weight:700;width:110px;flex-shrink:0;font-size:14px;}
+  .ai-desc{color:rgba(255,255,255,.7);}
+  .asjdf-receives{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px;}
+  .asjdf-rec-item{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:13px 15px;font-size:13px;color:rgba(255,255,255,.9);line-height:1.5;}
+
+  /* ── SLIDE 9 — VALIDAÇÃO ── */
+  #slide-9{background:linear-gradient(135deg,var(--g9a) 0%,var(--g9b) 100%);}
+  #slide-9::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 70%,rgba(59,130,246,.25) 0%,transparent 50%);pointer-events:none;}
+  .pilot-details{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start;}
+  .pilot-timeline{position:relative;padding-left:22px;}
+  .pilot-timeline::before{content:'';position:absolute;left:5px;top:7px;bottom:7px;width:2px;background:rgba(255,255,255,.2);}
+  .pt-item{position:relative;margin-bottom:14px;}
+  .pt-item::before{content:'';position:absolute;left:-19px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--gold);border:2px solid transparent;}
+  .pt-period{font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1px;}
+  .pt-desc{font-size:13px;color:rgba(255,255,255,.78);margin-top:3px;line-height:1.45;}
+  .success-criteria{display:flex;flex-direction:column;gap:10px;}
+  .sc-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.1);border-radius:12px;border:1px solid rgba(255,255,255,.18);}
+  .sc-metric{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);min-width:68px;}
+  .sc-label{font-size:13px;color:rgba(255,255,255,.75);line-height:1.4;}
+  .sc-label strong{color:#fff;display:block;margin-bottom:2px;}
+  .demo-link-box{margin-top:14px;background:rgba(30,64,175,.25);border:1px solid rgba(96,165,250,.35);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:13px;}
+  .dl-icon{font-size:22px;}
+  .dl-text{font-size:13px;color:rgba(255,255,255,.8);}
+  .dl-text strong{color:#BAE6FD;display:block;margin-bottom:3px;font-size:14px;}
+  .demo-links{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px;}
+  .demo-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#BAE6FD;background:rgba(30,64,175,.25);border:1px solid rgba(96,165,250,.35);border-radius:20px;padding:4px 12px;text-decoration:none;transition:all .2s;}
+  .demo-link:hover{background:rgba(30,64,175,.5);}
+
+  /* ── SLIDE 10 — ROADMAP / ENCERRAMENTO ── */
+  #slide-10{background:linear-gradient(135deg,var(--g10a) 0%,var(--g10b) 100%);}
+  #slide-10::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(52,211,153,.2) 0%,transparent 60%);pointer-events:none;}
+  .roadmap-waves{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
+  .wave-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:18px;text-align:center;position:relative;overflow:hidden;backdrop-filter:blur(4px);}
+  .wave-card::before{content:attr(data-wave);position:absolute;top:-6px;right:-2px;font-size:44px;font-weight:900;color:rgba(255,255,255,.05);font-family:'Playfair Display',serif;line-height:1;}
+  .wc-wave{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px;}
+  .wc-year{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold);}
+  .wc-scope{font-size:11px;color:rgba(255,255,255,.72);margin-top:4px;line-height:1.4;}
+  .wc-potential{font-size:12px;font-weight:700;color:#6EE7B7;margin-top:8px;}
+  .roi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;}
+  .roi-card{background:rgba(255,255,255,.09);border-radius:14px;padding:16px 18px;border:1px solid rgba(255,255,255,.14);}
+  .roi-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:5px;}
+  .roi-value{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;}
+  .roi-detail{font-size:11px;color:rgba(255,255,255,.52);margin-top:3px;}
+  .team-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+  .team-item{background:rgba(255,255,255,.08);border-radius:12px;padding:13px;text-align:center;border:1px solid rgba(255,255,255,.13);}
+  .ti-role{color:#fff;font-weight:700;margin-bottom:3px;font-size:11px;}
+  .ti-status{font-size:10px;}
+  .cta-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:50px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;cursor:pointer;border:none;}
+  .cta-primary{background:var(--gold);color:#1E1B4B;}
+  .cta-primary:hover{background:var(--gold-light);transform:translateY(-2px);}
+  .cta-secondary{background:rgba(255,255,255,.12);color:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.22);}
+  .cta-secondary:hover{background:rgba(255,255,255,.22);}
+  .inpi-badge{display:inline-flex;align-items:center;gap:7px;font-size:10px;color:rgba(255,255,255,.38);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:6px 16px;}
+  .closing-cta-box{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:16px;padding:18px 22px;margin-top:14px;}
+  .closing-cta-text{font-size:clamp(14px,1.4vw,17px);color:rgba(255,255,255,.9);line-height:1.6;margin-bottom:12px;font-style:italic;}
+</style>
+</head>
+<body>
+
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  CONTEÚDO EDITÁVEL — edite APENAS o objeto CONTENT abaixo      ║
+║  Não mexa no HTML das divs nem no CSS acima                     ║
+║  Apresentação: DestineAI × ASJDF · FGV MBA Projeto Aplicado    ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
+<script>
+const CONTENT = {
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 1 — CAPA
+  // ─────────────────────────────────────────────────────────────────
+  capa: {
+    context:   "Proposta de Parceria Comercial · FGV MBA Projeto Aplicado · 2026",
+    logo:      "IncentivaBR · DestineAI.com.br",
+    h1: [
+      "1.847 servidores da Justiça.",       // [0] branco
+      "R$4,3 milhões em IR disponíveis.",   // [1] dourado
+      "Uma escolha que ainda não foi feita." // [2] azul claro
+    ],
+    sub: "Declaração Completa · até 6% do IR devido · R$0 custo para o servidor",
+    autores: [
+      { nome: "Adacto Artur Dornas de Oliveira", papel: "Fundador · Analytics Translator" },
+      { nome: "Diego Morais",                    papel: "Co-autor" },
+      { nome: "Gabriel Cavichioli",              papel: "Co-autor" },
+      { nome: "Vilander Massao",                 papel: "Co-autor" },
+    ],
+    professor: { nome: "Prof. Gabriel Cogo", papel: "Orientador" },
+    floats: [
+      { pos: "fc1", cor: "#90CAF9", icone: "fa-users",       texto: "1.847 associados ASJDF"          },
+      { pos: "fc2", cor: "#A5D6A7", icone: "fa-check-circle",texto: "R$0 custo para o servidor"       },
+      { pos: "fc3", cor: "#FFD54F", icone: "fa-certificate", texto: "INPI BR512025000647-0"            },
+      { pos: "fc4", cor: "#EF9A9A", icone: "fa-chart-line",  texto: "R$4,3M potencial/ano"            },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 2 — DOR & IMPACTO (Slide 1 FGV)
+  // ─────────────────────────────────────────────────────────────────
+  dor: {
+    tag:       "Slide 1 · Dor & Impacto",
+    h2:        ["Os servidores da ASJDF trabalham pela Justiça. Mas ", "6% do IR deles vai para o governo", " — sem escolha."],
+    lead:      "A barreira não é motivacional, nem financeira. É operacional e perceptiva.",
+    bigNumber: "R$4,3M",
+    bigLabel:  "que os associados da ASJDF poderiam destinar anualmente — mas não fazem (Receita Federal, 2025)",
+    quote:     '"O servidor elegível não destina — não por falta de recursos ou motivação, mas por complexidade burocrática, insegurança jurídica percebida e ausência de plataforma digital especializada."',
+    stats: [
+      { n: "1.847", label: "associados elegíveis ASJDF"     },
+      { n: "99%",   label: "nunca fizeram uma destinação"   },
+      { n: "R$0",   label: "custo efetivo para o servidor"  },
+    ],
+    barreiras: [
+      "Declaração Completa obrigatória — muitos optam pelo desconto simplificado sem saber que perdem o benefício",
+      "Desconhecimento — 95% dos servidores elegíveis desconhecem a possibilidade",
+      "Complexidade percebida — medo de errar, linguagem inacessível, insegurança jurídica",
+      "Ausência de plataforma — nenhuma ferramenta especializada para este público",
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 3 — DECISÃO + STAKEHOLDERS (Slide 2 FGV)
+  // ─────────────────────────────────────────────────────────────────
+  stakeholders: {
+    tag: "Slide 2 · Decisão & Stakeholders",
+    h2:  ["Por que a ASJDF. Por que agora. ", "Por que funciona."],
+    b2b2c: [
+      { icone: "🏛️", nome: "IncentivaBR",      sub: "Plataforma · Compliance\nConsultoria · White-label", destaque: true  },
+      { icone: "⚖️",  nome: "ASJDF",            sub: "Associação parceira\nContrata IncentivaBR · Oferece aos associados", destaque: false },
+      { icone: "👤",  nome: "Servidor Público", sub: "Destina IR em 5 min\nAcompanha impacto · Declaração Completa", destaque: false },
+      { icone: "🎭",  nome: "Fundos / Projetos",sub: "Lei Rouanet · FNC\nProjeto Themis aprovado MinC", destaque: false },
+    ],
+    piloto: {
+      icone: "⚖️",
+      nome:  "ASJDF — 1.847 associados · R$4,3M potencial · Alinhamento ODS 16 (Paz, Justiça e Instituições)",
+      sub:   "Servidores do TRF, TJDFT, STJ e STF — público de alta renda, Declaração Completa, alto potencial de conversão",
+    },
+    stakeholders: [
+      { icone: "👤", nome: "Servidor Público",  role: "Quer: simplicidade + segurança jurídica\nRisco: desconfiança inicial"     },
+      { icone: "🏢", nome: "ASJDF Diretoria",   role: "Quer: benefício diferenciado para associados\nRestrição: homologação interna" },
+      { icone: "🎁", nome: "Projeto Themis",    role: "Quer: captação de recursos\nAprovado MinC PRONAC 24-00891"                 },
+      { icone: "🏛️", nome: "Receita Federal",   role: "Quer: conformidade art. 6º\nRestrição: e-CAC não disponível"             },
+      { icone: "🔍", nome: "CGU / TCU",         role: "Quer: transparência LGPD\nPodem exigir auditoria técnica"                 },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 4 — PERGUNTA DE NEGÓCIO + KPIs + HIPÓTESES (Slide 3 FGV)
+  // ─────────────────────────────────────────────────────────────────
+  kpis: {
+    tag: "Slide 3 · Pergunta de Negócio + KPIs + Hipóteses",
+    h2:  ["3 versões. ", "1 escolhida.", " Critérios claros."],
+    versoes: [
+      { versao: "v1 Estratégica",   selecionada: false, texto: "Aumentar o volume total destinado a fundos sociais no Brasil — impacto altíssimo, viabilidade baixa · prazo 2027–2028" },
+      { versao: "v2 Tática",        selecionada: false, texto: "Aumentar o número de servidores da ASJDF que realizam destinações — impacto alto, viabilidade média · prazo jun/2026" },
+      { versao: "v3 Operacional ✓", selecionada: true,  texto: "Como podemos, por meio de uma plataforma digital com compliance ativo e IA, aumentar em pelo menos 300% o número de associados da ASJDF (declaração completa) que realizam destinações de até 6% do IR devido, dentro do prazo legal, com conformidade documentada e comprovável?" },
+    ],
+    kpis: [
+      { primario: true,  icone: "🎯", valor: "≥ 60%",   label: "Taxa de Conversão\n(cadastro → destinação)", baseline: "Baseline: 0% · Meta nacional 2027: ≥70%"   },
+      { primario: false, icone: "💰", valor: "R$540k",  label: "Volume destinado no piloto",                   baseline: "Baseline: R$0 · Potencial total: R$4,3M/ano" },
+      { primario: false, icone: "⭐", valor: "≥ 70",    label: "NPS da plataforma",                            baseline: "Baseline: — · Meta nacional: ≥80"            },
+    ],
+    hipoteses: [
+      { tag: "H1 · Usabilidade", texto: '"Se reduzirmos o processo para menos de 5 minutos, então a taxa de iniciação superará 80%."',           meta: "→ Meta: Iniciação > 80% no piloto"   },
+      { tag: "H2 · Confiança",   texto: '"Se eliminarmos a insegurança jurídica com conformidade documentada, a taxa de conversão superará 60%."', meta: "→ Meta: Conversão > 60% no piloto"   },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 5 — DADOS (Slide 4 FGV)
+  // ─────────────────────────────────────────────────────────────────
+  dados: {
+    tag:  "Slide 4 · Dados — Fontes & Granularidade",
+    h2:   ["Dados certos, para ", "perguntas certas."],
+    lead: "Governança definida com minimização PII, RBAC e trilha de auditoria imutável.",
+    fontes: [
+      { nome: "Declaração IR (associado)", tipo: "Interna estruturada",  sensib: "Alta · PII", gran: "CPF, IR devido, renda bruta",       uso: "Calcular limite 6% Rouanet"                     },
+      { nome: "Cadastro Gov.br",           tipo: "Externa — API Gov.",   sensib: "Alta · PII", gran: "Nome, CPF, órgão, vínculo",         uso: "Autenticação; perfil do servidor"               },
+      { nome: "SALIC API — MinC",          tipo: "Externa — API pública",sensib: "Nenhuma",    gran: "Projetos, PRONAC, valores",         uso: "Catálogo Rouanet em tempo real"                 },
+      { nome: "Catálogo de Fundos",        tipo: "Interna curada",       sensib: "Baixa",      gran: "FNC · Rouanet · ODS",               uso: "Motor TINA — matching por perfil"               },
+      { nome: "Comprovantes PDF",          tipo: "Upload associado",     sensib: "Alta · PII", gran: "DARF, guias de recolhimento",       uso: "Conformidade art. 6º"                          },
+      { nome: "Histórico Destinações",     tipo: "Interna gerada",       sensib: "Média",      gran: "Valor, data, fundo, status",        uso: "Dashboard impacto ASJDF"                        },
+    ],
+    governanca: "Data Owner → Fundador · Data Steward → Dev/Compliance · Retenção: CPF/IR = 5 anos · LGPD by design",
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 6 — QUALIDADE & LACUNAS (Slide 5 FGV)
+  // ─────────────────────────────────────────────────────────────────
+  lacunas: {
+    tag: "Slide 5 · Qualidade & Lacunas de Dados",
+    h2:  ["Saber o que ", "ainda não sabemos", " é parte do rigor científico."],
+    gaps: [
+      "Perfil fiscal individualizado por associado (depende de declaração voluntária)",
+      "Sistema de matching inteligente associado ↔ fundo (TINA v2.0 — roadmap)",
+      "Dados de impacto verificável em tempo real por projeto",
+      "Integração e-CAC/Receita Federal (decisão deliberada — ver slide 7)",
+      "Histórico de destinações anterior ao piloto (baseline = zero)",
+    ],
+    mitig_gaps: "Piloto de 6 meses com ASJDF gera base histórica própria. Funil de métricas em 3 camadas operando desde o dia 1.",
+    qualidade: [
+      { ico: "✓", cor: "#A5D6A7", texto: "<strong>SALIC API (MinC)</strong> — alta qualidade, atualizada, pública e documentada"   },
+      { ico: "✓", cor: "#A5D6A7", texto: "<strong>Legislação fiscal</strong> — fonte primária (DOU/RFB), externalizada em YAML"    },
+      { ico: "~", cor: "#FFD54F", texto: "<strong>Declaração IR</strong> — dependente de auto-declaração correta do associado"     },
+      { ico: "~", cor: "#FFD54F", texto: "<strong>Comprovantes PDF</strong> — qualidade variável por banco/sistema"                },
+    ],
+    vies: "Viés de seleção: associados de menor renda podem ser subestimados",
+    mitig_vies: "Estratificação por faixa salarial · monitoramento contínuo de métricas de equidade.",
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 7 — RISCOS LGPD + MITIGAÇÃO (Slide 6 FGV)
+  // ─────────────────────────────────────────────────────────────────
+  lgpd: {
+    tag: "Slide 6 · Riscos LGPD & Mitigação",
+    h2:  ["Privacidade by design — ", "os dados dos seus associados", " protegidos."],
+    riscos: [
+      { icone: "fa-id-card",   corIcone: "#EF9A9A", nome: "CPF + Dados de IR",         prob: "Prob. Baixa",     impacto: "Impacto Altíssimo", prob_badge: "badge-red",  imp_badge: "badge-red",  mitig: "Criptografia AES em repouso · bcryptjs + JWT · RBAC granular"            },
+      { icone: "fa-file-pdf",  corIcone: "#FFD54F", nome: "Comprovante PDF",           prob: "Prob. Baixa",     impacto: "Impacto Alto",      prob_badge: "badge-gold", imp_badge: "badge-gold", mitig: "Hash SHA-256 · armazenamento isolado · URL assinada TTL"                 },
+      { icone: "fa-globe",     corIcone: "#90CAF9", nome: "OAuth Gov.br",              prob: "Prob. Baixa",     impacto: "Impacto Alto",      prob_badge: "badge-blue", imp_badge: "badge-blue", mitig: "Tokens curta duração · refresh rotation · revogação imediata"           },
+      { icone: "fa-edit",      corIcone: "#A5D6A7", nome: "Adulteração de Auditoria",  prob: "Prob. Baixíssima",impacto: "Impacto Alto",      prob_badge: "badge-green",imp_badge: "badge-gold", mitig: "Registros imutáveis append-only · SHA-256 por evento"                   },
+    ],
+    principios: [
+      { icone: "✅", nome: "Consentimento Explícito", sub: "Data/hora/versão registrados"        },
+      { icone: "🎯", nome: "Minimização",              sub: "Só CPF, IR e comprovantes"           },
+      { icone: "🔐", nome: "Segurança",                sub: "HTTPS/TLS + bcryptjs + JWT"          },
+      { icone: "⏱️", nome: "Retenção Definida",        sub: "5 anos (obrig. fiscal)"              },
+    ],
+    nota_ecac: "DestineAI não integra e-CAC — atua como <strong>facilitador educacional independente</strong>. Menor superfície de exposição · conformidade LGPD mais limpa · os dados dos associados da ASJDF ficam sob controle da plataforma, não da RFB.",
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 8 — SOLUÇÃO (Slide 7 FGV)
+  // ─────────────────────────────────────────────────────────────────
+  solucao: {
+    tag: "Slide 7 · Solução — White-label DestineAI para ASJDF",
+    h2:  ["Sua marca. Nossa tecnologia. ", "Seus associados no controle."],
+    camadas: [
+      { icone: "🖥️", nome: "Interface",             detalhe: "HTML5 · CSS3 · JS Vanilla · Mobile-First"                         },
+      { icone: "🔐", nome: "Gateway / Segurança",   detalhe: "JWT Auth · OAuth Gov.br · RBAC"                                   },
+      { icone: "🤖", nome: "TINA (Motor IA)",        detalhe: "Lógica proprietária + RAG v2.0 no roadmap", destaque: true        },
+      { icone: "⚙️", nome: "Microsserviços",         detalhe: "Calculadora IR · Destinação · Compliance"                         },
+      { icone: "🗄️", nome: "Armazenamento",          detalhe: "PostgreSQL · Segregação PII · Multer"                             },
+      { icone: "🔗", nome: "Integrações",             detalhe: "Gov.br · SALIC/MinC · BRB PIX (roadmap)"                         },
+      { icone: "📋", nome: "Compliance / Auditoria", detalhe: "Trilha imutável · SHA-256 · Laudos PDF"                           },
+    ],
+    porqueNaoEcac: [
+      "✓ Conformidade LGPD mais limpa",
+      "✓ Maior credibilidade que extensão gov.",
+      "✓ Performance estável e autônoma",
+      "✓ Sem autorização formal da RFB",
+      "✓ Usuário = único responsável fiscal",
+    ],
+    tiposIA: [
+      { tipo: "Prescritiva",   cor: "#C4B5FD", desc: "TINA — matching ODS: melhor fundo por perfil do servidor",        destaque: false },
+      { tipo: "IA Generativa", cor: "#FFD54F", desc: "TINA 2.0 — RAG + LLM: orienta cada servidor no processo (roadmap)", destaque: true  },
+    ],
+    inpi: "INPI BR512025000647-0 — proteção quadrupla: software + NCL35 + NCL42 + cartório",
+    asjdfRecebes: [
+      "🏛️ Plataforma white-label com a marca ASJDF",
+      "📊 Dashboard exclusivo — acompanhe destinações em tempo real",
+      "🤖 TINA — assistente de IA que orienta cada servidor",
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 9 — VALIDAÇÃO / PILOTO (Slide 8 FGV)
+  // ─────────────────────────────────────────────────────────────────
+  validacao: {
+    tag: "Slide 8 · Validação — Piloto & Critério de Sucesso",
+    h2:  ["Piloto de 6 meses com a ASJDF. ", "Critérios binários.", " Sem subjetividade."],
+    timeline: [
+      { periodo: "Jun 2026 — Mês 1",         desc: "Onboarding ASJDF · Configuração white-label · E-mail Despertar para associados"         },
+      { periodo: "Jul 2026 — Mês 2",         desc: "Campanha Educação · Webinar ao vivo · Demo DestineAI para servidores da ASJDF"          },
+      { periodo: "Ago–Set 2026 — Meses 3–4", desc: "Inspiração + Facilitação · Projeto Themis em destaque · Catálogo ODS"                  },
+      { periodo: "Out–Nov 2026 — Meses 5–6", desc: "Sprint de Mobilização · WhatsApp grupos ASJDF · Meta: 300+ destinações"                },
+      { periodo: "Dez 2026 — Sprint Final",   desc: "Alertas de prazo (31/12) · Comprovantes automáticos · Coleta NPS"                     },
+    ],
+    criterios: [
+      { metrica: "≥ 60%", nome: "Taxa de Conversão (KPI primário)", desc: "Cadastro → destinação concluída no período"                      },
+      { metrica: "≥ 70",  nome: "NPS da Plataforma",                desc: "Pesquisa pós-destinação com associados"                          },
+      { metrica: "Zero",  nome: "Incidentes de Não-Conformidade",   desc: "Documentação art. 6º correta · LGPD · DARF gerado"               },
+    ],
+    demo: {
+      titulo: "Demonstração ao vivo — MVP no ar",
+      sub:    "Fluxo completo: ASJDF → Projeto Themis → Painel do servidor",
+      links: [
+        { label: "1. Landing ASJDF",     href: "justica-df.html"      },
+        { label: "2. Projeto Themis",    href: "demo-projeto.html"    },
+        { label: "3. Painel do Servidor",href: "demo-dashboard.html"  },
+      ],
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // SLIDE 10 — ROADMAP + TIME + ROI (Slide 9 FGV — ENCERRAMENTO)
+  // ─────────────────────────────────────────────────────────────────
+  roadmap: {
+    tag: "Slide 9 · Roadmap + Time + ROI",
+    h2:  ["Começa com a ASJDF. ", "Escala para o Brasil."],
+    ondas: [
+      { onda: "Onda 1", ano: "2026",    escopo: "ASJDF Piloto\n200–500 usuários",    potencial: "R$540k destinados",    cor: "#FFD54F" },
+      { onda: "Onda 2", ano: "2027",    escopo: "Esfera Federal\n~600k servidores",  potencial: "R$30M/ano (5% adesão)", cor: "#A5D6A7" },
+      { onda: "Onda 3", ano: "2027–28", escopo: "Esfera Estadual\n~3M servidores",   potencial: "R$150M/ano",            cor: "#A5D6A7" },
+      { onda: "Onda 4", ano: "2028–29", escopo: "Esfera Municipal\n~6,5M servidores",potencial: "R$325M/ano",            cor: "#A5D6A7" },
+    ],
+    roi: [
+      { label: "Custo operacional / piloto",    valor: "R$18–30k<span style='font-size:13px;font-weight:400'>/mês</span>",  cor: "#EF9A9A", detalhe: "Dev + frontend + jurídico + infra"                          },
+      { label: "Receita IncentivaBR (5% taxa)", valor: "R$5,4M<span style='font-size:13px;font-weight:400'>/ano</span>",   cor: "#FFD54F", detalhe: "Cenário conservador — 120k contribuintes × R$900 médio"     },
+      { label: "Potencial nacional total",      valor: "R$505M<span style='font-size:13px;font-weight:400'>/ano</span>",   cor: "#A5D6A7", detalhe: "5% adesão · 10M servidores · R$1.000/servidor/ano"           },
+    ],
+    squad: [
+      { icone: "🧠", papel: "Analytics Translator", status: "Fundador · alocado",           cor: "#A5D6A7" },
+      { icone: "⚙️", papel: "Dev Backend",           status: "R$8–12k/mês · contratando",    cor: "#FFD54F" },
+      { icone: "🎨", papel: "Dev Frontend",           status: "R$6–10k/mês · contratando",    cor: "#FFD54F" },
+      { icone: "⚖️", papel: "Esp. Jurídico",          status: "R$3–5k/mês · consultor ext.",  cor: "#FFD54F" },
+      { icone: "☁️", papel: "Infra Cloud",            status: "Railway · R$1–3k/mês",         cor: "#A5D6A7" },
+    ],
+    cta_final: "A ASJDF pode ser a primeira associação do Brasil a transformar o IR dos seus associados em impacto real. Vamos começar?",
+    ctas: [
+      { label: "Iniciar Demo — ASJDF",  href: "justica-df.html",     primary: true,  icone: "fa-play"      },
+      { label: "Ver Projeto Themis",    href: "demo-projeto.html",   primary: false, icone: "fa-music"     },
+      { label: "Painel do Servidor",    href: "demo-dashboard.html", primary: false, icone: "fa-chart-bar" },
+    ],
+    inpi: "Registro INPI BR512025000647-0 · Proteção quadrupla: software + NCL35 + NCL42 + cartório",
+  },
+
+};
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║  FIM DO CONTEÚDO EDITÁVEL                                       ║
+// ╚══════════════════════════════════════════════════════════════════╝
+</script>
+
+<!-- ── HINT ── -->
+<div class="key-hint">Navegar: <kbd>←</kbd> <kbd>→</kbd> ou clique</div>
+
+<!-- ── DECK ── -->
+<div class="deck" id="deck"></div>
+
+<!-- ── NAV ── -->
+<nav class="nav-bar">
+  <button id="btn-prev" onclick="navigate(-1)" disabled><i class="fas fa-chevron-left"></i></button>
+  <div class="nav-dots" id="dots"></div>
+  <button id="btn-next" onclick="navigate(1)"><i class="fas fa-chevron-right"></i></button>
+  <div class="slide-counter" id="counter">1 / 10</div>
+  <div class="nav-badge">Demo · DestineAI × ASJDF</div>
+</nav>
+
+<script>
+// ── RENDER ────────────────────────────────────────────────────────────
+const deck = document.getElementById('deck');
+
+function slide(id, extraClass, bg, content) {
+  const d = document.createElement('div');
+  d.className = 'slide' + (extraClass ? ' ' + extraClass : '');
+  d.id = 'slide-' + id;
+  if (bg) d.style.background = bg;
+  d.innerHTML = content;
+  deck.appendChild(d);
+}
+
+function inner(content, wide) {
+  return `<div class="slide-inner${wide?' wide':''}">${content}</div>`;
+}
+
+function tag(cls, icon, label) {
+  return `<div class="slide-tag ${cls}"><i class="fas ${icon}"></i> ${label}</div>`;
+}
+
+// ── SLIDE 1 — CAPA ────────────────────────────────────────────────────
+const C = CONTENT;
+
+const floats = C.capa.floats.map(f =>
+  `<div class="float-card ${f.pos}" style="color:${f.cor}"><i class="fas ${f.icone}"></i> ${f.texto}</div>`
+).join('');
+
+const autores = C.capa.autores.map(a =>
+  `<div class="cover-meta-item"><strong>${a.nome}</strong>${a.papel}</div>`
+).join('') + `<div class="cover-meta-item"><strong>${C.capa.professor.nome}</strong>${C.capa.professor.papel}</div>`;
+
+slide(1, 'active', null, `
+  <div class="cover-float">${floats}</div>
+  <div class="cover-top">${C.capa.context}</div>
+  <div class="cover-logo">${C.capa.logo}</div>
+  <h1 class="cover-h1">
+    ${C.capa.h1[0]}<br>
+    <em class="hl">${C.capa.h1[1]}</em><br>
+    <em class="hl-blue">${C.capa.h1[2]}</em>
+  </h1>
+  <p class="cover-sub">${C.capa.sub}</p>
+  <div class="cover-meta">${autores}</div>
+`);
+
+// ── SLIDE 2 — DOR ─────────────────────────────────────────────────────
+const stats2 = C.dor.stats.map(s =>
+  `<div class="stat-item"><div class="stat-n">${s.n}</div><div class="stat-label">${s.label}</div></div>`
+).join('');
+
+const barriers = C.dor.barreiras.map((b, i) =>
+  `<div class="barrier-item"><div class="b-num">${i+1}</div>${b}</div>`
+).join('');
+
+slide(2, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-red','fa-heart-broken', C.dor.tag)}
+    <h2 class="slide-h2">${C.dor.h2[0]}<em class="hl-red">${C.dor.h2[1]}</em>${C.dor.h2[2]}</h2>
+    <p class="slide-lead">${C.dor.lead}</p>
+  </div>
+  <div class="slide-content">
+    <div class="dor-main">
+      <div>
+        <div class="big-number">${C.dor.bigNumber}</div>
+        <div class="big-label">${C.dor.bigLabel}</div>
+        <div class="dor-quote">${C.dor.quote}</div>
+        <div class="stat-row" style="margin-top:18px">${stats2}</div>
+      </div>
+      <div>
+        <div class="gap-section-title" style="margin-bottom:12px">4 barreiras principais de não-destinação</div>
+        <div class="barriers">${barriers}</div>
+      </div>
+    </div>
+  </div>
+`));
+
+// ── SLIDE 3 — DECISÃO + STAKEHOLDERS ─────────────────────────────────
+const nodes = C.stakeholders.b2b2c.map((n, i) => {
+  const arr = i < C.stakeholders.b2b2c.length - 1
+    ? `<div class="b2b2c-arrow"><i class="fas fa-arrow-right"></i></div>` : '';
+  return `<div class="b2b2c-node${n.destaque?' highlight-node':''}">
+    <div class="node-icon">${n.icone}</div>
+    <div class="node-name">${n.nome}</div>
+    <div class="node-sub">${n.sub.replace(/\n/g,'<br>')}</div>
+  </div>${arr}`;
+}).join('');
+
+const shs = C.stakeholders.stakeholders.map(s =>
+  `<div class="sh-card">
+    <div class="sh-icon">${s.icone}</div>
+    <div class="sh-name">${s.nome}</div>
+    <div class="sh-role">${s.role.replace(/\n/g,'<br>')}</div>
+  </div>`
+).join('');
+
+slide(3, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-green','fa-balance-scale', C.stakeholders.tag)}
+    <h2 class="slide-h2">${C.stakeholders.h2[0]}<em class="hl">${C.stakeholders.h2[1]}</em></h2>
+  </div>
+  <div class="slide-content">
+    <div class="b2b2c-diagram">${nodes}</div>
+    <div class="pilot-box">
+      <div class="pilot-icon">${C.stakeholders.piloto.icone}</div>
+      <div>
+        <div class="pilot-label">Piloto selecionado</div>
+        <div class="pilot-name">${C.stakeholders.piloto.nome}</div>
+        <div class="pilot-sub">${C.stakeholders.piloto.sub}</div>
+      </div>
+    </div>
+    <div class="gap-section-title">Stakeholders e posições</div>
+    <div class="stakeholder-grid">${shs}</div>
+  </div>
+`));
+
+// ── SLIDE 4 — KPIs ────────────────────────────────────────────────────
+const versoes = C.kpis.versoes.map(v =>
+  `<div class="pn-item${v.selecionada?' selected':''}">
+    <span class="pn-badge ${v.selecionada?'badge-blue':''}">${v.versao}</span>
+    ${v.texto}
+  </div>`
+).join('');
+
+const kpiCards = C.kpis.kpis.map(k =>
+  `<div class="kpi-card${k.primario?' primary-kpi':''}">
+    <div class="kpi-icon">${k.icone}</div>
+    <div class="kpi-value">${k.valor}</div>
+    <div class="kpi-label">${k.label.replace(/\n/g,'<br>')}</div>
+    <div class="kpi-baseline">${k.baseline}</div>
+  </div>`
+).join('');
+
+const hyps = C.kpis.hipoteses.map(h =>
+  `<div class="hyp-card">
+    <div class="hyp-tag">${h.tag}</div>
+    <div class="hyp-text">${h.texto}</div>
+    <div class="hyp-metric">${h.meta}</div>
+  </div>`
+).join('');
+
+slide(4, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-blue','fa-bullseye', C.kpis.tag)}
+    <h2 class="slide-h2">${C.kpis.h2[0]}<em class="hl">${C.kpis.h2[1]}</em>${C.kpis.h2[2]}</h2>
+  </div>
+  <div class="slide-content">
+    <div class="pn-versions">${versoes}</div>
+    <div class="kpi-cards">${kpiCards}</div>
+    <div class="hypothesis-row">${hyps}</div>
+  </div>
+`));
+
+// ── SLIDE 5 — DADOS ───────────────────────────────────────────────────
+function sensibBadge(s) {
+  if (s.includes('Alta'))  return `<span class="badge badge-red">${s}</span>`;
+  if (s.includes('Média')) return `<span class="badge badge-gold">${s}</span>`;
+  if (s.includes('Baixa')) return `<span class="badge badge-green">${s}</span>`;
+  return `<span class="badge badge-gray">${s}</span>`;
+}
+
+const dataCards = C.dados.fontes.slice(0, 6).map(f =>
+  `<div class="data-card">
+    <div class="dc-name">${f.nome}</div>
+    <div class="dc-badge-row">${sensibBadge(f.sensib)}</div>
+    <div class="dc-uso">${f.uso}</div>
+  </div>`
+).join('');
+
+slide(5, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-teal','fa-database', C.dados.tag)}
+    <h2 class="slide-h2">${C.dados.h2[0]}<em class="hl">${C.dados.h2[1]}</em></h2>
+    <p class="slide-lead">${C.dados.lead}</p>
+  </div>
+  <div class="slide-content">
+    <div class="data-cards" style="margin-bottom:16px">${dataCards}</div>
+    <div class="card card-accent-blue" style="display:flex;gap:12px;align-items:center">
+      <i class="fas fa-lock" style="color:#90CAF9;font-size:20px;flex-shrink:0"></i>
+      <div style="font-size:13px;color:rgba(255,255,255,.8)">
+        <strong style="color:#90CAF9;display:block;margin-bottom:3px">Governança</strong>
+        ${C.dados.governanca}
+      </div>
+    </div>
+  </div>
+`));
+
+// ── SLIDE 6 — LACUNAS ─────────────────────────────────────────────────
+const gapItems = C.lacunas.gaps.map(g =>
+  `<div class="gap-item"><span class="gap-ico" style="color:#EF9A9A">✗</span>${g}</div>`
+).join('');
+
+const qualItems = C.lacunas.qualidade.map(q =>
+  `<div class="gap-item"><span class="gap-ico" style="color:${q.cor}">${q.ico}</span><span>${q.texto}</span></div>`
+).join('');
+
+slide(6, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-gold','fa-search', C.lacunas.tag)}
+    <h2 class="slide-h2">${C.lacunas.h2[0]}<em class="hl">${C.lacunas.h2[1]}</em>${C.lacunas.h2[2]}</h2>
+  </div>
+  <div class="slide-content">
+    <div class="gap-grid">
+      <div>
+        <div class="gap-section-title">Capacidades analíticas ainda ausentes (GAP)</div>
+        ${gapItems}
+        <div class="mitig-card"><strong>Mitigação:</strong> ${C.lacunas.mitig_gaps}</div>
+      </div>
+      <div>
+        <div class="gap-section-title">Qualidade dos dados disponíveis</div>
+        ${qualItems}
+        <div class="section-divider"></div>
+        <div class="gap-section-title">Risco de viés algorítmico</div>
+        <div class="gap-item"><span class="gap-ico" style="color:#EF9A9A">⚠</span>${C.lacunas.vies}</div>
+        <div class="mitig-card"><strong>Mitigação:</strong> ${C.lacunas.mitig_vies}</div>
+      </div>
+    </div>
+  </div>
+`));
+
+// ── SLIDE 7 — LGPD ────────────────────────────────────────────────────
+const riscos = C.lgpd.riscos.map(r =>
+  `<div class="risk-item">
+    <div class="risk-top">
+      <div class="risk-name"><i class="fas ${r.icone}" style="color:${r.corIcone};margin-right:8px"></i>${r.nome}</div>
+      <div class="risk-chips">
+        <span class="badge ${r.prob_badge}">${r.prob}</span>
+        <span class="badge ${r.imp_badge}">${r.impacto}</span>
+      </div>
+    </div>
+    <div class="risk-mitig"><strong>Mitigação:</strong> ${r.mitig}</div>
+  </div>`
+).join('');
+
+const principios = C.lgpd.principios.map(p =>
+  `<div class="lgpd-p">
+    <div class="lgpd-icon">${p.icone}</div>
+    <span class="lgpd-name">${p.nome}</span>${p.sub}
+  </div>`
+).join('');
+
+slide(7, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-red','fa-shield-alt', C.lgpd.tag)}
+    <h2 class="slide-h2">${C.lgpd.h2[0]}<em class="hl">${C.lgpd.h2[1]}</em>${C.lgpd.h2[2]}</h2>
+  </div>
+  <div class="slide-content">
+    <div class="risk-matrix" style="margin-bottom:16px">${riscos}</div>
+    <div class="lgpd-principles">${principios}</div>
+    <div class="card card-accent-green" style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.8)">
+      <i class="fas fa-gavel" style="color:#A5D6A7;margin-right:8px"></i>
+      <strong style="color:#A5D6A7">Decisão-chave:</strong> ${C.lgpd.nota_ecac}
+    </div>
+  </div>
+`));
+
+// ── SLIDE 8 — SOLUÇÃO ─────────────────────────────────────────────────
+const camadas = C.solucao.camadas.map(c =>
+  `<div class="arch-layer" style="${c.destaque?'background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3)':''}">
+    <div class="al-icon">${c.icone}</div>
+    <div class="al-name">${c.nome}</div>
+    <div class="al-detail">${c.detalhe}</div>
+  </div>`
+).join('');
+
+const whyChips = C.solucao.porqueNaoEcac.map(w =>
+  `<div class="why-chip">${w}</div>`
+).join('');
+
+const aiRows = C.solucao.tiposIA.map(a =>
+  `<div class="ai-item" style="${a.destaque?'background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.3)':''}">
+    <span class="ai-type" style="color:${a.cor}">${a.tipo}</span>
+    <span class="ai-desc">${a.desc}</span>
+  </div>`
+).join('');
+
+const asjdfRecs = C.solucao.asjdfRecebes.map(r =>
+  `<div class="asjdf-rec-item">${r}</div>`
+).join('');
+
+slide(8, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-gold','fa-lightbulb', C.solucao.tag)}
+    <h2 class="slide-h2">${C.solucao.h2[0]}<em class="hl">${C.solucao.h2[1]}</em></h2>
+  </div>
+  <div class="slide-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+      <div>
+        <div class="gap-section-title">Arquitetura da Solução</div>
+        <div class="arch-layers">${camadas}</div>
+      </div>
+      <div>
+        <div class="why-not-ecac">
+          <div class="why-not-title"><i class="fas fa-check-double"></i> Por que NÃO integrar o e-CAC da RFB</div>
+          <div class="why-row">${whyChips}</div>
+        </div>
+        <div class="gap-section-title" style="margin-top:14px">IA aplicada</div>
+        <div class="ai-row">${aiRows}</div>
+        <div class="card card-accent-gold" style="margin-top:12px">
+          <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Proteção intelectual</div>
+          <div style="font-size:13px"><i class="fas fa-certificate" style="color:var(--gold);margin-right:7px"></i>${C.solucao.inpi}</div>
+        </div>
+      </div>
+    </div>
+    <div class="gap-section-title" style="margin-top:16px">O que a ASJDF recebe</div>
+    <div class="asjdf-receives">${asjdfRecs}</div>
+  </div>
+`, true));
+
+// ── SLIDE 9 — VALIDAÇÃO ───────────────────────────────────────────────
+const timeline9 = C.validacao.timeline.map(t =>
+  `<div class="pt-item">
+    <div class="pt-period">${t.periodo}</div>
+    <div class="pt-desc">${t.desc}</div>
+  </div>`
+).join('');
+
+const criterios = C.validacao.criterios.map(c =>
+  `<div class="sc-item">
+    <div class="sc-metric" style="${c.metrica==='Zero'?'font-size:16px':''}">${c.metrica}</div>
+    <div class="sc-label"><strong>${c.nome}</strong>${c.desc}</div>
+  </div>`
+).join('');
+
+const demoLinks = C.validacao.demo.links.map(l =>
+  `<a class="demo-link" href="${l.href}" target="_blank"><i class="fas fa-external-link-alt"></i> ${l.label}</a>`
+).join('');
+
+slide(9, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-blue','fa-flask', C.validacao.tag)}
+    <h2 class="slide-h2">${C.validacao.h2[0]}<em class="hl">${C.validacao.h2[1]}</em>${C.validacao.h2[2]}</h2>
+  </div>
+  <div class="slide-content">
+    <div class="pilot-details">
+      <div>
+        <div class="gap-section-title">Cronograma do piloto (ASJDF)</div>
+        <div class="pilot-timeline">${timeline9}</div>
+      </div>
+      <div>
+        <div class="gap-section-title">Critérios de sucesso (binários)</div>
+        <div class="success-criteria">${criterios}</div>
+        <div class="demo-link-box">
+          <div class="dl-icon">🖥️</div>
+          <div class="dl-text">
+            <strong>${C.validacao.demo.titulo}</strong>
+            ${C.validacao.demo.sub}
+            <div class="demo-links">${demoLinks}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+`));
+
+// ── SLIDE 10 — ROADMAP + ROI + ENCERRAMENTO ───────────────────────────
+const ondas = C.roadmap.ondas.map((o, i) =>
+  `<div class="wave-card" data-wave="${i+1}">
+    <div class="wc-wave">${o.onda}</div>
+    <div class="wc-year">${o.ano}</div>
+    <div class="wc-scope">${o.escopo.replace(/\n/g,'<br>')}</div>
+    <div class="wc-potential" style="color:${o.cor}">${o.potencial}</div>
+  </div>`
+).join('');
+
+const roiCards = C.roadmap.roi.map(r =>
+  `<div class="roi-card">
+    <div class="roi-label">${r.label}</div>
+    <div class="roi-value" style="color:${r.cor}">${r.valor}</div>
+    <div class="roi-detail">${r.detalhe}</div>
+  </div>`
+).join('');
+
+const squad = C.roadmap.squad.map(s =>
+  `<div class="team-item">
+    <div style="font-size:19px;margin-bottom:4px">${s.icone}</div>
+    <div class="ti-role">${s.papel}</div>
+    <div class="ti-status" style="color:${s.cor}">${s.status}</div>
+  </div>`
+).join('');
+
+const ctas10 = C.roadmap.ctas.map(c =>
+  `<a class="cta-btn ${c.primary?'cta-primary':'cta-secondary'}" href="${c.href}" target="_blank">
+    <i class="fas ${c.icone}"></i> ${c.label}
+  </a>`
+).join('');
+
+slide(10, '', null, inner(`
+  <div class="slide-header">
+    ${tag('tag-green','fa-road', C.roadmap.tag)}
+    <h2 class="slide-h2">${C.roadmap.h2[0]}<em class="hl">${C.roadmap.h2[1]}</em></h2>
+  </div>
+  <div class="slide-content">
+    <div class="roadmap-waves">${ondas}</div>
+    <div class="roi-row">${roiCards}</div>
+    <div class="gap-section-title">Squad — fase piloto</div>
+    <div class="team-row">${squad}</div>
+    <div class="closing-cta-box">
+      <div class="closing-cta-text">"${C.roadmap.cta_final}"</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div class="cta-links">${ctas10}</div>
+        <div class="inpi-badge"><i class="fas fa-certificate"></i> ${C.roadmap.inpi}</div>
+      </div>
+    </div>
+  </div>
+`, true));
+
+// ── NAVEGAÇÃO ─────────────────────────────────────────────────────────
+const TOTAL = 10;
+let current = 1;
+const dotsEl = document.getElementById('dots');
+const counter = document.getElementById('counter');
+
+for (let i = 1; i <= TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i === 1 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+}
+
+function goTo(n) {
+  if (n < 1 || n > TOTAL || n === current) return;
+  document.getElementById('slide-' + current).classList.remove('active');
+  document.getElementById('slide-' + current).classList.add('prev');
+  setTimeout(() => {
+    const p = document.getElementById('slide-' + (n < current ? n+1 : n-1));
+    if (p) p.classList.remove('prev');
+  }, 500);
+  document.getElementById('slide-' + n).classList.add('active');
+  current = n;
+  updateNav();
+}
+
+function navigate(dir) { goTo(current + dir); }
+
+function updateNav() {
+  document.getElementById('btn-prev').disabled = current === 1;
+  document.getElementById('btn-next').disabled = current === TOTAL;
+  counter.textContent = current + ' / ' + TOTAL;
+  document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i+1 === current));
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') navigate(1);
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp') navigate(-1);
+  if (e.key==='Home') goTo(1);
+  if (e.key==='End')  goTo(TOTAL);
+});
+
+let sx = 0;
+document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; });
+document.addEventListener('touchend',   e => { if (Math.abs(e.changedTouches[0].clientX - sx) > 50) navigate(e.changedTouches[0].clientX < sx ? 1 : -1); });
+</script>
+</body>
+</html>
