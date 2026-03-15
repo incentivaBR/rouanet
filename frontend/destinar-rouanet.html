@@ -793,7 +793,7 @@
               <label>IR Devido (R$)</label>
               <div class="input-prefix">
                 <span>R$</span>
-                <input type="number" id="rapidaIRDevido" placeholder="0,00" min="0" step="0.01">
+                <input type="text" inputmode="decimal" id="rapidaIRDevido" placeholder="0,00" oninput="maskBRL(this)">
               </div>
             </div>
           </div>
@@ -807,13 +807,13 @@
               <div class="form-group">
                 <label>Rendimentos Tributáveis (R$)</label>
                 <div class="input-prefix"><span>R$</span>
-                  <input type="number" id="rendimentos" placeholder="0,00" min="0" step="0.01">
+                  <input type="text" inputmode="decimal" id="rendimentos" placeholder="0,00" oninput="maskBRL(this)">
                 </div>
               </div>
               <div class="form-group">
                 <label>13º Salário (R$)</label>
                 <div class="input-prefix"><span>R$</span>
-                  <input type="number" id="decimo3" placeholder="0,00" min="0" step="0.01" value="0">
+                  <input type="text" inputmode="decimal" id="decimo3" placeholder="0,00" oninput="maskBRL(this)" value="0,00">
                 </div>
               </div>
               <div class="form-group">
@@ -823,19 +823,19 @@
               <div class="form-group">
                 <label>Dedução Saúde (R$)</label>
                 <div class="input-prefix"><span>R$</span>
-                  <input type="number" id="saude" placeholder="0,00" min="0" step="0.01" value="0">
+                  <input type="text" inputmode="decimal" id="saude" placeholder="0,00" oninput="maskBRL(this)" value="0,00">
                 </div>
               </div>
               <div class="form-group">
                 <label>Dedução Educação (R$)</label>
                 <div class="input-prefix"><span>R$</span>
-                  <input type="number" id="educacao" placeholder="0,00" min="0" step="0.01" value="0">
+                  <input type="text" inputmode="decimal" id="educacao" placeholder="0,00" oninput="maskBRL(this)" value="0,00">
                 </div>
               </div>
               <div class="form-group">
                 <label>INSS (R$)</label>
                 <div class="input-prefix"><span>R$</span>
-                  <input type="number" id="inss" placeholder="0,00" min="0" step="0.01" value="0">
+                  <input type="text" inputmode="decimal" id="inss" placeholder="0,00" oninput="maskBRL(this)" value="0,00">
                 </div>
               </div>
             </div>
@@ -892,7 +892,7 @@
 
           <div class="valor-input-big">
             <span class="currency">R$</span>
-            <input type="number" id="valorDestinar" placeholder="0,00" min="0.01" step="0.01"
+            <input type="text" inputmode="decimal" id="valorDestinar" placeholder="0,00"
                    oninput="onValorChange()">
           </div>
 
@@ -1102,6 +1102,28 @@
       window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
     }
 
+    // ── Máscara de moeda BRL ─────────────────────────────────
+    function maskBRL(el) {
+      let v = el.value.replace(/\D/g, '');
+      v = (parseInt(v) || 0).toString();
+      while (v.length < 3) v = '0' + v;
+      const cents = v.slice(-2);
+      let intPart = v.slice(0, -2).replace(/^0+/, '') || '0';
+      intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      el.value = intPart + ',' + cents;
+    }
+    function parseBRL(str) {
+      if (!str) return 0;
+      return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
+    }
+    function formatBRLInput(n) {
+      const v = Math.round(n * 100).toString().padStart(3, '0');
+      const cents = v.slice(-2);
+      let intPart = v.slice(0, -2).replace(/^0+/, '') || '0';
+      intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      return intPart + ',' + cents;
+    }
+
     const BASE = window.location.origin;
     const urlParams = new URLSearchParams(window.location.search);
     const orgParam  = urlParams.get('org') || '';
@@ -1215,22 +1237,22 @@
       let body;
 
       if (state.calcMode === 'rapida') {
-        const irDevido = parseFloat(document.getElementById('rapidaIRDevido').value);
+        const irDevido = parseBRL(document.getElementById('rapidaIRDevido').value);
         if (!irDevido || irDevido <= 0) { toast('Informe o IR Devido', 'error'); return; }
         body = { ir_devido: irDevido };
         return calcularRapido(body);
       }
 
-      const rendimentos = parseFloat(document.getElementById('rendimentos').value);
+      const rendimentos = parseBRL(document.getElementById('rendimentos').value);
       if (!rendimentos || rendimentos <= 0) { toast('Informe os rendimentos tributáveis', 'error'); return; }
 
       body = {
         rendimentos_tributaveis: rendimentos,
-        rendimento_13:           parseFloat(document.getElementById('decimo3').value)    || 0,
+        rendimento_13:           parseBRL(document.getElementById('decimo3').value),
         dependentes:             parseInt(document.getElementById('dependentes').value)  || 0,
-        deducao_saude:           parseFloat(document.getElementById('saude').value)      || 0,
-        deducao_educacao:        parseFloat(document.getElementById('educacao').value)   || 0,
-        inss:                    parseFloat(document.getElementById('inss').value)       || 0
+        deducao_saude:           parseBRL(document.getElementById('saude').value),
+        deducao_educacao:        parseBRL(document.getElementById('educacao').value),
+        inss:                    parseBRL(document.getElementById('inss').value)
       };
 
       showLoading('Calculando IR...');
@@ -1305,19 +1327,18 @@
       slider.max   = limite;
       slider.value = limite; // default: valor máximo
 
-      document.getElementById('valorDestinar').value = limite.toFixed(2);
-      document.getElementById('valorDestinar').max   = limite;
+      document.getElementById('valorDestinar').value = formatBRLInput(limite);
       updateResumoValor(limite);
     }
 
     function onSliderChange() {
       const v = parseFloat(document.getElementById('valorSlider').value) || 0;
-      document.getElementById('valorDestinar').value = v.toFixed(2);
+      document.getElementById('valorDestinar').value = formatBRLInput(v);
       updateResumoValor(v);
     }
 
     function onValorChange() {
-      const v = parseFloat(document.getElementById('valorDestinar').value) || 0;
+      const v = parseBRL(document.getElementById('valorDestinar').value);
       const max = state.limite || 0;
       const clamped = Math.min(v, max);
       document.getElementById('valorSlider').value = clamped;
