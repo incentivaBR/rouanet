@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASJDF × Destinai — Seu IR pela Justiça Social</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #F8F9FF; color: #1E293B; line-height: 1.6; }
+
+    :root {
+      --j-primary: #1A237E;
+      --j-gold: #C8A951;
+      --j-dark: #0D1B2A;
+      --j-light: #F0F4FF;
+    }
+
+    /* PARTNERSHIP BANNER */
+    .partner-banner {
+      background: var(--j-primary);
+      color: white;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+    .partner-banner strong { color: var(--j-gold); }
+
+    /* NAVBAR */
+    .navbar-custom {
+      background: white;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(26,35,126,0.08);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .navbar-logos {
+      display: flex; align-items: center; gap: 20px;
+    }
+    .navbar-logos .divider {
+      width: 1px; height: 36px; background: #E2E8F0;
+    }
+    .asjdf-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; color: var(--j-primary); font-size: 15px;
+    }
+    .asjdf-logo .badge-logo {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--j-primary), #3949AB);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px;
+    }
+    .destinai-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--j-primary);
+      letter-spacing: -0.5px;
+    }
+    .destinai-wordmark span { color: var(--j-gold); }
+    .btn-sm {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--j-primary); color: white;
+      padding: 10px 20px; border-radius: 10px;
+      font-size: 13px; font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-sm:hover { background: #283593; }
+
+    /* HERO EMOCIONAL */
+    .hero-emocional {
+      background: linear-gradient(160deg, #0D1B2A 0%, #1A237E 50%, #283593 100%);
+      color: white;
+      padding: 100px 40px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-emocional::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(200,169,81,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(57,73,171,0.3) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(200,169,81,0.15);
+      border: 1px solid rgba(200,169,81,0.4);
+      color: var(--j-gold);
+      padding: 8px 20px; border-radius: 50px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 28px; position: relative;
+    }
+    .hero-emocional h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      position: relative;
+      max-width: 800px;
+      margin-left: auto; margin-right: auto;
+    }
+    .hero-emocional h1 .gold { color: var(--j-gold); }
+    .hero-emocional h1 .underline {
+      position: relative;
+    }
+    .hero-emocional h1 .underline::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px; right: 0; height: 3px;
+      background: var(--j-gold);
+      border-radius: 2px;
+    }
+    .hero-lead {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      opacity: 0.9; line-height: 1.8;
+      max-width: 640px; margin: 0 auto 40px;
+      position: relative;
+    }
+    .hero-lead strong { color: var(--j-gold); }
+
+    /* HERO STAT BAR */
+    .hero-stat-bar {
+      display: flex; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+      position: relative; margin-bottom: 48px;
+    }
+    .hero-stat-item {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 20px 36px;
+      text-align: center;
+    }
+    .hero-stat-item:first-child { border-radius: 14px 0 0 14px; }
+    .hero-stat-item:last-child { border-radius: 0 14px 14px 0; }
+    .hero-stat-item .v {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 800; color: var(--j-gold);
+      display: block;
+    }
+    .hero-stat-item .l {
+      font-size: 11px; opacity: 0.75;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    .hero-cta-group {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      position: relative;
+    }
+    .btn-hero-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--j-gold);
+      color: var(--j-dark);
+      padding: 18px 36px; border-radius: 14px;
+      font-size: 16px; font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 8px 32px rgba(200,169,81,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-hero-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(200,169,81,0.5);
+      color: var(--j-dark);
+    }
+    .btn-hero-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 2px solid rgba(255,255,255,0.35);
+      color: white; padding: 18px 36px; border-radius: 14px;
+      font-size: 16px; font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-hero-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    /* SEÇÃO: O PROBLEMA */
+    .section-problema {
+      padding: 80px 40px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .problema-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+    }
+    .problema-text .eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: #DC2626;
+      background: #FEF2F2; padding: 5px 14px;
+      border-radius: 50px; margin-bottom: 16px;
+    }
+    .problema-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--j-dark); line-height: 1.3;
+      margin-bottom: 20px;
+    }
+    .problema-text h2 em {
+      font-style: normal; color: var(--j-primary);
+    }
+    .problema-text p {
+      color: #475569; line-height: 1.9; font-size: 15px;
+      margin-bottom: 14px;
+    }
+    .problema-text p strong { color: var(--j-dark); }
+
+    .problema-visual {
+      background: linear-gradient(135deg, #1A237E, #283593);
+      border-radius: 24px; padding: 40px;
+      color: white; text-align: center;
+    }
+    .ir-calc-demo {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px; padding: 28px;
+      margin-bottom: 20px;
+    }
+    .ir-calc-demo .cargo {
+      font-size: 12px; opacity: 0.7; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .ir-calc-demo .salario {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 800;
+      color: var(--j-gold); margin-bottom: 4px;
+    }
+    .ir-calc-demo .salario-label {
+      font-size: 12px; opacity: 0.7; margin-bottom: 24px;
+    }
+    .ir-linha {
+      display: flex; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+    }
+    .ir-linha:last-child { border-bottom: none; }
+    .ir-linha .label { opacity: 0.8; }
+    .ir-linha .valor { font-weight: 700; }
+    .ir-linha .valor.gold { color: var(--j-gold); font-size: 1.1rem; }
+    .ir-linha .valor.green { color: #34D399; font-size: 1.1rem; }
+    .ir-destaque {
+      background: rgba(200,169,81,0.15);
+      border: 1px solid rgba(200,169,81,0.4);
+      border-radius: 12px; padding: 16px;
+      margin-top: 16px;
+      font-size: 13px; color: var(--j-gold);
+    }
+
+    /* SEÇÃO: O PROJETO */
+    .section-projeto {
+      background: linear-gradient(180deg, #F0F4FF 0%, white 100%);
+      padding: 80px 40px;
+    }
+    .projeto-inner { max-width: 1100px; margin: 0 auto; }
+    .projeto-hero-card {
+      background: linear-gradient(135deg, #1A237E 0%, #4A148C 50%, #880E4F 100%);
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(26,35,126,0.3);
+    }
+    .projeto-hero-visual {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: rgba(0,0,0,0.1);
+    }
+    .projeto-hero-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(200,169,81,0.2) 0%, transparent 70%);
+    }
+    .projeto-eyebrow {
+      position: relative; z-index: 2;
+      background: rgba(200,169,81,0.2);
+      border: 1px solid rgba(200,169,81,0.5);
+      color: var(--j-gold);
+      padding: 6px 18px; border-radius: 50px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .projeto-content {
+      padding: 36px 40px 40px;
+      color: white;
+    }
+    .projeto-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 900; margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .projeto-content h2 .gold { color: var(--j-gold); }
+    .projeto-subtitle {
+      font-size: 14px; opacity: 0.8; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .projeto-content p {
+      font-size: 15px; line-height: 1.8; opacity: 0.9;
+      margin-bottom: 24px; max-width: 700px;
+    }
+    .projeto-numeros {
+      display: flex; gap: 0; flex-wrap: wrap;
+      background: rgba(255,255,255,0.08);
+      border-radius: 16px; overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .projeto-num {
+      flex: 1; min-width: 100px;
+      padding: 20px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .projeto-num:last-child { border-right: none; }
+    .projeto-num .n {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 800; color: var(--j-gold);
+    }
+    .projeto-num .l { font-size: 11px; opacity: 0.7; margin-top: 3px; }
+
+    /* SEÇÃO: COMO FUNCIONA */
+    .section-como {
+      padding: 80px 40px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .como-header { text-align: center; margin-bottom: 56px; }
+    .como-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--j-dark); margin-bottom: 12px;
+    }
+    .como-header p { color: #64748B; font-size: 16px; max-width: 500px; margin: 0 auto; }
+
+    .como-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0; position: relative;
+    }
+    .como-steps::before {
+      content: '';
+      position: absolute;
+      top: 44px; left: 15%; right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--j-primary), var(--j-gold), var(--j-primary));
+      opacity: 0.2;
+    }
+
+    .como-step {
+      text-align: center; padding: 0 24px;
+      position: relative;
+    }
+    .como-step-num {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 4px 20px rgba(26,35,126,0.15);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      position: relative; z-index: 1;
+      border: 3px solid #F0F4FF;
+      transition: all 0.3s;
+    }
+    .como-step:hover .como-step-num {
+      transform: scale(1.08);
+      box-shadow: 0 8px 32px rgba(26,35,126,0.2);
+      border-color: var(--j-gold);
+    }
+    .como-step-num i { font-size: 32px; color: var(--j-primary); }
+    .como-step-num .step-badge {
+      position: absolute; top: -4px; right: -4px;
+      width: 26px; height: 26px;
+      background: var(--j-gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800; color: var(--j-dark);
+    }
+    .como-step h3 { font-size: 17px; color: var(--j-dark); margin-bottom: 8px; font-weight: 700; }
+    .como-step p { font-size: 14px; color: #64748B; line-height: 1.7; }
+    .como-step .tempo {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #F0F4FF; color: var(--j-primary);
+      padding: 4px 12px; border-radius: 50px;
+      font-size: 11px; font-weight: 700;
+      margin-top: 10px;
+    }
+
+    /* SEÇÃO: APELO EMOCIONAL */
+    .section-emocional {
+      background: linear-gradient(135deg, #0D1B2A 0%, #1A237E 100%);
+      padding: 100px 40px;
+      text-align: center;
+      color: white;
+      position: relative; overflow: hidden;
+    }
+    .section-emocional::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(200,169,81,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .emocional-inner { max-width: 800px; margin: 0 auto; position: relative; }
+    .emocional-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.6;
+      margin-bottom: 20px;
+      color: white;
+    }
+    .emocional-quote .gold { color: var(--j-gold); }
+    .emocional-quote .quote-mark {
+      font-size: 4rem; color: var(--j-gold); opacity: 0.3;
+      line-height: 0; vertical-align: -0.6em;
+    }
+    .emocional-sub {
+      font-size: 15px; opacity: 0.8; line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .emocional-sub strong { color: var(--j-gold); }
+
+    .emocional-numeros {
+      display: flex; gap: 0; justify-content: center;
+      border: 1px solid rgba(200,169,81,0.3);
+      border-radius: 20px; overflow: hidden;
+      margin-bottom: 48px; flex-wrap: wrap;
+    }
+    .emocional-num {
+      padding: 28px 40px; text-align: center;
+      border-right: 1px solid rgba(200,169,81,0.2);
+      flex: 1; min-width: 160px;
+    }
+    .emocional-num:last-child { border-right: none; }
+    .emocional-num .v {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 800; color: var(--j-gold);
+    }
+    .emocional-num .l { font-size: 12px; opacity: 0.7; margin-top: 4px; }
+
+    /* DEPOIMENTOS */
+    .section-depoimentos {
+      padding: 80px 40px;
+      background: #F8F9FF;
+    }
+    .depo-inner { max-width: 1100px; margin: 0 auto; }
+    .depo-header { text-align: center; margin-bottom: 48px; }
+    .depo-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--j-dark); margin-bottom: 8px;
+    }
+    .depo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .depo-card {
+      background: white; border-radius: 20px;
+      padding: 28px; box-shadow: 0 4px 20px rgba(26,35,126,0.07);
+      border: 1px solid #E8EDF8;
+      position: relative;
+    }
+    .depo-card::before {
+      content: '\201C';
+      position: absolute; top: 16px; right: 24px;
+      font-family: Georgia, serif;
+      font-size: 72px; color: var(--j-primary); opacity: 0.07;
+      line-height: 1;
+    }
+    .depo-stars { color: var(--j-gold); margin-bottom: 14px; font-size: 14px; }
+    .depo-text {
+      font-size: 15px; color: #475569; line-height: 1.8;
+      font-style: italic; margin-bottom: 20px;
+    }
+    .depo-author { display: flex; align-items: center; gap: 12px; }
+    .depo-av {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--j-primary), #3949AB);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 14px;
+      flex-shrink: 0;
+    }
+    .depo-name { font-weight: 700; color: var(--j-dark); font-size: 14px; }
+    .depo-role { font-size: 12px; color: #94A3B8; }
+
+    /* CTA FINAL */
+    .section-cta-final {
+      background: linear-gradient(135deg, var(--j-primary) 0%, #4A148C 100%);
+      padding: 100px 40px;
+      text-align: center; color: white;
+    }
+    .cta-final-inner { max-width: 700px; margin: 0 auto; }
+    .cta-final-inner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900; margin-bottom: 16px; line-height: 1.2;
+    }
+    .cta-final-inner h2 .gold { color: var(--j-gold); }
+    .cta-final-inner p { font-size: 16px; opacity: 0.9; line-height: 1.8; margin-bottom: 36px; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--j-dark);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .footer .tagline { font-size: 13px; opacity: 0.6; margin-bottom: 16px; }
+    .footer-copyright { font-size: 12px; opacity: 0.4; }
+
+    @media (max-width: 768px) {
+      .hero-emocional { padding: 70px 20px 60px; }
+      .section-problema { padding: 50px 20px; }
+      .problema-grid { grid-template-columns: 1fr; }
+      .section-projeto { padding: 50px 20px; }
+      .projeto-content { padding: 24px 20px; }
+      .section-como { padding: 50px 20px; }
+      .como-steps::before { display: none; }
+      .section-emocional { padding: 70px 20px; }
+      .section-depoimentos { padding: 50px 20px; }
+      .section-cta-final { padding: 70px 20px; }
+      .navbar-custom { padding: 14px 20px; }
+      .hero-stat-item { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BANNER DE PARCERIA -->
+<div class="partner-banner">
+  <strong>ASJDF</strong> — Associação dos Servidores da Justiça do DF &nbsp;×&nbsp; <strong>Destinai</strong> &nbsp;·&nbsp; Benefício exclusivo para associados
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom">
+  <div class="navbar-logos">
+    <div class="asjdf-logo">
+      <div class="badge-logo"><i class="fas fa-balance-scale"></i></div>
+      <div>
+        <div style="font-size:13px;font-weight:800;color:var(--j-primary)">ASJDF</div>
+        <div style="font-size:10px;color:#64748B;font-weight:500">Servidores da Justiça DF</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="destinai-wordmark">Destinai<span>.</span></div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <a href="calculadora.html" style="color:var(--j-primary);font-weight:600;font-size:14px;text-decoration:none">
+      <i class="fas fa-calculator"></i> Calcular meu IR
+    </a>
+    <a href="demo-dashboard.html" class="btn-sm"><i class="fas fa-user"></i> Minha Conta</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-emocional">
+  <div class="hero-eyebrow">
+    <i class="fas fa-balance-scale"></i>
+    Benefício exclusivo ASJDF
+  </div>
+  <h1>
+    Você já paga esse imposto.<br>
+    <span class="gold">Agora você</span> <span class="underline">escolhe</span><br>
+    onde ele vai.
+  </h1>
+  <p class="hero-lead">
+    Como servidor da Justiça, você sabe melhor do que ninguém o que acontece quando o Estado falha na proteção social.
+    A Lei Rouanet te dá o poder de redirecionar <strong>até R$ 2.340 do seu IR</strong> para tirar jovens vulneráveis das ruas — sem pagar <em>um centavo a mais.</em>
+  </p>
+
+  <div class="hero-stat-bar">
+    <div class="hero-stat-item">
+      <span class="v">R$ 2.340</span>
+      <span class="l">disponível no seu IR</span>
+    </div>
+    <div class="hero-stat-item">
+      <span class="v">R$ 0</span>
+      <span class="l">custo adicional para você</span>
+    </div>
+    <div class="hero-stat-item">
+      <span class="v">5 min</span>
+      <span class="l">para destinar</span>
+    </div>
+    <div class="hero-stat-item">
+      <span class="v">80</span>
+      <span class="l">jovens impactados</span>
+    </div>
+  </div>
+
+  <div class="hero-cta-group">
+    <a href="demo-projeto.html" class="btn-hero-primary">
+      <i class="fas fa-music"></i> Conhecer o Projeto Themis
+    </a>
+    <a href="calculadora.html" class="btn-hero-secondary">
+      <i class="fas fa-calculator"></i> Calcular meu limite de IR
+    </a>
+  </div>
+</section>
+
+<!-- O PROBLEMA -->
+<section class="section-problema">
+  <div class="problema-grid">
+    <div class="problema-text">
+      <span class="eyebrow"><i class="fas fa-exclamation-triangle"></i> O problema que você conhece</span>
+      <h2>Todo ano, <em>bilhões de reais</em> vão para o governo sem que você tenha voz.</h2>
+      <p>
+        Você trabalha todos os dias pela justiça. Conhece os processos, as histórias, as famílias. Sabe que <strong>a maioria dos jovens que chegam ao sistema judicial vêm de um mesmo lugar: a ausência de oportunidades.</strong>
+      </p>
+      <p>
+        Enquanto isso, todo mês, uma parcela significativa do seu salário vai direto para o governo — e você não tem escolha sobre como esse dinheiro é gasto.
+      </p>
+      <p>
+        <strong>Até agora.</strong> A Lei Rouanet existe desde 1991. Mas poucos servidores sabem que ela se aplica a eles — e que o processo é simples.
+      </p>
+    </div>
+    <div class="problema-visual">
+      <div class="ir-calc-demo">
+        <div class="cargo">Analista Judiciário · TRF 1ª Região</div>
+        <div class="salario">R$ 15.000</div>
+        <div class="salario-label">salário mensal bruto</div>
+        <div class="ir-linha">
+          <span class="label">IR anual pago ao governo</span>
+          <span class="valor" style="color:#F87171">R$ 39.000</span>
+        </div>
+        <div class="ir-linha">
+          <span class="label">Limite Rouanet (6% do IR)</span>
+          <span class="valor gold">R$ 2.340</span>
+        </div>
+        <div class="ir-linha">
+          <span class="label">Custo extra para você</span>
+          <span class="valor green">R$ 0,00</span>
+        </div>
+      </div>
+      <div class="ir-destaque">
+        <i class="fas fa-lightbulb"></i>
+        <strong> R$ 2.340</strong> que já sairiam do seu bolso — agora você decide onde vão.
+        São <strong>80 jovens</strong> que podem ter um futuro diferente.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O PROJETO -->
+<section class="section-projeto">
+  <div class="projeto-inner">
+    <div style="text-align:center;margin-bottom:40px">
+      <span style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--j-primary);background:#E8EDF8;padding:6px 16px;border-radius:50px">O projeto que a ASJDF escolheu apoiar</span>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--j-dark);margin-top:14px">Conheça o Projeto Themis</h2>
+    </div>
+    <div class="projeto-hero-card">
+      <div class="projeto-hero-visual">
+        <span style="font-size:80px;opacity:0.15;position:absolute;left:40px;transform:rotate(-15deg)">🎻</span>
+        <span style="font-size:50px;opacity:0.12;position:absolute;right:60px;top:20px">🎵</span>
+        <span class="projeto-eyebrow"><i class="fas fa-music"></i> &nbsp;Música &amp; Transformação Social</span>
+      </div>
+      <div class="projeto-content">
+        <h2>Projeto Themis — <span class="gold">Da Rua ao Palco</span></h2>
+        <div class="projeto-subtitle">
+          <span><i class="fas fa-building"></i> Orquestra Social do DF</span>
+          <span>·</span>
+          <span><i class="fas fa-map-marker-alt"></i> Ceilândia · Samambaia · Santa Maria</span>
+          <span>·</span>
+          <span style="color:#6EE7B7"><i class="fas fa-check-circle"></i> Aprovado pelo MinC</span>
+        </div>
+        <p>
+          80 jovens de 10 a 17 anos em situação de vulnerabilidade social no Distrito Federal aprendem música clássica e formam uma orquestra. O nome é uma homenagem à deusa da Justiça — porque <strong style="color:var(--j-gold)">música é lei, e lei deveria ser para todos.</strong>
+        </p>
+        <p>
+          As apresentações acontecem no <strong style="color:var(--j-gold)">TJDFT, no STJ, no STF</strong> e em 20 escolas públicas do DF — trazendo a cultura diretamente para dentro das instituições que os servidores da ASJDF representam.
+        </p>
+        <div class="projeto-numeros">
+          <div class="projeto-num">
+            <div class="n">80</div>
+            <div class="l">Jovens em risco social</div>
+          </div>
+          <div class="projeto-num">
+            <div class="n">3</div>
+            <div class="l">Comunidades do DF</div>
+          </div>
+          <div class="projeto-num">
+            <div class="n">20</div>
+            <div class="l">Escolas públicas</div>
+          </div>
+          <div class="projeto-num">
+            <div class="n">2 anos</div>
+            <div class="l">De impacto contínuo</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="demo-projeto.html" class="btn-hero-primary" style="font-size:15px;padding:14px 28px">
+            <i class="fas fa-arrow-right"></i> Ver página completa do projeto
+          </a>
+          <a href="calculadora.html" style="display:inline-flex;align-items:center;gap:8px;border:2px solid rgba(255,255,255,0.3);color:white;padding:14px 24px;border-radius:12px;font-weight:600;text-decoration:none;font-size:14px">
+            <i class="fas fa-calculator"></i> Calcular meu IR
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="section-como">
+  <div class="como-header">
+    <span style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--j-primary);background:#E8EDF8;padding:6px 16px;border-radius:50px;margin-bottom:14px">Simples assim</span>
+    <h2>Do início ao comprovante em 5 minutos</h2>
+    <p>Sem burocracia. Sem papelada. Sem banco físico. 100% online.</p>
+  </div>
+  <div class="como-steps">
+    <div class="como-step">
+      <div class="como-step-num">
+        <i class="fas fa-calculator"></i>
+        <span class="step-badge">1</span>
+      </div>
+      <h3>Calcule seu limite</h3>
+      <p>Informe sua renda e descubra exatamente quanto você pode destinar via Lei Rouanet. Calculadora automática.</p>
+      <span class="tempo"><i class="fas fa-clock"></i> 1 minuto</span>
+    </div>
+    <div class="como-step">
+      <div class="como-step-num">
+        <i class="fas fa-heart"></i>
+        <span class="step-badge">2</span>
+      </div>
+      <h3>Escolha o projeto</h3>
+      <p>Selecione o Projeto Themis — o projeto que a ASJDF escolheu para representar os servidores da Justiça do DF.</p>
+      <span class="tempo"><i class="fas fa-clock"></i> 1 minuto</span>
+    </div>
+    <div class="como-step">
+      <div class="como-step-num">
+        <i class="fas fa-university"></i>
+        <span class="step-badge">3</span>
+      </div>
+      <h3>Transfira para o FNC</h3>
+      <p>Transfira diretamente para o Fundo Nacional de Cultura no Banco do Brasil. Dados fornecidos pela plataforma.</p>
+      <span class="tempo"><i class="fas fa-clock"></i> 2 minutos</span>
+    </div>
+    <div class="como-step">
+      <div class="como-step-num">
+        <i class="fas fa-file-pdf"></i>
+        <span class="step-badge">4</span>
+      </div>
+      <h3>Receba o comprovante</h3>
+      <p>Comprovante gerado automaticamente para sua declaração de IR. Dedução garantida. Sem custo adicional.</p>
+      <span class="tempo"><i class="fas fa-clock"></i> Imediato</span>
+    </div>
+  </div>
+</section>
+
+<!-- APELO EMOCIONAL -->
+<section class="section-emocional">
+  <div class="emocional-inner">
+    <div class="emocional-quote">
+      <span class="quote-mark">"</span>
+      Você passou anos estudando, se dedicando, construindo uma carreira na Justiça.
+      <span class="gold">Agora a Justiça pode ser a ferramenta que salva uma criança</span>
+      antes que ela precise dela por outros motivos.
+      <span class="quote-mark">"</span>
+    </div>
+    <p class="emocional-sub">
+      Um jovem de Ceilândia que aprende violino hoje tem <strong>73% menos chance</strong> de se envolver com atividades ilícitas.
+      Não é estatística — é o que os próprios servidores do TJ veem nos processos que chegam à sua mesa.
+      <br><br>
+      <strong>R$ 2.340 do seu IR</strong> podem mudar a trajetória de uma criança.
+      E esses R$ 2.340 você já pagava de qualquer jeito.
+    </p>
+
+    <div class="emocional-numeros">
+      <div class="emocional-num">
+        <div class="v">1.847</div>
+        <div class="l">Servidores da ASJDF</div>
+      </div>
+      <div class="emocional-num">
+        <div class="v">R$ 4,3M</div>
+        <div class="l">Potencial de captação/ano</div>
+      </div>
+      <div class="emocional-num">
+        <div class="v">80</div>
+        <div class="l">Jovens diretamente impactados</div>
+      </div>
+      <div class="emocional-num">
+        <div class="v">R$ 0</div>
+        <div class="l">Custo para cada servidor</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="demo-projeto.html" class="btn-hero-primary">
+        <i class="fas fa-music"></i> Quero apoiar o Projeto Themis
+      </a>
+      <a href="demo-dashboard.html" class="btn-hero-secondary">
+        <i class="fas fa-eye"></i> Ver como fica meu painel
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="section-depoimentos">
+  <div class="depo-inner">
+    <div class="depo-header">
+      <h2>Quem já destinou fala por si</h2>
+      <p style="color:#64748B;font-size:15px">Servidores da Justiça que transformaram o IR em cultura e justiça social</p>
+    </div>
+    <div class="depo-grid">
+      <div class="depo-card">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">"Trabalho há 14 anos no TRF e nunca soube que podia fazer isso. Em 5 minutos destine R$ 2.000 e recebi o comprovante na hora. O Projeto Themis faz exatamente o que eu acredito que a Justiça deveria fazer: prevenir, não só punir."</p>
+        <div class="depo-author">
+          <div class="depo-av">CE</div>
+          <div>
+            <div class="depo-name">Carlos Eduardo M.</div>
+            <div class="depo-role">Analista Judiciário · TRF 1ª Região</div>
+          </div>
+        </div>
+      </div>
+      <div class="depo-card">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">"Recebi o link pela ASJDF e fiz a destinação no intervalo do almoço. O mais impressionante é acompanhar as atualizações — ver aqueles jovens ensaiando, saber que meu IR está lá. Vai ser a primeira vez que vou ao TJDFT não a trabalho, mas para ver um concerto."</p>
+        <div class="depo-author">
+          <div class="depo-av">LR</div>
+          <div>
+            <div class="depo-name">Luciana R.</div>
+            <div class="depo-role">Oficial de Justiça · TJDFT</div>
+          </div>
+        </div>
+      </div>
+      <div class="depo-card">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">"Minha contadora dizia que eu devia fazer isso faz anos. Nunca tive tempo de entender. A plataforma da ASJDF foi direta: em 3 telas eu sabia exatamente quanto podia destinar, para onde ia, e o que aconteceria com o dinheiro. Simples assim."</p>
+        <div class="depo-author">
+          <div class="depo-av">FM</div>
+          <div>
+            <div class="depo-name">Fernando M.</div>
+            <div class="depo-role">Assessor Jurídico · STJ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="section-cta-final">
+  <div class="cta-final-inner">
+    <h2>Seu IR já está decidido.<br>Só falta <span class="gold">você decidir</span> onde vai.</h2>
+    <p>R$ 2.340 que você já pagaria ao governo. Agora você pode direcionar para 80 jovens do DF que precisam de uma chance. A ASJDF preparou esse caminho para você. Leva 5 minutos.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="demo-projeto.html" class="btn-hero-primary">
+        <i class="fas fa-music"></i> Apoiar o Projeto Themis agora
+      </a>
+      <a href="calculadora.html" class="btn-hero-secondary">
+        <i class="fas fa-calculator"></i> Calcular meu limite primeiro
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="destinai-wordmark" style="font-size:24px;margin-bottom:8px">Destinai<span style="color:var(--j-gold)">.</span></div>
+  <p class="tagline">Lei Rouanet Simplificada · Parceiro oficial ASJDF</p>
+  <div style="margin-top:16px">
+    <p class="footer-copyright">&copy; 2026 Destinai · IncentivaBR · Todos os direitos reservados</p>
+  </div>
+</footer>
+
+</body>
+</html>

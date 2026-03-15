@@ -357,6 +357,235 @@
       to { transform: rotate(360deg); }
     }
 
+    /* ─── Impacto Cards ─── */
+    .impact-cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .impact-card {
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(22,78,99,0.10);
+      overflow: hidden;
+      border: 1px solid #E8F4F8;
+      transition: box-shadow 0.3s;
+    }
+
+    .impact-card:hover {
+      box-shadow: 0 8px 32px rgba(22,78,99,0.16);
+    }
+
+    /* Cabeçalho colorido do card */
+    .impact-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: linear-gradient(135deg, #164E63 0%, #0891B2 100%);
+      color: white;
+    }
+
+    .impact-card-thumb {
+      width: 54px;
+      height: 54px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    .impact-card-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .impact-card-title {
+      font-weight: 700;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .impact-card-sub {
+      font-size: 12px;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .impact-card-amount {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .impact-amount-value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .impact-amount-label {
+      font-size: 11px;
+      opacity: 0.75;
+    }
+
+    /* Corpo do card */
+    .impact-card-body {
+      padding: 20px 24px;
+    }
+
+    /* Barra de progresso do projeto */
+    .impact-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .impact-progress-label span:last-child {
+      font-weight: 700;
+      color: #F59E0B;
+    }
+
+    .impact-progress-track {
+      height: 8px;
+      background: #E2E8F0;
+      border-radius: 50px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .impact-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #F59E0B, #EA580C);
+      border-radius: 50px;
+      transition: width 1.2s ease;
+    }
+
+    /* Última atualização */
+    .impact-update-box {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .impact-update-box i {
+      color: #059669;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .impact-update-text {
+      font-size: 13px;
+      color: #065F46;
+      line-height: 1.5;
+    }
+
+    .impact-update-date {
+      font-size: 11px;
+      color: #6B7280;
+      margin-top: 3px;
+    }
+
+    /* Como seu dinheiro foi usado */
+    .impact-breakdown {
+      margin-bottom: 16px;
+    }
+
+    .impact-breakdown-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94A3B8;
+      margin-bottom: 10px;
+    }
+
+    .impact-breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 13px;
+    }
+
+    .impact-breakdown-row:last-child {
+      border-bottom: none;
+    }
+
+    .impact-breakdown-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #475569;
+    }
+
+    .impact-breakdown-item i {
+      color: #0891B2;
+      font-size: 12px;
+      width: 16px;
+    }
+
+    .impact-breakdown-value {
+      font-weight: 600;
+      color: #164E63;
+    }
+
+    /* Footer do card */
+    .impact-card-footer {
+      padding: 14px 24px;
+      border-top: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .impact-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .impact-status-badge.status-confirmed {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    .impact-status-badge.status-pending {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .impact-status-badge.status-processed {
+      background: #DBEAFE;
+      color: #1E40AF;
+    }
+
+    .impact-footer-actions {
+      display: flex;
+      gap: 8px;
+    }
+
     @media (max-width: 768px) {
       .header nav:not(.user-menu) {
         display: none;
@@ -449,21 +678,19 @@
       </div>
     </div>
 
-    <!-- Minhas Destinacoes -->
+    <!-- Meu Impacto Cultural -->
     <div class="section">
       <div class="section-header">
-        <h2 class="section-title"><i class="fas fa-theater-masks"></i> Minhas Destinações Rouanet</h2>
+        <h2 class="section-title"><i class="fas fa-heart"></i> Meu Impacto Cultural</h2>
         <a href="projetos-rouanet.html" class="btn btn-outline">
           <i class="fas fa-plus"></i> Nova Destinação
         </a>
       </div>
 
-      <div class="card">
-        <div id="donationsList" class="donation-list">
-          <div class="loading">
-            <i class="fas fa-spinner"></i>
-            <p style="margin-top:16px">Carregando destinacoes...</p>
-          </div>
+      <div id="donationsList" class="impact-cards-list">
+        <div class="loading">
+          <i class="fas fa-spinner"></i>
+          <p style="margin-top:16px">Carregando destinações...</p>
         </div>
       </div>
     </div>
@@ -615,7 +842,136 @@
       }
     }
 
-    // Load donations
+    // Demo data: atualizações por status do projeto
+    const projectUpdates = {
+      confirmed: [
+        { icon: 'fa-circle-check', text: 'Seu comprovante de destinação foi emitido e está disponível para download. Use-o na sua declaração de IR.', date: 'Atualização recente' },
+      ],
+      pending: [
+        { icon: 'fa-clock', text: 'Sua destinação está sendo processada. Em breve você receberá a confirmação e poderá baixar o comprovante.', date: 'Aguardando confirmação' },
+      ],
+      processed: [
+        { icon: 'fa-star', text: 'Sua destinação foi processada e enviada ao Fundo Nacional de Cultura. O projeto está em execução!', date: 'Processado com sucesso' },
+      ]
+    };
+
+    // Demo: breakdown de uso por valor
+    function getBreakdown(amount) {
+      return [
+        { icon: 'fa-palette', label: 'Produção artística', pct: 0.40 },
+        { icon: 'fa-users', label: 'Equipe e cachês', pct: 0.35 },
+        { icon: 'fa-truck', label: 'Logística e transporte', pct: 0.15 },
+        { icon: 'fa-bullhorn', label: 'Comunicação', pct: 0.10 },
+      ].map(item => ({ ...item, value: amount * item.pct }));
+    }
+
+    // Icon por categoria (baseado no título do projeto)
+    function getProjectIcon(title) {
+      const t = (title || '').toLowerCase();
+      if (t.includes('música') || t.includes('musica') || t.includes('jazz') || t.includes('festival')) return 'fa-music';
+      if (t.includes('cinema') || t.includes('filme') || t.includes('documentário')) return 'fa-film';
+      if (t.includes('dança') || t.includes('danca')) return 'fa-person-dancing';
+      if (t.includes('arte') || t.includes('mural')) return 'fa-paint-brush';
+      return 'fa-theater-masks';
+    }
+
+    function getStatusInfo(status) {
+      const map = {
+        pending: { label: 'Pendente', cls: 'status-pending', icon: 'fa-clock' },
+        confirmed: { label: 'Confirmada', cls: 'status-confirmed', icon: 'fa-circle-check' },
+        processed: { label: 'Processada', cls: 'status-processed', icon: 'fa-star' },
+        rejected: { label: 'Recusada', cls: 'status-pending', icon: 'fa-times-circle' },
+        cancelled: { label: 'Cancelada', cls: 'status-pending', icon: 'fa-ban' },
+      };
+      return map[status] || map.pending;
+    }
+
+    function renderImpactCard(donation) {
+      const title = donation.projeto_titulo || (donation.pronac ? 'PRONAC ' + donation.pronac : (donation.project?.title || 'Projeto Cultural'));
+      const amount = donation.donation_amount;
+      const statusInfo = getStatusInfo(donation.status);
+      const icon = getProjectIcon(title);
+      const updates = projectUpdates[donation.status] || projectUpdates.pending;
+      const update = updates[0];
+      const breakdown = getBreakdown(amount);
+      const progress = donation.status === 'confirmed' || donation.status === 'processed' ? 78 : 45;
+
+      return `
+        <div class="impact-card">
+          <div class="impact-card-header">
+            <div class="impact-card-thumb">
+              <i class="fas ${icon}"></i>
+            </div>
+            <div class="impact-card-meta">
+              <div class="impact-card-title">${title}</div>
+              <div class="impact-card-sub">
+                ${donation.pronac ? `<span>PRONAC ${donation.pronac}</span><span>·</span>` : ''}
+                <span>Lei Rouanet</span>
+                <span>·</span>
+                <span>${utils.formatDate(donation.created_at)}</span>
+              </div>
+            </div>
+            <div class="impact-card-amount">
+              <div class="impact-amount-value">${utils.formatCurrency(amount)}</div>
+              <div class="impact-amount-label">destinados</div>
+            </div>
+          </div>
+
+          <div class="impact-card-body">
+            <!-- Progresso do projeto -->
+            <div class="impact-progress-label">
+              <span>Meta do projeto</span>
+              <span>${progress}% atingido</span>
+            </div>
+            <div class="impact-progress-track">
+              <div class="impact-progress-fill" style="width:${progress}%"></div>
+            </div>
+
+            <!-- Última atualização -->
+            <div class="impact-update-box">
+              <i class="fas ${update.icon}"></i>
+              <div>
+                <div class="impact-update-text">${update.text}</div>
+                <div class="impact-update-date">${update.date}</div>
+              </div>
+            </div>
+
+            <!-- Como seu dinheiro foi usado -->
+            <div class="impact-breakdown">
+              <div class="impact-breakdown-title">Como seu dinheiro foi aplicado</div>
+              ${breakdown.map(b => `
+                <div class="impact-breakdown-row">
+                  <div class="impact-breakdown-item">
+                    <i class="fas ${b.icon}"></i>
+                    ${b.label}
+                  </div>
+                  <div class="impact-breakdown-value">${utils.formatCurrency(b.value)}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="impact-card-footer">
+            <span class="impact-status-badge ${statusInfo.cls}">
+              <i class="fas ${statusInfo.icon}"></i> ${statusInfo.label}
+            </span>
+            <div class="impact-footer-actions">
+              ${donation.status === 'confirmed' ? `
+                <button onclick="baixarComprovante('${donation.id}')" class="btn-download comprovante">
+                  <i class="fas fa-file-pdf"></i> Comprovante IR
+                </button>
+              ` : ''}
+              ${donation.pronac ? `
+                <a href="projeto-detalhes.html?pronac=${donation.pronac}" class="btn-download recibo">
+                  <i class="fas fa-arrow-right"></i> Ver projeto
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     async function loadDonations() {
       const container = document.getElementById('donationsList');
 
@@ -627,51 +983,20 @@
 
         if (response.donations.length === 0) {
           container.innerHTML = `
-            <div class="empty-state">
+            <div class="empty-state" style="background:white;border-radius:18px;box-shadow:0 4px 20px rgba(22,78,99,0.10)">
               <i class="fas fa-theater-masks"></i>
-              <h3>Nenhuma destinação ainda</h3>
-              <p>Comece a apoiar a cultura brasileira via Lei Rouanet!</p>
+              <h3>Você ainda não apoiou nenhum projeto</h3>
+              <p>Destine parte do seu IR para projetos culturais aprovados pelo MinC.</p>
               <a href="projetos-rouanet.html" class="btn btn-primary" style="margin-top:20px">
-                Ver Projeto Cultural
+                <i class="fas fa-search"></i> Escolher um Projeto
               </a>
             </div>
           `;
           return;
         }
 
-        container.innerHTML = response.donations.map(donation => `
-          <div class="donation-item">
-            <div class="donation-icon">
-              <i class="fas fa-theater-masks"></i>
-            </div>
-            <div class="donation-info">
-              <div class="donation-title">${donation.projeto_titulo || (donation.pronac ? 'PRONAC ' + donation.pronac : (donation.project?.title || '—'))}</div>
-              <div class="donation-meta">
-                ${donation.pronac ? 'PRONAC ' + donation.pronac + ' &bull; ' : ''}Lei Rouanet &bull;
-                <span class="badge badge-${donation.status}">${getStatusLabel(donation.status)}</span>
-              </div>
-              ${donation.status === 'confirmed' ? `
-                <div class="donation-actions">
-                  <button onclick="baixarComprovante('${donation.id}')" class="btn-download comprovante">
-                    <i class="fas fa-file-pdf"></i> Comprovante
-                  </button>
-                  ${donation.receipt_file_path ? `
-                    <a href="${donation.receipt_file_path}"
-                       class="btn-download recibo" target="_blank">
-                      <i class="fas fa-receipt"></i> Recibo Oficial
-                    </a>
-                  ` : ''}
-                </div>
-              ` : ''}
-            </div>
-            <div class="donation-amount">
-              <div class="donation-value">${utils.formatCurrency(donation.donation_amount)}</div>
-              <div class="donation-date">${utils.formatDate(donation.created_at)}</div>
-            </div>
-          </div>
-        `).join('');
+        container.innerHTML = response.donations.map(renderImpactCard).join('');
 
-        // Update available amount
         if (irData && irData.limites_doacao) {
           const limRou = irData.limites_doacao.rouanet ?? irData.limites_doacao.total_maximo ?? 0;
           const available = limRou - response.summary.total_donated;
@@ -680,10 +1005,10 @@
 
       } catch (error) {
         container.innerHTML = `
-          <div class="empty-state">
-            <i class="fas fa-exclamation-circle"></i>
-            <h3>Erro ao carregar</h3>
-            <p>${error.message}</p>
+          <div class="empty-state" style="background:white;border-radius:18px;padding:48px;text-align:center">
+            <i class="fas fa-exclamation-circle" style="font-size:48px;color:#CBD5E1;margin-bottom:16px;display:block"></i>
+            <h3 style="color:#164E63;margin-bottom:8px">Erro ao carregar</h3>
+            <p style="color:#64748B">${error.message}</p>
           </div>
         `;
       }

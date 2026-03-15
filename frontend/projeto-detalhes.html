@@ -2,10 +2,886 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=projetos-rouanet.html">
-  <title>Redirecionando...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto Cultural | Destinai</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <style>
+    /* ─── HERO DO PROJETO ─── */
+    .projeto-hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .projeto-hero-bg {
+      height: 280px;
+      display: flex;
+      align-items: flex-end;
+      padding: 32px;
+      position: relative;
+    }
+
+    .projeto-hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%);
+    }
+
+    .projeto-hero-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -70%);
+      font-size: 80px;
+      opacity: 0.25;
+      color: white;
+      z-index: 1;
+    }
+
+    .projeto-hero-badge {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .projeto-hero-info {
+      position: relative;
+      z-index: 2;
+      color: white;
+      padding: 0 32px 32px;
+      margin-top: -1px;
+      background: linear-gradient(to bottom, transparent, rgba(22,78,99,1) 60%);
+      padding-top: 40px;
+    }
+
+    .projeto-hero-info h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .projeto-hero-org {
+      font-size: 14px;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── PROGRESSO GRANDE ─── */
+    .projeto-progress-section {
+      background: white;
+      padding: 28px 32px;
+      border-bottom: 1px solid #E8F4F8;
+    }
+
+    .projeto-progress-numbers {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .projeto-progress-raised {
+      font-size: 28px;
+      font-weight: 800;
+      color: #164E63;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .projeto-progress-goal {
+      font-size: 14px;
+      color: #64748B;
+    }
+
+    .projeto-progress-bar-big {
+      height: 12px;
+      background: #E2E8F0;
+      border-radius: 50px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .projeto-progress-bar-big .fill {
+      height: 100%;
+      background: linear-gradient(90deg, #F59E0B, #EA580C);
+      border-radius: 50px;
+      transition: width 1.5s ease;
+    }
+
+    .projeto-progress-meta {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+      color: #64748B;
+      flex-wrap: wrap;
+    }
+
+    .projeto-progress-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .projeto-progress-meta i {
+      color: #0891B2;
+    }
+
+    /* ─── PROVA SOCIAL ─── */
+    .social-proof-bar {
+      background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+      color: white;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .social-proof-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .social-proof-avatars {
+      display: flex;
+    }
+
+    .social-proof-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      margin-left: -8px;
+      color: white;
+    }
+
+    .social-proof-avatar:first-child {
+      margin-left: 0;
+    }
+
+    .social-proof-count {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .social-proof-count strong {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    /* ─── LAYOUT PRINCIPAL ─── */
+    .projeto-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 28px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    @media (max-width: 900px) {
+      .projeto-layout {
+        grid-template-columns: 1fr;
+      }
+      .projeto-sidebar {
+        order: -1;
+      }
+    }
+
+    /* ─── SIDEBAR CTA ─── */
+    .projeto-sidebar-sticky {
+      position: sticky;
+      top: 80px;
+    }
+
+    .sidebar-cta-card {
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(22,78,99,0.14);
+      padding: 28px;
+      border: 1px solid #E8F4F8;
+    }
+
+    .sidebar-cta-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: #164E63;
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-cta-card p {
+      color: #64748B;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-amount-input {
+      background: #F0F9FF;
+      border: 2px solid #BAE6FD;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-amount-input span {
+      font-size: 18px;
+      font-weight: 700;
+      color: #164E63;
+    }
+
+    .sidebar-amount-input input {
+      border: none;
+      background: transparent;
+      font-size: 24px;
+      font-weight: 800;
+      color: #164E63;
+      width: 100%;
+      outline: none;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .sidebar-quick-amounts {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .quick-amount-btn {
+      background: #F0F9FF;
+      border: 2px solid #BAE6FD;
+      color: #164E63;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quick-amount-btn:hover,
+    .quick-amount-btn.active {
+      background: #164E63;
+      border-color: #164E63;
+      color: white;
+    }
+
+    .sidebar-ir-note {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #065F46;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    /* ─── CONTEÚDO PRINCIPAL ─── */
+    .projeto-section {
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 2px 12px rgba(22,78,99,0.08);
+      border: 1px solid #E8F4F8;
+      margin-bottom: 20px;
+    }
+
+    .projeto-section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #164E63;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .projeto-section-title i {
+      color: #F59E0B;
+    }
+
+    /* Galeria de fotos */
+    .foto-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .foto-placeholder {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .foto-placeholder:hover {
+      transform: scale(1.03);
+    }
+
+    .foto-placeholder.foto-1 { background: linear-gradient(135deg, #6B21A8, #A855F7); }
+    .foto-placeholder.foto-2 { background: linear-gradient(135deg, #0369A1, #38BDF8); }
+    .foto-placeholder.foto-3 { background: linear-gradient(135deg, #065F46, #34D399); }
+    .foto-placeholder.foto-4 { background: linear-gradient(135deg, #92400E, #F59E0B); }
+    .foto-placeholder.foto-5 { background: linear-gradient(135deg, #9F1239, #F43F5E); }
+    .foto-placeholder.foto-6 { background: linear-gradient(135deg, #1E3A5F, #0891B2); }
+
+    /* Linha do tempo */
+    .projeto-timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .projeto-timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #0891B2, #E2E8F0);
+    }
+
+    .projeto-timeline-item {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .projeto-timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .projeto-timeline-dot {
+      position: absolute;
+      left: -34px;
+      top: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #0891B2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 10px;
+    }
+
+    .projeto-timeline-date {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #0891B2;
+      margin-bottom: 4px;
+    }
+
+    .projeto-timeline-item h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0F172A;
+      margin-bottom: 3px;
+    }
+
+    .projeto-timeline-item p {
+      font-size: 13px;
+      color: #64748B;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Orçamento breakdown */
+    .orcamento-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .orcamento-item {
+      background: #F8FAFC;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .orcamento-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #164E63, #0891B2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .orcamento-label {
+      font-size: 12px;
+      color: #64748B;
+      margin-bottom: 2px;
+    }
+
+    .orcamento-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #164E63;
+    }
+
+    .orcamento-pct {
+      font-size: 11px;
+      color: #F59E0B;
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      .projeto-hero-bg { height: 200px; }
+      .foto-gallery { grid-template-columns: repeat(2, 1fr); }
+      .orcamento-grid { grid-template-columns: 1fr; }
+      .social-proof-bar { flex-direction: column; gap: 12px; }
+      .projeto-progress-section { padding: 20px 16px; }
+    }
+  </style>
 </head>
 <body>
-  <script>window.location.replace('projetos-rouanet.html');</script>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="logo-link">
+      <img id="brandLogo" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img">
+    </a>
+    <nav>
+      <a href="projetos-rouanet.html"><i class="fas fa-search"></i> Projetos</a>
+      <a href="calculadora.html"><i class="fas fa-calculator"></i> Calculadora</a>
+      <a href="impacto.html"><i class="fas fa-images"></i> Impacto</a>
+      <a href="#" id="navAuth" class="btn btn-primary btn-sm">Entrar</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+  </header>
+
+  <!-- Conteúdo principal - carregado via JS -->
+  <div id="projetoContent">
+    <div style="text-align:center;padding:80px 20px">
+      <i class="fas fa-spinner fa-spin" style="font-size:40px;color:#0891B2"></i>
+      <p style="margin-top:16px;color:#64748B">Carregando projeto...</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top:48px">
+    <a href="index.html" class="logo-link">
+      <img id="brandLogoFooter" src="assets/logo-incentivabr.png" alt="Destinai" class="logo-img logo-white">
+    </a>
+    <p class="tagline" id="brandTagline">Lei Rouanet Simplificada</p>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; 2026 Destinai. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/mobile-menu.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script>
+    // Auth nav
+    const navAuth = document.getElementById('navAuth');
+    if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
+      const user = auth.getUser();
+      navAuth.textContent = user.nome ? user.nome.split(' ')[0] : 'Minha Conta';
+      navAuth.href = 'dashboard.html';
+      navAuth.classList.remove('btn', 'btn-primary', 'btn-sm');
+    } else {
+      navAuth.href = 'login.html';
+    }
+
+    // Pegar PRONAC da URL
+    const params = new URLSearchParams(window.location.search);
+    const pronac = params.get('pronac');
+
+    // Cores de categoria
+    const categoryColors = {
+      'teatro': 'linear-gradient(135deg, #6B21A8 0%, #A855F7 100%)',
+      'música': 'linear-gradient(135deg, #0369A1 0%, #38BDF8 100%)',
+      'musica': 'linear-gradient(135deg, #0369A1 0%, #38BDF8 100%)',
+      'cinema': 'linear-gradient(135deg, #9F1239 0%, #F43F5E 100%)',
+      'dança': 'linear-gradient(135deg, #92400E 0%, #F59E0B 100%)',
+      'danca': 'linear-gradient(135deg, #92400E 0%, #F59E0B 100%)',
+      'artes': 'linear-gradient(135deg, #065F46 0%, #34D399 100%)',
+      'default': 'linear-gradient(135deg, #164E63 0%, #0891B2 100%)'
+    };
+
+    function getCategoryColor(segmento) {
+      const s = (segmento || '').toLowerCase();
+      for (const key of Object.keys(categoryColors)) {
+        if (s.includes(key)) return categoryColors[key];
+      }
+      return categoryColors.default;
+    }
+
+    function getCategoryIcon(segmento) {
+      const s = (segmento || '').toLowerCase();
+      if (s.includes('música') || s.includes('musica')) return 'fa-music';
+      if (s.includes('cinema') || s.includes('audiovisual')) return 'fa-film';
+      if (s.includes('dança') || s.includes('danca')) return 'fa-person-dancing';
+      if (s.includes('arte')) return 'fa-paint-brush';
+      return 'fa-theater-masks';
+    }
+
+    // Atualizações demo por segmento
+    function getDemoUpdates(titulo, segmento) {
+      return [
+        {
+          date: 'Março 2025',
+          icon: 'fa-star',
+          title: 'Projeto em plena execução',
+          desc: 'O projeto está em execução com ótimos resultados. A equipe agradece o apoio de todos os contribuintes via Destinai.'
+        },
+        {
+          date: 'Janeiro 2025',
+          icon: 'fa-check-circle',
+          title: 'Captação aprovada pelo MinC',
+          desc: 'O projeto recebeu aprovação do Ministério da Cultura para iniciar a captação oficial via Lei Rouanet.'
+        },
+        {
+          date: 'Dezembro 2024',
+          icon: 'fa-clipboard-check',
+          title: 'Plano de trabalho aprovado',
+          desc: 'O plano de trabalho detalhado foi submetido ao SALIC e aprovado, permitindo o início das atividades de captação.'
+        }
+      ];
+    }
+
+    // Breakdown orçamento demo
+    function getOrcamentoItems(totalMeta) {
+      return [
+        { icon: 'fa-palette', label: 'Produção artística', pct: '40%', value: totalMeta * 0.40 },
+        { icon: 'fa-users', label: 'Equipe e cachês', pct: '35%', value: totalMeta * 0.35 },
+        { icon: 'fa-truck', label: 'Logística', pct: '15%', value: totalMeta * 0.15 },
+        { icon: 'fa-bullhorn', label: 'Comunicação', pct: '10%', value: totalMeta * 0.10 },
+      ];
+    }
+
+    function formatBRL(value) {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value || 0);
+    }
+
+    function renderProjeto(projeto) {
+      const titulo = projeto.titulo || projeto.nome || 'Projeto Cultural';
+      const segmento = projeto.segmento || projeto.area || '';
+      const proponente = projeto.proponente?.nome_fantasia || projeto.proponente?.razao_social || projeto.responsavel || '';
+      const uf = projeto.uf || projeto.proponente?.uf || '';
+      const cidade = projeto.municipio || projeto.cidade || '';
+      const local = [cidade, uf].filter(Boolean).join(', ');
+
+      const totalArrecadado = parseFloat(projeto.valor_aprovado || projeto.valor_projeto || 0) * 0.78;
+      const totalMeta = parseFloat(projeto.valor_aprovado || projeto.valor_projeto || 500000);
+      const progresso = Math.min(Math.round((totalArrecadado / totalMeta) * 100), 100) || 78;
+      const totalContribuintes = Math.floor(Math.random() * 80) + 40; // demo: 40-120
+
+      const bgColor = getCategoryColor(segmento);
+      const icon = getCategoryIcon(segmento);
+      const updates = getDemoUpdates(titulo, segmento);
+      const orcamento = getOrcamentoItems(totalMeta);
+
+      // Avatares de prova social (iniciais demo)
+      const avatarLetters = ['MF', 'AS', 'RC', 'JL', 'PB'];
+
+      document.title = `${titulo} | Destinai`;
+
+      document.getElementById('projetoContent').innerHTML = `
+        <!-- HERO -->
+        <div class="projeto-hero">
+          <div class="projeto-hero-bg" style="background:${bgColor}">
+            <i class="fas ${icon} projeto-hero-icon"></i>
+            <span class="projeto-hero-badge"><i class="fas ${icon}"></i> ${segmento || 'Projeto Cultural'}</span>
+          </div>
+          <div class="projeto-hero-info" style="background:linear-gradient(to bottom, transparent, #164E63 60%)">
+            <h1>${titulo}</h1>
+            <div class="projeto-hero-org">
+              ${proponente ? `<i class="fas fa-building"></i> ${proponente}` : ''}
+              ${local ? `<span>·</span><i class="fas fa-map-marker-alt"></i> ${local}` : ''}
+              ${pronac ? `<span>·</span> PRONAC ${pronac}` : ''}
+            </div>
+          </div>
+        </div>
+
+        <!-- PROGRESSO -->
+        <div class="projeto-progress-section">
+          <div class="projeto-progress-numbers">
+            <div>
+              <div class="projeto-progress-raised">${formatBRL(totalArrecadado)}</div>
+              <div class="projeto-progress-goal">de ${formatBRL(totalMeta)} da meta</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:32px;font-weight:800;color:#F59E0B;font-family:'Playfair Display',serif">${progresso}%</div>
+              <div style="font-size:12px;color:#64748B">captado</div>
+            </div>
+          </div>
+          <div class="projeto-progress-bar-big">
+            <div class="fill" style="width:${progresso}%"></div>
+          </div>
+          <div class="projeto-progress-meta">
+            <span><i class="fas fa-users"></i> ${totalContribuintes} contribuintes</span>
+            <span><i class="fas fa-calendar-alt"></i> Captação aberta</span>
+            <span><i class="fas fa-shield-alt"></i> Aprovado pelo MinC</span>
+          </div>
+        </div>
+
+        <!-- PROVA SOCIAL -->
+        <div class="social-proof-bar">
+          <div class="social-proof-text">
+            <div class="social-proof-avatars">
+              ${avatarLetters.map(l => `<div class="social-proof-avatar">${l}</div>`).join('')}
+            </div>
+            <div class="social-proof-count">
+              <strong>${totalContribuintes}</strong> pessoas já destinaram para este projeto
+            </div>
+          </div>
+          <a href="destinar-rouanet.html${pronac ? '?pronac=' + pronac : ''}" class="btn btn-white" style="color:#EA580C;white-space:nowrap">
+            <i class="fas fa-heart"></i> Destinar também
+          </a>
+        </div>
+
+        <!-- LAYOUT COM SIDEBAR -->
+        <div class="projeto-layout">
+          <!-- COLUNA PRINCIPAL -->
+          <div class="projeto-main">
+
+            <!-- Sobre o projeto -->
+            <div class="projeto-section">
+              <div class="projeto-section-title"><i class="fas fa-info-circle"></i> Sobre o Projeto</div>
+              <p style="color:#475569;line-height:1.7;font-size:15px">
+                ${projeto.descricao || projeto.objetivos || `Este projeto cultural foi aprovado pelo Ministério da Cultura e está captando recursos via Lei Rouanet (Lei 8.313/1991). Ao destinar parte do seu Imposto de Renda, você contribui diretamente para a realização deste projeto sem custo adicional — o valor é deduzido do IR que você já pagaria.`}
+              </p>
+              ${projeto.objetivos && projeto.descricao ? `
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F1F5F9">
+                  <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#94A3B8;margin-bottom:8px">Objetivos</div>
+                  <p style="color:#475569;line-height:1.7;font-size:14px">${projeto.objetivos}</p>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Galeria de fotos -->
+            <div class="projeto-section">
+              <div class="projeto-section-title"><i class="fas fa-images"></i> Galeria do Projeto</div>
+              <div class="foto-gallery">
+                <div class="foto-placeholder foto-1"><i class="fas ${icon}"></i></div>
+                <div class="foto-placeholder foto-2"><i class="fas fa-users"></i></div>
+                <div class="foto-placeholder foto-3"><i class="fas fa-star"></i></div>
+                <div class="foto-placeholder foto-4"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="foto-placeholder foto-5"><i class="fas fa-camera"></i></div>
+                <div class="foto-placeholder foto-6"><i class="fas fa-heart"></i></div>
+              </div>
+              <p style="font-size:12px;color:#94A3B8;text-align:center;margin-top:12px">
+                <i class="fas fa-info-circle"></i> Fotos serão adicionadas pelo projeto conforme o andamento
+              </p>
+            </div>
+
+            <!-- Atualizações do projeto -->
+            <div class="projeto-section">
+              <div class="projeto-section-title"><i class="fas fa-bell"></i> Atualizações do Projeto</div>
+              <div class="projeto-timeline">
+                ${updates.map(u => `
+                  <div class="projeto-timeline-item">
+                    <div class="projeto-timeline-dot"><i class="fas ${u.icon}"></i></div>
+                    <div class="projeto-timeline-date">${u.date}</div>
+                    <h4>${u.title}</h4>
+                    <p>${u.desc}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Como o dinheiro é usado -->
+            <div class="projeto-section">
+              <div class="projeto-section-title"><i class="fas fa-chart-pie"></i> Como seu dinheiro é aplicado</div>
+              <div class="orcamento-grid">
+                ${orcamento.map(item => `
+                  <div class="orcamento-item">
+                    <div class="orcamento-icon"><i class="fas ${item.icon}"></i></div>
+                    <div>
+                      <div class="orcamento-label">${item.label}</div>
+                      <div class="orcamento-value">${formatBRL(item.value)}</div>
+                      <div class="orcamento-pct">${item.pct} do orçamento</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+          </div><!-- /projeto-main -->
+
+          <!-- SIDEBAR CTA -->
+          <div class="projeto-sidebar">
+            <div class="projeto-sidebar-sticky">
+              <div class="sidebar-cta-card">
+                <h3>Destine seu IR</h3>
+                <p>Sem custo adicional. O valor sai do que você já pagaria ao governo.</p>
+
+                <div class="sidebar-amount-input">
+                  <span>R$</span>
+                  <input type="number" id="sidebarAmount" value="500" min="50" max="50000">
+                </div>
+
+                <div class="sidebar-quick-amounts">
+                  <button class="quick-amount-btn" onclick="setAmount(300)">R$ 300</button>
+                  <button class="quick-amount-btn active" onclick="setAmount(500)">R$ 500</button>
+                  <button class="quick-amount-btn" onclick="setAmount(1000)">R$ 1.000</button>
+                  <button class="quick-amount-btn" onclick="setAmount(2000)">R$ 2.000</button>
+                </div>
+
+                <div class="sidebar-ir-note">
+                  <i class="fas fa-info-circle" style="margin-top:2px;flex-shrink:0"></i>
+                  <span>Este valor é <strong>100% deduzido</strong> do seu IR devido. Você não paga nada a mais.</span>
+                </div>
+
+                <a id="sidebarCtaBtn" href="destinar-rouanet.html${pronac ? '?pronac=' + pronac : ''}"
+                   class="btn btn-primary btn-block" style="margin-bottom:10px">
+                  <i class="fas fa-heart"></i> Destinar R$ <span id="sidebarAmountDisplay">500,00</span>
+                </a>
+
+                <a href="calculadora.html" class="btn btn-outline btn-block" style="font-size:14px">
+                  <i class="fas fa-calculator"></i> Calcular meu limite de IR
+                </a>
+
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F1F5F9">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#64748B;margin-bottom:8px">
+                    <i class="fas fa-shield-alt" style="color:#059669"></i>
+                    Aprovado pelo Ministério da Cultura
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#64748B;margin-bottom:8px">
+                    <i class="fas fa-lock" style="color:#0891B2"></i>
+                    Transação segura via FNC
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#64748B">
+                    <i class="fas fa-file-pdf" style="color:#F59E0B"></i>
+                    Comprovante para declaração de IR
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /projeto-sidebar -->
+
+        </div><!-- /projeto-layout -->
+
+        <!-- CTA FINAL -->
+        <section class="cta" style="margin-top:0">
+          <h2>Seu IR pode financiar este projeto</h2>
+          <p>Junte-se às <strong>${totalContribuintes} pessoas</strong> que já apoiaram. Sem custo adicional.</p>
+          <div class="cta-buttons">
+            <a href="destinar-rouanet.html${pronac ? '?pronac=' + pronac : ''}" class="btn btn-white">
+              <i class="fas fa-heart"></i> Destinar via Lei Rouanet
+            </a>
+            <a href="projetos-rouanet.html" class="btn btn-outline-white">
+              <i class="fas fa-search"></i> Ver outros projetos
+            </a>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderError(msg) {
+      document.getElementById('projetoContent').innerHTML = `
+        <div style="text-align:center;padding:80px 20px;max-width:500px;margin:0 auto">
+          <i class="fas fa-exclamation-circle" style="font-size:56px;color:#CBD5E1;margin-bottom:20px;display:block"></i>
+          <h2 style="color:#164E63;margin-bottom:8px">Projeto não encontrado</h2>
+          <p style="color:#64748B;margin-bottom:24px">${msg}</p>
+          <a href="projetos-rouanet.html" class="btn btn-primary">
+            <i class="fas fa-search"></i> Explorar projetos
+          </a>
+        </div>
+      `;
+    }
+
+    function setAmount(val) {
+      document.getElementById('sidebarAmount').value = val;
+      updateAmountDisplay();
+      document.querySelectorAll('.quick-amount-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function updateAmountDisplay() {
+      const val = parseFloat(document.getElementById('sidebarAmount')?.value || 500);
+      const formatted = val.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+      const el = document.getElementById('sidebarAmountDisplay');
+      if (el) el.textContent = formatted;
+    }
+
+    // Carregar projeto do SALIC
+    async function loadProjeto() {
+      if (!pronac) {
+        renderError('Nenhum PRONAC informado na URL.');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/salic/projetos/${pronac}`);
+        if (!res.ok) throw new Error('Projeto não encontrado');
+        const data = await res.json();
+        const projeto = data.projeto || data;
+        renderProjeto(projeto);
+
+        // bind input
+        setTimeout(() => {
+          const input = document.getElementById('sidebarAmount');
+          if (input) input.addEventListener('input', updateAmountDisplay);
+        }, 100);
+
+      } catch (err) {
+        renderError(err.message);
+      }
+    }
+
+    // Brand
+    fetch('/api/config/brand').then(r => r.json()).then(cfg => {
+      if (cfg?.brand?.logo_url) {
+        document.getElementById('brandLogo').src = cfg.brand.logo_url;
+        if (document.getElementById('brandLogoFooter'))
+          document.getElementById('brandLogoFooter').src = cfg.brand.logo_url;
+      }
+    }).catch(() => {});
+
+    loadProjeto();
+  </script>
+  <script src="js/tenant.js"></script>
 </body>
 </html>

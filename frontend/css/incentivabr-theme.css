@@ -3201,3 +3201,350 @@ textarea:focus {
   background: rgba(245, 158, 11, 0.25);
   color: var(--text-primary);
 }
+
+/* ========================================
+   TIPOGRAFIA - DISPLAY FONT
+   ======================================== */
+.hero-home h1,
+.section-header h2,
+.cta h2,
+.page-header h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: -0.5px;
+}
+
+.hero-home h1 {
+  font-size: clamp(2.4rem, 5vw, 3.2rem);
+  line-height: 1.15;
+}
+
+.section-header h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+/* Eyebrow label acima do h2 */
+.section-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  background: rgba(8,145,178,0.10);
+  padding: 5px 14px;
+  border-radius: 50px;
+  margin-bottom: 12px;
+}
+
+/* Highlight inline no h2 */
+.highlight-text {
+  color: var(--secondary-color);
+  position: relative;
+}
+
+/* Step-number modernizado */
+.step-number {
+  width: 52px;
+  height: 52px;
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 auto var(--spacing-md);
+  box-shadow: 0 4px 16px rgba(8,145,178,0.35);
+}
+
+/* ========================================
+   SEÇÃO IMPACTO — "ONDE FOI MEU DINHEIRO"
+   ======================================== */
+.impacto-preview-section {
+  background: var(--background);
+}
+
+/* Contadores */
+.impacto-counters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.impacto-counter {
+  text-align: center;
+  background: var(--background-light);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border: 1px solid var(--border-light);
+  min-width: 160px;
+  flex: 1;
+  max-width: 220px;
+}
+
+.impacto-counter i {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.impacto-counter-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 1;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.impacto-counter-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Galeria de cards */
+.impacto-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.impacto-card {
+  background: var(--background);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  border: 1px solid var(--border-light);
+}
+
+.impacto-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Thumbnail de projeto */
+.impacto-card-thumb {
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+
+.impacto-card-thumb i {
+  font-size: 3rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.impacto-thumb-teatro {
+  background: linear-gradient(135deg, #6B21A8 0%, #A855F7 100%);
+}
+
+.impacto-thumb-musica {
+  background: linear-gradient(135deg, #0369A1 0%, #38BDF8 100%);
+}
+
+.impacto-thumb-cinema {
+  background: linear-gradient(135deg, #9F1239 0%, #F43F5E 100%);
+}
+
+.impacto-thumb-arte {
+  background: linear-gradient(135deg, #065F46 0%, #34D399 100%);
+}
+
+.impacto-thumb-danca {
+  background: linear-gradient(135deg, #92400E 0%, #F59E0B 100%);
+}
+
+.impacto-category {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.25);
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+
+/* Body do card */
+.impacto-card-body {
+  padding: var(--spacing-lg);
+}
+
+.impacto-card-body h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.impacto-org {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Barra de progresso */
+.impacto-progress-wrap {
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 50px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.impacto-progress-bar {
+  height: 100%;
+  background: var(--gradient-secondary);
+  border-radius: 50px;
+  transition: width 1s ease;
+}
+
+.impacto-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.impacto-raised {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.impacto-pct {
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.badge-success-text {
+  color: var(--success-color) !important;
+}
+
+/* Última atualização */
+.impacto-update {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  border-top: 1px solid var(--border-light);
+  padding-top: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+  margin-bottom: 0;
+}
+
+.impacto-update i {
+  color: var(--success-color);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .impacto-counters {
+    gap: var(--spacing-md);
+  }
+
+  .impacto-counter {
+    min-width: 140px;
+    padding: var(--spacing-md);
+  }
+
+  .impacto-counter-value {
+    font-size: 1.4rem;
+  }
+
+  .impacto-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   TIMELINE DE ATUALIZAÇÕES
+   ======================================== */
+.timeline {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent-color), var(--border-color));
+}
+
+.timeline-item {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+}
+
+.timeline-dot {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+  z-index: 1;
+}
+
+.timeline-content {
+  background: var(--background);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  flex: 1;
+  margin-top: 4px;
+}
+
+.timeline-date {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 6px;
+}
+
+.timeline-content h4 {
+  color: var(--primary-color);
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.timeline-content p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+}
