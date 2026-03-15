@@ -520,77 +520,150 @@
           <span>62 servidores já apoiaram</span>
         </div>
 
-        <!-- MINI CALCULADORA -->
-        <div style="margin-bottom:6px">
-          <div class="sidebar-valor-label">Qual é o seu salário bruto mensal?</div>
-          <div style="position:relative;margin-bottom:8px">
-            <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:#64748B">R$</span>
-            <input id="calc-salario"
-              type="text"
-              placeholder="ex: 8.000"
-              inputmode="numeric"
-              style="width:100%;padding:11px 12px 11px 36px;border:2px solid #E2E8F0;border-radius:10px;font-size:15px;font-weight:700;color:#1A237E;outline:none;transition:border .2s"
-              onfocus="this.style.borderColor='#7C3AED'"
-              onblur="this.style.borderColor='#E2E8F0'"
-              oninput="calcLimite(this.value)"
-            >
-          </div>
+        <!-- PASSO 1: SALÁRIO -->
+        <div class="sidebar-valor-label" style="margin-bottom:5px">
+          <i class="fas fa-calculator" style="margin-right:4px;color:#7C3AED"></i>
+          Passo 1 — Descubra seu limite
+        </div>
+        <div style="position:relative;margin-bottom:8px">
+          <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:#64748B">R$</span>
+          <input id="calc-salario"
+            type="text"
+            placeholder="Salário bruto mensal (ex: 8.000)"
+            inputmode="numeric"
+            style="width:100%;padding:11px 12px 11px 36px;border:2px solid #E2E8F0;border-radius:10px;font-size:14px;font-weight:600;color:#1A237E;outline:none;transition:border .2s"
+            onfocus="this.style.borderColor='#7C3AED'"
+            onblur="this.style.borderColor='#E2E8F0'"
+            oninput="calcLimite(this.value)"
+          >
+        </div>
 
-          <!-- resultado oculto até digitar -->
-          <div id="calc-resultado" style="display:none;background:#F0F4FF;border:1px solid #C7D2FE;border-radius:10px;padding:12px;margin-bottom:14px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <span style="font-size:11px;color:#64748B">IR anual estimado (alíquota ~25%)</span>
-              <span id="calc-ir" style="font-size:12px;font-weight:700;color:#1A237E"></span>
+        <!-- hint antes de digitar -->
+        <div id="calc-hint" style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:11px;margin-bottom:14px;font-size:12px;color:#92400E">
+          <i class="fas fa-lightbulb" style="margin-right:5px;color:#F59E0B"></i>
+          Digite seu salário e descubra <strong>exatamente quanto você pode destinar</strong> — você decide o valor.
+        </div>
+
+        <!-- resultado do cálculo -->
+        <div id="calc-resultado" style="display:none">
+          <div style="background:#F0F4FF;border:1px solid #C7D2FE;border-radius:10px;padding:12px;margin-bottom:14px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+              <span style="font-size:11px;color:#64748B">IR anual estimado (~27,5%)</span>
+              <span id="calc-ir" style="font-size:11px;font-weight:700;color:#1A237E"></span>
             </div>
-            <div style="height:1px;background:#E2E8F0;margin-bottom:6px"></div>
+            <div style="height:1px;background:#E2E8F0;margin-bottom:5px"></div>
             <div style="display:flex;justify-content:space-between;align-items:center">
               <span style="font-size:12px;font-weight:700;color:#4A148C">Seu limite Rouanet (6%)</span>
               <span id="calc-limite" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#4A148C"></span>
             </div>
-            <div id="calc-note" style="margin-top:6px;font-size:11px;color:#059669;font-weight:600"></div>
+            <div style="margin-top:5px;font-size:11px;color:#059669;font-weight:600">
+              ✓ 100% dedutível — custo efetivo real: R$ 0
+            </div>
           </div>
 
-          <!-- placeholder antes de digitar -->
-          <div id="calc-hint" style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px;margin-bottom:14px;font-size:12px;color:#92400E">
-            <i class="fas fa-lightbulb" style="margin-right:6px;color:#F59E0B"></i>
-            Digite seu salário e veja <strong>exatamente quanto você pode destinar</strong> — sem custo adicional.
+          <!-- PASSO 2: ESCOLHER VALOR -->
+          <div class="sidebar-valor-label" style="margin-bottom:8px">
+            <i class="fas fa-hand-pointer" style="margin-right:4px;color:#7C3AED"></i>
+            Passo 2 — Escolha quanto quer destinar
           </div>
+
+          <!-- atalhos de percentual -->
+          <div id="quick-btns" style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap"></div>
+
+          <!-- input do valor escolhido -->
+          <div style="position:relative;margin-bottom:6px">
+            <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:#64748B">R$</span>
+            <input id="calc-valor"
+              type="text"
+              inputmode="numeric"
+              placeholder="Digite o valor que deseja"
+              style="width:100%;padding:11px 12px 11px 36px;border:2px solid #C7D2FE;border-radius:10px;font-size:15px;font-weight:800;color:#4A148C;outline:none;transition:border .2s"
+              onfocus="this.style.borderColor='#7C3AED'"
+              onblur="this.style.borderColor='#C7D2FE'"
+              oninput="atualizarBotao()"
+            >
+          </div>
+          <div id="calc-aviso" style="font-size:11px;color:#94A3B8;margin-bottom:14px;min-height:16px"></div>
         </div>
 
         <a id="btn-destinar-link" href="demo-dashboard.html" class="btn-destinar">
           <i class="fas fa-music"></i> <span id="btn-destinar-txt">Quero destinar ao Themis</span>
         </a>
 
-        <div style="text-align:center;font-size:11px;color:#94A3B8">
-          <i class="fas fa-lock"></i> 100% dedutível · custo real R$ 0 · Banco do Brasil
+        <div style="text-align:center;font-size:11px;color:#94A3B8;margin-top:4px">
+          <i class="fas fa-lock"></i> Transferência direta ao FNC · Banco do Brasil
         </div>
 
         <script>
+        var _limiteCalc = 0;
+
+        function fmt(v) {
+          return 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+        }
+
         function calcLimite(raw) {
           const num = parseFloat(raw.replace(/\./g,'').replace(',','.')) || 0;
           const hint = document.getElementById('calc-hint');
           const res  = document.getElementById('calc-resultado');
-          const btn  = document.getElementById('btn-destinar-txt');
 
-          if (num < 100) {
+          if (num < 500) {
             hint.style.display = 'block';
             res.style.display  = 'none';
-            btn.textContent    = 'Quero destinar ao Themis';
+            _limiteCalc = 0;
+            document.getElementById('btn-destinar-txt').textContent = 'Quero destinar ao Themis';
             return;
           }
 
-          // Cálculo simplificado: IR anual ≈ salário × 12 × 0.275 (tabela progressiva ~27,5%)
-          const irAnual  = Math.round(num * 12 * 0.275);
-          const limite   = Math.round(irAnual * 0.06);
-          const fmt = v  => 'R$ ' + v.toLocaleString('pt-BR');
+          const irAnual = num * 12 * 0.275;
+          _limiteCalc   = Math.round(irAnual * 0.06);
 
           document.getElementById('calc-ir').textContent     = fmt(irAnual);
-          document.getElementById('calc-limite').textContent = fmt(limite);
-          document.getElementById('calc-note').textContent   = '✓ 100% dedutível — custo efetivo: R$ 0';
+          document.getElementById('calc-limite').textContent = fmt(_limiteCalc);
+
+          // atalhos: 25%, 50%, 75%, 100%
+          const qb = document.getElementById('quick-btns');
+          qb.innerHTML = '';
+          [0.25, 0.5, 0.75, 1].forEach(function(p) {
+            const v   = Math.round(_limiteCalc * p);
+            const btn = document.createElement('button');
+            btn.textContent = p === 1 ? 'Máximo (' + fmt(v) + ')' : (p*100)+'% — '+fmt(v);
+            btn.style.cssText = 'flex:1;min-width:calc(50% - 3px);padding:7px 6px;border-radius:8px;border:1px solid #C7D2FE;background:#F0F4FF;color:#4A148C;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s';
+            btn.onmouseover = function(){ this.style.background='#E0E7FF'; };
+            btn.onmouseout  = function(){ this.style.background='#F0F4FF'; };
+            btn.onclick     = function() {
+              document.getElementById('calc-valor').value = v.toLocaleString('pt-BR');
+              atualizarBotao();
+            };
+            qb.appendChild(btn);
+          });
 
           hint.style.display = 'none';
           res.style.display  = 'block';
-          btn.textContent    = 'Destinar ' + fmt(limite) + ' ao Themis';
+          atualizarBotao();
+        }
+
+        function atualizarBotao() {
+          const raw    = (document.getElementById('calc-valor').value || '').replace(/\./g,'').replace(',','.');
+          const valor  = parseFloat(raw) || 0;
+          const aviso  = document.getElementById('calc-aviso');
+          const btn    = document.getElementById('btn-destinar-txt');
+
+          if (valor <= 0) {
+            btn.textContent = 'Quero destinar ao Themis';
+            aviso.textContent = '';
+            return;
+          }
+
+          if (_limiteCalc > 0 && valor > _limiteCalc) {
+            aviso.style.color = '#DC2626';
+            aviso.textContent = '⚠ Valor acima do seu limite de ' + fmt(_limiteCalc);
+            btn.textContent   = 'Quero destinar ao Themis';
+            return;
+          }
+
+          aviso.style.color = '#059669';
+          aviso.textContent = '✓ Dentro do seu limite — dedução garantida';
+          btn.textContent   = 'Destinar ' + fmt(valor) + ' ao Themis';
         }
         </script>
       </div>
