@@ -1,7 +1,13 @@
+FROM node:20-alpine AS deps
+WORKDIR /deps
+COPY backend/package.json ./
+RUN npm install --no-package-lock
+
 FROM node:20-alpine
 WORKDIR /app
+COPY --from=deps /deps/node_modules ./node_modules
 COPY backend/ .
-RUN rm -rf node_modules && npm install --no-package-lock
+COPY frontend/ /frontend/
 EXPOSE 8080
 ENV PORT=8080
 CMD ["node", "server.js"]
