@@ -1,6 +1,8 @@
 FROM node:20-alpine
-WORKDIR /app
+WORKDIR /srv
+COPY backend/package.json ./
+RUN npm install
 COPY backend/ .
 COPY frontend/ /frontend/
 ENV PORT=8080
-CMD ["/bin/sh", "-c", "npm install --prefer-offline 2>&1 && node server.js 2>&1"]
+CMD ["node", "server.js"]
