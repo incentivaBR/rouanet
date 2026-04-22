@@ -1,7 +1,7 @@
 FROM node:20-alpine
+COPY backend/package.json /build/
+RUN cd /build && npm install --prefix /
 WORKDIR /srv
-COPY backend/package.json ./
-RUN npm install
 COPY backend/ .
 COPY frontend/ /frontend/
 ENV PORT=8080
