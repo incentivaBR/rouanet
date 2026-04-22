@@ -33,6 +33,7 @@ const ALLOWED_ORIGINS = [
   // DestineAI — plataforma do usuário final
   'https://destineai.com.br',
   'https://www.destineai.com.br',
+  'https://rouanet-production-4df2.up.railway.app',
   // IncentivaBR — institucional + admin (domínio mãe)
   'https://incentivabr.com.br',
   'https://www.incentivabr.com.br',
