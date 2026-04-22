@@ -1,12 +1,8 @@
-FROM node:20-alpine AS deps
-WORKDIR /install
-COPY backend/package.json .
-RUN npm install
-
 FROM node:20-alpine
 WORKDIR /app
+COPY backend/package*.json ./
+RUN npm ci && test -d node_modules/helmet && echo "BUILD: HELMET OK"
 COPY backend/ .
 COPY frontend/ /frontend/
-COPY --from=deps /install/node_modules ./node_modules
 ENV PORT=8080
-CMD ["node", "server.js"]
+CMD ["/bin/sh", "-c", "test -d /app/node_modules/helmet && echo 'RUNTIME: HELMET OK' || echo 'RUNTIME: HELMET SUMIU'; node server.js 2>&1"]
