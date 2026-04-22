@@ -4,4 +4,4 @@ COPY backend/ .
 RUN rm -rf node_modules && npm install --no-package-lock
 EXPOSE 8080
 ENV PORT=8080
-CMD ["/bin/sh", "-c", "node server.js 2>&1"]
+CMD ["node", "server.js"]
