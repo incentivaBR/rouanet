@@ -10,4 +10,4 @@ COPY backend/ .
 COPY frontend/ /frontend/
 EXPOSE 8080
 ENV PORT=8080
-CMD ["node", "server.js"]
+CMD ["/bin/sh", "-c", "node server.js 2>&1"]
