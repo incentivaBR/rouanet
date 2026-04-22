@@ -1,9 +1,12 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import pool, { testConnection } from './config/database.js';
+import { runMigrations } from './src/config/migrate.js';
 import { initEmailService, getEmailStatus } from './src/services/emailService.js';
 
 // ES modules: criar __dirname
@@ -17,6 +20,7 @@ import donationsRoutes from './src/routes/donations.js';
 import uploadsRoutes from './src/routes/uploads.js';
 import configRoutes from './src/routes/config.js';
 import salicRoutes from './src/routes/salic.js';
+import adminRoutes from './src/routes/admin.js';
 import tenantMiddleware from './src/middleware/tenant.js';
 
 dotenv.config();
@@ -24,14 +28,63 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
+// Domínios permitidos (IncentivaBR + white-labels)
+const ALLOWED_ORIGINS = [
+  // DestineAI — plataforma do usuário final
+  'https://destineai.com.br',
+  'https://www.destineai.com.br',
+  // IncentivaBR — institucional + admin (domínio mãe)
+  'https://incentivabr.com.br',
+  'https://www.incentivabr.com.br',
+  // Desenvolvimento local
+  'http://localhost:3000',
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  'http://127.0.0.1:3000'
+];
+
+// Segurança HTTP — headers de proteção
+app.use(helmet({
+  contentSecurityPolicy: false // desabilitado para não quebrar o frontend HTML existente
+}));
+
+// CORS restrito aos domínios conhecidos
 app.use(cors({
-  origin: true,
+  origin: (origin, callback) => {
+    // Permite sem origin (mobile, Postman, Railway health checks)
+    if (!origin) return callback(null, true);
+    if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    // Permite subdomínios *.incentivabr.com.br (white-labels)
+    if (/^https:\/\/[a-z0-9-]+\.incentivabr\.com\.br$/.test(origin)) return callback(null, true);
+    callback(new Error(`CORS bloqueado: ${origin}`));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(express.json());
+
+// Rate limiting global — proteção contra abuso
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { status: 'error', message: 'Muitas requisições. Tente novamente em 15 minutos.' }
+});
+app.use('/api/', globalLimiter);
+
+// Rate limiting rigoroso para autenticação — anti brute-force
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { status: 'error', message: 'Muitas tentativas de login. Tente novamente em 15 minutos.' }
+});
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
 
 // Redirect domínio sem www para www
 app.use((req, res, next) => {
@@ -138,7 +191,8 @@ app.use('/api/calculator', calculatorRoutes);
 app.use('/api/donations', donationsRoutes);
 app.use('/api/uploads', uploadsRoutes);
 app.use('/api/config', configRoutes);
-app.use('/api/salic', salicRoutes); // Lei Rouanet — proxy SALIC API
+app.use('/api/salic', salicRoutes);   // Lei Rouanet — proxy SALIC API
+app.use('/api/admin', adminRoutes);   // Super-admin IncentivaBR
 
 // Servir arquivos de upload
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -172,6 +226,9 @@ app.listen(PORT, async () => {
 
   // Testar conexão com banco na inicialização
   await testConnection();
+
+  // Aplicar migrations pendentes automaticamente
+  await runMigrations().catch(err => console.error('Erro nas migrations:', err));
 
   // Inicializar serviço de email
   initEmailService().catch(err => console.error('Erro ao inicializar email:', err));
