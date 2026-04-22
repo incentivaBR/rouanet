@@ -1,21 +1,9 @@
-FROM node:18-alpine
-
+FROM node:20-alpine
 WORKDIR /app
-
-# Copiar arquivos do backend
-COPY backend/package*.json ./
-
-# Instalar dependências
-RUN npm install --production
-
-# Copiar o resto do código do backend
-COPY backend/ ./
-
-# Copiar frontend para /frontend (onde o server.js espera: ../frontend)
+COPY backend/package.json ./
+RUN npm install --no-package-lock
+COPY backend/ .
 COPY frontend/ /frontend/
-
-# Expor porta
-EXPOSE 3000
-
-# Iniciar
+EXPOSE 8080
+ENV PORT=8080
 CMD ["node", "server.js"]
