@@ -5,4 +5,5 @@ RUN npm install --no-package-lock
 COPY backend/ .
 EXPOSE 8080
 ENV PORT=8080
-CMD ["node", "server.js"]
+ENV NODE_ENV=production
+CMD ["/bin/sh", "-c", "echo '=== START ===' && echo PORT=$PORT && echo NODE=$(node --version) && node server.js 2>&1"]
