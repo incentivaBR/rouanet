@@ -4,12 +4,447 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="pageTitle">DestineAI - Lei Rouanet Simplificada</title>
-  <meta name="description" content="Destine até 6% do seu Imposto de Renda para projetos culturais aprovados pelo MinC. Simples, seguro e sem custo adicional.">
+  <meta name="description" content="Destine até 6% do seu IR para projetos culturais aprovados pelo MinC. Sem custo extra. Processo 100% guiado por IA.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <style>
+    /* ===== INDEX — ESTILOS ESPECÍFICOS ===== */
+
+    .hero-home {
+      padding: 100px 20px 80px;
+      background: linear-gradient(135deg, #0D1B3E 0%, #1a2f6e 50%, #0D1B3E 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-home::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 60% 40%, rgba(255,215,0,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,215,0,0.15);
+      border: 1px solid rgba(255,215,0,0.3);
+      color: #FFD700;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-home h1 {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-home h1 .highlight { color: #FFD700; }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: rgba(255,255,255,0.8);
+      max-width: 620px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .hero-sub strong { color: #fff; }
+    .hero-zero-custo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(39,174,96,0.2);
+      border: 1px solid rgba(39,174,96,0.5);
+      color: #5dda8f;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 100px;
+      margin-bottom: 36px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .hero-buttons .btn {
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 50px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 36px;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #FFD700;
+    }
+    .hero-stat .label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Projeto Destaque */
+    .projeto-destaque-section {
+      background: #fff;
+      padding: 72px 20px;
+    }
+    .projeto-destaque-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #0D1B3E 0%, #1a2f6e 100%);
+      border-radius: 24px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: 0 20px 60px rgba(13,27,62,0.25);
+    }
+    @media (max-width: 640px) {
+      .projeto-destaque-card { grid-template-columns: 1fr; }
+    }
+    .projeto-destaque-visual {
+      background: linear-gradient(160deg, #1a3a8e 0%, #8b1a1a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+      text-align: center;
+      gap: 14px;
+    }
+    .projeto-destaque-visual i { font-size: 4rem; color: #FFD700; }
+    .pronac-badge {
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      letter-spacing: 0.08em;
+    }
+    .projeto-destaque-visual h3 {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0;
+    }
+    .projeto-destaque-visual p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+    .projeto-destaque-info {
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+    .destaque-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #FFD700;
+    }
+    .projeto-destaque-info h4 {
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.4;
+    }
+    .projeto-destaque-info p {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .pd-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .pd-stat {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+    .pd-stat .v { color: #FFD700; font-size: 1.25rem; font-weight: 800; }
+    .pd-stat .l { color: rgba(255,255,255,0.6); font-size: 0.72rem; text-transform: uppercase; }
+    .btn-gold {
+      background: #FFD700;
+      color: #0D1B3E;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      align-self: flex-start;
+    }
+    .btn-gold:hover { background: #FFC107; transform: translateY(-2px); }
+
+    /* Steps modernizados */
+    #como-funciona { background: #f8f9ff; }
+    .steps-grid-modern {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .step-card-modern {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+      transition: all 0.25s;
+    }
+    .step-card-modern:hover {
+      border-color: #1a2f6e;
+      box-shadow: 0 12px 32px rgba(26,47,110,0.1);
+      transform: translateY(-4px);
+    }
+    .step-number-modern {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #1a2f6e, #3a5fd0);
+      color: #fff;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 0 auto 16px;
+    }
+    .step-card-modern h3 { font-size: 1rem; font-weight: 700; color: #1a2f6e; margin-bottom: 8px; }
+    .step-card-modern p { font-size: 0.85rem; color: #64748b; line-height: 1.6; margin: 0; }
+
+    /* Afinidade profissional */
+    .afinidade-section { background: #f8f9ff; padding: 72px 20px; }
+    .section-eyebrow-pill {
+      display: inline-block;
+      background: #e8edff;
+      color: #1a2f6e;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+    .afinidade-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .afinidade-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 26px 22px;
+      border: 1px solid #e2e8f0;
+      transition: all 0.25s;
+    }
+    .afinidade-card:hover {
+      border-color: #1a2f6e;
+      box-shadow: 0 8px 32px rgba(26,47,110,0.1);
+      transform: translateY(-3px);
+    }
+    .afinidade-icon {
+      width: 50px; height: 50px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 14px;
+    }
+    .afinidade-icon.justica   { background: #e8edff; color: #1a2f6e; }
+    .afinidade-icon.educacao  { background: #fff3cd; color: #d97706; }
+    .afinidade-icon.saude     { background: #fce8e8; color: #dc2626; }
+    .afinidade-icon.seguranca { background: #e8f5e9; color: #16a34a; }
+    .afinidade-icon.fazenda   { background: #f3e8ff; color: #7c3aed; }
+    .afinidade-icon.cultura   { background: #fef3c7; color: #b45309; }
+    .afinidade-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #1a2f6e;
+      background: #e8edff;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .afinidade-card h4 { font-size: 0.92rem; font-weight: 700; color: #1a2f6e; margin-bottom: 6px; }
+    .afinidade-card p { font-size: 0.83rem; color: #64748b; line-height: 1.6; margin: 0; }
+
+    /* Objeções */
+    .objecoes-section { background: #0D1B3E; padding: 72px 20px; }
+    .objecoes-section h2 { color: #fff; }
+    .objecoes-section .section-subtitle { color: rgba(255,255,255,0.6); }
+    .restituicao-callout {
+      background: linear-gradient(135deg, #1a2f6e, #0D1B3E);
+      border: 1px solid rgba(255,215,0,0.35);
+      border-radius: 20px;
+      padding: 32px 36px;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+    .restituicao-callout h3 { color: #FFD700; font-size: 1.1rem; margin-bottom: 14px; }
+    .restituicao-example {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 8px;
+    }
+    .re-arrow { color: #FFD700; font-size: 1.1rem; }
+    .re-val {
+      background: rgba(255,255,255,0.1);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .re-val.good { background: rgba(39,174,96,0.25); color: #5dda8f; }
+    .restituicao-callout .re-note {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 14px;
+    }
+    .objecoes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .objecao-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .objecao-q {
+      font-size: 0.82rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+    }
+    .objecao-a { font-size: 0.88rem; color: rgba(255,255,255,0.9); font-weight: 500; line-height: 1.5; }
+    .objecao-a strong { color: #FFD700; }
+
+    /* Trust badges extra */
+    .inpi-note {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+    .inpi-note code {
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #475569;
+      font-size: 0.7rem;
+    }
+
+    /* CTA final */
+    .cta-final {
+      background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .cta-final h2 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: #0D1B3E;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .cta-final p {
+      font-size: 1.05rem;
+      color: rgba(13,27,62,0.7);
+      max-width: 480px;
+      margin: 0 auto 36px;
+    }
+    .cta-final .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-dark {
+      background: #0D1B3E;
+      color: #FFD700;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-dark:hover { background: #1a2f6e; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,27,62,0.3); }
+    .btn-outline-dark {
+      background: transparent;
+      color: #0D1B3E;
+      border: 2px solid #0D1B3E;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-outline-dark:hover { background: rgba(13,27,62,0.08); }
+
+    @media (max-width: 480px) {
+      .hero-stats { gap: 24px; }
+      .hero-stat .value { font-size: 1.5rem; }
+      .restituicao-callout { padding: 22px 18px; }
+      .projeto-destaque-info { padding: 28px 24px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -32,14 +467,22 @@
 
   <!-- Hero -->
   <section class="hero-home">
-    <h1>Seu IR vira<br><span class="highlight">Cultura Brasileira</span></h1>
-    <p>
-      Destine até <strong>6%</strong> do seu IR devido para projetos culturais aprovados pelo Ministério da Cultura.<br>
-      Lei Rouanet (Lei 8.313/1991) — sem custo adicional para você.
+    <div class="hero-eyebrow">
+      <i class="fas fa-star"></i>
+      Piloto Acadêmico · FGV PA II · 2026
+    </div>
+    <h1>Seu imposto já vai<br>para algum lugar.<br><span class="highlight">Escolha para onde.</span></h1>
+    <p class="hero-sub">
+      A Lei Rouanet permite destinar <strong>até 6% do IR devido</strong> para projetos culturais aprovados pelo Ministério da Cultura.<br>
+      Zero reais a mais no bolso — é imposto que você já pagaria de qualquer forma.
     </p>
+    <div class="hero-zero-custo">
+      <i class="fas fa-check-circle"></i>
+      R$ 0 de custo adicional &nbsp;·&nbsp; 4 passos &nbsp;·&nbsp; 100% guiado por IA
+    </div>
     <div class="hero-buttons">
       <a href="calculadora.html" class="btn btn-white">
-        <i class="fas fa-calculator"></i> Calcular meu IR
+        <i class="fas fa-calculator"></i> Calcular quanto posso destinar
       </a>
       <a href="projetos-rouanet.html" class="btn btn-outline-white">
         <i class="fas fa-music"></i> Ver Projetos Culturais
@@ -58,6 +501,43 @@
         <div class="value">4.300+</div>
         <div class="label">contribuintes</div>
       </div>
+      <div class="hero-stat">
+        <div class="value">31 dez</div>
+        <div class="label">prazo deste ano</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projeto Destaque: Themis -->
+  <section class="projeto-destaque-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow-pill">Projeto em Destaque</span>
+        <h2>Conheça quem você vai apoiar</h2>
+        <p>Um projeto real, aprovado pelo MinC, esperando o seu IR</p>
+      </div>
+      <div class="projeto-destaque-card">
+        <div class="projeto-destaque-visual">
+          <i class="fas fa-music"></i>
+          <span class="pronac-badge">PRONAC 250347</span>
+          <h3>Projeto Themis</h3>
+          <p>Música clássica para<br>jovens em vulnerabilidade</p>
+        </div>
+        <div class="projeto-destaque-info">
+          <div class="destaque-eyebrow">Ceilândia · Distrito Federal</div>
+          <h4>12 jovens de Ceilândia tocaram Vivaldi para 800 pessoas no TJDFT</h4>
+          <p>Jovens em situação de vulnerabilidade social recebem formação musical profissional. O projeto já se apresentou no Tribunal de Justiça do DF — transformando vidas através da arte.</p>
+          <div class="pd-stats-grid">
+            <div class="pd-stat"><div class="v">12</div><div class="l">jovens</div></div>
+            <div class="pd-stat"><div class="v">800</div><div class="l">espectadores</div></div>
+            <div class="pd-stat"><div class="v">6%</div><div class="l">do IR</div></div>
+            <div class="pd-stat"><div class="v">R$ 0</div><div class="l">custo extra</div></div>
+          </div>
+          <a href="projetos-rouanet.html" class="btn-gold">
+            <i class="fas fa-heart"></i> Apoiar este projeto
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -65,67 +545,136 @@
   <section class="section" id="como-funciona">
     <div class="container">
       <div class="section-header">
-        <h2>Como Funciona?</h2>
-        <p>Em 4 passos simples você destina seu IR para a cultura brasileira</p>
+        <h2>4 Passos. Tudo Guiado.</h2>
+        <p>A TINA, nossa assistente de IA, te acompanha em cada etapa — do cálculo ao comprovante fiscal</p>
       </div>
-      <div class="steps-grid">
-        <div class="card step-card">
-          <div class="step-number">1</div>
-          <h3 class="text-primary">Calcule seu IR</h3>
-          <p>Descubra quanto você pode destinar — até <strong>6%</strong> do IR devido via Lei Rouanet</p>
+      <div class="steps-grid-modern">
+        <div class="step-card-modern">
+          <div class="step-number-modern">1</div>
+          <h3>Calcule seu IR</h3>
+          <p>Descubra quanto você pode destinar — até <strong>6%</strong> do IR devido. Leva 2 minutos.</p>
         </div>
-        <div class="card step-card">
-          <div class="step-number">2</div>
-          <h3 class="text-secondary-color">Escolha o Projeto</h3>
-          <p>Busque entre milhares de projetos culturais aprovados pelo MinC via SALIC</p>
+        <div class="step-card-modern">
+          <div class="step-number-modern">2</div>
+          <h3>Escolha o Projeto</h3>
+          <p>Busque entre projetos aprovados pelo MinC no SALIC. Filtre por área, cidade ou categoria.</p>
         </div>
-        <div class="card step-card">
-          <div class="step-number">3</div>
-          <h3 class="text-accent">Faça a Transferência</h3>
-          <p>Transfira diretamente para o Fundo Nacional de Cultura (FNC) e envie o comprovante</p>
+        <div class="step-card-modern">
+          <div class="step-number-modern">3</div>
+          <h3>Transfira ao FNC</h3>
+          <p>PIX, TED ou DOC direto ao Fundo Nacional de Cultura — Banco do Brasil, CNPJ oficial.</p>
         </div>
-        <div class="card step-card">
-          <div class="step-number">4</div>
-          <h3 class="text-success">Receba de Volta</h3>
-          <p>O valor é deduzido do seu IR na declaração — sem custo extra</p>
+        <div class="step-card-modern">
+          <div class="step-number-modern">4</div>
+          <h3>Declare no IRPF</h3>
+          <p>Ficha "Doações Efetuadas", Código 41. O valor é deduzido do seu IR devido.</p>
         </div>
       </div>
-      <div class="section-link">
-        <a href="como-funciona.html" class="link-accent">
-          Ver explicação completa →
-        </a>
+      <div class="section-link" style="text-align:center;margin-top:32px;">
+        <a href="como-funciona.html" class="link-accent">Ver explicação completa com exemplos práticos →</a>
       </div>
     </div>
   </section>
 
-  <!-- O que é a Lei Rouanet -->
-  <section class="section section-alt">
+  <!-- Afinidade Profissional -->
+  <section class="afinidade-section">
     <div class="container">
       <div class="section-header">
-        <h2>O que é a Lei Rouanet?</h2>
-        <p>Mecanismo oficial do Governo Federal para financiar a cultura brasileira</p>
+        <span class="section-eyebrow-pill">Por profissão</span>
+        <h2>Por que isso importa <em>para você</em>?</h2>
+        <p>Descubra a conexão entre o seu trabalho e o Projeto Themis</p>
       </div>
-      <div class="steps-grid">
-        <div class="card step-card">
-          <div class="help-card-icon icon-secondary">
-            <i class="fas fa-landmark"></i>
-          </div>
-          <h3>Lei 8.313/1991</h3>
-          <p>Criada em 1991, permite que pessoas físicas destinem parte do IR a projetos culturais aprovados pelo MinC</p>
+      <div class="afinidade-grid">
+        <div class="afinidade-card">
+          <div class="afinidade-icon justica"><i class="fas fa-balance-scale"></i></div>
+          <span class="afinidade-tag">Justiça / Judiciário</span>
+          <h4>O Themis já esteve no seu tribunal</h4>
+          <p>12 jovens de Ceilândia tocaram Vivaldi para 800 pessoas no TJDFT. Seu apoio mantém isso acontecendo.</p>
         </div>
-        <div class="card step-card">
-          <div class="help-card-icon icon-accent">
-            <i class="fas fa-percent"></i>
-          </div>
-          <h3>Até 6% do IR Devido</h3>
-          <p>Patrocínios têm dedução integral (100%). O valor sai do que você já pagaria ao governo</p>
+        <div class="afinidade-card">
+          <div class="afinidade-icon educacao"><i class="fas fa-chalkboard-teacher"></i></div>
+          <span class="afinidade-tag">Educação</span>
+          <h4>É educação fora da sala de aula</h4>
+          <p>Formação musical para jovens em vulnerabilidade — amplia o que você faz todos os dias como educador.</p>
         </div>
-        <div class="card step-card">
-          <div class="help-card-icon icon-success">
-            <i class="fas fa-theater-masks"></i>
-          </div>
-          <h3>Projetos Verificados</h3>
-          <p>Todos os projetos passam por aprovação do Ministério da Cultura e ficam disponíveis no SALIC</p>
+        <div class="afinidade-card">
+          <div class="afinidade-icon saude"><i class="fas fa-heartbeat"></i></div>
+          <span class="afinidade-tag">Saúde</span>
+          <h4>Arte é saúde pública</h4>
+          <p>Música tem impacto comprovado na saúde mental. O Themis é saúde pública pela via cultural.</p>
+        </div>
+        <div class="afinidade-card">
+          <div class="afinidade-icon seguranca"><i class="fas fa-shield-alt"></i></div>
+          <span class="afinidade-tag">Segurança Pública</span>
+          <h4>Jovem com música não está na rua</h4>
+          <p>O Projeto Themis afasta adolescentes de Ceilândia da criminalidade — complementa seu trabalho de proteção.</p>
+        </div>
+        <div class="afinidade-card">
+          <div class="afinidade-icon fazenda"><i class="fas fa-chart-line"></i></div>
+          <span class="afinidade-tag">Fazenda / Finanças</span>
+          <h4>Você já sabe como funciona</h4>
+          <p>É o mesmo imposto que você já paga, só redirecionado. Você entende isso melhor do que ninguém.</p>
+        </div>
+        <div class="afinidade-card">
+          <div class="afinidade-icon cultura"><i class="fas fa-theater-masks"></i></div>
+          <span class="afinidade-tag">Cultura / Artes</span>
+          <h4>Fortalece o ecossistema cultural do DF</h4>
+          <p>Apoiar o Themis fortalece o setor onde você trabalha — fechando o círculo virtuoso da cultura.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Por que 99% não destinam -->
+  <section class="objecoes-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Por que 99% das pessoas <em>não</em> destinam?</h2>
+        <p class="section-subtitle" style="color:rgba(255,255,255,0.6);">Identificamos os 6 obstáculos — e a resposta para cada um</p>
+      </div>
+
+      <div class="restituicao-callout">
+        <h3><i class="fas fa-lightbulb"></i> Você tem restituição a receber?</h3>
+        <p style="color:rgba(255,255,255,0.72);font-size:0.88rem;margin-bottom:14px;">A destinação aumenta o valor que você recebe de volta</p>
+        <div class="restituicao-example">
+          <div class="re-val">IR retido R$ 24k</div>
+          <span class="re-arrow">→</span>
+          <div class="re-val">IR devido R$ 22k</div>
+          <span class="re-arrow">→</span>
+          <div class="re-val">Restituição R$ 2k</div>
+        </div>
+        <div class="restituicao-example" style="margin-top:8px;">
+          <div class="re-val">+ Destinação R$ 1.500</div>
+          <span class="re-arrow">→</span>
+          <div class="re-val good">Nova restituição R$ 3.500</div>
+        </div>
+        <p class="re-note">Destinou R$ 1.500 para cultura + recebeu R$ 1.500 a mais de restituição = custo real: R$ 0</p>
+      </div>
+
+      <div class="objecoes-grid">
+        <div class="objecao-card">
+          <div class="objecao-q">"Parece muito complicado..."</div>
+          <div class="objecao-a">São <strong>4 passos</strong>. A TINA te guia do início ao fim, incluindo como declarar no IRPF.</div>
+        </div>
+        <div class="objecao-card">
+          <div class="objecao-q">"Tenho medo da malha fina..."</div>
+          <div class="objecao-a"><strong>Zero risco</strong> se respeitar o limite e guardar o comprovante. Milhões fazem isso todo ano.</div>
+        </div>
+        <div class="objecao-card">
+          <div class="objecao-q">"Sai do meu bolso?"</div>
+          <div class="objecao-a">Não. É imposto que você <strong>já deve pagar</strong>. A destinação redireciona — não adiciona.</div>
+        </div>
+        <div class="objecao-card">
+          <div class="objecao-q">"Meu IR é descontado em folha..."</div>
+          <div class="objecao-a">Não impede. O que importa é o <strong>IR devido na declaração anual</strong> — não o desconto em folha.</div>
+        </div>
+        <div class="objecao-card">
+          <div class="objecao-q">"Deixo para o ano que vem..."</div>
+          <div class="objecao-a">Prazo: <strong>31 de dezembro</strong>. Cada ano perdido é imposto que foi inteiro para o governo.</div>
+        </div>
+        <div class="objecao-card">
+          <div class="objecao-q">"O dinheiro realmente chega?"</div>
+          <div class="objecao-a">Projetos aprovados pelo <strong>MinC / SALIC</strong>. FNC gerido pelo Banco do Brasil. Transparência total.</div>
         </div>
       </div>
     </div>
@@ -136,7 +685,7 @@
     <div class="container">
       <div class="section-header">
         <h2>Quem Já Destinou Recomenda</h2>
-        <p>Contribuintes que transformaram seu IR em cultura</p>
+        <p>Servidores públicos que transformaram IR em cultura — sem custo adicional</p>
       </div>
       <div class="testimonials-grid">
         <div class="testimonial-card">
@@ -145,13 +694,13 @@
             <i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
           <p class="testimonial-content">
-            "Sempre quis apoiar a cultura brasileira, mas não sabia como. Descobri que posso destinar parte do meu IR sem pagar nada a mais. Já são 3 anos consecutivos apoiando projetos."
+            "Sempre quis apoiar a cultura, mas nunca soube como. Descobri que posso destinar parte do meu IR sem pagar nada a mais. Já são 3 anos consecutivos apoiando projetos."
           </p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">MF</div>
             <div class="testimonial-info">
               <h4>Marcos F.</h4>
-              <p>Servidor Público Federal</p>
+              <p>Servidor Público Federal · Brasília</p>
             </div>
           </div>
         </div>
@@ -161,13 +710,13 @@
             <i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
           <p class="testimonial-content">
-            "Minha contadora indicou a plataforma. O processo foi simples e recebi o comprovante certinho para incluir na declaração. Apoiei um projeto de teatro que adorei."
+            "O processo foi simples e recebi o Comunicado de Mecenato certinho para a declaração. Apoiei um projeto de teatro e minha restituição aumentou em R$ 1.200."
           </p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">AS</div>
             <div class="testimonial-info">
               <h4>Ana S.</h4>
-              <p>Analista Judiciário - TRF</p>
+              <p>Analista Judiciária · TRF</p>
             </div>
           </div>
         </div>
@@ -177,117 +726,16 @@
             <i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
           <p class="testimonial-content">
-            "Como contador, indico para todos os clientes que fazem declaração completa. É uma forma inteligente de direcionar recursos que já seriam pagos ao governo para a cultura."
+            "Como contador, indico para todos os clientes com declaração completa. É a forma mais inteligente de redirecionar imposto que já seria pago ao governo."
           </p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">RC</div>
             <div class="testimonial-info">
               <h4>Roberto C.</h4>
-              <p>Contador - CRC/DF</p>
+              <p>Contador · CRC/DF</p>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Onde foi meu dinheiro -->
-  <section class="section impacto-preview-section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Transparência Total</div>
-        <h2>Onde foi <span class="highlight-text">seu dinheiro</span>?</h2>
-        <p>Veja os projetos culturais que já foram apoiados pela nossa comunidade de contribuintes</p>
-      </div>
-
-      <!-- Contadores de impacto -->
-      <div class="impacto-counters">
-        <div class="impacto-counter">
-          <i class="fas fa-hand-holding-heart"></i>
-          <div class="impacto-counter-value">R$ 2,4M</div>
-          <div class="impacto-counter-label">destinados em 2025</div>
-        </div>
-        <div class="impacto-counter">
-          <i class="fas fa-theater-masks"></i>
-          <div class="impacto-counter-value">1.847</div>
-          <div class="impacto-counter-label">projetos apoiados</div>
-        </div>
-        <div class="impacto-counter">
-          <i class="fas fa-map-marker-alt"></i>
-          <div class="impacto-counter-value">23</div>
-          <div class="impacto-counter-label">estados do Brasil</div>
-        </div>
-        <div class="impacto-counter">
-          <i class="fas fa-users"></i>
-          <div class="impacto-counter-value">4.300+</div>
-          <div class="impacto-counter-label">contribuintes ativos</div>
-        </div>
-      </div>
-
-      <!-- Galeria de projetos -->
-      <div class="impacto-gallery">
-        <div class="impacto-card">
-          <div class="impacto-card-thumb impacto-thumb-teatro">
-            <i class="fas fa-theater-masks"></i>
-            <span class="impacto-category">Teatro</span>
-          </div>
-          <div class="impacto-card-body">
-            <h4>Circo Navegador — Espetáculo Nacional</h4>
-            <p class="impacto-org"><i class="fas fa-building"></i> Cia. Arte Viva · São Paulo, SP</p>
-            <div class="impacto-progress-wrap">
-              <div class="impacto-progress-bar" style="width:78%"></div>
-            </div>
-            <div class="impacto-progress-info">
-              <span class="impacto-raised">R$ 390.000 arrecadados</span>
-              <span class="impacto-pct">78%</span>
-            </div>
-            <p class="impacto-update"><i class="fas fa-circle-check"></i> Estreou em 12 cidades — 14.000 espectadores</p>
-          </div>
-        </div>
-
-        <div class="impacto-card">
-          <div class="impacto-card-thumb impacto-thumb-musica">
-            <i class="fas fa-music"></i>
-            <span class="impacto-category">Música</span>
-          </div>
-          <div class="impacto-card-body">
-            <h4>Festival de Jazz do Nordeste 2025</h4>
-            <p class="impacto-org"><i class="fas fa-building"></i> Instituto Cultural Sertão · Fortaleza, CE</p>
-            <div class="impacto-progress-wrap">
-              <div class="impacto-progress-bar" style="width:100%"></div>
-            </div>
-            <div class="impacto-progress-info">
-              <span class="impacto-raised">R$ 180.000 arrecadados</span>
-              <span class="impacto-pct badge-success-text">✓ Concluído</span>
-            </div>
-            <p class="impacto-update"><i class="fas fa-circle-check"></i> 3 dias de festival · 8.500 pessoas presentes</p>
-          </div>
-        </div>
-
-        <div class="impacto-card">
-          <div class="impacto-card-thumb impacto-thumb-cinema">
-            <i class="fas fa-film"></i>
-            <span class="impacto-category">Cinema</span>
-          </div>
-          <div class="impacto-card-body">
-            <h4>Documentário "Raízes do Cerrado"</h4>
-            <p class="impacto-org"><i class="fas fa-building"></i> Produtora Savana Filmes · Brasília, DF</p>
-            <div class="impacto-progress-wrap">
-              <div class="impacto-progress-bar" style="width:55%"></div>
-            </div>
-            <div class="impacto-progress-info">
-              <span class="impacto-raised">R$ 137.500 arrecadados</span>
-              <span class="impacto-pct">55%</span>
-            </div>
-            <p class="impacto-update"><i class="fas fa-clock"></i> Em produção — previsão: 2º semestre 2025</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-link">
-        <a href="impacto.html" class="btn btn-primary">
-          <i class="fas fa-images"></i> Ver todos os projetos apoiados
-        </a>
       </div>
     </div>
   </section>
@@ -316,56 +764,59 @@
         <span class="trust-badge-detail">Banco do Brasil</span>
       </div>
       <div class="trust-badge">
-        <i class="fas fa-calculator"></i>
-        <span>Validado por</span>
-        <span class="trust-badge-detail">Contadores</span>
+        <i class="fas fa-certificate"></i>
+        <span>Registro INPI</span>
+        <span class="trust-badge-detail">Metodologia Protegida</span>
       </div>
+    </div>
+    <div class="inpi-note">
+      Metodologia protegida · <code>INPI BR512025000647-0</code> · Powered by IncentivaBR
     </div>
   </section>
 
-  <!-- Precisa de Ajuda -->
+  <!-- Comece por aqui -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <h2>Precisa de Ajuda?</h2>
-        <p>Estamos aqui para esclarecer suas dúvidas sobre a Lei Rouanet</p>
+        <h2>Comece por aqui</h2>
+        <p>Escolha o caminho certo para o seu perfil</p>
       </div>
       <div class="help-grid">
-        <a href="como-funciona.html" class="card help-card">
+        <a href="calculadora.html" class="card help-card">
           <div class="help-card-icon icon-secondary">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <h3>Calculadora IR</h3>
+          <p>Descubra em 2 minutos quanto você pode destinar este ano</p>
+        </a>
+        <a href="como-funciona.html" class="card help-card">
+          <div class="help-card-icon icon-accent">
             <i class="fas fa-route"></i>
           </div>
           <h3>Como Funciona</h3>
-          <p>Entenda o processo completo de destinação via Lei Rouanet</p>
+          <p>Passo a passo completo — do cálculo ao comprovante fiscal</p>
         </a>
         <a href="faq.html" class="card help-card">
-          <div class="help-card-icon icon-accent">
+          <div class="help-card-icon icon-success">
             <i class="fas fa-question-circle"></i>
           </div>
           <h3>Perguntas Frequentes</h3>
-          <p>Respostas para as dúvidas mais comuns sobre a Lei Rouanet</p>
-        </a>
-        <a href="projetos-rouanet.html" class="card help-card">
-          <div class="help-card-icon icon-success">
-            <i class="fas fa-theater-masks"></i>
-          </div>
-          <h3>Buscar Projetos</h3>
-          <p>Explore projetos culturais aprovados pelo Ministério da Cultura</p>
+          <p>Respostas para servidores públicos e todos os contribuintes</p>
         </a>
       </div>
     </div>
   </section>
 
   <!-- CTA Final -->
-  <section class="cta">
-    <h2>Pronto para apoiar a cultura brasileira?</h2>
-    <p>Seu IR pode financiar teatro, música, cinema e muito mais. Comece agora!</p>
+  <section class="cta-final">
+    <h2>Seu IR já vai para o governo.<br>Agora, escolha o destino.</h2>
+    <p>Em 4 passos você apoia a cultura brasileira sem gastar um centavo a mais.</p>
     <div class="cta-buttons">
-      <a href="calculadora.html" class="btn btn-white">
-        <i class="fas fa-calculator"></i> Calcular meu IR
+      <a href="calculadora.html" class="btn-dark">
+        <i class="fas fa-calculator"></i> Calcular meu IR agora
       </a>
-      <a href="projetos-rouanet.html" class="btn btn-outline-white">
-        <i class="fas fa-search"></i> Explorar Projetos
+      <a href="projetos-rouanet.html" class="btn-outline-dark">
+        <i class="fas fa-music"></i> Ver Projeto Themis
       </a>
     </div>
   </section>
@@ -419,6 +870,7 @@
 
   <script src="js/auth.js"></script>
   <script src="js/mobile-menu.js"></script>
+  <script src="js/tina.js"></script>
   <script>
     // Auth nav
     const navAuth = document.getElementById('navAuth');
@@ -431,7 +883,7 @@
       navAuth.href = 'login.html';
     }
 
-    // Carregar brand via API
+    // Brand config via API
     fetch('/api/config/brand')
       .then(r => r.json())
       .then(cfg => {

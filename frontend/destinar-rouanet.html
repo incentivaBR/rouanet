@@ -1606,11 +1606,10 @@
 
     // ── Brand dinâmica ───────────────────────────────────────
     fetch('/api/config/brand').then(r => r.json()).then(cfg => {
-      if (!cfg?.brand) return;
-      const b = cfg.brand;
-      if (b.logo_url)       document.getElementById('brandLogo').src = b.logo_url;
-      if (b.primary_color)  document.documentElement.style.setProperty('--rouanet', b.primary_color);
-      if (b.secondary_color) document.documentElement.style.setProperty('--rouanet-dark', b.secondary_color);
+      if (!cfg || cfg.status === 'error') return;
+      if (cfg.logo_url)      document.getElementById('brandLogo').src = cfg.logo_url;
+      if (cfg.color_primary) document.documentElement.style.setProperty('--rouanet', cfg.color_primary);
+      if (cfg.color_accent)  document.documentElement.style.setProperty('--rouanet-dark', cfg.color_accent);
     }).catch(() => {});
 
     // ── Init ─────────────────────────────────────────────────

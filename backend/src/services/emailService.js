@@ -129,6 +129,24 @@ function getEmailTemplate(content, org = null) {
   `;
 }
 
+// Envio genérico de email — usado por auth.js (reset, verificação, etc.)
+export async function sendEmail({ to, subject, html }) {
+  if (!transporter) return;
+  try {
+    const info = await transporter.sendMail({
+      from: getFromAddress(),
+      to,
+      subject,
+      html
+    });
+    if (emailServiceStatus.mode === 'test') {
+      console.log('📧 Email de teste:', nodemailer.getTestMessageUrl(info));
+    }
+  } catch (error) {
+    console.error('Erro ao enviar email:', error.message);
+  }
+}
+
 // Email de boas-vindas
 export async function sendWelcomeEmail(user, org = null) {
   if (!transporter) {

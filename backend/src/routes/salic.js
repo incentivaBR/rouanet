@@ -302,39 +302,56 @@ router.get('/org-project', async (req, res) => {
   try {
     const org = req.organization;
 
-    if (!org || !org.pronac) {
+    if (!org) {
+      return res.status(404).json({ status: 'error', message: 'Organização não encontrada.' });
+    }
+
+    // Buscar projeto em destaque na tabela org_projects (nova estrutura)
+    const projectResult = await import('../../config/database.js').then(m =>
+      m.default.query(
+        `SELECT * FROM org_projects
+         WHERE organization_id = $1 AND is_active = true
+         ORDER BY is_featured DESC, created_at DESC LIMIT 1`,
+        [org.id]
+      )
+    );
+
+    const orgProject = projectResult.rows[0];
+    const pronac = orgProject?.pronac || org.pronac; // fallback campo legado
+
+    if (!pronac) {
       return res.status(404).json({
         status: 'error',
-        message: 'Esta organização não possui um projeto SALIC vinculado. Configure o PRONAC no painel admin.'
+        message: 'Esta organização não possui um projeto SALIC vinculado. Configure no painel admin.'
       });
     }
 
-    const cacheKey = `salic:org-project:${org.pronac}`;
+    const cacheKey = `salic:org-project:${pronac}`;
     const cached = cacheGet(cacheKey);
     if (cached) return res.json(cached);
 
-    const data = await salicFetch(`/projetos/${org.pronac}`);
+    const data = await salicFetch(`/projetos/${pronac}`);
 
     const result = {
       status: 'success',
       source: 'SALIC API — Ministério da Cultura',
       lei: 'Lei Rouanet (Lei 8.313/1991)',
       organizacao: {
-        slug:      org.slug,
-        name:      org.name,
-        pronac:    org.pronac,
-        // Dados bancários para pagamento (configurados pelo admin da org)
-        bank_name:         org.bank_name,
-        bank_code:         org.bank_code,
-        bank_agency:       org.bank_agency,
-        bank_account:      org.bank_account,
-        pix_key:           org.pix_key,
-        pix_key_type:      org.pix_key_type,
-        beneficiary_name:  org.beneficiary_name,
-        beneficiary_cnpj:  org.beneficiary_cnpj,
-        max_percentage:    parseFloat(org.max_percentage) || 6.00,
-        contact_email:     org.contact_email,
-        contact_phone:     org.contact_phone
+        slug:             org.slug,
+        name:             org.name,
+        pronac:           pronac,
+        max_percentage:   parseFloat(org.max_percentage) || 6.00,
+        contact_email:    org.contact_email,
+        contact_phone:    org.contact_phone,
+        // Dados bancários do proponente (vêm do org_projects)
+        bank_name:        orgProject?.bank_name        || null,
+        bank_code:        orgProject?.bank_code        || null,
+        bank_agency:      orgProject?.bank_agency      || null,
+        bank_account:     orgProject?.bank_account     || null,
+        pix_key:          orgProject?.pix_key          || null,
+        pix_key_type:     orgProject?.pix_key_type     || null,
+        beneficiary_name: orgProject?.proponente_nome  || null,
+        beneficiary_cnpj: orgProject?.proponente_cnpj  || null
       },
       projeto: normalizarProjetoDetalhe(data)
     };
