@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <style>
     /* ===== INDEX — ESTILOS ESPECÍFICOS ===== */
 
@@ -516,7 +517,7 @@
         <h2>Conheça quem você vai apoiar</h2>
         <p>Um projeto real, aprovado pelo MinC, esperando o seu IR</p>
       </div>
-      <div class="projeto-destaque-card">
+      <div class="projeto-destaque-card" data-aos="fade-up">
         <div class="projeto-destaque-visual">
           <i class="fas fa-music"></i>
           <span class="pronac-badge">PRONAC 250347</span>
@@ -549,22 +550,22 @@
         <p>A TINA, nossa assistente de IA, te acompanha em cada etapa — do cálculo ao comprovante fiscal</p>
       </div>
       <div class="steps-grid-modern">
-        <div class="step-card-modern">
+        <div class="step-card-modern" data-aos="fade-up" data-aos-delay="0">
           <div class="step-number-modern">1</div>
           <h3>Calcule seu IR</h3>
           <p>Descubra quanto você pode destinar — até <strong>6%</strong> do IR devido. Leva 2 minutos.</p>
         </div>
-        <div class="step-card-modern">
+        <div class="step-card-modern" data-aos="fade-up" data-aos-delay="100">
           <div class="step-number-modern">2</div>
           <h3>Escolha o Projeto</h3>
           <p>Busque entre projetos aprovados pelo MinC no SALIC. Filtre por área, cidade ou categoria.</p>
         </div>
-        <div class="step-card-modern">
+        <div class="step-card-modern" data-aos="fade-up" data-aos-delay="200">
           <div class="step-number-modern">3</div>
           <h3>Transfira ao FNC</h3>
           <p>PIX, TED ou DOC direto ao Fundo Nacional de Cultura — Banco do Brasil, CNPJ oficial.</p>
         </div>
-        <div class="step-card-modern">
+        <div class="step-card-modern" data-aos="fade-up" data-aos-delay="300">
           <div class="step-number-modern">4</div>
           <h3>Declare no IRPF</h3>
           <p>Ficha "Doações Efetuadas", Código 41. O valor é deduzido do seu IR devido.</p>
@@ -585,37 +586,37 @@
         <p>Descubra a conexão entre o seu trabalho e o Projeto Themis</p>
       </div>
       <div class="afinidade-grid">
-        <div class="afinidade-card">
+        <div class="afinidade-card" data-aos="fade-up" data-aos-delay="0">
           <div class="afinidade-icon justica"><i class="fas fa-balance-scale"></i></div>
           <span class="afinidade-tag">Justiça / Judiciário</span>
           <h4>O Themis já esteve no seu tribunal</h4>
           <p>12 jovens de Ceilândia tocaram Vivaldi para 800 pessoas no TJDFT. Seu apoio mantém isso acontecendo.</p>
         </div>
-        <div class="afinidade-card">
+        <div class="afinidade-card" data-aos="fade-up" data-aos-delay="100">
           <div class="afinidade-icon educacao"><i class="fas fa-chalkboard-teacher"></i></div>
           <span class="afinidade-tag">Educação</span>
           <h4>É educação fora da sala de aula</h4>
           <p>Formação musical para jovens em vulnerabilidade — amplia o que você faz todos os dias como educador.</p>
         </div>
-        <div class="afinidade-card">
+        <div class="afinidade-card" data-aos="fade-up" data-aos-delay="200">
           <div class="afinidade-icon saude"><i class="fas fa-heartbeat"></i></div>
           <span class="afinidade-tag">Saúde</span>
           <h4>Arte é saúde pública</h4>
           <p>Música tem impacto comprovado na saúde mental. O Themis é saúde pública pela via cultural.</p>
         </div>
-        <div class="afinidade-card">
+        <div class="afinidade-card" data-aos="fade-up" data-aos-delay="0">
           <div class="afinidade-icon seguranca"><i class="fas fa-shield-alt"></i></div>
           <span class="afinidade-tag">Segurança Pública</span>
           <h4>Jovem com música não está na rua</h4>
           <p>O Projeto Themis afasta adolescentes de Ceilândia da criminalidade — complementa seu trabalho de proteção.</p>
         </div>
-        <div class="afinidade-card">
+        <div class="afinidade-card" data-aos="fade-up" data-aos-delay="100">
           <div class="afinidade-icon fazenda"><i class="fas fa-chart-line"></i></div>
           <span class="afinidade-tag">Fazenda / Finanças</span>
           <h4>Você já sabe como funciona</h4>
           <p>É o mesmo imposto que você já paga, só redirecionado. Você entende isso melhor do que ninguém.</p>
         </div>
-        <div class="afinidade-card">
+        <div class="afinidade-card" data-aos="fade-up" data-aos-delay="200">
           <div class="afinidade-icon cultura"><i class="fas fa-theater-masks"></i></div>
           <span class="afinidade-tag">Cultura / Artes</span>
           <h4>Fortalece o ecossistema cultural do DF</h4>
@@ -910,5 +911,7 @@
       }).catch(() => {});
   </script>
   <script src="js/tenant.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 600, easing: 'ease-out-cubic', once: true, offset: 60 });</script>
 </body>
 </html>
