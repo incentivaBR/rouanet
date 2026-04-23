@@ -87,13 +87,27 @@ export function getEmailStatus() {
   return emailServiceStatus;
 }
 
+// URL base da aplicação (usada nos links dos emails)
+const getAppUrl = () => {
+  if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, '');
+  const domain = process.env.BRAND_DOMAIN;
+  if (domain) return `https://${domain.replace(/^https?:\/\//, '')}`;
+  return 'http://localhost:3000';
+};
+
 // Remetente padrão
-const getFromAddress = () => process.env.SMTP_FROM || '"IncentivaBR" <noreply@incentivabr.com.br>';
+const getFromAddress = () => {
+  if (process.env.SMTP_FROM) return process.env.SMTP_FROM;
+  const brand = process.env.BRAND_NAME || 'DestineAI';
+  const domain = process.env.BRAND_DOMAIN || 'destineai.com.br';
+  return `"${brand}" <noreply@${domain}>`;
+};
 
 // Template base do email
 function getEmailTemplate(content, org = null) {
-  const orgName = org?.name || 'IncentivaBR';
-  const primaryColor = org?.primary_color || '#00A859';
+  const orgName   = org?.name  || process.env.BRAND_NAME  || 'DestineAI';
+  const primaryColor = org?.primary_color || process.env.BRAND_COLOR_PRIMARY || '#273F77';
+  const appUrl    = getAppUrl();
 
   return `
     <!DOCTYPE html>
@@ -107,21 +121,21 @@ function getEmailTemplate(content, org = null) {
         .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
         .button { display: inline-block; background: ${primaryColor}; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
         .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #666; }
-        .highlight { background: #e8f5e9; padding: 15px; border-radius: 5px; margin: 15px 0; }
+        .highlight { background: #EEF2FF; padding: 15px; border-radius: 5px; margin: 15px 0; }
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
           <h1>${orgName}</h1>
-          <p>Incentivos Fiscais Simplificados</p>
+          <p>Incentivos Fiscais Simplificados · Powered by IncentivaBR</p>
         </div>
         <div class="content">
           ${content}
         </div>
         <div class="footer">
           <p>Este é um email automático do ${orgName}.</p>
-          <p>Plataforma IncentivaBR - Transforme seu imposto em impacto social</p>
+          <p><a href="${appUrl}" style="color:#273F77">${appUrl.replace('https://', '')}</a></p>
         </div>
       </div>
     </body>
@@ -167,13 +181,14 @@ export async function sendWelcomeEmail(user, org = null) {
       <strong>💡 Sabia que?</strong><br>
       Destinar parte do seu IR não custa nada a mais! É um direito seu escolher para onde vai o seu imposto.
     </div>
-    <a href="http://localhost:3000/calculadora.html" class="button">Calcular meu potencial</a>
+    <a href="${getAppUrl()}/calculadora.html" class="button">Calcular meu potencial</a>
   `;
 
+  const brandName = process.env.BRAND_NAME || 'DestineAI';
   const info = await transporter.sendMail({
     from: getFromAddress(),
     to: user.email,
-    subject: 'Bem-vindo ao IncentivaBR! 🎉',
+    subject: `Bem-vindo ao ${brandName}!`,
     html: getEmailTemplate(content, org)
   });
 
@@ -202,13 +217,13 @@ export async function sendDestinationRegisteredEmail(user, donation, project, or
     </div>
     <p><strong>Próximo passo:</strong></p>
     <p>Faça o PIX ou transferência para a conta informada no sistema. Após a confirmação do depósito pelo fundo, você receberá o recibo oficial.</p>
-    <a href="http://localhost:3000/dashboard.html" class="button">Ver minhas destinações</a>
+    <a href="${getAppUrl()}/dashboard.html" class="button">Ver minhas destinações</a>
   `;
 
   const info = await transporter.sendMail({
     from: getFromAddress(),
     to: user.email,
-    subject: `Destinação registrada - ${project.title}`,
+    subject: `Destinação registrada — ${project.title}`,
     html: getEmailTemplate(content, org)
   });
 
@@ -241,7 +256,7 @@ export async function sendDestinationConfirmedEmail(user, donation, project, org
       <li>📄 Recibo Oficial do Fundo (para declaração do IR)</li>
     </ul>
     <p>Acesse seu dashboard para baixar os documentos.</p>
-    <a href="http://localhost:3000/dashboard.html" class="button">Baixar documentos</a>
+    <a href="${getAppUrl()}/dashboard.html" class="button">Baixar documentos</a>
     <p style="margin-top: 20px; color: #00A859; font-weight: bold;">
       🎉 Obrigado por transformar seu imposto em impacto social!
     </p>
@@ -279,7 +294,7 @@ export async function sendNewDonationToAdminEmail(adminEmail, user, donation, pr
       <strong>Data:</strong> ${new Date().toLocaleDateString('pt-BR')}
     </div>
     <p>Acesse o painel administrativo para verificar o depósito e confirmar a destinação.</p>
-    <a href="http://localhost:3000/admin.html" class="button">Acessar Painel Admin</a>
+    <a href="${getAppUrl()}/admin.html" class="button">Acessar Painel Admin</a>
   `;
 
   const info = await transporter.sendMail({
