@@ -1,7 +1,7 @@
 FROM node:20-alpine
-WORKDIR /app
-COPY backend/package.json ./
-RUN npm install --no-package-lock
+COPY backend/package.json backend/package-lock.json /build/
+RUN cd /build && npm ci --prefix /
+WORKDIR /srv
 COPY backend/ .
 COPY frontend/ /frontend/
 EXPOSE 8080
