@@ -60,6 +60,13 @@ const api = {
     });
   },
 
+  async calcularLimitesRapido(irDevido) {
+    return this.request('/calculator/limites-rapido', {
+      method: 'POST',
+      body: JSON.stringify({ ir_devido: irDevido })
+    });
+  },
+
   async validateDistribution(data) {
     return this.request('/calculator/distribuir', {
       method: 'POST',
@@ -67,8 +74,8 @@ const api = {
     });
   },
 
-  // Projects
-  async getProjects(filters = {}) {
+  // SALIC — Projetos Lei Rouanet
+  async getSalicProjects(filters = {}) {
     const params = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
       if (value !== undefined && value !== '' && value !== null) {
@@ -76,20 +83,19 @@ const api = {
       }
     });
     const query = params.toString() ? `?${params.toString()}` : '';
-    return this.request(`/projects${query}`);
+    return this.request(`/salic/projetos${query}`);
   },
 
-  async getProject(id) {
-    return this.request(`/projects/${id}`);
+  async getSalicProject(pronac) {
+    return this.request(`/salic/projetos/${pronac}`);
   },
 
-  // Funds
-  async getFunds() {
-    return this.request('/funds');
+  async getOrgProject() {
+    return this.request('/salic/org-project');
   },
 
-  async getFund(id) {
-    return this.request(`/funds/${id}`);
+  async getSalicAreas() {
+    return this.request('/salic/areas');
   },
 
   // Organizations

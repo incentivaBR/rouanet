@@ -9,43 +9,57 @@ import pool from '../../config/database.js';
  */
 async function tenantMiddleware(req, res, next) {
   try {
-    let slug = 'www'; // padrão
+    let org = null;
 
-    // 1. Verificar query param (para desenvolvimento)
+    // 1. Query param (desenvolvimento): ?org=ajufer
     if (req.query.org) {
-      slug = req.query.org;
+      const result = await pool.query(
+        'SELECT * FROM organizations WHERE slug = $1 AND is_active = true',
+        [req.query.org]
+      );
+      org = result.rows[0] || null;
     }
-    // 2. Verificar subdomínio
-    else if (req.hostname) {
+
+    // 2. Domínio customizado ou admin_domain
+    //    custom_domain: destineai.com.br (usuário final)
+    //    admin_domain:  incentivabr.com.br (institucional + admin)
+    if (!org && req.hostname) {
+      const hostname = req.hostname.toLowerCase();
+      const result = await pool.query(
+        'SELECT * FROM organizations WHERE (custom_domain = $1 OR admin_domain = $1) AND is_active = true',
+        [hostname]
+      );
+      org = result.rows[0] || null;
+    }
+
+    // 3. Subdomínio: ajufer.incentivabr.com.br → slug = 'ajufer'
+    if (!org && req.hostname) {
       const parts = req.hostname.split('.');
-      // Se tiver mais de 2 partes e não for www, usar como slug
-      // Ex: ajufer.incentivabr.com.br → parts = ['ajufer', 'incentivabr', 'com', 'br']
+      let slug = null;
       if (parts.length > 2 && parts[0] !== 'www' && parts[0] !== 'localhost') {
         slug = parts[0];
-      }
-      // Para desenvolvimento local com subdomínio
-      // Ex: ajufer.localhost → parts = ['ajufer', 'localhost']
-      else if (parts.length === 2 && parts[1] === 'localhost' && parts[0] !== 'www') {
+      } else if (parts.length === 2 && parts[1] === 'localhost' && parts[0] !== 'www') {
         slug = parts[0];
+      }
+      if (slug) {
+        const result = await pool.query(
+          'SELECT * FROM organizations WHERE slug = $1 AND is_active = true',
+          [slug]
+        );
+        org = result.rows[0] || null;
       }
     }
 
-    // Buscar organização pelo slug
-    const result = await pool.query(
-      'SELECT * FROM organizations WHERE slug = $1 AND is_active = true',
-      [slug]
-    );
-
-    if (result.rows.length > 0) {
-      req.organization = result.rows[0];
-    } else {
-      // Fallback para organização padrão (www)
-      const defaultOrg = await pool.query(
+    // 4. Fallback: organização padrão (www)
+    if (!org) {
+      const result = await pool.query(
         'SELECT * FROM organizations WHERE slug = $1',
         ['www']
       );
-      req.organization = defaultOrg.rows[0] || null;
+      org = result.rows[0] || null;
     }
+
+    req.organization = org;
 
     // Adicionar slug ao request para fácil acesso
     req.tenantSlug = req.organization?.slug || 'www';
