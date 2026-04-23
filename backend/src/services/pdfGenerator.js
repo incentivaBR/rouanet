@@ -210,11 +210,13 @@ export function gerarComprovante(donation, user, project, fund) {
      .fillColor(mutedColor);
 
   if (fund.code === 'FDCA') {
-    doc.text('Base Legal: Art. 260 do ECA (Lei 8.069/90) - Deducao de ate 3% do IR');
+    doc.text('Base Legal: Art. 260 do ECA (Lei 8.069/90) — Dedução de até 3% do IR');
   } else if (fund.code === 'FDI') {
-    doc.text('Base Legal: Art. 3º da Lei 12.213/10 - Deducao de ate 3% do IR');
+    doc.text('Base Legal: Art. 3º da Lei 12.213/10 — Dedução de até 3% do IR');
+  } else if (fund.code === 'FNC') {
+    doc.text('Base Legal: Lei 8.313/1991 (Lei Rouanet) — Dedução de até 6% do IR devido');
   } else {
-    doc.text('Base Legal: Legislacao de incentivo fiscal vigente');
+    doc.text('Base Legal: Legislação de incentivo fiscal vigente');
   }
 
   doc.moveDown(2);

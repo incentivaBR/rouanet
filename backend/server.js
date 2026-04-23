@@ -21,6 +21,7 @@ import uploadsRoutes from './src/routes/uploads.js';
 import configRoutes from './src/routes/config.js';
 import salicRoutes from './src/routes/salic.js';
 import adminRoutes from './src/routes/admin.js';
+import chatRoutes from './src/routes/chat.js';
 import tenantMiddleware from './src/middleware/tenant.js';
 
 dotenv.config();
@@ -194,6 +195,7 @@ app.use('/api/uploads', uploadsRoutes);
 app.use('/api/config', configRoutes);
 app.use('/api/salic', salicRoutes);   // Lei Rouanet — proxy SALIC API
 app.use('/api/admin', adminRoutes);   // Super-admin IncentivaBR
+app.use('/api/chat', chatRoutes);     // TINA — assistente virtual IA
 
 // Servir arquivos de upload
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
