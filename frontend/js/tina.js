@@ -1,16 +1,16 @@
-// TINA - Assistente Virtual IncentivaBR
-// Chatbot para tirar dúvidas sobre destinação de IR
+// TINA - Assistente Virtual DestineAI (powered by Claude AI)
 
 const TINA = (function() {
   'use strict';
 
   let isOpen = false;
   let container = null;
+  let conversationHistory = [];
 
   // Configurações
   const config = {
     whatsappNumber: '5561999682929',
-    whatsappMessage: 'Olá! Tenho dúvidas sobre destinação de IR no IncentivaBR.',
+    whatsappMessage: 'Olá! Tenho dúvidas sobre destinação de IR via Lei Rouanet.',
     botName: 'TINA',
     botAvatar: '🤖',
     userAvatar: '👤'
@@ -751,27 +751,45 @@ const TINA = (function() {
     }
   }
 
-  // Enviar pergunta
-  function send() {
+  // Enviar pergunta (tenta Claude API, usa regras como fallback)
+  async function send() {
     const input = document.getElementById('tinaInput');
     if (!input) return;
 
     const pergunta = input.value.trim();
     if (!pergunta) return;
 
-    // Adiciona mensagem do usuário
     addMessage(pergunta, true);
     input.value = '';
-
-    // Mostra indicador de digitação
     showTyping();
 
-    // Responde após delay
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/chat/tina', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: pergunta,
+          history: conversationHistory.slice(-12)
+        })
+      });
+
       hideTyping();
-      const resposta = getResposta(pergunta);
-      addMessage(resposta);
-    }, 1000 + Math.random() * 500);
+
+      if (response.ok) {
+        const data = await response.json();
+        const resposta = data.reply || getResposta(pergunta);
+        conversationHistory.push({ role: 'user', content: pergunta });
+        conversationHistory.push({ role: 'assistant', content: resposta });
+        // Mantém histórico enxuto
+        if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-20);
+        addMessage(resposta.replace(/\n/g, '<br>'));
+      } else {
+        addMessage(getResposta(pergunta));
+      }
+    } catch (_) {
+      hideTyping();
+      addMessage(getResposta(pergunta));
+    }
   }
 
   // Pergunta rápida

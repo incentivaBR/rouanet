@@ -468,7 +468,7 @@
     <div class="alert-text">
       <strong>Comprovante disponível</strong> — use na sua declaração de IR 2026. Documento gerado e assinado digitalmente.
     </div>
-    <a href="#" class="btn-comprovante">
+    <a href="#" class="btn-comprovante" onclick="gerarComprovantePDF(); return false;">
       <i class="fas fa-download"></i> Baixar comprovante
     </a>
   </div>
@@ -558,7 +558,7 @@
     <div class="impact-card-footer">
       <div class="impact-card-footer-left">
         <span class="badge-ok"><i class="fas fa-check-circle"></i> Destinação confirmada</span>
-        <a href="#" class="btn-comprovante-card">
+        <a href="#" class="btn-comprovante-card" onclick="gerarComprovantePDF(); return false;">
           <i class="fas fa-file-pdf"></i> Comprovante IR
         </a>
         <a href="demo-projeto.html" class="btn-ver-concerto">
@@ -614,6 +614,148 @@
   </div>
 
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function gerarComprovantePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  const PRIMARY  = [26, 35, 126];   // #1A237E
+  const GOLD     = [200, 169, 81];  // #C8A951
+  const DARK     = [51, 51, 51];
+  const MUTED    = [100, 100, 100];
+  const BGLIGHT  = [245, 247, 255];
+
+  const marginL = 20;
+  const pageW   = 210;
+  let y = 20;
+
+  // ── Cabeçalho ──────────────────────────────────────────────
+  doc.setFillColor(...PRIMARY);
+  doc.rect(0, 0, pageW, 32, 'F');
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(20);
+  doc.setFont('helvetica', 'bold');
+  doc.text('DestineAI', pageW / 2, 14, { align: 'center' });
+
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Powered by IncentivaBR · Lei Rouanet Simplificada', pageW / 2, 22, { align: 'center' });
+
+  doc.setFillColor(...GOLD);
+  doc.rect(0, 29, pageW, 2, 'F');
+
+  y = 44;
+
+  // ── Título ──────────────────────────────────────────────────
+  doc.setTextColor(...PRIMARY);
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.text('COMPROVANTE DE DESTINAÇÃO', pageW / 2, y, { align: 'center' });
+  y += 6;
+  doc.setFontSize(11);
+  doc.text('DE INCENTIVO FISCAL — LEI ROUANET', pageW / 2, y, { align: 'center' });
+  y += 5;
+  doc.setFontSize(8);
+  doc.setTextColor(180, 50, 50);
+  doc.text('(Documento sem valor fiscal — apenas para controle pessoal)', pageW / 2, y, { align: 'center' });
+
+  y += 10;
+
+  // ── Função auxiliar para seções ────────────────────────────
+  function secao(titulo, campos) {
+    doc.setFillColor(...BGLIGHT);
+    doc.rect(marginL, y - 4, pageW - marginL * 2, 7, 'F');
+    doc.setTextColor(...PRIMARY);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text(titulo, marginL + 2, y + 1);
+    y += 9;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...DARK);
+    campos.forEach(([label, valor]) => {
+      doc.setFont('helvetica', 'bold');
+      doc.text(label + ':', marginL + 2, y);
+      doc.setFont('helvetica', 'normal');
+      doc.text(valor, marginL + 52, y);
+      y += 6;
+    });
+    y += 4;
+  }
+
+  // ── Dados do Contribuinte ───────────────────────────────────
+  secao('DADOS DO CONTRIBUINTE', [
+    ['Nome',  'Dr. Carlos Eduardo Mendes'],
+    ['CPF',   '***.456.789-**'],
+    ['E-mail', 'carlos.mendes@tjdft.jus.br']
+  ]);
+
+  // ── Dados da Destinação ─────────────────────────────────────
+  const hoje = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' });
+  secao('DADOS DA DESTINAÇÃO', [
+    ['Valor Destinado',    'R$ 2.000,00'],
+    ['IR Total Declarado', 'R$ 33.333,00'],
+    ['Percentual do IR',   '6,00%'],
+    ['Ano-Calendário',     '2025'],
+    ['Data da Destinação', '10/01/2025'],
+    ['Situação',           'Confirmada'],
+    ['Data do Comprovante', hoje]
+  ]);
+
+  // ── Projeto Beneficiado ─────────────────────────────────────
+  secao('PROJETO BENEFICIADO', [
+    ['Projeto', 'Projeto Themis — Da Rua ao Palco'],
+    ['PRONAC',  '250347'],
+    ['Proponente', 'Orquestra Social do DF']
+  ]);
+
+  // ── Fundo Destinatário ──────────────────────────────────────
+  secao('FUNDO DESTINATÁRIO', [
+    ['Fundo', 'FNC — Fundo Nacional de Cultura'],
+    ['CNPJ',  '00.394.285/0001-41'],
+    ['Banco', 'Banco do Brasil (001)'],
+    ['Agência / Conta', '3902-5 / 170500-8'],
+    ['Base Legal', 'Lei 8.313/1991 — até 6% do IR devido']
+  ]);
+
+  // ── Código de Verificação ───────────────────────────────────
+  doc.setFillColor(230, 235, 255);
+  doc.roundedRect(marginL, y, pageW - marginL * 2, 22, 3, 3, 'F');
+  doc.setTextColor(...PRIMARY);
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'bold');
+  doc.text('CÓDIGO DE VERIFICAÇÃO', pageW / 2, y + 7, { align: 'center' });
+  doc.setFontSize(13);
+  doc.setFont('courier', 'bold');
+  doc.setTextColor(...DARK);
+  doc.text('A3F7B2C9D1E4F0A8', pageW / 2, y + 16, { align: 'center' });
+  y += 30;
+
+  // ── Aviso importante ────────────────────────────────────────
+  doc.setFillColor(255, 243, 205);
+  doc.roundedRect(marginL, y, pageW - marginL * 2, 22, 3, 3, 'F');
+  doc.setTextColor(133, 100, 4);
+  doc.setFontSize(8);
+  doc.setFont('helvetica', 'bold');
+  doc.text('AVISO IMPORTANTE', pageW / 2, y + 7, { align: 'center' });
+  doc.setFont('helvetica', 'normal');
+  doc.text('Este comprovante é apenas para seu controle pessoal e NÃO possui valor fiscal.', pageW / 2, y + 13, { align: 'center' });
+  doc.text('Para a declaração do IR, utilize o recibo oficial emitido pelo FNC.', pageW / 2, y + 18, { align: 'center' });
+  y += 30;
+
+  // ── Rodapé ──────────────────────────────────────────────────
+  doc.setTextColor(...MUTED);
+  doc.setFontSize(7.5);
+  doc.setFont('helvetica', 'normal');
+  doc.text(`Emitido em: ${hoje} · DestineAI — destineai.com.br · Powered by IncentivaBR`, pageW / 2, y, { align: 'center' });
+
+  doc.save('comprovante-rouanet-themis.pdf');
+}
+</script>
 
 <!-- FOOTER -->
 <footer class="footer">

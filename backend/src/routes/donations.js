@@ -78,10 +78,10 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
     await client.query('BEGIN');
 
     const result = await client.query(`
-      INSERT INTO donations (user_id, pronac, projeto_titulo, official_fund_id, ir_total, donation_amount, fiscal_year, status)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, 'pending')
+      INSERT INTO donations (user_id, pronac, projeto_titulo, official_fund_id, organization_id, ir_total, donation_amount, fiscal_year, status)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'pending')
       RETURNING id, created_at
-    `, [userId, pronac, projeto_titulo || `Projeto PRONAC ${pronac}`, fncId, ir_total, donation_amount, fiscal_year]);
+    `, [userId, pronac, projeto_titulo || `Projeto PRONAC ${pronac}`, fncId, org?.id || null, ir_total, donation_amount, fiscal_year]);
 
     const donation = result.rows[0];
 
@@ -216,7 +216,7 @@ router.get('/', authenticateToken, async (req, res) => {
         fiscal_year:      d.fiscal_year,
         status:           d.status,
         created_at:       d.created_at,
-        receipt_file_path: d.receipt_file_path,
+        receipt_url: d.receipt_url,
         fund: { code: d.fund_code, name: d.fund_name }
       }))
     });
@@ -322,10 +322,10 @@ router.get('/:id/comprovante', authenticateToken, async (req, res) => {
 
     const row = result.rows[0];
 
-    if (row.status !== 'confirmed') {
+    if (row.status === 'cancelled') {
       return res.status(400).json({
         status: 'error',
-        message: 'Comprovante disponível apenas para destinações confirmadas.'
+        message: 'Comprovante não disponível para destinações canceladas.'
       });
     }
 
