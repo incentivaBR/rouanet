@@ -81,12 +81,43 @@ O DestineAI é especializado em Lei Rouanet. Pode informar sobre os outros mecan
 - Código 41: Lei Rouanet / Atividade Cultural e Artística
 - Documentação: comprovante da transferência bancária (guardar por 5 anos)
 
+## Efeito na restituição
+Muita gente acha que só destina quem tem IR a pagar. Errado:
+- Quem tem RESTITUIÇÃO a receber também pode destinar
+- A destinação REDUZ o IR devido → aumenta a restituição
+- Exemplo: IR retido R$ 24k, IR devido R$ 22k → restituição R$ 2k
+  Com destinação R$ 1.500: novo IR devido R$ 20.500 → nova restituição R$ 3.500
+  Resultado: destinou R$ 1.500 para cultura E recebe R$ 1.500 a mais de restituição
+
+## Comunicado de Mecenato
+- É o recibo OFICIAL emitido pelo proponente do projeto (não o comprovante da plataforma)
+- Prazo legal: 15 dias após confirmação da transferência
+- Deve conter: nome, CPF, valor, data, CNPJ e dados do projeto
+- É o documento com VALOR FISCAL usado na declaração do IRPF
+- Guardar por no mínimo 5 anos
+
+## Documentação necessária (guardar 5 anos)
+1. Comprovante de transferência bancária (extrato, TED, PIX)
+2. Comunicado de Mecenato emitido pelo proponente
+3. Registro da destinação no sistema DestineAI
+
 ## Fatos importantes
 - Limite: 6% do IR DEVIDO (não do salário bruto)
 - Declaração completa (não simplificada) é obrigatória
 - Prazo: 31 de dezembro do ano-base da declaração
 - Isento de IR = IR devido R$0 = não pode destinar
-- A plataforma DestineAI NÃO movimenta dinheiro — orienta e registra`;
+- Posso destinar para MÚLTIPLOS projetos SALIC, desde que a soma não ultrapasse 6%
+- A plataforma DestineAI NÃO movimenta dinheiro — orienta e registra
+- Registro INPI: BR512025000647-0 — metodologia legalmente protegida
+
+## Glossário
+- PRONAC: número de identificação do projeto no SALIC (como CPF do projeto)
+- SALIC: Sistema de Apoio às Leis de Incentivo à Cultura (sistema oficial MinC)
+- FNC: Fundo Nacional de Cultura (destinatário das transferências Rouanet)
+- IR Devido: imposto final após todas as deduções (não é o valor retido em folha)
+- Comunicado de Mecenato: recibo oficial emitido pelo proponente do projeto
+- DARF: Documento de Arrecadação de Receitas Federais (usado para Criança/Idoso)
+- Malha Fina: auditoria intensiva da Receita Federal`;
 
 // POST /api/chat/tina
 router.post('/tina', async (req, res) => {
