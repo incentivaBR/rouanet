@@ -174,8 +174,9 @@
     <div class="faq-categories">
       <button class="faq-category-btn active" onclick="filterCategory('all', this)">Todas</button>
       <button class="faq-category-btn" onclick="filterCategory('lei', this)">Lei Rouanet</button>
+      <button class="faq-category-btn" onclick="filterCategory('servidor', this)">Servidores Públicos</button>
       <button class="faq-category-btn" onclick="filterCategory('processo', this)">Processo</button>
-      <button class="faq-category-btn" onclick="filterCategory('declaracao', this)">Declaracao IR</button>
+      <button class="faq-category-btn" onclick="filterCategory('declaracao', this)">Declaração IR</button>
     </div>
 
     <div class="no-results" id="noResults">
@@ -243,6 +244,101 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- SERVIDORES PÚBLICOS -->
+    <div class="faq-section" data-category="servidor">
+      <h2 class="faq-section-title"><i class="fas fa-user-tie"></i> Servidores Públicos</h2>
+
+      <div class="faq-item" data-keywords="servidor publico folha desconto retencao fonte imposto retido salario">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Tenho imposto retido em folha. Posso destinar assim mesmo?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>Sim!</strong> O imposto retido na fonte não impede a destinação. O que importa é o <strong>IR devido</strong> calculado na sua declaração anual completa — não o valor retido mensalmente.</p>
+            <div class="highlight-box">
+              Se você tem <strong>restituição a receber</strong>, a destinação pode aumentar esse valor. Se tem <strong>imposto a pagar</strong>, a destinação reduz o saldo devedor. Em ambos os casos, seu bolso fica igual.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-keywords="servidor procedimento especifico diferenciado funciona igual regras">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Existe algum procedimento específico para servidores públicos?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>Não.</strong> Servidores seguem as mesmas regras das demais pessoas físicas. A única diferença — favorável — é que você tem <strong>previsibilidade de renda</strong> (salário fixo), o que facilita o planejamento da destinação.</p>
+            <p>Basta fazer a declaração completa do IR e ter IR devido maior que zero.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-keywords="calcular contracheque holerite salario bruto limite estimativa ir">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Como estimo quanto posso destinar com base no meu contracheque?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p>O valor exato só é conhecido após simular a declaração completa, mas você pode <strong>estimar</strong> assim:</p>
+            <div class="info-box">
+              <strong>IR retido no ano anterior ≈ IR devido neste ano</strong><br><br>
+              Máximo Rouanet (6%) = IR retido em 2024 × 0,06<br>
+              Exemplo: reteve R$ 20.000 → pode destinar até <strong>R$ 1.200</strong>
+            </div>
+            <p>Use nossa <a href="calculadora.html" style="color: var(--primary-color); font-weight: 600;">Calculadora IR</a> para uma estimativa mais precisa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-keywords="malha fina risco problema receita federal medo auditoria">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Existe risco de cair na malha fina?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>Zero risco</strong> se você: respeitar o limite de 6%, informar o valor correto na ficha "Doações Efetuadas" (código 41) e guardar o comprovante da transferência por 5 anos.</p>
+            <div class="highlight-box">
+              Milhões de brasileiros destinam via Lei Rouanet todo ano sem qualquer problema. A destinação é <strong>totalmente legal</strong> e reconhecida pela Receita Federal.
+            </div>
+            <p>O único risco é declarar valor acima do limite ou sem comprovante — situações que nossa plataforma previne automaticamente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-keywords="projeto fora cidade estado outro municipio regiao qualquer localidade">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Posso destinar para projetos fora da minha cidade?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>Sim.</strong> Você pode escolher projetos de <strong>qualquer localidade do Brasil</strong>, independentemente do seu domicílio fiscal. A Lei Rouanet não restringe por região.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-keywords="credenciado aprovado verificar legitimo golpe projeto real salic pronac">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Como sei se o projeto é legítimo e aprovado?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p>Todos os projetos da plataforma são <strong>pré-aprovados pelo MinC</strong> e listados no <strong>SALIC</strong> (sistema oficial). Cada projeto tem um número <strong>PRONAC</strong> — o identificador oficial.</p>
+            <div class="info-box">
+              Consulte qualquer projeto em <strong>salic.cultura.gov.br</strong> pelo PRONAC para conferir os dados oficiais do MinC. Nunca transfira sem verificar.
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- PROCESSO -->
