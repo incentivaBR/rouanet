@@ -100,11 +100,11 @@ router.get('/brand', (req, res) => {
   const org = req.organization;
 
   const brand = {
-    name:          org?.name          || process.env.BRAND_NAME          || 'Destinai',
+    name:          org?.name          || process.env.BRAND_NAME          || 'DestineAI',
     logo_url:      org?.logo_url      || process.env.BRAND_LOGO_URL      || '/assets/logo-incentivabr.png',
-    color_primary: org?.primary_color || process.env.BRAND_COLOR_PRIMARY || '#1E3A5F',
-    color_accent:  org?.secondary_color || process.env.BRAND_COLOR_ACCENT || '#2B5A9E',
-    domain:        process.env.BRAND_DOMAIN || 'destinai.com.br',
+    color_primary: org?.primary_color || process.env.BRAND_COLOR_PRIMARY || '#273F77',
+    color_accent:  org?.secondary_color || process.env.BRAND_COLOR_ACCENT || '#EE985C',
+    domain:        process.env.BRAND_DOMAIN || 'destineai.com.br',
   };
 
   res.json(brand);
