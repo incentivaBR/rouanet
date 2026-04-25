@@ -118,8 +118,10 @@ function getEmailTemplate(content, org = null) {
 async function doSend({ to, subject, html }) {
   if (resendClient) {
     const from = getFromAddress();
-    const { error } = await resendClient.emails.send({ from, to, subject, html });
-    if (error) throw new Error(error.message);
+    console.log('📧 Resend send:', { from, to, subject });
+    const result = await resendClient.emails.send({ from, to, subject, html });
+    console.log('📧 Resend result:', JSON.stringify(result));
+    if (result.error) throw new Error(result.error.message);
     return;
   }
   if (transporter) {
