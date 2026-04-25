@@ -157,6 +157,11 @@
       });
     });
 
+    // Abrir aba de cadastro automaticamente se ?tab=register na URL
+    if (utils.getQueryParam('tab') === 'register') {
+      document.querySelector('[data-tab="register"]')?.click();
+    }
+
     function togglePassword(inputId, icon) {
       const input = document.getElementById(inputId);
       if (input.type === 'password') {
