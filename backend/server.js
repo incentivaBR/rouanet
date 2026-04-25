@@ -29,6 +29,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Necessário para rate-limit funcionar corretamente atrás do proxy do Railway
+app.set('trust proxy', 1);
+
 // Domínios permitidos (IncentivaBR + white-labels)
 const ALLOWED_ORIGINS = [
   // DestineAI — plataforma do usuário final
