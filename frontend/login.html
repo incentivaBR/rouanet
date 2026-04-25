@@ -92,7 +92,7 @@
         <div class="mb-4">
           <label class="block text-sm font-semibold text-gray-700 mb-2">Senha *</label>
           <div class="relative">
-            <input type="password" id="regSenha" class="field" style="padding-right:48px" placeholder="Mínimo 6 caracteres" required>
+            <input type="password" id="regSenha" class="field" style="padding-right:48px" placeholder="Mínimo 8 caracteres" required>
             <i class="fas fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer text-sm"
                onclick="togglePassword('regSenha', this)"></i>
           </div>
@@ -287,8 +287,8 @@
         Toast.warning('Digite um email válido', 'Email inválido');
         return;
       }
-      if (senha.length < 6) {
-        Toast.warning('Senha deve ter pelo menos 6 caracteres', 'Senha fraca');
+      if (senha.length < 8) {
+        Toast.warning('Senha deve ter pelo menos 8 caracteres', 'Senha fraca');
         return;
       }
       if (senha !== senhaConfirm) {
