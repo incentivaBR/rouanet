@@ -246,7 +246,7 @@ const TINA = (function() {
             <div class="tina-avatar">🤖</div>
             <div>
               <div class="tina-name">TINA</div>
-              <div class="tina-status">Assistente IncentivaBR</div>
+              <div class="tina-status">Assistente DestineAI</div>
             </div>
           </div>
           <button class="tina-close" onclick="TINA.close()">

@@ -18,6 +18,8 @@ const SALIC_BASE = 'https://api.salic.cultura.gov.br/api/v1';
 
 // Cache simples em memória com TTL
 const cache = new Map();
+// Cache persistente (stale) — guarda último resultado válido sem expirar
+const staleCache = new Map();
 
 function cacheGet(key) {
   const entry = cache.get(key);
@@ -31,13 +33,14 @@ function cacheGet(key) {
 
 function cacheSet(key, data, ttlMs) {
   cache.set(key, { data, expiresAt: Date.now() + ttlMs });
+  staleCache.set(key, data); // guarda cópia permanente como fallback
 }
 
 const TTL_LIST    = 5  * 60 * 1000; // 5 min para listas (dados mudam)
 const TTL_DETAIL  = 30 * 60 * 1000; // 30 min para detalhes
 const TTL_STATIC  = 24 * 60 * 60 * 1000; // 24h para áreas/segmentos
 
-async function salicFetch(path, params = {}) {
+async function salicFetch(path, params = {}, timeoutMs = 15000) {
   const url = new URL(`${SALIC_BASE}${path}`);
 
   // Sempre pedir JSON limpo
@@ -54,7 +57,7 @@ async function salicFetch(path, params = {}) {
       'Accept': 'application/json',
       'User-Agent': 'IncentivaBR/1.0 (contato@incentivabr.com.br)'
     },
-    signal: AbortSignal.timeout(10000) // 10s timeout
+    signal: AbortSignal.timeout(timeoutMs)
   });
 
   if (!response.ok) {
@@ -165,7 +168,7 @@ router.get('/projetos', async (req, res) => {
     const cached = cacheGet(cacheKey);
     if (cached) return res.json(cached);
 
-    const data = await salicFetch('/projetos', params);
+    const data = await salicFetch('/projetos', params, 15000);
 
     // A SALIC retorna HAL+JSON: { _embedded: { projetos: [...] }, total: N, count: N }
     const projetos = data._embedded?.projetos ?? data.projetos ?? [];
@@ -186,6 +189,13 @@ router.get('/projetos', async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('[SALIC] Erro ao buscar projetos:', error.message);
+
+    // Fallback: retorna último resultado válido desta consulta (stale cache)
+    const stale = staleCache.get(cacheKey);
+    if (stale) {
+      return res.json({ ...stale, source: 'cache_salic', aviso: 'API SALIC instável — exibindo resultados anteriores.' });
+    }
+
     res.status(error.status || 502).json({
       status: 'error',
       message: 'Falha ao consultar API SALIC. Tente novamente.',

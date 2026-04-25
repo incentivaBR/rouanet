@@ -3,430 +3,322 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora IR 2026 - Lei Rouanet</title>
+  <title>Calculadora IR 2026 — DestineAI</title>
   <meta name="description" content="Calcule seu Imposto de Renda e descubra quanto pode destinar para projetos culturais via Lei Rouanet.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            navy:     '#0D1B3E',
+            navydark: '#0A1530',
+            navymid:  '#132247',
+            gold:     '#FFD700',
+            golddk:   '#FFC000',
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    body { background: var(--background-light); }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      margin-bottom: 24px;
-      font-size: 14px;
-    }
-    .back-link:hover { color: var(--primary-color); }
-
-    .page-header { text-align: center; margin-bottom: 40px; }
-    .page-header h1 {
-      font-size: 36px;
-      color: #1a1a2e;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      font-weight: 800;
-    }
-    .page-header h1 i { color: #F7941D; }
-    .page-header p { color: #333; font-size: 18px; font-weight: 500; }
-
-    .info-banner {
-      background: rgba(91, 33, 182, 0.08);
-      border: 2px solid rgba(91, 33, 182, 0.3);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #4c1d95;
-      font-size: 14px;
-    }
-    .info-banner i { font-size: 20px; flex-shrink: 0; }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 32px;
-      box-shadow: var(--shadow-md);
-      margin-bottom: 24px;
-    }
-
-    .card-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--primary-color);
-    }
-    .card-title i { color: var(--secondary-color); }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 16px;
-      transition: border-color 0.3s;
-    }
-    .form-group input:focus, .form-group select:focus {
-      outline: none;
-      border-color: var(--primary-color);
-    }
-    .form-group small {
-      color: var(--text-muted);
-      font-size: 12px;
-      margin-top: 4px;
-      display: block;
-    }
-
-    .btn-block { width: 100%; }
-
+    body { font-family: 'Inter', sans-serif; }
+    input:focus, select:focus { outline: none; }
     .result-section { display: none; }
     .result-section.show { display: block; }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-    }
-
-    .result-item {
-      text-align: center;
-      padding: 20px;
-      background: var(--background-light);
-      border-radius: 12px;
-    }
-    .result-item .value {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--primary-color);
-    }
-    .result-item .label {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-top: 4px;
-    }
-
-    .limites-card {
-      background: linear-gradient(135deg, #5B21B6 0%, #7C3AED 100%);
-      color: white;
-      border-radius: 16px;
-      padding: 32px;
-    }
-    .limites-card h3 {
-      font-size: 20px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .limite-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-    .limite-item:last-child { border-bottom: none; }
-    .limite-item .name { opacity: 0.9; }
-    .limite-item .value { font-weight: 700; font-size: 20px; }
-
-    .limite-total {
-      background: rgba(255,255,255,0.2);
-      margin: 20px -32px -32px;
-      padding: 20px 32px;
-      border-radius: 0 0 16px 16px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .alert-warning {
-      background: rgba(255, 184, 0, 0.1);
-      border: 2px solid var(--warning-color);
-      color: #8a6d00;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 24px;
-    }
-    .alert-title {
-      font-weight: 600;
-      font-size: 18px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .actions .btn { flex: 1; }
-
-    @media (max-width: 600px) {
-      .actions { flex-direction: column; }
-    }
   </style>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen">
 
-  <!-- Header -->
-  <header class="header">
-    <a href="index.html" class="logo-link">
-      <img id="brandLogo" src="assets/logo-destineai.jpg" alt="DestineAI" class="logo-img">
-    </a>
-    <nav>
-      <a href="projetos-rouanet.html">Projetos Culturais</a>
-      <a href="calculadora.html" class="active">Calculadora</a>
-      <a href="#" id="navAuth">Entrar</a>
-    </nav>
-  </header>
-
-  <div class="container" style="max-width: 900px; padding-top: 40px; padding-bottom: 60px;">
-    <a href="index.html" class="back-link">
-      <i class="fas fa-arrow-left"></i> Voltar ao início
-    </a>
-
-    <div class="page-header">
-      <h1><i class="fas fa-calculator"></i> Calculadora Lei Rouanet</h1>
-      <p>Descubra quanto pode destinar para a cultura — ano-calendário 2025</p>
-    </div>
-
-    <!-- Urgência: Prazo IR -->
-    <div id="urgencyBanner" style="
-      background: linear-gradient(135deg, #dc2626, #ef4444);
-      color: white;
-      border-radius: 12px;
-      padding: 14px 20px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    ">
-      <div style="display:flex;align-items:center;gap:10px;font-weight:600">
-        <i class="fas fa-clock"></i>
-        <span>Prazo para entrega da Declaração IR 2025:</span>
-        <strong>30/04/2026</strong>
-      </div>
-      <div id="countdown" style="font-size:18px;font-weight:700;background:rgba(255,255,255,0.2);padding:6px 16px;border-radius:8px">
-        —
+  <!-- ── NAV ─────────────────────────────────────────────── -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 bg-[#0D1B3E]/95 backdrop-blur-md shadow-lg">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <a href="index.html" class="text-white font-extrabold text-xl tracking-tight no-underline">
+        Destine<span class="text-[#FFD700]">AI</span>
+      </a>
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="text-white/60 hover:text-white text-sm font-medium transition-colors hidden sm:block">Início</a>
+        <a href="calculadora.html" class="text-[#FFD700] text-sm font-semibold">Calculadora</a>
+        <a href="login.html" id="navAuth" class="text-white/70 hover:text-white text-sm font-medium transition-colors">Entrar</a>
       </div>
     </div>
+  </nav>
 
-    <!-- Banner informativo -->
-    <div class="info-banner">
-      <i class="fas fa-info-circle"></i>
-      <span>
-        <strong>Lei Rouanet exige Declaração Completa.</strong>
-        Preencha suas deduções abaixo para calcular o IR devido com precisão.
-        O limite é de até <strong>6% do IR devido</strong>.
-      </span>
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="bg-[#0D1B3E] pt-24 pb-12">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/30 px-5 py-2 mb-6">
+        <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        <span class="text-[#FFD700] font-semibold text-sm">Lei Rouanet · até 6% do IR</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight mb-3">
+        Calculadora <span class="text-[#FFD700]">Lei Rouanet</span>
+      </h1>
+      <p class="text-white/60 text-lg">Descubra quanto pode destinar — ano-calendário 2025</p>
+    </div>
+  </section>
+
+  <!-- ── CONTEÚDO ──────────────────────────────────────────── -->
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 pb-20">
+
+    <!-- Card de impacto -->
+    <div class="bg-[#0D1B3E] rounded-2xl overflow-hidden mb-6">
+      <div class="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+        <div class="flex items-center gap-4 px-6 py-5">
+          <div class="w-10 h-10 rounded-full bg-[#FFD700]/10 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+          </div>
+          <div>
+            <div class="text-[#FFD700] font-black text-2xl leading-none">12</div>
+            <div class="text-white/50 text-xs mt-1">jovens formados</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 px-6 py-5">
+          <div class="w-10 h-10 rounded-full bg-[#FFD700]/10 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          </div>
+          <div>
+            <div class="text-[#FFD700] font-black text-2xl leading-none">800</div>
+            <div class="text-white/50 text-xs mt-1">pessoas impactadas</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 px-6 py-5">
+          <div class="w-10 h-10 rounded-full bg-[#FFD700]/10 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/></svg>
+          </div>
+          <div>
+            <div class="text-white/40 text-[10px] uppercase tracking-widest font-semibold mb-0.5">Prazo IR 2025</div>
+            <div class="text-white font-bold text-base leading-none">30/04/2026</div>
+            <div id="diasRestantes" class="text-[#FFD700] text-xs font-semibold mt-1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info banner -->
+    <div class="flex items-start gap-3 bg-[#0D1B3E]/5 border border-[#0D1B3E]/15 rounded-xl px-5 py-4 mb-6 text-sm text-[#0D1B3E]/80">
+      <svg class="w-5 h-5 text-[#0D1B3E] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg>
+      <span><strong>Lei Rouanet exige Declaração Completa.</strong> Preencha suas deduções para calcular o IR devido com precisão. O limite é de até <strong>6% do IR devido</strong>.</span>
     </div>
 
     <!-- Tabs -->
-    <div style="display:flex;gap:0;margin-bottom:24px;border-radius:12px;overflow:hidden;border:2px solid var(--primary-color)">
-      <button id="tabCompleta" onclick="switchTab('completa')" style="flex:1;padding:14px;border:none;cursor:pointer;font-size:15px;font-weight:600;background:var(--primary-color);color:white;transition:all 0.2s">
-        <i class="fas fa-file-invoice-dollar"></i> Calcular pelo Holerite
+    <div class="flex rounded-xl overflow-hidden border border-[#0D1B3E]/20 mb-6 bg-white">
+      <button id="tabCompleta" onclick="switchTab('completa')"
+        class="flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold bg-[#0D1B3E] text-white transition-all">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Calcular pelo Holerite
       </button>
-      <button id="tabRapida" onclick="switchTab('rapida')" style="flex:1;padding:14px;border:none;cursor:pointer;font-size:15px;font-weight:600;background:white;color:var(--primary-color);transition:all 0.2s">
-        <i class="fas fa-bolt"></i> Já sei meu IR Devido
+      <button id="tabRapida" onclick="switchTab('rapida')"
+        class="flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold bg-white text-[#0D1B3E] transition-all">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Já sei meu IR Devido
       </button>
     </div>
 
-    <!-- Calculadora Rápida -->
+    <!-- ── CALCULADORA RÁPIDA ────────────────────────────── -->
     <div id="formRapida" style="display:none">
-      <div class="card">
-        <h2 class="card-title"><i class="fas fa-bolt"></i> Calculadora Rápida</h2>
-        <p style="color:var(--text-secondary);margin-bottom:24px">
-          Se você já tem sua declaração do ano anterior ou sabe o IR Devido, informe o valor e veja instantaneamente quanto pode destinar via Lei Rouanet.
-        </p>
-        <div class="form-group">
-          <label for="irDireto">IR Devido (anual) *</label>
-          <input type="text" id="irDireto" placeholder="R$ 0,00" style="font-size:22px;font-weight:700;text-align:center">
-          <small>Valor do campo "IR Devido" da sua declaração — ou use o valor do ano anterior como estimativa</small>
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 mb-6">
+        <h2 class="flex items-center gap-2 text-lg font-bold text-[#0D1B3E] mb-2">
+          <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Calculadora Rápida
+        </h2>
+        <p class="text-gray-500 text-sm mb-6">Se você já sabe o IR Devido (da declaração anterior), informe o valor e veja seu limite Rouanet.</p>
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">IR Devido (anual)</label>
+          <input type="text" id="irDireto" placeholder="R$ 0,00"
+            class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-4 text-2xl font-bold text-center text-[#0D1B3E] transition-colors">
+          <p class="text-gray-400 text-xs mt-2">Campo "IR Devido" da declaração — ou estimativa do ano anterior</p>
         </div>
-        <button type="button" id="calcRapidoBtn" onclick="calcularRapido()" class="btn btn-primary btn-block">
-          <i class="fas fa-bolt"></i> Ver meu Limite Rouanet
+        <button type="button" id="calcRapidoBtn" onclick="calcularRapido()"
+          class="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold py-4 rounded-xl transition-all hover:scale-[1.01]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Ver meu Limite Rouanet
         </button>
       </div>
     </div>
 
-    <!-- Formulário Completo -->
+    <!-- ── FORMULÁRIO COMPLETO ───────────────────────────── -->
     <div id="formCompleta">
-    <div class="card">
-      <h2 class="card-title"><i class="fas fa-file-invoice-dollar"></i> Seus Dados</h2>
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 mb-6">
+        <h2 class="flex items-center gap-2 text-lg font-bold text-[#0D1B3E] mb-6">
+          <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Seus Dados
+        </h2>
 
-      <form id="calculatorForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="rendimentos">Rendimentos Tributáveis (anual) *</label>
-            <input type="text" id="rendimentos" placeholder="R$ 0,00" required>
+        <form id="calculatorForm">
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">Rendimentos Tributáveis (anual) *</label>
+              <input type="text" id="rendimentos" placeholder="R$ 0,00" required
+                class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-3 text-[#0D1B3E] transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">13º Salário</label>
+              <input type="text" id="rendimento13" placeholder="R$ 0,00"
+                class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-3 text-[#0D1B3E] transition-colors">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="rendimento13">13º Salário</label>
-            <input type="text" id="rendimento13" placeholder="R$ 0,00">
+
+          <h3 class="flex items-center gap-2 text-sm font-bold text-[#0D1B3E] mt-6 mb-4 pb-3 border-b border-gray-100">
+            <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
+            Deduções (Declaração Completa)
+          </h3>
+
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">Número de Dependentes</label>
+              <input type="number" id="dependentes" value="0" min="0"
+                class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-3 text-[#0D1B3E] transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">INSS Pago (mensal acumulado)</label>
+              <input type="text" id="inss" placeholder="R$ 0,00"
+                class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-3 text-[#0D1B3E] transition-colors">
+            </div>
           </div>
-        </div>
 
-        <h3 class="card-title" style="margin-top:8px;font-size:16px">
-          <i class="fas fa-receipt"></i> Deduções (Declaração Completa)
-        </h3>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="dependentes">Número de Dependentes</label>
-            <input type="number" id="dependentes" value="0" min="0">
+          <div class="mb-4">
+            <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">INSS do 13º Salário</label>
+            <input type="text" id="inss-13" placeholder="R$ 0,00"
+              class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-3 text-[#0D1B3E] transition-colors">
+            <p class="text-gray-400 text-xs mt-1">INSS retido especificamente do 13º (separado do INSS mensal)</p>
           </div>
-          <div class="form-group">
-            <label for="inss">INSS Pago (mensal acumulado)</label>
-            <input type="text" id="inss" placeholder="R$ 0,00">
+
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">Despesas com Saúde</label>
+              <input type="text" id="saude" placeholder="R$ 0,00"
+                class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-3 text-[#0D1B3E] transition-colors">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">Despesas com Educação</label>
+              <input type="text" id="educacao" placeholder="R$ 0,00"
+                class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-3 text-[#0D1B3E] transition-colors">
+            </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="inss-13">INSS do 13º Salário</label>
-          <input type="text" id="inss-13" placeholder="R$ 0,00">
-          <small>INSS retido especificamente do 13º salário (separado do INSS mensal)</small>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="saude">Despesas com Saúde</label>
-            <input type="text" id="saude" placeholder="R$ 0,00">
+          <div class="mb-6">
+            <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">Previdência Privada (PGBL)</label>
+            <input type="text" id="previdencia" placeholder="R$ 0,00"
+              class="w-full border-2 border-gray-200 focus:border-[#0D1B3E] rounded-xl px-4 py-3 text-[#0D1B3E] transition-colors">
           </div>
-          <div class="form-group">
-            <label for="educacao">Despesas com Educação</label>
-            <input type="text" id="educacao" placeholder="R$ 0,00">
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label for="previdencia">Previdência Privada (PGBL)</label>
-          <input type="text" id="previdencia" placeholder="R$ 0,00">
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block" id="calcBtn">
-          <i class="fas fa-calculator"></i> Calcular IR
-        </button>
-      </form>
-    </div>
-
+          <button type="submit" id="calcBtn"
+            class="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold py-4 rounded-xl transition-all hover:scale-[1.01]">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            Calcular IR
+          </button>
+        </form>
+      </div>
     </div><!-- /formCompleta -->
 
-    <!-- Resultado -->
+    <!-- ── RESULTADO ─────────────────────────────────────── -->
     <div class="result-section" id="resultSection">
 
-      <div class="card">
-        <h2 class="card-title"><i class="fas fa-chart-pie"></i> Resultado do Cálculo</h2>
-        <div class="result-grid">
-          <div class="result-item">
-            <div class="value" id="resRendimentos">R$ 0</div>
-            <div class="label">Rendimentos Totais</div>
+      <!-- Grid de métricas -->
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 mb-4">
+        <h2 class="flex items-center gap-2 text-lg font-bold text-[#0D1B3E] mb-6">
+          <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          Resultado do Cálculo
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-gray-50 rounded-xl">
+            <div id="resRendimentos" class="text-xl font-bold text-[#0D1B3E]">R$ 0</div>
+            <div class="text-xs text-gray-500 mt-1">Rendimentos Totais</div>
           </div>
-          <div class="result-item">
-            <div class="value" id="resBase">R$ 0</div>
-            <div class="label">Base de Cálculo</div>
+          <div class="text-center p-4 bg-gray-50 rounded-xl">
+            <div id="resBase" class="text-xl font-bold text-[#0D1B3E]">R$ 0</div>
+            <div class="text-xs text-gray-500 mt-1">Base de Cálculo</div>
           </div>
-          <div class="result-item">
-            <div class="value" id="resIR">R$ 0</div>
-            <div class="label">IR Devido</div>
+          <div class="text-center p-4 bg-[#0D1B3E]/5 border border-[#0D1B3E]/10 rounded-xl">
+            <div id="resIR" class="text-xl font-bold text-[#0D1B3E]">R$ 0</div>
+            <div class="text-xs text-gray-500 mt-1">IR Devido</div>
           </div>
-          <div class="result-item">
-            <div class="value" id="resAliquota">0%</div>
-            <div class="label">Alíquota Efetiva</div>
+          <div class="text-center p-4 bg-gray-50 rounded-xl">
+            <div id="resAliquota" class="text-xl font-bold text-[#0D1B3E]">0%</div>
+            <div class="text-xs text-gray-500 mt-1">Alíquota Efetiva</div>
           </div>
         </div>
       </div>
 
       <!-- Isento -->
-      <div class="alert-warning" id="alertIsento" style="display:none">
-        <div class="alert-title"><i class="fas fa-info-circle"></i> IR Devido = R$ 0</div>
-        <p>Você está na faixa de isenção ou suas deduções zeram o IR. Não há valor a destinar via Lei Rouanet.</p>
+      <div id="alertIsento" class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-4">
+        <div class="flex items-center gap-2 font-bold text-amber-800 mb-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg>
+          IR Devido = R$ 0
+        </div>
+        <p class="text-amber-700 text-sm">Você está na faixa de isenção ou suas deduções zeram o IR. Não há valor a destinar via Lei Rouanet.</p>
       </div>
 
       <!-- Limite Rouanet -->
-      <div class="limites-card" id="limitesCard" style="display:none">
-        <h3><i class="fas fa-theater-masks"></i> Você pode destinar via Lei Rouanet:</h3>
-        <div class="limite-item">
-          <span class="name">Lei Rouanet — Patrocínio Cultural (6%)</span>
-          <span class="value" id="limRouanet">R$ 0</span>
+      <div id="limitesCard" class="hidden bg-[#0D1B3E] rounded-2xl p-6 sm:p-8 mb-4">
+        <h3 class="flex items-center gap-2 text-white font-bold text-lg mb-6">
+          <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"/></svg>
+          Você pode destinar via Lei Rouanet:
+        </h3>
+        <div class="flex items-center justify-between py-4 border-b border-white/10">
+          <span class="text-white/70 text-sm">Lei Rouanet — Patrocínio Cultural (6%)</span>
+          <span id="limRouanet" class="text-white font-bold text-xl">R$ 0</span>
         </div>
-        <div class="limite-total">
-          <span>SEU LIMITE ROUANET</span>
-          <span id="limTotal">R$ 0</span>
+        <div class="flex items-center justify-between pt-5">
+          <span class="text-[#FFD700] font-bold tracking-wide">SEU LIMITE ROUANET</span>
+          <span id="limTotal" class="text-[#FFD700] font-black text-2xl">R$ 0</span>
         </div>
       </div>
 
-      <div class="actions" id="actionsCompleta" style="display:none">
-        <a href="projetos-rouanet.html" class="btn btn-success">
-          <i class="fas fa-theater-masks"></i> Escolher Projeto Cultural
+      <!-- Ações -->
+      <div id="actionsCompleta" class="hidden flex gap-3 flex-col sm:flex-row mb-4">
+        <a href="projetos-rouanet.html"
+          class="flex-1 flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold py-4 rounded-xl transition-all hover:scale-[1.01] no-underline">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+          Escolher Projeto Cultural
         </a>
-        <button class="btn btn-outline" onclick="document.getElementById('resultSection').classList.remove('show'); window.scrollTo({top:0,behavior:'smooth'})">
-          <i class="fas fa-redo"></i> Novo Cálculo
+        <button onclick="document.getElementById('resultSection').classList.remove('show'); window.scrollTo({top:0,behavior:'smooth'})"
+          class="flex-1 flex items-center justify-center gap-2 border-2 border-[#0D1B3E]/20 text-[#0D1B3E] font-semibold py-4 rounded-xl hover:bg-[#0D1B3E]/5 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Novo Cálculo
         </button>
       </div>
 
-      <!-- Login push (só para não logados) -->
-      <div id="loginPush" style="display:none;margin-top:20px;background:linear-gradient(135deg,#1E3A5F,#2B5A9E);color:white;border-radius:16px;padding:28px 32px;text-align:center">
-        <i class="fas fa-user-circle" style="font-size:40px;margin-bottom:12px;opacity:0.9"></i>
-        <h3 style="margin:0 0 8px;font-size:20px">Salve seu cálculo e escolha um projeto</h3>
-        <p style="margin:0 0 20px;opacity:0.85">Crie sua conta gratuita para acompanhar sua destinação e receber o comprovante fiscal.</p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-          <a href="cadastro.html" class="btn" style="background:white;color:#1E3A5F;font-weight:700">
-            <i class="fas fa-user-plus"></i> Criar Conta Grátis
+      <!-- Login push -->
+      <div id="loginPush" class="hidden bg-[#0D1B3E] rounded-2xl p-7 text-center">
+        <svg class="w-10 h-10 text-[#FFD700] mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <h3 class="text-white font-bold text-xl mb-2">Salve seu cálculo e escolha um projeto</h3>
+        <p class="text-white/60 text-sm mb-6">Crie sua conta gratuita para acompanhar sua destinação e receber o comprovante fiscal.</p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="cadastro.html"
+            class="flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold px-6 py-3 rounded-xl transition-all no-underline">
+            Criar Conta Grátis
           </a>
-          <a href="login.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.6);color:white">
-            <i class="fas fa-sign-in-alt"></i> Já tenho conta
+          <a href="login.html"
+            class="flex items-center gap-2 border border-white/30 text-white font-medium px-6 py-3 rounded-xl hover:bg-white/10 transition-colors no-underline">
+            Já tenho conta
           </a>
         </div>
       </div>
-    </div>
+
+    </div><!-- /resultSection -->
+
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <a href="index.html" class="logo-link">
-      <img src="assets/logo-destineai.jpg" alt="DestineAI" class="logo-img logo-white">
-    </a>
-    <p class="tagline">Lei Rouanet Simplificada</p>
-    <div class="footer-bottom">
-      <p>
-        <a href="politica-privacidade.html" style="color:rgba(255,255,255,0.8)">Política de Privacidade</a> |
-        <a href="termos-uso.html" style="color:rgba(255,255,255,0.8)">Termos de Uso</a>
-      </p>
-      <p style="margin-top:12px">&copy; 2026 DestineAI. Todos os direitos reservados.</p>
-      <p style="margin-top:8px;font-size:12px;opacity:0.7">
-        Powered by <a href="https://www.incentivabr.com.br" target="_blank" style="color:inherit">IncentivaBR</a>
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="bg-[#0A1530] py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="text-white/40 text-sm font-semibold">
+        Destine<span class="text-[#FFD700]/60">AI</span>
+      </span>
+      <div class="flex gap-4 text-white/30 text-xs">
+        <a href="politica-privacidade.html" class="hover:text-white/60 transition-colors no-underline">Política de Privacidade</a>
+        <span>|</span>
+        <a href="termos-uso.html" class="hover:text-white/60 transition-colors no-underline">Termos de Uso</a>
+      </div>
+      <p class="text-white/30 text-xs">
+        Plataforma de destinação de IR para projetos culturais · Lei 8.313/1991
       </p>
     </div>
   </footer>
@@ -453,7 +345,7 @@
       if (el) el.addEventListener('input', function() { utils.maskCurrency(this); });
     });
 
-    // Submit
+    // Submit calculadora completa
     document.getElementById('calculatorForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -477,67 +369,64 @@
 
       const btn = document.getElementById('calcBtn');
       btn.disabled = true;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calculando...';
+      btn.innerHTML = '<svg class="w-4 h-4 animate-spin inline mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg> Calculando...';
 
       try {
         const result = await api.calculateIR(data);
-
-        // Salvar para uso no wizard de destinação
         if (typeof auth !== 'undefined') auth.setIRData(result);
-
-        // Preencher resultado
-        document.getElementById('resRendimentos').textContent = utils.formatCurrency(result.rendimentos_total);
-        document.getElementById('resBase').textContent        = utils.formatCurrency(result.base_calculo);
-        document.getElementById('resIR').textContent          = utils.formatCurrency(result.ir_devido);
-        document.getElementById('resAliquota').textContent    = result.aliquota_efetiva + '%';
-
-        const limRouanet = result.limites_doacao?.rouanet || result.limites_doacao?.total_maximo || 0;
-
-        if (result.ir_devido > 0 && limRouanet > 0) {
-          document.getElementById('alertIsento').style.display  = 'none';
-          document.getElementById('limitesCard').style.display  = 'block';
-          document.getElementById('actionsCompleta').style.display = 'flex';
-          document.getElementById('limRouanet').textContent = utils.formatCurrency(limRouanet);
-          document.getElementById('limTotal').textContent   = utils.formatCurrency(limRouanet);
-        } else {
-          document.getElementById('alertIsento').style.display  = 'block';
-          document.getElementById('limitesCard').style.display  = 'none';
-          document.getElementById('actionsCompleta').style.display = 'none';
-        }
-
-        document.getElementById('resultSection').classList.add('show');
-        document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
-
-        // Login push — só para não logados quando há limite Rouanet
-        const isLogged = typeof auth !== 'undefined' && auth.isLoggedIn();
-        const loginPush = document.getElementById('loginPush');
-        if (!isLogged && result.ir_devido > 0) {
-          loginPush.style.display = 'block';
-        } else {
-          loginPush.style.display = 'none';
-        }
-
+        mostrarResultado(result);
       } catch (error) {
         utils.showToast(error.message || 'Erro ao calcular IR', 'error');
       } finally {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-calculator"></i> Calcular IR';
+        btn.innerHTML = '<svg class="w-5 h-5 inline mr-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg> Calcular IR';
       }
     });
+
+    function mostrarResultado(result) {
+      document.getElementById('resRendimentos').textContent = utils.formatCurrency(result.rendimentos_total || 0);
+      document.getElementById('resBase').textContent        = utils.formatCurrency(result.base_calculo || 0);
+      document.getElementById('resIR').textContent          = utils.formatCurrency(result.ir_devido || 0);
+      document.getElementById('resAliquota').textContent    = (result.aliquota_efetiva || '—') + (result.aliquota_efetiva ? '%' : '');
+
+      const limRouanet = result.limites_doacao?.rouanet || result.limites_doacao?.total_maximo || 0;
+
+      if (result.ir_devido > 0 && limRouanet > 0) {
+        document.getElementById('alertIsento').classList.add('hidden');
+        document.getElementById('limitesCard').classList.remove('hidden');
+        document.getElementById('actionsCompleta').classList.remove('hidden');
+        document.getElementById('limRouanet').textContent = utils.formatCurrency(limRouanet);
+        document.getElementById('limTotal').textContent   = utils.formatCurrency(limRouanet);
+      } else {
+        document.getElementById('alertIsento').classList.remove('hidden');
+        document.getElementById('limitesCard').classList.add('hidden');
+        document.getElementById('actionsCompleta').classList.add('hidden');
+      }
+
+      document.getElementById('resultSection').classList.add('show');
+      document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+
+      const isLogged = typeof auth !== 'undefined' && auth.isLoggedIn();
+      document.getElementById('loginPush').classList.toggle('hidden', isLogged || result.ir_devido <= 0);
+    }
 
     // Tabs
     function switchTab(tab) {
       const isCompleta = tab === 'completa';
       document.getElementById('formCompleta').style.display = isCompleta ? 'block' : 'none';
       document.getElementById('formRapida').style.display   = isCompleta ? 'none'  : 'block';
-      document.getElementById('tabCompleta').style.background = isCompleta ? 'var(--primary-color)' : 'white';
-      document.getElementById('tabCompleta').style.color     = isCompleta ? 'white' : 'var(--primary-color)';
-      document.getElementById('tabRapida').style.background  = isCompleta ? 'white' : 'var(--primary-color)';
-      document.getElementById('tabRapida').style.color       = isCompleta ? 'var(--primary-color)' : 'white';
+
+      const tabC = document.getElementById('tabCompleta');
+      const tabR = document.getElementById('tabRapida');
+      tabC.className = 'flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold transition-all ' +
+        (isCompleta ? 'bg-[#0D1B3E] text-white' : 'bg-white text-[#0D1B3E]');
+      tabR.className = 'flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold transition-all ' +
+        (!isCompleta ? 'bg-[#0D1B3E] text-white' : 'bg-white text-[#0D1B3E]');
+
       document.getElementById('resultSection').classList.remove('show');
     }
 
-    // Máscara no campo IR direto
+    // Máscara IR direto
     const irDiretoEl = document.getElementById('irDireto');
     if (irDiretoEl) irDiretoEl.addEventListener('input', function() { utils.maskCurrency(this); });
 
@@ -551,77 +440,37 @@
 
       const btn = document.getElementById('calcRapidoBtn');
       btn.disabled = true;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calculando...';
+      btn.innerHTML = '<svg class="w-4 h-4 animate-spin inline mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg> Calculando...';
 
       try {
         const result = await api.calcularLimitesRapido(irDevido);
-
         if (typeof auth !== 'undefined') auth.setIRData(result);
 
-        // Preencher resultado (campos da calculadora completa)
+        // Preenche campos do resultado
         document.getElementById('resRendimentos').textContent = '—';
         document.getElementById('resBase').textContent        = '—';
         document.getElementById('resIR').textContent          = utils.formatCurrency(result.ir_devido);
         document.getElementById('resAliquota').textContent    = '—';
 
-        const limRouanet = result.limites_doacao?.rouanet || result.limites_doacao?.total_maximo || 0;
-
-        if (limRouanet > 0) {
-          document.getElementById('alertIsento').style.display  = 'none';
-          document.getElementById('limitesCard').style.display  = 'block';
-          document.getElementById('actionsCompleta').style.display = 'flex';
-          document.getElementById('limRouanet').textContent = utils.formatCurrency(limRouanet);
-          document.getElementById('limTotal').textContent   = utils.formatCurrency(limRouanet);
-        } else {
-          document.getElementById('alertIsento').style.display  = 'block';
-          document.getElementById('limitesCard').style.display  = 'none';
-          document.getElementById('actionsCompleta').style.display = 'none';
-        }
-
-        document.getElementById('resultSection').classList.add('show');
-        document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
-
-        const isLogged = typeof auth !== 'undefined' && auth.isLoggedIn();
-        document.getElementById('loginPush').style.display = (!isLogged && limRouanet > 0) ? 'block' : 'none';
-
+        mostrarResultado(result);
       } catch (error) {
         utils.showToast(error.message || 'Erro ao calcular', 'error');
       } finally {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-bolt"></i> Ver meu Limite Rouanet';
+        btn.innerHTML = '<svg class="w-5 h-5 inline mr-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Ver meu Limite Rouanet';
       }
     }
 
-    // Countdown IR 2025 deadline (30/04/2026)
+    // Dias restantes para prazo IR
     (function() {
       const deadline = new Date('2026-04-30T23:59:59-03:00');
-      const banner = document.getElementById('urgencyBanner');
-      const el = document.getElementById('countdown');
-
-      function updateCountdown() {
-        const diff = deadline - Date.now();
-        if (diff <= 0) {
-          banner.style.display = 'none';
-          return;
-        }
-        const days = Math.floor(diff / 86400000);
-        const hours = Math.floor((diff % 86400000) / 3600000);
-        const mins  = Math.floor((diff % 3600000) / 60000);
-        el.textContent = days > 0
-          ? `${days}d ${hours}h ${mins}min restantes`
-          : `${hours}h ${mins}min restantes`;
-      }
-
-      updateCountdown();
-      setInterval(updateCountdown, 60000);
+      const el = document.getElementById('diasRestantes');
+      if (!el) return;
+      const diff = deadline - Date.now();
+      if (diff <= 0) { el.textContent = 'Prazo encerrado'; return; }
+      const days = Math.floor(diff / 86400000);
+      el.textContent = days === 1 ? 'último dia!' : `${days} dias restantes`;
     })();
-
-    // Brand dinâmica
-    fetch('/api/config/brand').then(r => r.json()).then(cfg => {
-      if (!cfg || cfg.status === 'error') return;
-      if (cfg.logo_url) document.getElementById('brandLogo').src = cfg.logo_url;
-      if (cfg.color_primary) document.documentElement.style.setProperty('--primary-color', cfg.color_primary);
-    }).catch(() => {});
   </script>
   <script src="js/tenant.js"></script>
   <script src="js/tina.js"></script>

@@ -3,653 +3,515 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perguntas Frequentes - Lei Rouanet</title>
-  <meta name="description" content="Tire suas duvidas sobre destinacao de IR para projetos culturais via Lei Rouanet (Lei 8.313/1991).">
+  <title>Perguntas Frequentes — DestineAI</title>
+  <meta name="description" content="Tire suas dúvidas sobre destinação de IR para projetos culturais via Lei Rouanet (Lei 8.313/1991).">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            navy:     '#0D1B3E',
+            navydark: '#0A1530',
+            navymid:  '#132247',
+            gold:     '#FFD700',
+            golddk:   '#FFC000',
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    body { background: var(--background-light); }
-
-    .hero {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color, #2B5A9E) 100%);
-      padding: 3rem 2rem;
-      text-align: center;
-      color: white;
-    }
-
-    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .hero p { font-size: 1.2rem; opacity: 0.95; }
-
-    .faq-container { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
-
-    .faq-search { margin-bottom: 2rem; }
-    .faq-search input {
-      width: 100%;
-      padding: 16px 24px;
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      font-size: 16px;
-      transition: all 0.3s;
-    }
-    .faq-search input:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
-    }
-
-    .faq-categories {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-    .faq-category-btn {
-      padding: 10px 20px;
-      border: 2px solid var(--border-color);
-      background: white;
-      border-radius: 25px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .faq-category-btn:hover, .faq-category-btn.active {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-      color: white;
-    }
-
-    .faq-section { margin-bottom: 2rem; }
-    .faq-section-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .faq-item {
-      background: white;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-      transition: all 0.3s;
-    }
-    .faq-item:hover { box-shadow: var(--shadow-md); }
-    .faq-question {
-      padding: 20px 24px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-      color: var(--text-primary);
-      transition: all 0.3s;
-    }
-    .faq-question i { color: var(--secondary-color); transition: transform 0.3s; }
-    .faq-item.open .faq-question i { transform: rotate(180deg); }
+    body { font-family: 'Inter', sans-serif; }
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-    .faq-item.open .faq-answer { max-height: 600px; }
-    .faq-answer-content {
-      padding: 16px 24px 20px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      border-top: 1px solid var(--border-color);
-    }
-    .faq-answer-content ul { margin: 12px 0; padding-left: 20px; }
-    .faq-answer-content li { margin-bottom: 8px; }
-    .faq-answer-content strong { color: var(--text-primary); }
-    .faq-answer-content .highlight-box {
-      background: rgba(0, 168, 89, 0.1);
-      border-left: 4px solid var(--success-color);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin: 12px 0;
-    }
-    .faq-answer-content .info-box {
-      background: rgba(30, 58, 95, 0.07);
-      border-left: 4px solid var(--primary-color);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin: 12px 0;
-    }
-
-    .faq-cta {
-      text-align: center;
-      background: white;
-      padding: 3rem;
-      border-radius: 16px;
-      margin-top: 3rem;
-      box-shadow: var(--shadow-md);
-    }
-    .faq-cta h3 { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 1rem; }
-    .faq-cta p { color: var(--text-secondary); margin-bottom: 1.5rem; }
-    .faq-cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-    .no-results { text-align: center; padding: 3rem; color: var(--text-secondary); display: none; }
-    .no-results i { font-size: 3rem; color: var(--border-color); margin-bottom: 1rem; display: block; }
-
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 1.8rem; }
-      .hero p { font-size: 1rem; }
-      .faq-container { padding: 0 1rem; margin: 2rem auto; }
-      .faq-question { padding: 16px 18px; font-size: 15px; }
-      .faq-answer-content { padding: 16px 18px; font-size: 14px; }
-      .faq-cta { padding: 2rem 1.5rem; }
-      .faq-cta-buttons { flex-direction: column; }
-    }
+    .faq-item.open .faq-answer { max-height: 800px; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-chevron { transition: transform 0.3s ease; }
+    .faq-item { display: block; }
+    input:focus { outline: none; }
   </style>
 </head>
-<body>
-  <header class="header">
-    <a href="index.html" class="logo-link">
-      <img id="brandLogo" src="assets/logo-destineai.jpg" alt="DestineAI" class="logo-img">
-    </a>
-    <nav>
-      <a href="projetos-rouanet.html">Nosso Projeto</a>
-      <a href="calculadora.html">Calculadora IR</a>
-      <a href="#" id="navAuth" class="btn btn-primary btn-sm">Entrar</a>
-    </nav>
-    <button class="menu-toggle" id="menuToggle">
-      <i class="fas fa-bars"></i>
-    </button>
-  </header>
+<body class="bg-gray-50 min-h-screen">
 
-  <section class="hero">
-    <h1><i class="fas fa-question-circle"></i> Perguntas Frequentes</h1>
-    <p>Tudo sobre Lei Rouanet e destinacao de IR para cultura</p>
+  <!-- ── NAV ─────────────────────────────────────────────── -->
+  <nav class="fixed top-0 inset-x-0 z-50 bg-[#0D1B3E]/95 backdrop-blur-md shadow-lg">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <a href="index.html" class="text-white font-extrabold text-xl tracking-tight no-underline">
+        Destine<span class="text-[#FFD700]">AI</span>
+      </a>
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="text-white/60 hover:text-white text-sm font-medium transition-colors hidden sm:block no-underline">Início</a>
+        <a href="calculadora.html" class="text-white/60 hover:text-white text-sm font-medium transition-colors hidden sm:block no-underline">Calculadora</a>
+        <a href="faq.html" class="text-[#FFD700] text-sm font-semibold no-underline">FAQ</a>
+        <a href="login.html" id="navAuth" class="text-white/70 hover:text-white text-sm font-medium transition-colors no-underline">Entrar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="bg-[#0D1B3E] pt-24 pb-12">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/30 px-5 py-2 mb-6">
+        <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3m.08 4h.01"/></svg>
+        <span class="text-[#FFD700] font-semibold text-sm">Perguntas Frequentes</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight mb-3">
+        Tudo sobre <span class="text-[#FFD700]">Lei Rouanet</span>
+      </h1>
+      <p class="text-white/60 text-lg">Respostas claras para destinar seu IR com segurança e confiança.</p>
+    </div>
   </section>
 
-  <div class="faq-container">
-    <div class="faq-search">
-      <input type="text" id="faqSearch" placeholder="Buscar pergunta..." oninput="filterFAQ()">
+  <!-- ── CONTEÚDO ──────────────────────────────────────────── -->
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 pb-20">
+
+    <!-- Busca -->
+    <div class="relative mb-6">
+      <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="faqSearch" placeholder="Buscar pergunta..." oninput="filterFAQ()"
+        class="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 focus:border-[#0D1B3E] rounded-2xl text-sm text-gray-700 transition-colors">
     </div>
 
-    <div class="faq-categories">
-      <button class="faq-category-btn active" onclick="filterCategory('all', this)">Todas</button>
-      <button class="faq-category-btn" onclick="filterCategory('lei', this)">Lei Rouanet</button>
-      <button class="faq-category-btn" onclick="filterCategory('servidor', this)">Servidores Públicos</button>
-      <button class="faq-category-btn" onclick="filterCategory('processo', this)">Processo</button>
-      <button class="faq-category-btn" onclick="filterCategory('declaracao', this)">Declaração IR</button>
+    <!-- Filtros por categoria -->
+    <div class="flex gap-2 flex-wrap mb-8">
+      <button onclick="filterCategory('all', this)"
+        class="faq-cat-btn px-4 py-2 rounded-full text-sm font-semibold bg-[#0D1B3E] text-white border-2 border-[#0D1B3E] transition-all">
+        Todas
+      </button>
+      <button onclick="filterCategory('lei', this)"
+        class="faq-cat-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-[#0D1B3E] border-2 border-gray-200 hover:border-[#0D1B3E] transition-all">
+        Lei Rouanet
+      </button>
+      <button onclick="filterCategory('servidor', this)"
+        class="faq-cat-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-[#0D1B3E] border-2 border-gray-200 hover:border-[#0D1B3E] transition-all">
+        Servidores Públicos
+      </button>
+      <button onclick="filterCategory('processo', this)"
+        class="faq-cat-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-[#0D1B3E] border-2 border-gray-200 hover:border-[#0D1B3E] transition-all">
+        Processo
+      </button>
+      <button onclick="filterCategory('declaracao', this)"
+        class="faq-cat-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-[#0D1B3E] border-2 border-gray-200 hover:border-[#0D1B3E] transition-all">
+        Declaração IR
+      </button>
     </div>
 
-    <div class="no-results" id="noResults">
-      <i class="fas fa-search"></i>
-      <h3>Nenhuma pergunta encontrada</h3>
-      <p>Tente buscar com outras palavras.</p>
+    <!-- Sem resultados -->
+    <div id="noResults" class="hidden text-center py-16">
+      <svg class="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/></svg>
+      <h3 class="text-gray-500 font-semibold mb-1">Nenhuma pergunta encontrada</h3>
+      <p class="text-gray-400 text-sm">Tente buscar com outras palavras.</p>
     </div>
 
-    <!-- LEI ROUANET -->
-    <div class="faq-section" data-category="lei">
-      <h2 class="faq-section-title"><i class="fas fa-landmark"></i> Lei Rouanet</h2>
+    <!-- ── LEI ROUANET ───────────────────────────────────── -->
+    <div class="faq-section mb-8" data-category="lei">
+      <h2 class="flex items-center gap-2 text-sm font-bold text-[#0D1B3E] uppercase tracking-widest mb-4 px-1">
+        <span class="w-5 h-5 rounded-full bg-[#FFD700] flex items-center justify-center">
+          <svg class="w-3 h-3 text-[#0D1B3E]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+        </span>
+        Lei Rouanet
+      </h2>
+      <div class="space-y-2">
 
-      <div class="faq-item" data-keywords="perder dinheiro prejuizo custo pagar mais">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Vou perder dinheiro ou pagar mais imposto?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>NAO!</strong> O valor destinado e deduzido integralmente do IR devido. Ou seja, voce redireciona dinheiro que ja iria para o governo para um projeto cultural. Custo adicional: zero.</p>
-            <div class="highlight-box">
-              Exemplo: IR devido R$ 10.000 → destina R$ 600 (6%) → paga so R$ 9.400 ao governo. A diferenca vai para cultura.
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="perder dinheiro prejuizo custo pagar mais">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Vou perder dinheiro ou pagar mais imposto?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3"><strong class="text-[#0D1B3E]">Não!</strong> O valor destinado é deduzido integralmente do IR devido. Você redireciona dinheiro que já iria para o governo para um projeto cultural. Custo adicional: <strong class="text-[#0D1B3E]">zero</strong>.</p>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#FFD700] rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                Exemplo: IR devido R$ 10.000 → destina R$ 600 (6%) → paga só R$ 9.400 ao governo. A diferença vai para a cultura.
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="faq-item" data-keywords="lei rouanet o que e como funciona cultura MinC SALIC FNC">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          O que e a Lei Rouanet?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>A <strong>Lei 8.313/1991</strong> (Lei Rouanet) permite que pessoas fisicas destinem ate <strong>6% do seu IR devido</strong> para projetos culturais aprovados pelo Ministerio da Cultura (MinC) e cadastrados no sistema <strong>SALIC</strong>.</p>
-            <p>O dinheiro vai para o <strong>Fundo Nacional de Cultura (FNC)</strong>, gerido pelo Banco do Brasil, e e repassado ao projeto escolhido.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="seguro confiavel golpe fake verdade SALIC MinC FNC Banco do Brasil">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          E seguro? Como verifico os dados?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>100% seguro.</strong> Os projetos sao aprovados e publicados no SALIC (salic.cultura.gov.br), sistema oficial do governo federal. O FNC e gerido pelo Banco do Brasil.</p>
-            <div class="info-box">
-              Voce pode verificar qualquer projeto diretamente em <strong>salic.cultura.gov.br</strong> pelo numero PRONAC.
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="lei rouanet o que e como funciona cultura MinC SALIC FNC">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>O que é a Lei Rouanet?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-2">A <strong class="text-[#0D1B3E]">Lei 8.313/1991</strong> permite que pessoas físicas destinem até <strong class="text-[#0D1B3E]">6% do IR devido</strong> para projetos culturais aprovados pelo Ministério da Cultura (MinC) e cadastrados no sistema <strong class="text-[#0D1B3E]">SALIC</strong>.</p>
+              <p>O dinheiro vai para o <strong class="text-[#0D1B3E]">Fundo Nacional de Cultura (FNC)</strong>, gerido pelo Banco do Brasil, e é repassado ao projeto escolhido.</p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="faq-item" data-keywords="limite 6 porcento quanto posso destinar IR devido">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Qual o limite que posso destinar?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>O limite e <strong>6% do IR devido</strong> (nao do salario, mas do imposto calculado). Use nossa calculadora para saber o valor exato com base no seu rendimento.</p>
-            <p>Destinar acima do limite nao gera beneficio fiscal — o excedente nao e deduzivel.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SERVIDORES PÚBLICOS -->
-    <div class="faq-section" data-category="servidor">
-      <h2 class="faq-section-title"><i class="fas fa-user-tie"></i> Servidores Públicos</h2>
-
-      <div class="faq-item" data-keywords="servidor publico folha desconto retencao fonte imposto retido salario">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Tenho imposto retido em folha. Posso destinar assim mesmo?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Sim!</strong> O imposto retido na fonte não impede a destinação. O que importa é o <strong>IR devido</strong> calculado na sua declaração anual completa — não o valor retido mensalmente.</p>
-            <div class="highlight-box">
-              Se você tem <strong>restituição a receber</strong>, a destinação pode aumentar esse valor. Se tem <strong>imposto a pagar</strong>, a destinação reduz o saldo devedor. Em ambos os casos, seu bolso fica igual.
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="seguro confiavel golpe fake verdade SALIC MinC FNC Banco do Brasil">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>É seguro? Como verifico os dados?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3"><strong class="text-[#0D1B3E]">100% seguro.</strong> Os projetos são aprovados e publicados no SALIC (salic.cultura.gov.br), sistema oficial do governo federal. O FNC é gerido pelo Banco do Brasil.</p>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#0D1B3E]/30 rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                Você pode verificar qualquer projeto em <strong>salic.cultura.gov.br</strong> pelo número PRONAC.
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="faq-item" data-keywords="servidor procedimento especifico diferenciado funciona igual regras">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Existe algum procedimento específico para servidores públicos?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Não.</strong> Servidores seguem as mesmas regras das demais pessoas físicas. A única diferença — favorável — é que você tem <strong>previsibilidade de renda</strong> (salário fixo), o que facilita o planejamento da destinação.</p>
-            <p>Basta fazer a declaração completa do IR e ter IR devido maior que zero.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="calcular contracheque holerite salario bruto limite estimativa ir">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Como estimo quanto posso destinar com base no meu contracheque?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>O valor exato só é conhecido após simular a declaração completa, mas você pode <strong>estimar</strong> assim:</p>
-            <div class="info-box">
-              <strong>IR retido no ano anterior ≈ IR devido neste ano</strong><br><br>
-              Máximo Rouanet (6%) = IR retido em 2024 × 0,06<br>
-              Exemplo: reteve R$ 20.000 → pode destinar até <strong>R$ 1.200</strong>
-            </div>
-            <p>Use nossa <a href="calculadora.html" style="color: var(--primary-color); font-weight: 600;">Calculadora IR</a> para uma estimativa mais precisa.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="malha fina risco problema receita federal medo auditoria">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Existe risco de cair na malha fina?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Zero risco</strong> se você: respeitar o limite de 6%, informar o valor correto na ficha "Doações Efetuadas" (código 41) e guardar o comprovante da transferência por 5 anos.</p>
-            <div class="highlight-box">
-              Milhões de brasileiros destinam via Lei Rouanet todo ano sem qualquer problema. A destinação é <strong>totalmente legal</strong> e reconhecida pela Receita Federal.
-            </div>
-            <p>O único risco é declarar valor acima do limite ou sem comprovante — situações que nossa plataforma previne automaticamente.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="projeto fora cidade estado outro municipio regiao qualquer localidade">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Posso destinar para projetos fora da minha cidade?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Sim.</strong> Você pode escolher projetos de <strong>qualquer localidade do Brasil</strong>, independentemente do seu domicílio fiscal. A Lei Rouanet não restringe por região.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="credenciado aprovado verificar legitimo golpe projeto real salic pronac">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Como sei se o projeto é legítimo e aprovado?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>Todos os projetos da plataforma são <strong>pré-aprovados pelo MinC</strong> e listados no <strong>SALIC</strong> (sistema oficial). Cada projeto tem um número <strong>PRONAC</strong> — o identificador oficial.</p>
-            <div class="info-box">
-              Consulte qualquer projeto em <strong>salic.cultura.gov.br</strong> pelo PRONAC para conferir os dados oficiais do MinC. Nunca transfira sem verificar.
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="limite 6 porcento quanto posso destinar IR devido">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Qual o limite que posso destinar?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-2">O limite é <strong class="text-[#0D1B3E]">6% do IR devido</strong> — não do salário, mas do imposto calculado. Use nossa calculadora para saber o valor exato.</p>
+              <p>Destinar acima do limite não gera benefício fiscal — o excedente não é dedutível.</p>
             </div>
           </div>
         </div>
-      </div>
 
-    </div>
-
-    <!-- PROCESSO -->
-    <div class="faq-section" data-category="processo">
-      <h2 class="faq-section-title"><i class="fas fa-list-ol"></i> Processo</h2>
-
-      <div class="faq-item" data-keywords="comprovante upload enviar formato pix transferencia TED deposito">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Como faco a transferencia? Posso usar PIX?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>Sim! Voce pode usar <strong>PIX, TED ou transferencia bancaria</strong> para a conta do FNC no Banco do Brasil:</p>
-            <ul>
-              <li><strong>Banco:</strong> Banco do Brasil (001)</li>
-              <li><strong>Agencia:</strong> 3902-5</li>
-              <li><strong>Conta:</strong> 170500-8</li>
-              <li><strong>Favorecido:</strong> Fundo Nacional de Cultura</li>
-            </ul>
-            <div class="highlight-box">
-              No campo descricao/referencia, informe o <strong>PRONAC do projeto</strong> (fornecido no sistema apos registrar a destinacao).
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="comprovante enviar foto print upload formato">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Que comprovante preciso enviar?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>Envie o comprovante da transferencia em <strong>PDF, JPG ou PNG</strong> (ate 5MB). O comprovante deve mostrar data, valor e destinatario (FNC).</p>
-            <div class="highlight-box">
-              Print da tela do aplicativo do banco funciona perfeitamente!
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="erro errei corrigir valor errado dados bancarios">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          E se eu errar o valor ou os dados bancarios?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Antes do deposito:</strong> simplesmente corrija no sistema e refaca o processo.</p>
-            <p><strong>Apos o deposito:</strong> entre em contato em ate 48 horas para orientacao. Transferencias para o FNC podem ser estornadas dependendo do banco.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="comunicado mecenato recibo oficial projeto proponente documento fiscal">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          O que é o Comunicado de Mecenato?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>O <strong>Comunicado de Mecenato</strong> é o recibo oficial emitido pelo proponente do projeto cultural. É o documento com valor fiscal que você usa na declaração do IR — diferente do comprovante que emitimos (que é só para controle pessoal).</p>
-            <ul>
-              <li>O proponente tem <strong>prazo legal de 15 dias</strong> para emitir</li>
-              <li>Deve conter: seu nome, CPF, valor, data e dados do projeto</li>
-              <li>Guarde por no mínimo 5 anos</li>
-            </ul>
-            <div class="info-box">
-              Notificamos você por email assim que o Comunicado de Mecenato estiver disponível.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="guardar documentos comprovantes 5 anos organizar pasta digital">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Quais documentos preciso guardar e por quanto tempo?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>Guarde estes documentos por <strong>mínimo 5 anos</strong> (a Receita Federal pode solicitar em auditoria):</p>
-            <ul>
-              <li><strong>Comprovante de transferência bancária</strong> (extrato, print do app ou TED)</li>
-              <li><strong>Comunicado de Mecenato</strong> emitido pelo proponente do projeto</li>
-              <li><strong>Registro da destinação</strong> na plataforma DestineAI</li>
-            </ul>
-            <div class="highlight-box">
-              Dica: Crie uma pasta digital "Destinações IR 2025" no Google Drive ou OneDrive — organize tudo por projeto e tenha backup automático.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="contador contabilidade declaracao informar avisar">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Preciso avisar meu contador?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Sim, recomendado.</strong> Ele precisara incluir a destinacao na declaracao e o comprovante da transferencia. Compartilhe o link <a href="como-funciona.html" style="color: var(--primary-color);">Como Funciona</a> com ele.</p>
-          </div>
-        </div>
       </div>
     </div>
 
-    <!-- DECLARACAO IR -->
-    <div class="faq-section" data-category="declaracao">
-      <h2 class="faq-section-title"><i class="fas fa-file-invoice-dollar"></i> Declaracao do IR</h2>
+    <!-- ── SERVIDORES PÚBLICOS ─────────────────────────── -->
+    <div class="faq-section mb-8" data-category="servidor">
+      <h2 class="flex items-center gap-2 text-sm font-bold text-[#0D1B3E] uppercase tracking-widest mb-4 px-1">
+        <span class="w-5 h-5 rounded-full bg-[#FFD700] flex items-center justify-center">
+          <svg class="w-3 h-3 text-[#0D1B3E]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        </span>
+        Servidores Públicos
+      </h2>
+      <div class="space-y-2">
 
-      <div class="faq-item" data-keywords="prazo quando ate limite data 31 dezembro ano">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Ate quando posso fazer a destinacao?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>A transferencia deve ser feita <strong>dentro do exercicio fiscal</strong> — ou seja, entre 1 de janeiro e 31 de dezembro do ano-base.</p>
-            <p>Para entrar na declaracao de 2026 (ano-base 2025), o deposito deve ser feito ate <strong>31 de dezembro de 2025</strong>.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="declarar como informar DIRPF ficha codigo 41">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Como declaro a destinacao no IR?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>Na DIRPF, informe a destinacao em:</p>
-            <ul>
-              <li><strong>Ficha:</strong> Doacoes Efetuadas</li>
-              <li><strong>Codigo:</strong> 41 — Lei Rouanet / Atividade Cultural e Artistica</li>
-            </ul>
-            <div class="highlight-box">
-              Guarde o comprovante da transferencia bancaria — a Receita Federal pode solicitar como prova.
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="servidor publico folha desconto retencao fonte imposto retido salario">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Tenho imposto retido em folha. Posso destinar assim mesmo?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3"><strong class="text-[#0D1B3E]">Sim!</strong> O imposto retido na fonte não impede a destinação. O que importa é o <strong class="text-[#0D1B3E]">IR devido</strong> calculado na sua declaração anual completa.</p>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#FFD700] rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                Se você tem <strong>restituição a receber</strong>, a destinação aumenta esse valor. Se tem <strong>imposto a pagar</strong>, a destinação reduz o saldo. Em ambos os casos, seu bolso fica igual.
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="faq-item" data-keywords="recibo comprovante oficial prazo 60 dias declaracao">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Quando recebo o recibo oficial?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>O recibo oficial e emitido pelo proprio projeto/proponente ou pelo MinC em ate <strong>60 dias</strong> (prazo legal). Voce recebe notificacao por email assim que disponivel.</p>
-            <div class="info-box">
-              Nosso comprovante e apenas para seu controle pessoal. O documento com valor fiscal e o recibo oficial emitido pelo proponente do projeto.
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="servidor procedimento especifico diferenciado funciona igual regras">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Existe algum procedimento específico para servidores públicos?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-2"><strong class="text-[#0D1B3E]">Não.</strong> Servidores seguem as mesmas regras das demais pessoas físicas.</p>
+              <p>A única diferença — favorável — é que você tem <strong class="text-[#0D1B3E]">previsibilidade de renda</strong> (salário fixo), o que facilita o planejamento da destinação.</p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="faq-item" data-keywords="mais de um projeto dividir varios projetos salic pronac multiplos">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Posso destinar para mais de um projeto cultural?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Sim.</strong> Você pode distribuir seu limite entre quantos projetos SALIC quiser, desde que a soma não ultrapasse 6% do IR devido.</p>
-            <div class="highlight-box">
-              Exemplo: IR devido R$ 20.000 → limite R$ 1.200 → R$ 700 para o Projeto Themis + R$ 500 para outro projeto = R$ 1.200 (100% do limite). ✅
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="calcular contracheque holerite salario bruto limite estimativa ir">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Como estimo quanto posso destinar com base no meu contracheque?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3">O valor exato só é conhecido após simular a declaração completa, mas você pode estimar assim:</p>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#0D1B3E]/30 rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium mb-3">
+                <strong>IR retido no ano anterior ≈ IR devido neste ano</strong><br><br>
+                Limite Rouanet (6%) = IR retido em 2024 × 0,06<br>
+                Exemplo: reteve R$ 20.000 → pode destinar até <strong>R$ 1.200</strong>
+              </div>
+              <p>Use nossa <a href="calculadora.html" class="text-[#0D1B3E] font-semibold underline underline-offset-2">Calculadora IR →</a> para uma estimativa mais precisa.</p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="faq-item" data-keywords="pronac o que e numero codigo identificador projeto salic">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          O que é o PRONAC?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p>O <strong>PRONAC</strong> (Programa Nacional de Apoio à Cultura) é o número de identificação oficial do projeto no sistema SALIC do Ministério da Cultura. É como o CPF do projeto.</p>
-            <p>Você precisa informar o PRONAC na transferência bancária (campo referência/descrição) e na declaração do IR. Nosso sistema fornece o PRONAC correto automaticamente ao registrar a destinação.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item" data-keywords="restituicao restitui recebo dinheiro de volta como afeta aumenta valor">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Tenho restituição a receber. A destinação afeta esse valor?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Sim — para melhor!</strong> A destinação <em>aumenta</em> o valor da sua restituição.</p>
-            <div class="info-box">
-              <strong>Exemplo:</strong><br>
-              IR retido em folha: R$ 24.000<br>
-              IR devido calculado: R$ 22.000<br>
-              Restituição original: R$ 2.000<br><br>
-              <strong>Com destinação de R$ 1.500 (Rouanet):</strong><br>
-              Novo IR devido: R$ 22.000 − R$ 1.500 = R$ 20.500<br>
-              Menos retido: R$ 24.000<br>
-              <strong>Nova restituição: R$ 3.500 ✅</strong>
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="malha fina risco problema receita federal medo auditoria">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Existe risco de cair na malha fina?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3"><strong class="text-[#0D1B3E]">Zero risco</strong> se você respeitar o limite de 6%, informar o valor correto na ficha "Doações Efetuadas" (código 41) e guardar o comprovante por 5 anos.</p>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#FFD700] rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                Milhões de brasileiros destinam via Lei Rouanet todo ano sem problema. A destinação é <strong>totalmente legal</strong> e reconhecida pela Receita Federal.
+              </div>
             </div>
-            <p>Ou seja: você destinou R$ 1.500 para a cultura e ainda recebe R$ 1.500 a mais de restituição. Custo real: zero.</p>
           </div>
         </div>
-      </div>
 
-      <div class="faq-item" data-keywords="isento nao pago IR posso destinar restituicao">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          Sou isento de IR. Posso destinar?
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            <p><strong>Infelizmente nao.</strong> A destinacao via Lei Rouanet e um percentual do <em>IR devido</em>. Quem e isento tem IR devido = R$ 0, entao nao ha base para a deducao.</p>
-            <p>Para verificar se voce e isento, use nossa calculadora — ela calcula o IR devido com base no seu rendimento anual.</p>
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="projeto fora cidade estado outro municipio regiao qualquer localidade">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Posso destinar para projetos fora da minha cidade?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p><strong class="text-[#0D1B3E]">Sim.</strong> Você pode escolher projetos de <strong class="text-[#0D1B3E]">qualquer localidade do Brasil</strong>, independentemente do seu domicílio fiscal. A Lei Rouanet não restringe por região.</p>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- CTA -->
-    <div class="faq-cta">
-      <h3>Ainda tem duvidas?</h3>
-      <p>Fale conosco pelo WhatsApp ou consulte nosso guia completo.</p>
-      <div class="faq-cta-buttons">
-        <a href="https://wa.me/5561999682929?text=Ola!%20Tenho%20duvidas%20sobre%20a%20Lei%20Rouanet." class="btn btn-primary" target="_blank">
-          <i class="fab fa-whatsapp"></i> WhatsApp
+    <!-- ── PROCESSO ─────────────────────────────────────── -->
+    <div class="faq-section mb-8" data-category="processo">
+      <h2 class="flex items-center gap-2 text-sm font-bold text-[#0D1B3E] uppercase tracking-widest mb-4 px-1">
+        <span class="w-5 h-5 rounded-full bg-[#FFD700] flex items-center justify-center">
+          <svg class="w-3 h-3 text-[#0D1B3E]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+        </span>
+        Processo
+      </h2>
+      <div class="space-y-2">
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="comprovante upload enviar formato pix transferencia TED deposito">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Como faço a transferência? Posso usar PIX?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3">Sim! Você pode usar <strong class="text-[#0D1B3E]">PIX, TED ou transferência bancária</strong> para a conta do FNC no Banco do Brasil:</p>
+              <ul class="space-y-1 mb-3 text-xs text-gray-500 pl-4">
+                <li><strong class="text-[#0D1B3E]">Banco:</strong> Banco do Brasil (001)</li>
+                <li><strong class="text-[#0D1B3E]">Agência:</strong> 3902-5</li>
+                <li><strong class="text-[#0D1B3E]">Conta:</strong> 170500-8</li>
+                <li><strong class="text-[#0D1B3E]">Favorecido:</strong> Fundo Nacional de Cultura</li>
+              </ul>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#FFD700] rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                No campo descrição/referência, informe o <strong>PRONAC do projeto</strong> (fornecido no sistema após registrar a destinação).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="comprovante enviar foto print upload formato">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Que comprovante preciso enviar?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3">Envie o comprovante da transferência em <strong class="text-[#0D1B3E]">PDF, JPG ou PNG</strong> (até 5MB). Deve mostrar data, valor e destinatário (FNC).</p>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#FFD700] rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                Print da tela do aplicativo do banco funciona perfeitamente!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="comunicado mecenato recibo oficial projeto proponente documento fiscal">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>O que é o Comunicado de Mecenato?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3">O <strong class="text-[#0D1B3E]">Comunicado de Mecenato</strong> é o recibo oficial emitido pelo proponente do projeto. É o documento com valor fiscal para a declaração do IR — diferente do comprovante da plataforma (só para controle pessoal).</p>
+              <ul class="space-y-1 text-xs text-gray-500 pl-4">
+                <li>O proponente tem <strong class="text-[#0D1B3E]">prazo legal de 15 dias</strong> para emitir</li>
+                <li>Deve conter: seu nome, CPF, valor, data e dados do projeto</li>
+                <li>Guarde por no mínimo 5 anos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="guardar documentos comprovantes 5 anos organizar pasta digital">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Quais documentos preciso guardar e por quanto tempo?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3">Guarde por <strong class="text-[#0D1B3E]">mínimo 5 anos</strong>:</p>
+              <ul class="space-y-1 text-xs text-gray-500 pl-4 mb-3">
+                <li>Comprovante de transferência bancária</li>
+                <li>Comunicado de Mecenato emitido pelo proponente</li>
+                <li>Registro da destinação na plataforma DestineAI</li>
+              </ul>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#FFD700] rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                Dica: crie uma pasta "Destinações IR 2025" no Google Drive ou OneDrive com backup automático.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── DECLARAÇÃO IR ────────────────────────────────── -->
+    <div class="faq-section mb-10" data-category="declaracao">
+      <h2 class="flex items-center gap-2 text-sm font-bold text-[#0D1B3E] uppercase tracking-widest mb-4 px-1">
+        <span class="w-5 h-5 rounded-full bg-[#FFD700] flex items-center justify-center">
+          <svg class="w-3 h-3 text-[#0D1B3E]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </span>
+        Declaração do IR
+      </h2>
+      <div class="space-y-2">
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="prazo quando ate limite data 31 dezembro ano">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Até quando posso fazer a destinação?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-2">A transferência deve ser feita <strong class="text-[#0D1B3E]">dentro do exercício fiscal</strong> — entre 1 de janeiro e 31 de dezembro do ano-base.</p>
+              <p>Para entrar na declaração de 2026 (ano-base 2025), o depósito deve ter sido feito até <strong class="text-[#0D1B3E]">31 de dezembro de 2025</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="declarar como informar DIRPF ficha codigo 41">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Como declaro a destinação no IR?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3">Na DIRPF, informe em:</p>
+              <ul class="space-y-1 text-xs text-gray-500 pl-4 mb-3">
+                <li><strong class="text-[#0D1B3E]">Ficha:</strong> Doações Efetuadas</li>
+                <li><strong class="text-[#0D1B3E]">Código:</strong> 41 — Lei Rouanet / Atividade Cultural e Artística</li>
+              </ul>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#FFD700] rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                Guarde o comprovante da transferência bancária — a Receita Federal pode solicitar como prova.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="restituicao restitui recebo dinheiro de volta como afeta aumenta valor">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Tenho restituição a receber. A destinação afeta esse valor?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3"><strong class="text-[#0D1B3E]">Sim — para melhor!</strong> A destinação aumenta o valor da sua restituição.</p>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#0D1B3E]/30 rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium mb-3">
+                IR retido: R$ 24.000 · IR devido: R$ 22.000 · Restituição original: R$ 2.000<br><br>
+                Com destinação de R$ 1.500 → novo IR: R$ 20.500 → <strong>nova restituição: R$ 3.500 ✅</strong>
+              </div>
+              <p class="text-xs">Você destinou R$ 1.500 para a cultura e ainda recebe R$ 1.500 a mais de restituição. Custo real: <strong class="text-[#0D1B3E]">zero</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="mais de um projeto dividir varios projetos salic pronac multiplos">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Posso destinar para mais de um projeto cultural?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-3"><strong class="text-[#0D1B3E]">Sim.</strong> Você pode distribuir seu limite entre quantos projetos SALIC quiser, desde que a soma não ultrapasse 6% do IR devido.</p>
+              <div class="bg-[#0D1B3E]/5 border-l-4 border-[#FFD700] rounded-r-xl px-4 py-3 text-[#0D1B3E] text-xs font-medium">
+                Exemplo: IR devido R$ 20.000 → limite R$ 1.200 → R$ 700 para o Projeto Themis + R$ 500 para outro projeto = R$ 1.200 ✅
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden" data-keywords="isento nao pago IR posso destinar restituicao">
+          <button class="faq-question w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-[#0D1B3E] hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span>Sou isento de IR. Posso destinar?</span>
+            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 pt-1 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+              <p class="mb-2"><strong class="text-[#0D1B3E]">Infelizmente não.</strong> A destinação é um percentual do IR devido. Quem é isento tem IR devido = R$ 0, então não há base para a dedução.</p>
+              <p class="text-xs">Use nossa <a href="calculadora.html" class="text-[#0D1B3E] font-semibold underline underline-offset-2">Calculadora IR →</a> para verificar se você tem IR devido.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── CTA ─────────────────────────────────────────── -->
+    <div class="bg-[#0D1B3E] rounded-2xl p-8 text-center">
+      <h3 class="text-white font-bold text-xl mb-2">Ainda tem dúvidas?</h3>
+      <p class="text-white/50 text-sm mb-7">Fale conosco pelo WhatsApp ou use a calculadora para ver seu limite.</p>
+      <div class="flex gap-3 justify-center flex-wrap">
+        <a href="https://wa.me/5561999682929?text=Ol%C3%A1!%20Tenho%20d%C3%BAvidas%20sobre%20a%20Lei%20Rouanet." target="_blank"
+          class="flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba58] text-white font-bold px-6 py-3 rounded-xl transition-all no-underline text-sm">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.564 4.14 1.544 5.875L0 24l6.305-1.52A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.879 9.879 0 01-5.032-1.374l-.361-.214-3.741.981.998-3.648-.235-.374A9.86 9.86 0 012.118 12C2.118 6.98 6.98 2.118 12 2.118S21.882 6.98 21.882 12 17.02 21.882 12 21.882z"/></svg>
+          WhatsApp
         </a>
-        <a href="como-funciona.html" class="btn btn-outline">
-          <i class="fas fa-book"></i> Como Funciona
+        <a href="calculadora.html"
+          class="flex items-center gap-2 border-2 border-white/20 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-colors no-underline text-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          Calculadora IR
         </a>
-        <a href="calculadora.html" class="btn btn-outline">
-          <i class="fas fa-calculator"></i> Calculadora IR
+        <a href="destinar-rouanet.html?pronac=250347"
+          class="flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold px-6 py-3 rounded-xl transition-all no-underline text-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+          Destinar agora
         </a>
       </div>
     </div>
+
   </div>
 
-  <footer class="footer">
-    <a href="index.html" class="logo-link">
-      <img id="footerLogo" src="assets/logo-destineai.jpg" alt="DestineAI" class="logo-img logo-white">
-    </a>
-    <p class="tagline">Lei Rouanet Simplificada</p>
-    <div class="footer-nav">
-      <a href="como-funciona.html">Como Funciona</a>
-      <a href="projetos-rouanet.html">Nosso Projeto</a>
-      <a href="calculadora.html">Calculadora</a>
-    </div>
-    <div class="footer-bottom">
-      <p>
-        <a href="politica-privacidade.html" class="footer-legal-link">Politica de Privacidade</a> |
-        <a href="termos-uso.html" class="footer-legal-link">Termos de Uso</a>
-      </p>
-      <p class="footer-copyright" id="footerBrandName">&copy; 2026 DestineAI. Todos os direitos reservados.</p>
-      <p style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px;">
-        Powered by <a href="https://incentivabr.com.br" target="_blank" style="color: rgba(255,255,255,0.6);">IncentivaBR</a>
-      </p>
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="bg-[#0A1530] py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="text-white/40 text-sm font-semibold">Destine<span class="text-[#FFD700]/60">AI</span></span>
+      <div class="flex gap-4 text-white/30 text-xs">
+        <a href="politica-privacidade.html" class="hover:text-white/60 transition-colors no-underline">Política de Privacidade</a>
+        <span>|</span>
+        <a href="termos-uso.html" class="hover:text-white/60 transition-colors no-underline">Termos de Uso</a>
+      </div>
+      <p class="text-white/30 text-xs">Plataforma de destinação de IR para projetos culturais · Lei 8.313/1991</p>
     </div>
   </footer>
 
   <script src="js/auth.js"></script>
-  <script src="js/mobile-menu.js"></script>
+  <script src="js/tina.js"></script>
   <script>
-    // Dynamic brand
-    fetch('/api/config/brand').then(r => r.json()).then(brand => {
-      if (brand.logo_url) {
-        document.getElementById('brandLogo').src = brand.logo_url;
-        document.getElementById('footerLogo').src = brand.logo_url;
-      }
-      if (brand.name) {
-        document.getElementById('brandLogo').alt = brand.name;
-        document.getElementById('footerLogo').alt = brand.name;
-        document.getElementById('footerBrandName').textContent = `© 2026 ${brand.name}. Todos os direitos reservados.`;
-        document.title = `Perguntas Frequentes - ${brand.name}`;
-      }
-      if (brand.color_primary) document.documentElement.style.setProperty('--primary-color', brand.color_primary);
-      if (brand.color_accent) document.documentElement.style.setProperty('--accent-color', brand.color_accent);
-    }).catch(() => {});
-
     // Nav auth
     const navAuth = document.getElementById('navAuth');
     if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
       const user = auth.getUser();
       navAuth.textContent = user.nome ? user.nome.split(' ')[0] : 'Minha Conta';
       navAuth.href = 'dashboard.html';
-      navAuth.classList.remove('btn', 'btn-primary', 'btn-sm');
     } else {
       navAuth.href = 'login.html';
     }
 
-    function toggleFAQ(element) {
-      const item = element.closest('.faq-item');
+    // Accordion
+    function toggleFAQ(btn) {
+      const item = btn.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
       if (!wasOpen) item.classList.add('open');
     }
 
+    // Filtro por categoria
     function filterCategory(category, btn) {
-      document.querySelectorAll('.faq-category-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      document.querySelectorAll('.faq-cat-btn').forEach(b => {
+        b.className = 'faq-cat-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-[#0D1B3E] border-2 border-gray-200 hover:border-[#0D1B3E] transition-all';
+      });
+      btn.className = 'faq-cat-btn px-4 py-2 rounded-full text-sm font-semibold bg-[#0D1B3E] text-white border-2 border-[#0D1B3E] transition-all';
       document.querySelectorAll('.faq-section').forEach(section => {
         section.style.display = (category === 'all' || section.dataset.category === category) ? 'block' : 'none';
       });
       document.getElementById('faqSearch').value = '';
-      document.getElementById('noResults').style.display = 'none';
+      document.getElementById('noResults').classList.add('hidden');
     }
 
+    // Busca por texto
     function filterFAQ() {
       const query = document.getElementById('faqSearch').value.toLowerCase().trim();
       let hasResults = false;
@@ -657,8 +519,8 @@
       document.querySelectorAll('.faq-item').forEach(item => {
         const keywords = item.dataset.keywords || '';
         const question = item.querySelector('.faq-question').textContent.toLowerCase();
-        const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
-        const matches = !query || keywords.includes(query) || question.includes(query) || answer.includes(query);
+        const answer   = item.querySelector('.faq-answer').textContent.toLowerCase();
+        const matches  = !query || keywords.includes(query) || question.includes(query) || answer.includes(query);
         item.style.display = matches ? 'block' : 'none';
         if (matches) hasResults = true;
       });
@@ -666,11 +528,14 @@
         const visible = Array.from(section.querySelectorAll('.faq-item')).some(i => i.style.display !== 'none');
         section.style.display = visible ? 'block' : 'none';
       });
-      document.getElementById('noResults').style.display = (!hasResults && query) ? 'block' : 'none';
-      document.querySelectorAll('.faq-category-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('.faq-category-btn').classList.add('active');
+      document.getElementById('noResults').classList.toggle('hidden', hasResults || !query);
+      // Reset categoria ativa
+      document.querySelectorAll('.faq-cat-btn').forEach((b, i) => {
+        b.className = i === 0
+          ? 'faq-cat-btn px-4 py-2 rounded-full text-sm font-semibold bg-[#0D1B3E] text-white border-2 border-[#0D1B3E] transition-all'
+          : 'faq-cat-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-[#0D1B3E] border-2 border-gray-200 hover:border-[#0D1B3E] transition-all';
+      });
     }
   </script>
-  <script src="js/tenant.js"></script>
 </body>
 </html>
