@@ -12,11 +12,29 @@ import pool from '../../config/database.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
+const CONFIG_DIR     = __dirname;
 const MIGRATIONS_DIR = path.join(__dirname, '../migrations');
+const LEGACY_DIR     = path.join(__dirname, '../../migrations');
+
+async function applyFile(client, filePath, label) {
+  if (!fs.existsSync(filePath)) return;
+  const sql = fs.readFileSync(filePath, 'utf8');
+  try {
+    await client.query(sql);
+    console.log(`✅ ${label}`);
+  } catch (err) {
+    console.error(`⚠️  ${label}:`, err.message);
+  }
+}
 
 export async function runMigrations() {
   const client = await pool.connect();
   try {
+    // Aplicar schema base e seeds (idempotente — usa IF NOT EXISTS / ON CONFLICT)
+    await applyFile(client, path.join(CONFIG_DIR, 'schema.sql'),          'Schema base');
+    await applyFile(client, path.join(CONFIG_DIR, 'seeds.sql'),           'Seeds');
+    await applyFile(client, path.join(LEGACY_DIR, '003_multi_tenant.sql'), 'Migration 003 — Multi-tenant');
+
     // Criar tabela de controle se não existir
     await client.query(`
       CREATE TABLE IF NOT EXISTS migrations_log (
