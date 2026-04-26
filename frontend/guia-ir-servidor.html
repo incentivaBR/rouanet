@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia IR para Servidores — DestineAI</title>
+  <meta name="description" content="Guia passo a passo: como encontrar o IR Devido no contracheque, e-CAC e SIGEPE, e como lançar a destinação Lei Rouanet na declaração de IR.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <style>
+    :root {
+      --primary-color: #0D1B3E;
+      --secondary-color: #FFD700;
+      --accent-color: #FFC000;
+      --green: #00A859;
+      --orange: #FF6B35;
+    }
+
+    body { font-family: 'Inter', sans-serif; background: #F7F8FA; color: #1a1a2e; }
+
+    .logo-text { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+
+    /* ── Hero ── */
+    .hero-guia {
+      background: linear-gradient(135deg, #0D1B3E 0%, #132247 100%);
+      padding: 72px 24px 56px;
+      text-align: center;
+      color: white;
+    }
+    .hero-guia .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,215,0,.12); border: 1px solid rgba(255,215,0,.3);
+      color: #FFD700; font-size: 13px; font-weight: 600;
+      padding: 6px 16px; border-radius: 999px; margin-bottom: 20px;
+    }
+    .hero-guia h1 { font-size: clamp(26px,5vw,40px); font-weight: 800; margin: 0 0 14px; line-height: 1.2; }
+    .hero-guia p  { font-size: 17px; color: rgba(255,255,255,.7); max-width: 600px; margin: 0 auto; }
+
+    /* ── Layout ── */
+    .page-wrap { max-width: 860px; margin: 0 auto; padding: 48px 20px 80px; }
+
+    /* ── Índice ── */
+    .indice {
+      background: white; border-radius: 16px; padding: 28px 32px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06); margin-bottom: 40px;
+      border-left: 4px solid #FFD700;
+    }
+    .indice h3 { font-size: 14px; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .06em; color: #666; margin: 0 0 16px; }
+    .indice ol { margin: 0; padding-left: 20px; }
+    .indice li { margin-bottom: 10px; }
+    .indice a  { color: #0D1B3E; font-weight: 600; text-decoration: none; font-size: 15px; }
+    .indice a:hover { color: #273F77; text-decoration: underline; }
+
+    /* ── Seção ── */
+    .section-block { margin-bottom: 48px; }
+    .section-title {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 22px; font-weight: 800; color: #0D1B3E;
+      margin: 0 0 24px; padding-bottom: 16px;
+      border-bottom: 2px solid #E8EBF5;
+    }
+    .section-title .icon-circle {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .ic-blue   { background: #EEF2FF; color: #273F77; }
+    .ic-green  { background: #E6F7EF; color: #00A859; }
+    .ic-yellow { background: #FFF9E6; color: #B8860B; }
+
+    /* ── Cards de método ── */
+    .metodo-card {
+      background: white; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      margin-bottom: 20px; overflow: hidden;
+    }
+    .metodo-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 24px; border-bottom: 1px solid #F0F2F8;
+      cursor: pointer; user-select: none;
+    }
+    .metodo-header:hover { background: #FAFBFF; }
+    .metodo-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #0D1B3E; color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; flex-shrink: 0;
+    }
+    .metodo-header h3 { font-size: 16px; font-weight: 700; margin: 0; flex: 1; }
+    .metodo-header .tag {
+      font-size: 11px; font-weight: 700; padding: 3px 10px;
+      border-radius: 999px; text-transform: uppercase; letter-spacing: .05em;
+    }
+    .tag-recomendado { background: #E6F7EF; color: #00A859; }
+    .tag-alternativo  { background: #EEF2FF; color: #273F77; }
+    .tag-rapido       { background: #FFF9E6; color: #B8860B; }
+    .metodo-body { padding: 24px; display: block; }
+    .metodo-body.collapsed { display: none; }
+
+    /* ── Passos numerados ── */
+    .step-list { list-style: none; padding: 0; margin: 0; }
+    .step-list li {
+      display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start;
+    }
+    .step-list li:last-child { margin-bottom: 0; }
+    .step-n {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #0D1B3E; color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-content h4 { font-size: 15px; font-weight: 700; margin: 0 0 6px; color: #0D1B3E; }
+    .step-content p  { font-size: 14px; color: #555; margin: 0; line-height: 1.6; }
+
+    /* ── Destaque de campo ── */
+    .campo-destaque {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #F0F4FF; border: 1.5px solid #C5D1FF;
+      border-radius: 8px; padding: 4px 12px;
+      font-family: 'Courier New', monospace; font-size: 13px;
+      font-weight: 700; color: #273F77; margin: 4px 2px;
+    }
+
+    /* ── Box de atenção ── */
+    .box-atencao {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: #FFF9E6; border: 1.5px solid #FFD700;
+      border-radius: 12px; padding: 16px 20px; margin: 20px 0;
+    }
+    .box-atencao i { color: #B8860B; font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+    .box-atencao p { margin: 0; font-size: 14px; color: #5A4500; line-height: 1.6; }
+
+    .box-dica {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: #E6F7EF; border: 1.5px solid #00A859;
+      border-radius: 12px; padding: 16px 20px; margin: 20px 0;
+    }
+    .box-dica i { color: #00A859; font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+    .box-dica p { margin: 0; font-size: 14px; color: #004A28; line-height: 1.6; }
+
+    .box-info {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: #EEF2FF; border: 1.5px solid #C5D1FF;
+      border-radius: 12px; padding: 16px 20px; margin: 20px 0;
+    }
+    .box-info i { color: #273F77; font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+    .box-info p { margin: 0; font-size: 14px; color: #1a2a5e; line-height: 1.6; }
+
+    /* ── Mockup de tela ── */
+    .screen-mock {
+      background: #1E1E2E; border-radius: 12px;
+      padding: 20px 24px; margin: 20px 0;
+      font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.8;
+    }
+    .screen-mock .sm-title {
+      color: #aaa; font-size: 11px; text-transform: uppercase;
+      letter-spacing: .1em; margin-bottom: 12px; font-family: 'Inter', sans-serif;
+    }
+    .sm-label  { color: #888; }
+    .sm-value  { color: #7EE8A2; font-weight: 700; }
+    .sm-highlight { color: #FFD700; font-weight: 700; font-size: 15px; }
+    .sm-field  { color: #79AAFF; }
+
+    /* ── Campos IRPF ── */
+    .irpf-ficha {
+      background: white; border: 2px solid #E8EBF5;
+      border-radius: 12px; padding: 20px 24px; margin: 16px 0;
+    }
+    .irpf-ficha .ficha-titulo {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: #273F77; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .irpf-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid #F0F2F8; gap: 12px;
+    }
+    .irpf-row:last-child { border-bottom: none; }
+    .irpf-row .label { font-size: 13px; color: #555; flex: 1; }
+    .irpf-row .valor {
+      font-size: 14px; font-weight: 700; color: #0D1B3E;
+      background: #F0F4FF; padding: 4px 12px; border-radius: 6px;
+      font-family: 'Courier New', monospace; white-space: nowrap;
+    }
+    .irpf-row .valor.destaque { background: #E6F7EF; color: #00A859; }
+
+    /* ── Exemplo numérico ── */
+    .exemplo-box {
+      background: linear-gradient(135deg, #0D1B3E, #132247);
+      border-radius: 14px; padding: 24px 28px; margin: 24px 0; color: white;
+    }
+    .exemplo-box h4 { font-size: 14px; font-weight: 700; color: #FFD700;
+                       text-transform: uppercase; letter-spacing: .06em; margin: 0 0 16px; }
+    .exemplo-row {
+      display: flex; justify-content: space-between;
+      font-size: 14px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .exemplo-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .exemplo-row .el { color: rgba(255,255,255,.65); }
+    .exemplo-row .ev { color: white; font-weight: 600; }
+    .exemplo-row.total { margin-top: 8px; padding-top: 16px; border-top: 1px solid rgba(255,215,0,.3); border-bottom: none; }
+    .exemplo-row.total .el { color: #FFD700; font-weight: 700; }
+    .exemplo-row.total .ev { color: #FFD700; font-weight: 800; font-size: 18px; }
+
+    /* ── CTA final ── */
+    .cta-final {
+      background: linear-gradient(135deg, #FFD700, #FFC000);
+      border-radius: 16px; padding: 36px 32px; text-align: center; margin-top: 48px;
+    }
+    .cta-final h3 { font-size: 22px; font-weight: 800; color: #0D1B3E; margin: 0 0 10px; }
+    .cta-final p  { font-size: 15px; color: rgba(13,27,62,.7); margin: 0 0 24px; }
+    .btn-cta-dark {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #0D1B3E; color: white; font-weight: 700; font-size: 15px;
+      padding: 14px 28px; border-radius: 10px; text-decoration: none;
+      transition: transform .15s, background .15s;
+    }
+    .btn-cta-dark:hover { background: #132247; transform: translateY(-1px); }
+
+    /* ── Tabela simples ── */
+    .tabela { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .tabela th {
+      background: #0D1B3E; color: white; font-size: 13px;
+      padding: 10px 14px; text-align: left;
+    }
+    .tabela td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid #F0F2F8; }
+    .tabela tr:hover td { background: #FAFBFF; }
+
+    /* ── Responsivo ── */
+    @media (max-width: 600px) {
+      .page-wrap { padding: 28px 16px 60px; }
+      .metodo-body { padding: 16px; }
+      .irpf-row { flex-direction: column; align-items: flex-start; }
+      .exemplo-row { flex-direction: column; gap: 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <a href="index.html" class="logo-link">
+      <span class="logo-text" style="color:white">Destine<span style="color:#FFD700">AI</span></span>
+    </a>
+    <nav>
+      <a href="como-funciona.html">Como funciona</a>
+      <a href="faq.html">FAQ</a>
+      <a href="calculadora.html">Calculadora</a>
+      <a href="#" id="navAuth" class="btn btn-primary btn-sm">Entrar</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero-guia">
+    <div class="badge">
+      <i class="fas fa-file-invoice-dollar"></i>
+      Guia exclusivo para servidores públicos
+    </div>
+    <h1>Como declarar a destinação<br>Lei Rouanet no seu IR</h1>
+    <p>Passo a passo: onde encontrar o IR Devido e como lançar corretamente na declaração anual.</p>
+  </section>
+
+  <div class="page-wrap">
+
+    <!-- ── Índice ── -->
+    <div class="indice">
+      <h3><i class="fas fa-list"></i> &nbsp;Nesta página</h3>
+      <ol>
+        <li><a href="#parte1">Parte 1 — Como encontrar o valor do IR Devido</a></li>
+        <li><a href="#parte2">Parte 2 — Como lançar a destinação na declaração de IR</a></li>
+        <li><a href="#parte3">Parte 3 — Documentos que você precisa guardar</a></li>
+        <li><a href="#parte4">Parte 4 — Exemplo numérico completo</a></li>
+      </ol>
+    </div>
+
+    <div class="box-atencao">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p><strong>Requisito:</strong> a destinação via Lei Rouanet exige a <strong>Declaração Completa</strong> (não a simplificada). Servidores públicos com renda de mais de 2 salários mínimos devem optar pelo modelo completo para aproveitar as deduções.</p>
+    </div>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PARTE 1                                        -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div class="section-block" id="parte1">
+      <h2 class="section-title">
+        <span class="icon-circle ic-blue"><i class="fas fa-search-dollar"></i></span>
+        Parte 1 — Como encontrar o valor do IR Devido
+      </h2>
+
+      <p style="font-size:15px;color:#555;margin:0 0 24px;line-height:1.7">
+        O <strong>IR Devido</strong> é o imposto calculado sobre sua renda, <em>antes</em> de abater o que já foi retido em folha.
+        Você precisa desse número para saber o limite que pode destinar (6% do IR Devido).
+        Há três formas de encontrá-lo:
+      </p>
+
+      <!-- Método 1 -->
+      <div class="metodo-card">
+        <div class="metodo-header" onclick="toggleMetodo(this)">
+          <div class="metodo-num">1</div>
+          <h3>Via declaração de IR do ano anterior (mais fácil)</h3>
+          <span class="tag tag-recomendado">Recomendado</span>
+          <i class="fas fa-chevron-down" style="color:#aaa;margin-left:8px"></i>
+        </div>
+        <div class="metodo-body">
+          <p style="font-size:14px;color:#555;margin:0 0 20px;line-height:1.7">
+            Se você faz declaração anual, o IR Devido do ano anterior é uma boa estimativa para o ano atual.
+            Acesse pelo programa IRPF ou pelo <strong>e-CAC</strong> (portal da Receita Federal).
+          </p>
+          <ul class="step-list">
+            <li>
+              <div class="step-n">1</div>
+              <div class="step-content">
+                <h4>Acesse o e-CAC</h4>
+                <p>Entre em <strong>cav.receita.fazenda.gov.br</strong> com sua conta <strong>gov.br</strong> (CPF + senha ou certificado digital). Servidores federais já têm conta gov.br.</p>
+              </div>
+            </li>
+            <li>
+              <div class="step-n">2</div>
+              <div class="step-content">
+                <h4>Vá em "Declarações e Demonstrativos"</h4>
+                <p>No menu lateral, clique em <span class="campo-destaque">Declarações e Demonstrativos</span> → <span class="campo-destaque">IRPF — Declaração de Ajuste Anual</span></p>
+              </div>
+            </li>
+            <li>
+              <div class="step-n">3</div>
+              <div class="step-content">
+                <h4>Selecione o exercício mais recente</h4>
+                <p>Clique na declaração do último ano entregue. Abra o <strong>Resumo da Declaração</strong>.</p>
+              </div>
+            </li>
+            <li>
+              <div class="step-n">4</div>
+              <div class="step-content">
+                <h4>Localize o campo "Imposto Devido"</h4>
+                <p>Na seção <em>Cálculo do Imposto</em>, procure a linha:</p>
+                <div class="screen-mock">
+                  <div class="sm-title">Resumo da Declaração — Cálculo do Imposto</div>
+                  <div><span class="sm-label">Rendimentos Tributáveis:        </span><span class="sm-value">R$ 85.200,00</span></div>
+                  <div><span class="sm-label">Deduções:                        </span><span class="sm-value">R$ 15.600,00</span></div>
+                  <div><span class="sm-label">Base de Cálculo:                 </span><span class="sm-value">R$ 69.600,00</span></div>
+                  <div><span class="sm-label">Imposto Devido:                  </span><span class="sm-highlight">R$ 8.200,00</span></div>
+                  <div><span class="sm-label">IR Retido na Fonte:              </span><span class="sm-value">R$ 9.500,00</span></div>
+                  <div><span class="sm-label">Imposto a Restituir:             </span><span class="sm-value">R$ 1.300,00</span></div>
+                </div>
+                <p>O valor que você precisa é o <strong>Imposto Devido</strong> — no exemplo acima: <strong>R$ 8.200,00</strong>.<br>
+                Seu limite de destinação = R$ 8.200 × 6% = <strong>R$ 492,00</strong>.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="box-dica">
+            <i class="fas fa-lightbulb"></i>
+            <p><strong>Dica:</strong> mesmo que o Imposto a Restituir seja diferente de zero, o que importa para o limite é o <strong>Imposto Devido</strong>, não o valor retido ou restituído.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Método 2 -->
+      <div class="metodo-card">
+        <div class="metodo-header" onclick="toggleMetodo(this)">
+          <div class="metodo-num">2</div>
+          <h3>Via contracheque / holerite (estimativa rápida)</h3>
+          <span class="tag tag-rapido">Estimativa</span>
+          <i class="fas fa-chevron-down" style="color:#aaa;margin-left:8px"></i>
+        </div>
+        <div class="metodo-body collapsed">
+          <p style="font-size:14px;color:#555;margin:0 0 20px;line-height:1.7">
+            Seu contracheque mensal mostra o <strong>IR retido na fonte</strong> de cada mês. A soma de 12 meses é uma boa aproximação do IR Devido anual.
+          </p>
+          <ul class="step-list">
+            <li>
+              <div class="step-n">1</div>
+              <div class="step-content">
+                <h4>Abra o contracheque de dezembro do ano anterior</h4>
+                <p>O contracheque de dezembro geralmente acumula o total anual na coluna <strong>"Ano"</strong> ou <strong>"Acumulado"</strong>.</p>
+              </div>
+            </li>
+            <li>
+              <div class="step-n">2</div>
+              <div class="step-content">
+                <h4>Localize "IRRF" ou "Imposto de Renda" na coluna de descontos</h4>
+                <div class="screen-mock">
+                  <div class="sm-title">Contracheque — Dezembro</div>
+                  <div><span class="sm-label">Provento Bruto:          </span><span class="sm-value">R$ 7.100,00</span></div>
+                  <div><span class="sm-label">INSS:                    </span><span class="sm-value">R$ 710,00</span></div>
+                  <div><span class="sm-label">IRRF (mês):              </span><span class="sm-field">R$ 680,00</span></div>
+                  <div><span class="sm-label">IRRF (acumulado ano):    </span><span class="sm-highlight">R$ 7.900,00</span></div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="step-n">3</div>
+              <div class="step-content">
+                <h4>Use o IRRF acumulado como estimativa do IR Devido</h4>
+                <p>No exemplo: IRRF acumulado = R$ 7.900 → limite estimado = R$ 7.900 × 6% = <strong>R$ 474,00</strong>.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="box-atencao">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p><strong>Atenção:</strong> o IRRF retido é uma <em>estimativa</em> do IR Devido. O valor exato só é calculado na declaração anual, considerando todas as deduções (saúde, dependentes, educação etc.). Use nossa <a href="calculadora.html" style="color:#B8860B;font-weight:600">calculadora</a> para uma estimativa mais precisa.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Método 3 -->
+      <div class="metodo-card">
+        <div class="metodo-header" onclick="toggleMetodo(this)">
+          <div class="metodo-num">3</div>
+          <h3>Via SIGEPE (servidor federal)</h3>
+          <span class="tag tag-alternativo">Servidor Federal</span>
+          <i class="fas fa-chevron-down" style="color:#aaa;margin-left:8px"></i>
+        </div>
+        <div class="metodo-body collapsed">
+          <p style="font-size:14px;color:#555;margin:0 0 20px;line-height:1.7">
+            O SIGEPE (Sistema de Gestão de Pessoas do Governo Federal) permite consultar o histórico de remuneração e os valores de IRRF retidos na fonte por competência.
+          </p>
+          <ul class="step-list">
+            <li>
+              <div class="step-n">1</div>
+              <div class="step-content">
+                <h4>Acesse o SIGEPE</h4>
+                <p>Entre em <strong>sigepe.gov.br</strong> com seu login gov.br (CPF + senha).</p>
+              </div>
+            </li>
+            <li>
+              <div class="step-n">2</div>
+              <div class="step-content">
+                <h4>Vá em "Contracheque" → "Histórico de Pagamentos"</h4>
+                <p>Selecione o ano de referência e exporte o resumo anual.</p>
+              </div>
+            </li>
+            <li>
+              <div class="step-n">3</div>
+              <div class="step-content">
+                <h4>Some todos os valores de "IRRF" do ano</h4>
+                <p>A soma dos IRRF mensais é o total retido na fonte — use como base de estimativa do IR Devido.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="box-info">
+            <i class="fas fa-info-circle"></i>
+            <p>O SIGEPE também emite o <strong>Informe de Rendimentos</strong> anual, que é a fonte mais confiável para preencher a declaração. Disponível em: <strong>SIGEPE → Minha Área → Informe de Rendimentos</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /section parte1 -->
+
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PARTE 2                                        -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div class="section-block" id="parte2">
+      <h2 class="section-title">
+        <span class="icon-circle ic-green"><i class="fas fa-file-alt"></i></span>
+        Parte 2 — Como lançar a destinação na declaração de IR
+      </h2>
+
+      <p style="font-size:15px;color:#555;margin:0 0 24px;line-height:1.7">
+        Após fazer a transferência para o projeto cultural, você precisa registrar a destinação na sua declaração anual do IRPF (programa da Receita Federal). Siga os passos abaixo.
+      </p>
+
+      <ul class="step-list">
+        <li>
+          <div class="step-n">1</div>
+          <div class="step-content">
+            <h4>Abra o programa IRPF da Receita Federal</h4>
+            <p>Baixe a versão mais recente em <strong>gov.br/receitafederal</strong> ou use o <strong>app Meu Imposto de Renda</strong> no celular. Abra sua declaração do ano correspondente.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-n">2</div>
+          <div class="step-content">
+            <h4>Acesse a ficha "Doações Efetuadas"</h4>
+            <p>No menu lateral do programa, localize a ficha:</p>
+            <div style="margin:10px 0">
+              <span class="campo-destaque"><i class="fas fa-folder-open"></i> Doações Efetuadas</span>
+            </div>
+            <p>Esta ficha reúne todas as doações dedutíveis do IR — inclusive as da Lei Rouanet.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-n">3</div>
+          <div class="step-content">
+            <h4>Clique em "Novo" e selecione o Código 41</h4>
+            <p>Na janela que abre, escolha:</p>
+            <div class="irpf-ficha" style="margin-top:12px">
+              <div class="ficha-titulo"><i class="fas fa-list-ol"></i> Ficha: Doações Efetuadas — Nova Doação</div>
+              <div class="irpf-row">
+                <span class="label">Código da doação</span>
+                <span class="valor">41 — Atividade Cultural e Artística</span>
+              </div>
+              <div class="irpf-row">
+                <span class="label">CNPJ do beneficiário</span>
+                <span class="valor">[CNPJ do proponente cultural]</span>
+              </div>
+              <div class="irpf-row">
+                <span class="label">Nome do beneficiário</span>
+                <span class="valor">[Nome do proponente]</span>
+              </div>
+              <div class="irpf-row">
+                <span class="label">Data do pagamento</span>
+                <span class="valor">DD/MM/AAAA</span>
+              </div>
+              <div class="irpf-row">
+                <span class="label">Valor pago</span>
+                <span class="valor destaque">R$ [valor destinado]</span>
+              </div>
+            </div>
+            <div class="box-dica" style="margin-top:12px">
+              <i class="fas fa-lightbulb"></i>
+              <p>O CNPJ do proponente e o nome completo constam no <strong>Recibo de Mecenato</strong> que a DestineAI emite para você após a confirmação do pagamento.</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="step-n">4</div>
+          <div class="step-content">
+            <h4>Confira o limite automático</h4>
+            <p>O programa IRPF calcula automaticamente se você está dentro do limite de 6%. Se ultrapassar, ele avisa antes de você enviar.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-n">5</div>
+          <div class="step-content">
+            <h4>Verifique a restituição (ou imposto a pagar)</h4>
+            <p>Após lançar a doação, observe o <strong>Resumo da Declaração</strong>. O valor da restituição deve aumentar (ou o imposto a pagar deve diminuir) exatamente no valor que você doou — comprovando que a destinação foi reconhecida.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="box-info">
+        <i class="fas fa-info-circle"></i>
+        <p><strong>Fiz a transferência parcelada (várias vezes no ano).</strong> Nesse caso, lance cada transferência individualmente na ficha "Doações Efetuadas" com a data e valor correspondentes. Ou lance o total anual em uma única linha com a data da última transferência — desde que o total não ultrapasse 6% do IR Devido.</p>
+      </div>
+
+    </div><!-- /section parte2 -->
+
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PARTE 3                                        -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div class="section-block" id="parte3">
+      <h2 class="section-title">
+        <span class="icon-circle ic-yellow"><i class="fas fa-folder"></i></span>
+        Parte 3 — Documentos que você precisa guardar
+      </h2>
+
+      <p style="font-size:15px;color:#555;margin:0 0 20px;line-height:1.7">
+        A Receita Federal pode solicitar comprovação em até 5 anos. Guarde os seguintes documentos:
+      </p>
+
+      <table class="tabela">
+        <thead>
+          <tr>
+            <th>Documento</th>
+            <th>Onde obter</th>
+            <th>Prazo de guarda</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Recibo de Mecenato</strong> (emitido pela DestineAI)</td>
+            <td>Dashboard do site · Email de confirmação</td>
+            <td>5 anos</td>
+          </tr>
+          <tr>
+            <td><strong>Comprovante de transferência</strong> (extrato bancário ou comprovante PIX)</td>
+            <td>App ou internet banking do seu banco</td>
+            <td>5 anos</td>
+          </tr>
+          <tr>
+            <td><strong>CNPJ e dados do proponente</strong></td>
+            <td>Recibo de Mecenato · Página do projeto no SALIC</td>
+            <td>5 anos</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box-dica">
+        <i class="fas fa-shield-alt"></i>
+        <p><strong>Zero risco de malha fina</strong> se você respeitar o limite de 6%, informar o código correto (41) e guardar os comprovantes. Milhões de brasileiros destinam via Lei Rouanet todo ano — é um procedimento reconhecido e incentivado pela própria Receita Federal.</p>
+      </div>
+
+    </div><!-- /section parte3 -->
+
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PARTE 4                                        -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div class="section-block" id="parte4">
+      <h2 class="section-title">
+        <span class="icon-circle ic-blue"><i class="fas fa-calculator"></i></span>
+        Parte 4 — Exemplo numérico completo
+      </h2>
+
+      <p style="font-size:15px;color:#555;margin:0 0 20px;line-height:1.7">
+        Veja como o fluxo funciona do início ao fim para um servidor público típico:
+      </p>
+
+      <div class="exemplo-box">
+        <h4><i class="fas fa-user-tie"></i> &nbsp;Perfil: Analista Judiciário Federal</h4>
+        <div class="exemplo-row">
+          <span class="el">Salário bruto mensal</span>
+          <span class="ev">R$ 7.100,00</span>
+        </div>
+        <div class="exemplo-row">
+          <span class="el">Rendimento tributável anual</span>
+          <span class="ev">R$ 85.200,00</span>
+        </div>
+        <div class="exemplo-row">
+          <span class="el">Deduções (INSS + dependentes + saúde)</span>
+          <span class="ev">R$ 17.000,00</span>
+        </div>
+        <div class="exemplo-row">
+          <span class="el">Base de cálculo</span>
+          <span class="ev">R$ 68.200,00</span>
+        </div>
+        <div class="exemplo-row">
+          <span class="el">IR Devido (alíquota efetiva ~12%)</span>
+          <span class="ev">R$ 8.184,00</span>
+        </div>
+        <div class="exemplo-row">
+          <span class="el">Limite Lei Rouanet (6% do IR Devido)</span>
+          <span class="ev" style="color:#FFD700">R$ 491,00</span>
+        </div>
+        <div class="exemplo-row">
+          <span class="el">IR retido na fonte (anual)</span>
+          <span class="ev">R$ 9.500,00</span>
+        </div>
+        <div class="exemplo-row">
+          <span class="el">Restituição <em>sem</em> destinação</span>
+          <span class="ev">R$ 1.316,00</span>
+        </div>
+        <div class="exemplo-row total">
+          <span class="el">Restituição <em>com</em> destinação de R$ 491</span>
+          <span class="ev">R$ 1.807,00</span>
+        </div>
+      </div>
+
+      <div class="box-dica">
+        <i class="fas fa-star"></i>
+        <p><strong>O servidor destinou R$ 491 para cultura e recebeu R$ 491 a mais de restituição.</strong> Custo líquido real: R$ 0,00. O dinheiro que iria para o governo foi para jovens músicos em Ceilândia.</p>
+      </div>
+
+    </div><!-- /section parte4 -->
+
+
+    <!-- ── CTA Final ── -->
+    <div class="cta-final">
+      <h3>Pronto para destinar seu IR?</h3>
+      <p>Use a calculadora para descobrir seu limite exato e comece agora.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <a href="calculadora.html" class="btn-cta-dark">
+          <i class="fas fa-calculator"></i> Calcular meu limite
+        </a>
+        <a href="destinar-rouanet.html" class="btn-cta-dark" style="background:#273F77">
+          <i class="fas fa-arrow-right"></i> Destinar agora
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /page-wrap -->
+
+  <footer class="footer" style="text-align:center;padding:32px 20px;background:#0D1B3E;color:rgba(255,255,255,.5);font-size:13px">
+    <p>DestineAI · Powered by IncentivaBR · Lei Rouanet (Lei 8.313/1991)</p>
+    <p style="margin-top:8px">
+      <a href="politica-privacidade.html" style="color:rgba(255,255,255,.4);text-decoration:none;margin:0 8px">Política de Privacidade</a>·
+      <a href="termos-uso.html" style="color:rgba(255,255,255,.4);text-decoration:none;margin:0 8px">Termos de Uso</a>·
+      <a href="faq.html" style="color:rgba(255,255,255,.4);text-decoration:none;margin:0 8px">FAQ</a>
+    </p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/mobile-menu.js"></script>
+  <script>
+    // Nav auth
+    const navAuth = document.getElementById('navAuth');
+    if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
+      navAuth.textContent = 'Minha conta';
+      navAuth.href = 'dashboard.html';
+    } else {
+      navAuth.href = 'login.html';
+    }
+
+    // Acordeão dos métodos
+    function toggleMetodo(header) {
+      const body = header.nextElementSibling;
+      const icon = header.querySelector('.fa-chevron-down, .fa-chevron-up');
+      if (body.classList.contains('collapsed')) {
+        body.classList.remove('collapsed');
+        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+      } else {
+        body.classList.add('collapsed');
+        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+      }
+    }
+  </script>
+</body>
+</html>
