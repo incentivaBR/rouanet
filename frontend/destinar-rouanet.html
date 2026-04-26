@@ -787,7 +787,7 @@
           <!-- Modo rápido -->
           <div id="calcRapida">
             <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">
-              Informe diretamente o valor do IR devido (disponível na sua declaração ou holerite).
+              Informe o valor do IR Devido. Você encontra no seu <strong>contracheque/holerite</strong>, na declaração de 2024, no e-CAC (acesso.gov.br), ou pergunte ao seu <strong>contador</strong>.
             </p>
             <div class="form-group">
               <label>IR Devido (R$)</label>
@@ -937,7 +937,7 @@
               <i class="fas fa-arrow-left"></i> Voltar
             </button>
             <button class="btn-primary-rouanet" id="btnRegistrar" onclick="registrarDestinacao()">
-              <i class="fas fa-check"></i> Confirmar e ver dados para pagamento
+              Próximo — Dados de Pagamento <i class="fas fa-arrow-right"></i>
             </button>
           </div>
         </div>
@@ -957,6 +957,7 @@
             <span>
               Realize a transferência bancária ou PIX <strong>para o beneficiário abaixo</strong>.
               Use a referência indicada para identificação. Após transferir, envie o comprovante na próxima etapa.
+              <br><strong>Prazo:</strong> a transferência deve ser feita até <strong>31/12/2025</strong> para constar na declaração deste ano.
             </span>
           </div>
 
@@ -1045,12 +1046,15 @@
             <div class="file-name" id="fileName" style="display:none"></div>
           </div>
 
-          <div style="display:flex;gap:10px">
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button class="btn-secondary" onclick="goTo(4)">
               <i class="fas fa-arrow-left"></i> Voltar
             </button>
             <button class="btn-primary-rouanet" id="btnEnviar" onclick="enviarComprovante()" disabled>
-              <i class="fas fa-paper-plane"></i> Enviar comprovante e finalizar
+              <i class="fas fa-paper-plane"></i> Enviar e finalizar
+            </button>
+            <button class="btn-secondary" onclick="pularComprovante()" style="font-size:13px;opacity:0.75">
+              <i class="fas fa-clock"></i> Enviar depois
             </button>
           </div>
         </div>
@@ -1064,7 +1068,7 @@
           <div class="success-wrap">
             <div class="success-icon"><i class="fas fa-check"></i></div>
             <h2>Destinação Registrada!</h2>
-            <p>Seu comprovante foi enviado e sua destinação está em análise pela organização.</p>
+            <p id="successMsg">Seu comprovante foi enviado e sua destinação está em análise pela organização.</p>
 
             <div class="donation-id-box">
               Protocolo: <span id="successDonationId">—</span>
@@ -1462,6 +1466,13 @@
       } finally {
         hideLoading();
       }
+    }
+
+    function pularComprovante() {
+      document.getElementById('successDonationId').textContent = state.donationId || '—';
+      document.getElementById('successMsg').textContent =
+        'Destinação registrada! Envie o comprovante pelo Dashboard assim que fizer a transferência.';
+      goTo(6);
     }
 
     // ── Auth helper ───────────────────────────────────────────

@@ -75,7 +75,7 @@ const getFromAddress = () => {
   if (process.env.SMTP_FROM) return process.env.SMTP_FROM;
   const brand = process.env.BRAND_NAME || 'DestineAI';
   const domain = process.env.BRAND_DOMAIN || 'destineai.com.br';
-  return `"${brand}" <noreply@${domain}>`;
+  return `"${brand}" <contato@${domain}>`;
 };
 
 function getEmailTemplate(content, org = null) {

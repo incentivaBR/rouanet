@@ -306,11 +306,22 @@
 
       try {
         await api.register({ nome, cpf, email, phone, senha, accepted_terms: true });
-        Toast.success('Sua conta foi criada com sucesso! Faça login para continuar.', 'Bem-vindo!');
-        setTimeout(() => {
-          document.querySelector('.tab[data-tab="login"]').click();
-          document.getElementById('loginCpfEmail').value = email;
-        }, 500);
+        Toast.success('Conta criada! Entrando automaticamente...', 'Bem-vindo!');
+
+        // Auto-login após cadastro
+        try {
+          const loginResp = await api.login({ email, senha });
+          auth.setToken(loginResp.token);
+          auth.setUser(loginResp.user);
+          const redirect = utils.getQueryParam('redirect') || 'dashboard.html';
+          setTimeout(() => window.location.href = redirect, 1000);
+        } catch {
+          // Fallback: redirecionar para aba de login com email preenchido
+          setTimeout(() => {
+            document.querySelector('.tab[data-tab="login"]').click();
+            document.getElementById('loginCpfEmail').value = email;
+          }, 800);
+        }
       } catch (error) {
         Toast.error(error.message || 'Não foi possível criar sua conta. Tente novamente.', 'Erro no cadastro');
       } finally {
