@@ -171,7 +171,7 @@ const TINA = (function() {
     // FAQ
     faq: {
       keywords: ['dúvidas', 'perguntas frequentes', 'faq', 'outras perguntas'],
-      response: '❓ <strong>MAIS DÚVIDAS?</strong><br>Acesse nossa página de <a href="faq.html" style="color:#667eea;font-weight:bold;">Perguntas Frequentes</a> com respostas detalhadas sobre todo o processo!'
+      response: '❓ <strong>MAIS DÚVIDAS?</strong><br>Acesse nossa página de <a href="faq.html" style="color:#0D1B3E;font-weight:bold;">Perguntas Frequentes</a> com respostas detalhadas sobre todo o processo!'
     }
   };
 
