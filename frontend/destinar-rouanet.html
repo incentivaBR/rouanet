@@ -1086,7 +1086,7 @@
         toast('Aceite os termos para continuar', 'error'); return;
       }
       const pronacFinal = urlParams.get('pronac') || state.projeto?.pronac || state.org?.pronac;
-      const tituloFinal = urlParams.get('titulo')  || state.projeto?.nome  || state.org?.pronac_titulo;
+      const tituloFinal = state.projeto?.nome || state.org?.pronac_titulo || urlParams.get('titulo');
 
       if (!pronacFinal) { toast('PRONAC não encontrado. Volte e selecione o projeto.', 'error'); return; }
 
