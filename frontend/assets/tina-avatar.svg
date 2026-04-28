@@ -3,50 +3,61 @@
   <circle cx="40" cy="40" r="40" fill="#0D1B3E"/>
 
   <!-- Corpo / blusa -->
-  <path d="M 12 80 Q 14 58 40 56 Q 66 58 68 80 Z" fill="#273F77"/>
+  <path d="M 10 80 Q 12 62 40 60 Q 68 62 70 80 Z" fill="#273F77"/>
 
   <!-- Pescoço -->
-  <rect x="34" y="50" width="12" height="10" rx="5" fill="#F4C89A"/>
+  <rect x="34" y="52" width="12" height="10" rx="5" fill="#F5C5A3"/>
 
-  <!-- Cabelo de trás (longo) -->
-  <ellipse cx="40" cy="44" rx="22" ry="25" fill="#2C1810"/>
+  <!-- Cabelo longo atrás (cobre toda a parte de baixo) -->
+  <ellipse cx="40" cy="50" rx="24" ry="20" fill="#3D1F0F"/>
 
   <!-- Rosto -->
-  <circle cx="40" cy="36" r="17" fill="#F4C89A"/>
+  <ellipse cx="40" cy="37" rx="16" ry="18" fill="#F5C5A3"/>
 
-  <!-- Cabelo frente / franja -->
-  <path d="M 22 28 Q 23 16 40 16 Q 57 16 58 28 Q 52 22 40 22 Q 28 22 22 28 Z" fill="#2C1810"/>
+  <!-- Cabelo em cima da cabeça -->
+  <ellipse cx="40" cy="22" rx="18" ry="10" fill="#3D1F0F"/>
 
-  <!-- Cabelo lateral esquerdo -->
-  <ellipse cx="23" cy="38" rx="4.5" ry="13" fill="#2C1810"/>
-  <!-- Cabelo lateral direito -->
-  <ellipse cx="57" cy="38" rx="4.5" ry="13" fill="#2C1810"/>
+  <!-- Franja (cobre a testa levemente) -->
+  <path d="M 24 26 Q 26 18 40 17 Q 54 18 56 26 Q 48 22 40 23 Q 32 22 24 26 Z" fill="#3D1F0F"/>
+
+  <!-- Cabelo lateral esquerdo — longo, não toca o rosto -->
+  <rect x="22" y="26" width="5" height="28" rx="2.5" fill="#3D1F0F"/>
+
+  <!-- Cabelo lateral direito — longo, não toca o rosto -->
+  <rect x="53" y="26" width="5" height="28" rx="2.5" fill="#3D1F0F"/>
 
   <!-- Olhos — branco -->
-  <ellipse cx="33" cy="36" rx="3.5" ry="4" fill="white"/>
-  <ellipse cx="47" cy="36" rx="3.5" ry="4" fill="white"/>
-  <!-- Íris -->
-  <circle cx="33" cy="37" r="2.5" fill="#2C1810"/>
-  <circle cx="47" cy="37" r="2.5" fill="#2C1810"/>
-  <!-- Brilho dos olhos -->
+  <ellipse cx="33" cy="36" rx="4" ry="3.5" fill="white"/>
+  <ellipse cx="47" cy="36" rx="4" ry="3.5" fill="white"/>
+  <!-- Íris verde-escuro -->
+  <circle cx="33" cy="37" r="2.5" fill="#2E4A1E"/>
+  <circle cx="47" cy="37" r="2.5" fill="#2E4A1E"/>
+  <!-- Brilho -->
   <circle cx="34" cy="36" r="1" fill="white"/>
   <circle cx="48" cy="36" r="1" fill="white"/>
 
-  <!-- Sobrancelhas -->
-  <path d="M 29 31 Q 33 29 37 31" stroke="#2C1810" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-  <path d="M 43 31 Q 47 29 51 31" stroke="#2C1810" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Cílios superiores -->
+  <path d="M 29 33 Q 31 31 33 32" stroke="#2C1810" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M 33 32 Q 35 31 37 33" stroke="#2C1810" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M 43 33 Q 45 31 47 32" stroke="#2C1810" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M 47 32 Q 49 31 51 33" stroke="#2C1810" stroke-width="1.2" fill="none" stroke-linecap="round"/>
 
-  <!-- Nariz sutil -->
-  <path d="M 38 41 Q 38 44 40 44 Q 42 44 42 41" stroke="#D4956A" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <!-- Sobrancelhas arqueadas (femininas) -->
+  <path d="M 28 31 Q 33 28 38 30" stroke="#3D1F0F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M 42 30 Q 47 28 52 31" stroke="#3D1F0F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
 
-  <!-- Sorriso -->
-  <path d="M 33 46 Q 40 52 47 46" stroke="#C07040" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Nariz delicado -->
+  <path d="M 39 41 Q 38 44 40 44 Q 42 44 41 41" stroke="#D4956A" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+
+  <!-- Boca com batom rosa -->
+  <path d="M 34 48 Q 40 52 46 48" fill="#E87A8A"/>
+  <path d="M 34 48 Q 37 46 40 47 Q 43 46 46 48" fill="#F4A0AA"/>
 
   <!-- Bochechas rosadas -->
-  <circle cx="27" cy="43" r="5" fill="#F08080" opacity="0.25"/>
-  <circle cx="53" cy="43" r="5" fill="#F08080" opacity="0.25"/>
+  <circle cx="26" cy="43" r="5" fill="#F08080" opacity="0.2"/>
+  <circle cx="54" cy="43" r="5" fill="#F08080" opacity="0.2"/>
 
   <!-- Brinco dourado (cor da marca) -->
-  <circle cx="22.5" cy="40" r="2" fill="#FFD700"/>
-  <circle cx="57.5" cy="40" r="2" fill="#FFD700"/>
+  <circle cx="23.5" cy="42" r="2.5" fill="#FFD700"/>
+  <circle cx="56.5" cy="42" r="2.5" fill="#FFD700"/>
 </svg>
