@@ -321,7 +321,7 @@ const TINA = (function() {
       }
 
       .tina-chat-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #0D1B3E 0%, #132247 100%);
       }
 
       .tina-whatsapp {
@@ -399,7 +399,7 @@ const TINA = (function() {
 
       /* Header */
       .tina-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #0D1B3E 0%, #132247 100%);
         color: white;
         padding: 16px;
         display: flex;
@@ -481,7 +481,7 @@ const TINA = (function() {
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background: #667eea;
+        background: #0D1B3E;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -490,7 +490,7 @@ const TINA = (function() {
       }
 
       .tina-user .tina-msg-avatar {
-        background: #1E3A5F;
+        background: #0D1B3E;
       }
 
       .tina-msg-content {
@@ -503,7 +503,7 @@ const TINA = (function() {
       }
 
       .tina-user .tina-msg-content {
-        background: #1E3A5F;
+        background: #0D1B3E;
         color: white;
       }
 
@@ -527,14 +527,14 @@ const TINA = (function() {
         border-radius: 20px;
         font-size: 12px;
         font-weight: 500;
-        color: #667eea;
+        color: #0D1B3E;
         cursor: pointer;
         transition: all 0.2s;
       }
 
       .tina-quick-actions button:hover {
-        background: #667eea;
-        color: white;
+        background: #FFD700;
+        color: #0D1B3E;
       }
 
       /* Input */
@@ -556,16 +556,16 @@ const TINA = (function() {
       }
 
       #tinaInput:focus {
-        border-color: #667eea;
+        border-color: #0D1B3E;
       }
 
       .tina-send-btn {
-        background: #667eea;
+        background: #FFD700;
         border: none;
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        color: white;
+        color: #0D1B3E;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -574,7 +574,7 @@ const TINA = (function() {
       }
 
       .tina-send-btn:hover {
-        background: #5a6fd6;
+        background: #FFC000;
       }
 
       /* Typing indicator */
@@ -823,7 +823,8 @@ const TINA = (function() {
     ask,
     openWhatsApp,
     hideWelcome,
-    showWelcomeBubble
+    showWelcomeBubble,
+    init: () => {} // auto-inicializado; exposto por compatibilidade com chamadas nas páginas
   };
 })();
 
