@@ -235,7 +235,7 @@ const TINA = (function() {
           <i class="fab fa-whatsapp"></i>
         </button>
         <button class="tina-fab tina-chat-btn" onclick="TINA.toggle()" title="Falar com TINA" id="tinaChatBtn">
-          <i class="fas fa-robot"></i>
+          <img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
         </button>
       </div>
 
@@ -243,7 +243,7 @@ const TINA = (function() {
       <div class="tina-chat" id="tinaChat">
         <div class="tina-header">
           <div class="tina-header-info">
-            <div class="tina-avatar">🤖</div>
+            <div class="tina-avatar"><img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
             <div>
               <div class="tina-name">TINA</div>
               <div class="tina-status">Assistente DestineAI</div>
@@ -256,7 +256,7 @@ const TINA = (function() {
 
         <div class="tina-messages" id="tinaMessages">
           <div class="tina-message tina-bot">
-            <div class="tina-msg-avatar">🤖</div>
+            <div class="tina-msg-avatar"><img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
             <div class="tina-msg-content">
               Olá! Sou a <strong>TINA</strong>, sua assistente virtual.
               Como posso ajudar você hoje?
@@ -321,7 +321,13 @@ const TINA = (function() {
       }
 
       .tina-chat-btn {
-        background: linear-gradient(135deg, #0D1B3E 0%, #132247 100%);
+        width: 72px;
+        height: 72px;
+        background: transparent;
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+        border: 3px solid #FFD700;
       }
 
       .tina-whatsapp {

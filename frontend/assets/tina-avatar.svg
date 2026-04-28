@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <!-- Fundo azul da marca -->
+  <circle cx="40" cy="40" r="40" fill="#0D1B3E"/>
+
+  <!-- Corpo / blusa -->
+  <path d="M 12 80 Q 14 58 40 56 Q 66 58 68 80 Z" fill="#273F77"/>
+
+  <!-- Pescoço -->
+  <rect x="34" y="50" width="12" height="10" rx="5" fill="#F4C89A"/>
+
+  <!-- Cabelo de trás (longo) -->
+  <ellipse cx="40" cy="44" rx="22" ry="25" fill="#2C1810"/>
+
+  <!-- Rosto -->
+  <circle cx="40" cy="36" r="17" fill="#F4C89A"/>
+
+  <!-- Cabelo frente / franja -->
+  <path d="M 22 28 Q 23 16 40 16 Q 57 16 58 28 Q 52 22 40 22 Q 28 22 22 28 Z" fill="#2C1810"/>
+
+  <!-- Cabelo lateral esquerdo -->
+  <ellipse cx="23" cy="38" rx="4.5" ry="13" fill="#2C1810"/>
+  <!-- Cabelo lateral direito -->
+  <ellipse cx="57" cy="38" rx="4.5" ry="13" fill="#2C1810"/>
+
+  <!-- Olhos — branco -->
+  <ellipse cx="33" cy="36" rx="3.5" ry="4" fill="white"/>
+  <ellipse cx="47" cy="36" rx="3.5" ry="4" fill="white"/>
+  <!-- Íris -->
+  <circle cx="33" cy="37" r="2.5" fill="#2C1810"/>
+  <circle cx="47" cy="37" r="2.5" fill="#2C1810"/>
+  <!-- Brilho dos olhos -->
+  <circle cx="34" cy="36" r="1" fill="white"/>
+  <circle cx="48" cy="36" r="1" fill="white"/>
+
+  <!-- Sobrancelhas -->
+  <path d="M 29 31 Q 33 29 37 31" stroke="#2C1810" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M 43 31 Q 47 29 51 31" stroke="#2C1810" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Nariz sutil -->
+  <path d="M 38 41 Q 38 44 40 44 Q 42 44 42 41" stroke="#D4956A" stroke-width="1" fill="none" stroke-linecap="round"/>
+
+  <!-- Sorriso -->
+  <path d="M 33 46 Q 40 52 47 46" stroke="#C07040" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Bochechas rosadas -->
+  <circle cx="27" cy="43" r="5" fill="#F08080" opacity="0.25"/>
+  <circle cx="53" cy="43" r="5" fill="#F08080" opacity="0.25"/>
+
+  <!-- Brinco dourado (cor da marca) -->
+  <circle cx="22.5" cy="40" r="2" fill="#FFD700"/>
+  <circle cx="57.5" cy="40" r="2" fill="#FFD700"/>
+</svg>
