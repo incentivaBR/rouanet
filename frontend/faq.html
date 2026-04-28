@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/destineai.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -27,7 +28,6 @@
     }
   </script>
   <style>
-    body { font-family: 'Inter', sans-serif; }
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
     .faq-item.open .faq-answer { max-height: 800px; }
     .faq-item.open .faq-chevron { transform: rotate(180deg); }
@@ -37,21 +37,6 @@
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-
-  <!-- ── NAV ─────────────────────────────────────────────── -->
-  <nav class="fixed top-0 inset-x-0 z-50 bg-[#0D1B3E]/95 backdrop-blur-md shadow-lg">
-    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-      <a href="index.html" class="text-white font-extrabold text-xl tracking-tight no-underline">
-        Destine<span class="text-[#FFD700]">AI</span>
-      </a>
-      <div class="flex items-center gap-6">
-        <a href="index.html" class="text-white/60 hover:text-white text-sm font-medium transition-colors hidden sm:block no-underline">Início</a>
-        <a href="calculadora.html" class="text-white/60 hover:text-white text-sm font-medium transition-colors hidden sm:block no-underline">Calculadora</a>
-        <a href="faq.html" class="text-[#FFD700] text-sm font-semibold no-underline">FAQ</a>
-        <a href="login.html" id="navAuth" class="text-white/70 hover:text-white text-sm font-medium transition-colors no-underline">Entrar</a>
-      </div>
-    </div>
-  </nav>
 
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <section class="bg-[#0D1B3E] pt-24 pb-12">
@@ -473,32 +458,12 @@
 
   </div>
 
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <footer class="bg-[#0A1530] py-10">
-    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="text-white/40 text-sm font-semibold">Destine<span class="text-[#FFD700]/60">AI</span></span>
-      <div class="flex gap-4 text-white/30 text-xs">
-        <a href="politica-privacidade.html" class="hover:text-white/60 transition-colors no-underline">Política de Privacidade</a>
-        <span>|</span>
-        <a href="termos-uso.html" class="hover:text-white/60 transition-colors no-underline">Termos de Uso</a>
-      </div>
-      <p class="text-white/30 text-xs">Plataforma de destinação de IR para projetos culturais · Lei 8.313/1991</p>
-    </div>
-  </footer>
-
   <script src="js/auth.js"></script>
+  <script src="js/layout.js"></script>
+  <script>Layout.init('faq');</script>
   <script src="js/tina.js"></script>
+  <script>if (typeof TINA !== 'undefined') TINA.init();</script>
   <script>
-    // Nav auth
-    const navAuth = document.getElementById('navAuth');
-    if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
-      const user = auth.getUser();
-      navAuth.textContent = user.nome ? user.nome.split(' ')[0] : 'Minha Conta';
-      navAuth.href = 'dashboard.html';
-    } else {
-      navAuth.href = 'login.html';
-    }
-
     // Accordion
     function toggleFAQ(btn) {
       const item = btn.closest('.faq-item');

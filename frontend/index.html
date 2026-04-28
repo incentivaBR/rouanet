@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/destineai.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -27,37 +28,8 @@
       }
     }
   </script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .fade-up {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-  </style>
 </head>
 <body class="bg-[#0D1B3E]">
-
-  <!-- ── NAV ─────────────────────────────────────────────── -->
-  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
-    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-      <span class="text-white font-extrabold text-xl tracking-tight">
-        Destine<span class="text-[#FFD700]">AI</span>
-      </span>
-      <div class="flex items-center gap-6">
-        <a href="#como-funciona" class="text-white/70 hover:text-white text-sm font-medium transition-colors hidden sm:block">
-          Como funciona
-        </a>
-        <a href="login.html?tab=register" class="hidden sm:inline-flex items-center gap-1.5 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold text-sm px-4 py-2 rounded-lg transition-all duration-200">
-          Criar conta
-        </a>
-        <a href="login.html" class="text-white/70 hover:text-white text-sm font-medium transition-colors">
-          Entrar
-        </a>
-      </div>
-    </div>
-  </nav>
 
   <!-- ── HERO ───────────────────────────────────────────── -->
   <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0D1B3E]">
@@ -375,41 +347,7 @@
     </div>
   </section>
 
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <footer class="bg-[#0A1530] py-12">
-    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="text-white/40 text-sm font-semibold">
-        Destine<span class="text-[#FFD700]/60">AI</span>
-      </span>
-      <p class="text-white/30 text-xs text-center sm:text-right">
-        Plataforma de direcionamento de IR para projetos culturais aprovados pelo MinC · Lei 8.313/1991
-      </p>
-    </div>
-  </footer>
-
   <script>
-    // Navbar scroll effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) {
-        navbar.style.cssText = 'background: rgba(13,27,62,0.95); backdrop-filter: blur(12px); box-shadow: 0 4px 24px rgba(0,0,0,0.2);';
-      } else {
-        navbar.style.cssText = '';
-      }
-    }, { passive: true });
-
-    // Fade-up on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
     // FAQ accordion
     function toggleFaq(btn) {
       const answer = btn.nextElementSibling;
@@ -426,11 +364,14 @@
     }
   </script>
 
+  <!-- Shared layout (nav + footer + fade-up + auth) -->
+  <script src="js/auth.js"></script>
+  <script src="js/layout.js"></script>
+  <script>Layout.init('home', { transparentNav: true });</script>
+
   <!-- TINA — Assistente Virtual -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="js/tina.js"></script>
-  <script>
-    if (typeof TINA !== 'undefined') TINA.init();
-  </script>
+  <script>if (typeof TINA !== 'undefined') TINA.init();</script>
 </body>
 </html>

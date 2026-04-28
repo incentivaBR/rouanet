@@ -9,24 +9,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <link rel="stylesheet" href="css/destineai.css">
   <style>
-    /* ── Cores DestineAI ──────────────────────────────────── */
     :root {
       --primary-color: #0D1B3E;
       --secondary-color: #FFD700;
-      --accent-color: #FFC000;
-      --background-dark: #0D1B3E;
-      --gradient-primary: linear-gradient(135deg, #0D1B3E 0%, #132247 100%);
-      --shadow-sm: 0 2px 8px rgba(13,27,62,0.10);
       --shadow-md: 0 4px 16px rgba(13,27,62,0.14);
-      --shadow-lg: 0 8px 28px rgba(13,27,62,0.18);
+      --text-primary: #1a1a2e;
     }
-
-    .legal-container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    .legal-container { max-width: 800px; margin: 0 auto; padding: 80px 20px 60px; }
     .legal-header { text-align: center; margin-bottom: 40px; }
     .legal-header h1 { font-size: 34px; color: #1a1a2e; margin-bottom: 8px; font-weight: 800; }
-    .legal-header p { color: #333; font-size: 16px; font-weight: 500; }
+    .legal-header p { color: #555; font-size: 16px; font-weight: 500; }
     .legal-content { background: white; border-radius: 16px; padding: 40px; box-shadow: var(--shadow-md); }
     .legal-content h2 { font-size: 20px; color: var(--primary-color); margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--secondary-color); }
     .legal-content h2:first-child { margin-top: 0; }
@@ -34,9 +28,9 @@
     .legal-content ul { margin: 16px 0; padding-left: 24px; }
     .legal-content li { margin-bottom: 12px; line-height: 1.7; color: var(--text-primary); }
     .legal-content strong { color: var(--primary-color); }
-    .highlight-box { background: rgba(30, 58, 95, 0.05); border-left: 4px solid var(--primary-color); padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+    .highlight-box { background: rgba(13,27,62,0.05); border-left: 4px solid var(--primary-color); padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
     .highlight-box p { margin: 0; }
-    .contact-box { background: rgba(247, 148, 29, 0.1); border: 1px solid var(--secondary-color); padding: 20px; border-radius: 12px; margin-top: 24px; }
+    .contact-box { background: rgba(255,215,0,0.08); border: 1px solid var(--secondary-color); padding: 20px; border-radius: 12px; margin-top: 24px; }
     .contact-box h3 { color: var(--primary-color); margin-bottom: 12px; font-size: 16px; }
     .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--primary-color); text-decoration: none; margin-bottom: 24px; font-weight: 500; }
     .back-link:hover { text-decoration: underline; }
@@ -47,18 +41,6 @@
   </style>
 </head>
 <body>
-  <header class="header">
-    <a href="index.html" class="logo-link">
-      <span style="font-size:22px;font-weight:700;color:white;letter-spacing:-0.5px;font-family:'Inter',sans-serif">Destine<span style="color:#FFD700">AI</span></span>
-    </a>
-    <nav>
-      <a href="index.html">Início</a>
-      <a href="projetos-rouanet.html">Nosso Projeto</a>
-    </nav>
-    <button class="menu-toggle" id="menuToggle">
-      <i class="fas fa-bars"></i>
-    </button>
-  </header>
 
   <div class="legal-container">
     <a href="index.html" class="back-link">
@@ -161,49 +143,15 @@
       <h2>10. Contato</h2>
       <div class="contact-box">
         <h3><i class="fas fa-envelope"></i> Encarregado de Proteção de Dados (DPO)</h3>
-        <p id="contactEmail"><strong>E-mail:</strong> privacidade@destineai.com.br</p>
+        <p><strong>E-mail:</strong> privacidade@destineai.com.br</p>
         <p><strong>Endereço:</strong> Brasília — DF</p>
         <p>Para dúvidas, solicitações ou exercício de seus direitos relacionados a esta política, entre em contato conosco.</p>
       </div>
     </div>
   </div>
 
-  <footer class="footer">
-    <a href="index.html" class="logo-link">
-      <span style="font-size:22px;font-weight:700;color:white;letter-spacing:-0.5px;font-family:'Inter',sans-serif">Destine<span style="color:#FFD700">AI</span></span>
-    </a>
-    <p class="tagline">Lei Rouanet Simplificada</p>
-    <div class="footer-bottom">
-      <p>
-        <a href="politica-privacidade.html" style="color: rgba(255,255,255,0.8);">Política de Privacidade</a> |
-        <a href="termos-uso.html" style="color: rgba(255,255,255,0.8);">Termos de Uso</a>
-      </p>
-      <p style="margin-top: 12px;" id="footerBrandName">&copy; 2026 DestineAI. Todos os direitos reservados.</p>
-      <p style="margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.5);">
-        Powered by <a href="https://incentivabr.com.br" target="_blank" style="color: rgba(255,255,255,0.6);">IncentivaBR</a>
-      </p>
-    </div>
-  </footer>
-
-  <script src="js/mobile-menu.js"></script>
-  <script>
-    fetch('/api/config/brand').then(r => r.json()).then(brand => {
-      if (brand.logo_url) {
-        document.getElementById('brandLogo').src = brand.logo_url;
-        document.getElementById('footerLogo').src = brand.logo_url;
-      }
-      if (brand.name) {
-        document.getElementById('brandLogo').alt = brand.name;
-        document.getElementById('footerLogo').alt = brand.name;
-        document.getElementById('footerBrandName').textContent = `© 2026 ${brand.name}. Todos os direitos reservados.`;
-        document.title = `Política de Privacidade — ${brand.name}`;
-      }
-      if (brand.domain) {
-        document.getElementById('contactEmail').innerHTML = `<strong>E-mail:</strong> privacidade@${brand.domain}`;
-      }
-      if (brand.color_primary) document.documentElement.style.setProperty('--primary-color', brand.color_primary);
-      if (brand.color_accent) document.documentElement.style.setProperty('--accent-color', brand.color_accent);
-    }).catch(() => {});
-  </script>
+  <script src="js/auth.js"></script>
+  <script src="js/layout.js"></script>
+  <script>Layout.init('');</script>
 </body>
 </html>
