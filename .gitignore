@@ -29,3 +29,13 @@ Thumbs.db
 # Build
 dist/
 build/
+
+# Backups e arquivos temporários
+*.bak
+*.tmp
+frontend/index.html.bak
+
+# Documentos e apresentações não versionados
+*.pptx
+*.docx
+make_pptx*.py
