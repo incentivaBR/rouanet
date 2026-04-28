@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projeto Themis — Da Rua ao Palco | DestineAI</title>
+  <title>Circuito do Forró — Cultura Popular Brasileira | DestineAI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -468,36 +468,36 @@
       <div class="hero-badge-row">
         <span class="badge badge-gold"><i class="fas fa-music"></i> Música &amp; Cultura</span>
         <span class="badge badge-green"><i class="fas fa-check-circle"></i> Aprovado MinC</span>
-        <span class="badge badge-white">PRONAC 24-00891</span>
+        <span class="badge badge-white">PRONAC 252026</span>
         <span class="badge badge-white"><i class="fas fa-map-marker-alt"></i> Distrito Federal</span>
       </div>
-      <h1>Projeto Themis<br><span class="gold">Da Rua ao Palco</span></h1>
+      <h1>Circuito do Forró<br><span class="gold">Cultura Popular Brasileira</span></h1>
       <div class="projeto-hero-subtitle">
-        <span><i class="fas fa-building"></i> Orquestra Social do DF</span>
+        <span><i class="fas fa-building"></i> BR Projects LTDA</span>
         <span style="opacity:0.4">·</span>
-        <span>Ceilândia · Samambaia · Santa Maria</span>
+        <span>Brasil · Forró e cultura popular</span>
       </div>
       <p class="projeto-hero-desc">
-        80 jovens de 10 a 17 anos em situação de vulnerabilidade no Distrito Federal aprendem música clássica
-        e formam a Orquestra Themis. Uma homenagem à deusa da Justiça —
-        porque <strong>música é lei, e lei deveria ser para todos.</strong>
+        O Circuito do Forró leva a música e a cultura popular brasileira a praças, teatros e centros culturais em todo o país,
+        valorizando artistas e promovendo o forró autêntico —
+        porque <strong>cultura é identidade, e identidade é para todos.</strong>
       </p>
       <div class="hero-nums">
         <div class="hero-num">
-          <span class="n">80</span>
-          <span class="l">jovens</span>
+          <span class="n">60+</span>
+          <span class="l">músicos</span>
         </div>
         <div class="hero-num">
-          <span class="n">3</span>
-          <span class="l">comunidades</span>
+          <span class="n">10+</span>
+          <span class="l">estados</span>
         </div>
         <div class="hero-num">
-          <span class="n">20</span>
-          <span class="l">escolas</span>
+          <span class="n">30+</span>
+          <span class="l">shows/ano</span>
         </div>
         <div class="hero-num">
           <span class="n">2 anos</span>
-          <span class="l">de impacto</span>
+          <span class="l">de circuito</span>
         </div>
       </div>
     </div>
@@ -592,7 +592,7 @@
         </div>
 
         <a id="btn-destinar-link" href="demo-dashboard.html" class="btn-destinar">
-          <i class="fas fa-music"></i> <span id="btn-destinar-txt">Quero destinar ao Themis</span>
+          <i class="fas fa-music"></i> <span id="btn-destinar-txt">Quero destinar ao Circuito do Forró</span>
         </a>
 
         <div style="text-align:center;font-size:11px;color:#94A3B8;margin-top:4px">
@@ -615,7 +615,7 @@
             hint.style.display = 'block';
             res.style.display  = 'none';
             _limiteCalc = 0;
-            document.getElementById('btn-destinar-txt').textContent = 'Quero destinar ao Themis';
+            document.getElementById('btn-destinar-txt').textContent = 'Quero destinar ao Circuito do Forró';
             return;
           }
 
@@ -653,7 +653,7 @@
           const btn    = document.getElementById('btn-destinar-txt');
 
           if (valor <= 0) {
-            btn.textContent = 'Quero destinar ao Themis';
+            btn.textContent = 'Quero destinar ao Circuito do Forró';
             aviso.textContent = '';
             return;
           }
@@ -661,13 +661,13 @@
           if (_limiteCalc > 0 && valor > _limiteCalc) {
             aviso.style.color = '#DC2626';
             aviso.textContent = '⚠ Valor acima do seu limite de ' + fmt(_limiteCalc);
-            btn.textContent   = 'Quero destinar ao Themis';
+            btn.textContent   = 'Quero destinar ao Circuito do Forró';
             return;
           }
 
           aviso.style.color = '#059669';
           aviso.textContent = '✓ Dentro do seu limite — dedução garantida';
-          btn.textContent   = 'Destinar ' + fmt(valor) + ' ao Themis';
+          btn.textContent   = 'Destinar ' + fmt(valor) + ' ao Circuito do Forró';
         }
 
         // Se veio da calculadora, pré-preenche o IR devido e abre o resultado automaticamente
@@ -716,13 +716,13 @@
     <h2 class="section-title"><i class="fas fa-music" style="color:var(--j-gold);margin-right:8px"></i>Sobre o Projeto</h2>
     <div class="sobre-text">
       <p style="margin-bottom:16px">
-        80 jovens de 10 a 17 anos em situação de vulnerabilidade em <em>Ceilândia, Samambaia e Santa Maria</em> aprendem música clássica e formam a <strong>Orquestra Themis</strong> — homenagem à deusa da Justiça. O projeto acredita que <strong>música é lei, e lei deveria ser para todos.</strong>
+        O <strong>Circuito do Forró</strong> é um projeto cultural aprovado pelo Ministério da Cultura que promove e difunde o forró e a cultura popular brasileira por todo o país. Com shows, oficinas e ações culturais em praças, teatros e centros comunitários, o projeto valoriza a identidade cultural nordestina e nacional.
       </p>
       <p style="margin-bottom:16px">
-        Com professores de música formados, instrumentos doados e um palco dentro dos próprios tribunais do DF, esses jovens descobrem que o futuro tem mais a oferecer do que as ruas. As apresentações acontecem no <strong>TJDFT, STJ e STF</strong> — e em 20 escolas públicas do Distrito Federal.
+        Com músicos profissionais, produção de alta qualidade e uma programação que percorre mais de dez estados, o Circuito do Forró leva alegria, tradição e arte a comunidades de norte a sul do Brasil. As apresentações reúnem plateias de todas as idades em <strong>festivais, parques culturais e espaços públicos</strong>.
       </p>
       <p>
-        O nome <em>Themis</em> não é acidente. Themis, na mitologia grega, é a deusa da Justiça e da Lei — a mesma que os servidores da ASJDF representam em seu trabalho diário. <strong>Quando você destina seu IR ao Projeto Themis, você fecha um círculo: a Justiça protegendo aqueles que mais precisam dela.</strong>
+        O forró é patrimônio cultural do Brasil. <strong>Quando você destina seu IR ao Circuito do Forró, você investe na preservação e difusão de uma das expressões mais autênticas da cultura popular brasileira — sem custo algum para o seu bolso.</strong>
       </p>
     </div>
 
@@ -730,28 +730,28 @@
     <h2 class="section-title" style="margin-top:40px"><i class="fas fa-images" style="color:var(--j-gold);margin-right:8px"></i>Galeria</h2>
     <div class="galeria-grid">
       <div class="galeria-item">
-        <img src="assets/galeria/ensaio.png" alt="Ensaio — Ceilândia" loading="lazy">
-        <div class="galeria-label">Ensaio — Ceilândia</div>
+        <img src="assets/galeria/ensaio.png" alt="Ensaio do Circuito do Forró" loading="lazy">
+        <div class="galeria-label">Ensaio — Circuito do Forró</div>
       </div>
       <div class="galeria-item">
-        <img src="assets/galeria/aula-violino.png" alt="Aula de violino" loading="lazy">
-        <div class="galeria-label">Aula de violino</div>
+        <img src="assets/galeria/aula-violino.png" alt="Oficina de sanfona" loading="lazy">
+        <div class="galeria-label">Oficina de sanfona</div>
       </div>
       <div class="galeria-item">
-        <img src="assets/galeria/concerto.png" alt="Concerto TJDFT" loading="lazy">
-        <div class="galeria-label">Concerto TJDFT — Mar/2025</div>
+        <img src="assets/galeria/concerto.png" alt="Show em praça pública" loading="lazy">
+        <div class="galeria-label">Show em praça pública — Mar/2025</div>
       </div>
       <div class="galeria-item">
-        <img src="assets/galeria/concerto-escola.png" alt="Apresentação escola pública" loading="lazy">
-        <div class="galeria-label">Apresentação escola pública</div>
+        <img src="assets/galeria/concerto-escola.png" alt="Apresentação em festival" loading="lazy">
+        <div class="galeria-label">Apresentação em festival</div>
       </div>
       <div class="galeria-item">
-        <img src="assets/galeria/cerimonia-formatura.png" alt="Cerimônia de formatura" loading="lazy">
-        <div class="galeria-label">Cerimônia de formatura</div>
+        <img src="assets/galeria/cerimonia-formatura.png" alt="Encerramento de temporada" loading="lazy">
+        <div class="galeria-label">Encerramento de temporada</div>
       </div>
       <div class="galeria-item">
-        <img src="assets/galeria/orquestra-themis.png" alt="Jovens da Orquestra Themis" loading="lazy">
-        <div class="galeria-label">Jovens da Orquestra Themis</div>
+        <img src="assets/galeria/orquestra-themis.png" alt="Músicos do Circuito do Forró" loading="lazy">
+        <div class="galeria-label">Músicos do Circuito do Forró</div>
       </div>
     </div>
 
@@ -763,9 +763,9 @@
         <div class="timeline-dot"><i class="fas fa-star"></i></div>
         <div class="timeline-content">
           <div class="timeline-date">Março 2025</div>
-          <div class="timeline-title">Primeiro concerto no TJDFT — 800 pessoas</div>
+          <div class="timeline-title">Primeiro grande show da temporada — casa lotada</div>
           <div class="timeline-highlight">
-            "Foi a primeira vez que muitos desses jovens entraram em um tribunal por razões que não eram trágicas. Sobre o palco onde se decide o futuro de tantas famílias, 12 jovens de Ceilândia tocaram Vivaldi. 800 pessoas na plateia. A Justiça nunca soou tão bem."
+            "O forró reuniu pessoas de todas as idades num palco ao ar livre. Músicos de vários estados, ritmo, alegria e cultura popular brasileira em sua essência. O público vibrou do início ao fim. É isso que a cultura pode fazer."
           </div>
         </div>
       </div>
@@ -774,8 +774,8 @@
         <div class="timeline-dot"><i class="fas fa-music"></i></div>
         <div class="timeline-content">
           <div class="timeline-date">Fevereiro 2025</div>
-          <div class="timeline-title">Orquestra completa — todos os 80 jovens confirmados</div>
-          <div class="timeline-text">Ensaios 3x por semana no centro comunitário de Ceilândia. A Orquestra Themis tem seu elenco completo: 80 jovens, 12 professores, 3 comunidades unidas pela música.</div>
+          <div class="timeline-title">Elenco completo — mais de 60 músicos confirmados</div>
+          <div class="timeline-text">Ensaios e produção em plena atividade. O Circuito do Forró conta com seu elenco completo: mais de 60 músicos, produtores e equipe técnica de mais de 10 estados brasileiros.</div>
         </div>
       </div>
 
@@ -784,7 +784,7 @@
         <div class="timeline-content">
           <div class="timeline-date">Janeiro 2025</div>
           <div class="timeline-title">43% da meta atingida em 60 dias — acima do esperado</div>
-          <div class="timeline-text">A parceria com a ASJDF e a plataforma DestineAI acelerou a captação além do planejado. R$ 87.500 captados de 62 contribuintes em apenas dois meses de campanha.</div>
+          <div class="timeline-text">A parceria com a plataforma DestineAI acelerou a captação além do planejado. R$ 87.500 captados de 62 contribuintes em apenas dois meses de campanha.</div>
         </div>
       </div>
 
@@ -793,7 +793,7 @@
         <div class="timeline-content">
           <div class="timeline-date">Novembro 2024</div>
           <div class="timeline-title">Aprovação do MinC e início da captação</div>
-          <div class="timeline-text">O Projeto Themis recebe aprovação do Ministério da Cultura (PRONAC 24-00891) e inicia a captação de recursos via Lei Rouanet em parceria com a DestineAI e a ASJDF.</div>
+          <div class="timeline-text">O Circuito do Forró recebe aprovação do Ministério da Cultura (PRONAC 252026) e inicia a captação de recursos via Lei Rouanet em parceria com a DestineAI. Proponente: BR Projects LTDA.</div>
         </div>
       </div>
 
@@ -833,7 +833,7 @@
     <div class="depo-grid">
       <div class="depo-card">
         <div class="depo-stars">★★★★★</div>
-        <p class="depo-text">"Trabalho há 14 anos no TRF e nunca soube que podia fazer isso. Em 5 minutos destine R$ 2.000 e recebi o comprovante na hora. O Projeto Themis faz exatamente o que eu acredito que a Justiça deveria fazer: prevenir, não só punir."</p>
+        <p class="depo-text">"Trabalho há 14 anos no TRF e nunca soube que podia fazer isso. Em 5 minutos destine R$ 2.000 e recebi o comprovante na hora. O Circuito do Forró mostra que cultura popular é patrimônio de todos — e que cada um de nós pode contribuir."</p>
         <div class="depo-author">
           <div class="depo-av">CE</div>
           <div>
@@ -844,7 +844,7 @@
       </div>
       <div class="depo-card">
         <div class="depo-stars">★★★★★</div>
-        <p class="depo-text">"Recebi o link pela ASJDF e fiz a destinação no intervalo do almoço. Vai ser a primeira vez que vou ao TJDFT não a trabalho, mas para ver um concerto. Nunca imaginei que meu IR poderia me emocionar assim."</p>
+        <p class="depo-text">"Recebi o link e fiz a destinação no intervalo do almoço. Vou ao próximo show do Circuito do Forró sabendo que ajudei a torná-lo possível. Nunca imaginei que meu IR pudesse me emocionar assim."</p>
         <div class="depo-author">
           <div class="depo-av">LR</div>
           <div>
@@ -868,10 +868,10 @@
 
     <!-- CTA EMOCIONAL -->
     <div class="cta-emocional">
-      <h2>80 jovens estão esperando.<br><span class="gold">Seu IR já está decidido</span> — só falta você.</h2>
-      <p>Até <strong>6% do seu IR devido</strong> — dinheiro que você já pagaria ao governo — podem garantir que jovens de Ceilândia tenham aulas de música por um ano inteiro. Descubra seu limite e destine. Custo real: R$ 0.</p>
+      <h2>O forró está esperando.<br><span class="gold">Seu IR já está decidido</span> — só falta você.</h2>
+      <p>Até <strong>6% do seu IR devido</strong> — dinheiro que você já pagaria ao governo — podem garantir que o Circuito do Forró leve cultura popular brasileira a mais pessoas em todo o país. Descubra seu limite e destine. Custo real: R$ 0.</p>
       <a href="#calc-salario" onclick="document.getElementById('calc-salario').scrollIntoView({behavior:'smooth'});document.getElementById('calc-salario').focus();return false;" class="btn-cta-gold">
-        <i class="fas fa-calculator"></i> Calcular meu limite e destinar ao Themis
+        <i class="fas fa-calculator"></i> Calcular meu limite e destinar ao Circuito do Forró
       </a>
     </div>
 
@@ -887,7 +887,7 @@
       </div>
       <div class="confirma-item">
         <span class="confirma-label">PRONAC</span>
-        <span class="confirma-value">24-00891</span>
+        <span class="confirma-value">252026</span>
       </div>
       <div class="confirma-item">
         <span class="confirma-label">Mecanismo</span>
@@ -903,11 +903,11 @@
       </div>
       <div class="confirma-item">
         <span class="confirma-label">Área</span>
-        <span class="confirma-value">Música</span>
+        <span class="confirma-value">Música / Cultura Popular</span>
       </div>
       <div class="confirma-item">
         <span class="confirma-label">Localização</span>
-        <span class="confirma-value">Distrito Federal</span>
+        <span class="confirma-value">Brasil (múltiplos estados)</span>
       </div>
       <div class="confirma-item">
         <span class="confirma-label">Meta total</span>
@@ -921,9 +921,9 @@
 
     <div style="margin-top:16px;background:linear-gradient(135deg,var(--j-purple),var(--j-wine));border-radius:16px;padding:24px;color:white;text-align:center">
       <div style="font-size:11px;opacity:0.8;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Seu impacto direto</div>
-      <div style="font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:800;color:var(--j-gold)">3 jovens</div>
+      <div style="font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:800;color:var(--j-gold)">3 músicos</div>
       <div style="font-size:13px;opacity:0.9;margin-top:4px;line-height:1.6">
-        Cada R$ 667 do seu IR financia<br>1 jovem por 1 mês de aulas
+        Cada R$ 667 do seu IR financia<br>1 músico por 1 mês de produção cultural
       </div>
     </div>
   </div>

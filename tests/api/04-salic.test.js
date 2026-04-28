@@ -2,7 +2,7 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { req } from './helpers.js';
 
-const PRONAC_THEMIS = '250347';
+const PRONAC_CIRCUITO_FORRO = '252026';
 
 describe('SALIC — GET /api/salic/projetos', () => {
   test('lista projetos → 200 + array', async () => {
@@ -32,8 +32,8 @@ describe('SALIC — GET /api/salic/projetos', () => {
 });
 
 describe('SALIC — GET /api/salic/projetos/:pronac', () => {
-  test('PRONAC Themis (250347) → 200 ou fallback', async () => {
-    const { status, body } = await req(`GET`, `/api/salic/projetos/${PRONAC_THEMIS}`);
+  test('PRONAC Circuito do Forró (252026) → 200 ou fallback', async () => {
+    const { status, body } = await req(`GET`, `/api/salic/projetos/${PRONAC_CIRCUITO_FORRO}`);
     assert.ok(
       status === 200 || status === 404 || status === 502,
       `esperado 200/404/502 (SALIC pode estar instável), recebido ${status}`

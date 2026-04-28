@@ -25,7 +25,7 @@ Para gerações longas (página completa), comece com a Seção A + B em uma ún
 
 Você está construindo a UI da plataforma IncentivaBR (marca pública DestineAI), produto SaaS B2B2C que permite a servidores públicos brasileiros destinarem parte do imposto de renda devido a projetos sociais aprovados pelo governo, sem custo adicional, com retorno integral na declaração anual seguinte.
 
-A plataforma é multi-tenant (cada organização cliente — tribunal, prefeitura, sindicato, associação — tem sua própria white label). Cobre sete leis de incentivo (Rouanet, LIE, PRONON, PRONAS/PCD, LIR, FIA, Fundo do Idoso), mas a versão inicial foca apenas Rouanet com o Projeto Themis (PRONAC 250347 — orquestra de jovens de Ceilândia).
+A plataforma é multi-tenant (cada organização cliente — tribunal, prefeitura, sindicato, associação — tem sua própria white label). Cobre sete leis de incentivo (Rouanet, LIE, PRONON, PRONAS/PCD, LIR, FIA, Fundo do Idoso), mas a versão inicial foca apenas Rouanet com o Circuito do Forró (PRONAC 252026 — projeto musical de forró popular brasileiro, proponente BR Projects LTDA, conta de captação no Banco do Brasil ag. 1419-2 / conta 36.068-6).
 
 ### Persona-alvo
 
@@ -148,22 +148,22 @@ Gere a landing page completa do DestineAI seguindo o design system acima. A pág
 - Texto centralizado:
   - Selo no topo: "R$ 0 do seu bolso" em badge dourada com ícone de relógio
   - Headline gigante: "Seu imposto vira **música**." (a palavra "música" em dourado #FFD700)
-  - Subtítulo: "12 jovens de Ceilândia tocaram Vivaldi para 800 pessoas no TJDFT. Com 6% do seu IR — dinheiro que você já pagaria ao governo."
-  - Dois CTAs: "Quero apoiar o Projeto Themis" (dourado primário) e "Calcular quanto posso destinar →" (link sutil)
+  - Subtítulo: "[TBD: descrição de impacto do Circuito do Forró em 1-2 linhas com números reais — ex.: 'X músicos levaram forró autêntico a Y praças e centros culturais'. Manter o gancho 'Com 6% do seu IR — dinheiro que você já pagaria ao governo.']"
+  - Dois CTAs: "Quero apoiar o Circuito do Forró" (dourado primário) e "Calcular quanto posso destinar →" (link sutil)
   - Indicador de scroll na base (seta animada com bounce)
 
-**Seção 2 — Projeto Themis** (id="themis"):
+**Seção 2 — Circuito do Forró** (id="circuito-forro"):
 - Card grande horizontal (grid md:grid-cols-2)
 - Lado esquerdo: imagem da orquestra com overlay navy gradient e badge "Música & Transformação"
-- Lado direito: título "Projeto Themis", PRONAC 250347 em dourado uppercase, descrição em 3 linhas, e grade 2x2 de indicadores (12 jovens, 800 espectadores, TJDFT, R$ 0 custo) em mini-cards com ícone dourado
-- CTA no final: "Destinar meu IR para o Themis" (link para `destinar-rouanet.html?pronac=250347`)
+- Lado direito: título "Circuito do Forró", PRONAC 252026 em dourado uppercase, descrição em 3 linhas (TBD: pegar do release/proposta oficial), e grade 2x2 de indicadores ([TBD: indicador 1], [TBD: indicador 2], [TBD: território/local], R$ 0 custo) em mini-cards com ícone dourado
+- CTA no final: "Destinar meu IR para o Circuito do Forró" (link para `destinar-rouanet.html?pronac=252026`)
 
 **Seção 3 — Como funciona** (id="como-funciona", fundo branco):
 - Título: "4 passos. **Menos de 5 minutos.**" (segunda parte em dourado)
 - Grade de 4 cards numerados (01, 02, 03, 04)
 - Cada card tem ícone navy em quadrado dourado, título e descrição:
   1. Calcule seu IR disponível
-  2. Confirme o Projeto Themis
+  2. Confirme o Circuito do Forró
   3. Transfira ao Fundo
   4. Declare no IRPF — Código 41
 - Hover: card se destaca com shadow
@@ -181,7 +181,7 @@ Gere a landing page completa do DestineAI seguindo o design system acima. A pág
 - Link discreto: "Calcular quanto posso destinar →"
 
 **Seção 6 — FAQ resumido** (fundo branco):
-- 5 perguntas accordion: "Isso sai do meu bolso?", "Qual o limite?", "Tenho IR retido em folha — posso destinar?", "Como funciona na declaração?", "O Projeto Themis é aprovado?"
+- 5 perguntas accordion: "Isso sai do meu bolso?", "Qual o limite?", "Tenho IR retido em folha — posso destinar?", "Como funciona na declaração?", "O Circuito do Forró é aprovado?"
 - Link: "Ver todas as perguntas →" para `faq.html`
 
 **Footer**:
@@ -207,13 +207,13 @@ Gere a página `como-funciona.html` seguindo o design system. Estrutura:
 **Hero compacta:**
 - Fundo navy
 - Título: "Como funciona em 5 minutos"
-- Subtítulo: "O passo a passo da destinação de IR para o Projeto Themis"
+- Subtítulo: "O passo a passo da destinação de IR para o Circuito do Forró"
 
 **Seção 1 — Os 4 passos detalhados:**
 - Linha do tempo vertical (em mobile) ou horizontal (em desktop)
 - Cada passo tem número grande dourado, ícone, título, descrição expandida (3 a 4 linhas)
 - 1. Calcule seu IR devido — explica como achar o número na declaração anterior
-- 2. Confirme o projeto — apresenta o Themis em detalhes, fala do PRONAC e da aprovação MinC
+- 2. Confirme o projeto — apresenta o Circuito do Forró em detalhes, fala do PRONAC 252026 e da aprovação MinC
 - 3. Transfira via PIX — explica que vai DIRETO ao beneficiário, plataforma não recebe
 - 4. Declare no IRPF — código 41, mostra screenshot/ilustração do campo
 
@@ -342,7 +342,7 @@ Gere a página `calculadora.html` — calculadora rápida sem necessidade de cad
 - Linha de fechamento, em destaque visual: "Seu bolso fica **igual**. Mas R$ X agora vão para um projeto que você escolhe, e não somem na máquina pública."
 
 **3 CTAs após o resultado:**
-- "Quero destinar para o Projeto Themis →" (botão dourado primário)
+- "Quero destinar para o Circuito do Forró →" (botão dourado primário)
 - "Quero ver outros projetos →" (botão secundário)
 - "Salvar este cálculo no meu e-mail" (campo de email + botão pequeno — opcional)
 
@@ -423,11 +423,11 @@ Gere a página `destinar-rouanet.html` — fluxo de destinação em 6 passos, em
 Use abordagem de step-by-step (cada passo aparece, outros ficam ocultos). Botão "Anterior" volta um passo, botão "Continuar" avança. Salvar progresso em `localStorage` para retomada.
 
 **PASSO 1 — Projeto:**
-- Card grande do Projeto Themis
+- Card grande do Circuito do Forró
   - Imagem
   - Nome, PRONAC, lei
   - Resumo
-  - 4 indicadores (12 jovens, 800 espectadores, TJDFT, R$ 0 custo)
+  - 4 indicadores ([TBD: indicador 1], [TBD: indicador 2], [TBD: território/local], R$ 0 custo)
   - Selo "Aprovado pelo MinC"
 - Bloco "Antes de continuar, confira":
   - Lei: Rouanet
@@ -472,7 +472,7 @@ Use abordagem de step-by-step (cada passo aparece, outros ficam ocultos). Botão
 
 **PASSO 6 — Confirmação:**
 - Animação confetti (use canvas-confetti via CDN: `https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js`)
-- Mensagem central: "Pronto, [primeiro nome]! Sua destinação de R$ X para o Projeto Themis está registrada."
+- Mensagem central: "Pronto, [primeiro nome]! Sua destinação de R$ X para o Circuito do Forró está registrada."
 - Bloco "Próximos passos automáticos":
   - ✅ Recibo oficial em até 48h
   - ✅ Comprovante arquivado no painel
@@ -510,7 +510,7 @@ Gere a página `dashboard.html` — painel do servidor logado. Layout: navbar fi
 - Subtítulo: "Aqui você acompanha suas destinações e o impacto que está gerando"
 
 **Card destacado — Próxima ação:**
-- Se ainda não destinou: "Você ainda não destinou. Comece pelo Projeto Themis →" (CTA dourado grande)
+- Se ainda não destinou: "Você ainda não destinou. Comece pelo Circuito do Forró →" (CTA dourado grande)
 - Se já destinou: "Sua destinação de R$ X está registrada. Que tal apoiar mais um projeto?"
 
 **Grade de cards informativos (3 colunas em desktop, 1 em mobile):**
@@ -569,10 +569,11 @@ Gere a página `comprovante.html` — visualização de comprovante de destinaç
 
 **Bloco — Dados da destinação:**
 - Lei: Rouanet (Lei 8.313/1991)
-- Projeto: Projeto Themis
-- PRONAC: 250347
-- Beneficiário: [Nome do proponente]
-- CNPJ do beneficiário
+- Projeto: Circuito do Forró
+- PRONAC: 252026
+- Beneficiário: BR Projects LTDA
+- CNPJ do beneficiário: 00.383.111/0001-24
+- Banco: Banco do Brasil — Ag. 1419-2 — Conta de Captação 36.068-6
 - Valor destinado: R$ X
 - Data da transferência
 

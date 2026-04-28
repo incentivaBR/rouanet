@@ -22,17 +22,17 @@ async function setAuthToken(page) {
 test.describe('Wizard de Destinação — navegação entre steps', () => {
   test.beforeEach(async ({ page }) => {
     await setAuthToken(page);
-    await page.goto('/destinar-rouanet.html?pronac=250347');
+    await page.goto('/destinar-rouanet.html?pronac=252026');
     await expect(page.locator('body')).toHaveClass(/dai-ready/, { timeout: 8_000 });
     // aguarda o loading overlay desaparecer (pode demorar por chamada SALIC)
     await expect(page.locator('#loadingOverlay')).not.toBeVisible({ timeout: 20_000 });
   });
 
-  test('step 1 — projeto Themis carrega com PRONAC correto', async ({ page }) => {
+  test('step 1 — Circuito do Forró carrega com PRONAC correto', async ({ page }) => {
     await expect(page.locator('#step1')).toBeVisible();
     await expect(page.locator('#tab1')).toHaveClass(/active/);
-    // PRONAC chip deve ter 250347
-    await expect(page.locator('#pronacChip')).toContainText('250347', { timeout: 10_000 });
+    // PRONAC chip deve ter 252026
+    await expect(page.locator('#pronacChip')).toContainText('252026', { timeout: 10_000 });
   });
 
   test('step 1 → step 2 — clique em "Avançar"', async ({ page }) => {

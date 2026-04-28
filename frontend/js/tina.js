@@ -63,7 +63,7 @@ const TINA = (function() {
     // PRAZOS E DATAS
     prazos: {
       keywords: ['prazo', 'quando', 'demora', '60 dias', 'tempo'],
-      response: '⏰ <strong>PRAZOS — Destinação IR 2026:</strong><br><br>• <strong>Transferência para o FNC:</strong> até <strong>31/12/2026</strong> — é o prazo mais importante!<br>• <strong>Comunicado de Mecenato:</strong> até 15 dias após a transferência (recibo fiscal emitido pelo Instituto Themis)<br>• <strong>Declaração IRPF 2026:</strong> até <strong>30/04/2027</strong> — informe na ficha "Doações Efetuadas", Código 41<br>• <strong>Guarda de documentos:</strong> 5 anos (até 2031)<br><br>💡 Não deixe para o fim do ano — faça agora e garanta seu prazo!'
+      response: '⏰ <strong>PRAZOS — Destinação IR 2026:</strong><br><br>• <strong>Transferência para o FNC:</strong> até <strong>31/12/2026</strong> — é o prazo mais importante!<br>• <strong>Comunicado de Mecenato:</strong> até 15 dias após a transferência (recibo fiscal emitido pela BR Projects LTDA)<br>• <strong>Declaração IRPF 2026:</strong> até <strong>30/04/2027</strong> — informe na ficha "Doações Efetuadas", Código 41<br>• <strong>Guarda de documentos:</strong> 5 anos (até 2031)<br><br>💡 Não deixe para o fim do ano — faça agora e garanta seu prazo!'
     },
     declaracao: {
       keywords: ['declaração', 'receita federal', 'declarar', 'próximo ano'],

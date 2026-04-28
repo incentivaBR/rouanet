@@ -8,7 +8,7 @@ const Layout = {
   /* Links de navegação — ordem e IDs fixos */
   _links: [
     { id: 'calculadora', href: 'calculadora.html',      label: 'MeuLimite' },
-    { id: 'projeto',     href: 'projetos-rouanet.html', label: 'Projeto Themis' },
+    { id: 'projeto',     href: 'projetos-rouanet.html', label: 'Circuito do Forró' },
     { id: 'como',        href: 'como-funciona.html',    label: 'Como funciona' },
   ],
 

@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 const FULL_LAYOUT_PAGES = [
   { path: '/',                          title: /DestineAI/i },
   { path: '/calculadora.html',          title: /MeuLimite|DestineAI/i },
-  { path: '/projetos-rouanet.html',     title: /Themis|DestineAI/i },
+  { path: '/projetos-rouanet.html',     title: /Forró|DestineAI/i },
   { path: '/projeto-detalhes.html',     title: /Projeto|DestineAI/i },
   { path: '/como-funciona.html',        title: /funciona/i },
   { path: '/faq.html',                  title: /perguntas|faq/i },
