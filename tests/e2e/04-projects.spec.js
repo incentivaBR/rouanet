@@ -14,8 +14,8 @@ test.describe('Projetos Rouanet — página do Projeto Themis', () => {
     const container = page.locator('#projectsContainer');
     await expect(container).toBeVisible();
 
-    // aguarda skeleton sumir (shimmer desaparece quando os dados chegam)
-    await expect(container.locator('.shimmer').first()).not.toBeVisible({ timeout: 15_000 });
+    // aguarda skeleton sumir — SALIC pode demorar até 30s
+    await expect(container.locator('.shimmer').first()).not.toBeVisible({ timeout: 30_000 });
   });
 
   test('botão CTA "Destinar agora" aponta para wizard com PRONAC 250347', async ({ page }) => {
