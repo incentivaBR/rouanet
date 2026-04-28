@@ -121,8 +121,8 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
           beneficiary_name: 'Fundo Nacional de Cultura — FNC',
           bank_name:        'Banco do Brasil',
           bank_code:        '001',
-          bank_agency:      '3902-5',
-          bank_account:     '170500-8',
+          bank_agency:      '1419-2',
+          bank_account:     '36.068-6',
           instrucoes:       'Identificar no comprovante: nome completo, CPF e PRONAC do projeto.'
         }
       }
