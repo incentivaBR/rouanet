@@ -39,3 +39,7 @@ frontend/index.html.bak
 *.pptx
 *.docx
 make_pptx*.py
+
+# Relatórios de testes (gerados automaticamente)
+tests/playwright-report/
+tests/test-results/
