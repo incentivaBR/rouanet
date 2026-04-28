@@ -86,6 +86,7 @@ const authLimiter = rateLimit({
   max: 10,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => process.env.NODE_ENV === 'test',
   message: { status: 'error', message: 'Muitas tentativas de login. Tente novamente em 15 minutos.' }
 });
 app.use('/api/auth/login', authLimiter);
