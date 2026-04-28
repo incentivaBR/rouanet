@@ -311,6 +311,43 @@ router.get('/me', authenticateToken, async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────
+// PUT /api/auth/profile — atualiza email e/ou nome do usuário
+// ─────────────────────────────────────────────────────────────
+router.put('/profile', authenticateToken, async (req, res) => {
+  try {
+    const { nome, email } = req.body;
+    if (!nome && !email) {
+      return res.status(400).json({ status: 'error', message: 'Informe nome ou email para atualizar.' });
+    }
+    if (email && !isValidEmail(email)) {
+      return res.status(400).json({ status: 'error', message: 'Email inválido.' });
+    }
+    if (email) {
+      const conflict = await pool.query(
+        'SELECT id FROM users WHERE email = $1 AND id <> $2',
+        [email.toLowerCase(), req.user.userId]
+      );
+      if (conflict.rows.length > 0) {
+        return res.status(409).json({ status: 'error', message: 'Email já está em uso por outra conta.' });
+      }
+    }
+    const fields = [];
+    const values = [];
+    if (nome) { fields.push(`nome = $${fields.length + 1}`); values.push(nome.trim()); }
+    if (email) { fields.push(`email = $${fields.length + 1}`); values.push(email.toLowerCase()); }
+    values.push(req.user.userId);
+    const result = await pool.query(
+      `UPDATE users SET ${fields.join(', ')}, updated_at = NOW() WHERE id = $${values.length} RETURNING id, nome, email`,
+      values
+    );
+    res.json({ status: 'success', message: 'Perfil atualizado.', user: result.rows[0] });
+  } catch (error) {
+    console.error('Erro ao atualizar perfil:', error.message);
+    res.status(500).json({ status: 'error', message: 'Erro ao atualizar perfil.' });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────
 // POST /api/auth/forgot-password
 // ─────────────────────────────────────────────────────────────
 router.post('/forgot-password', async (req, res) => {
