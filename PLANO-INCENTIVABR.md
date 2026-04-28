@@ -108,6 +108,18 @@ O TINA já existe no backend (`@anthropic-ai/sdk`). Vale acelerar com funções 
 - Respondedor de diligência: lê o pedido do analista e propõe resposta técnica com referência à IN
 - Redator de carta-proposta: gera versão personalizada por patrocinador
 
+### Política de proteção de PII em chamadas à API externa
+
+Como o TINA usa a API da Anthropic (Claude), nenhum dado pessoalmente identificável (PII) do servidor pode ser enviado bruto. Regra inegociável:
+
+- **Mascarar antes de enviar:** CPF, nome completo, e-mail, telefone, endereço, valores monetários específicos do usuário e dados bancários nunca vão na requisição. Substituir por placeholders (ex.: `<CPF_USUARIO>`, `<EMAIL>`, `<VALOR_DESTINACAO>`).
+- **Contexto suficiente sem PII:** o TINA precisa saber a etapa, a lei, o tipo de dúvida e o perfil profissional do servidor — não precisa saber QUEM é o servidor.
+- **Logs sanitizados:** logs de sessão TINA (pergunta, resposta, etapa, tenant, versão da base) também devem ter PII mascarada antes de armazenar.
+- **Modelo local para conteúdo sensível (futuro):** quando o volume justificar, avaliar uso de modelo on-premise ou via Bedrock/AWS para validação de planilha com dados completos sem trafegar pela internet.
+- **Trilha de auditoria de chamadas:** registrar quantas chamadas, quais endpoints, qual tenant, sem armazenar payload bruto.
+
+Isso atende exigências da LGPD (princípio da minimização) e protege a plataforma de exposição em caso de eventual mudança nos termos da Anthropic ou incidente do provedor.
+
 ---
 
 ## 7. Defensibilidade
@@ -280,6 +292,10 @@ O IncentivaBR é simultaneamente TCC do MBA em IA e Analytics da FGV (PI já ent
 - O PI prevê três marcas (IncentivaBR + Destina Servidor + Servidor Cidadão); decisão posterior simplificou para uma marca única (IncentivaBR) com DestineAI como showroom/demo. Apresentar como evolução estratégica do projeto.
 - Piloto de 6 meses (jun-dez/2026) não cabe antes da defesa: rodar mini-piloto de 4 semanas com 30 usuários para coleta de dados preliminares de H1 e H2. Defesa apresenta "design + wave 1", não "resultados completos".
 - Métrica "aumentar em 300%" tem baseline zero (plataforma nova) — reformular comparando com o baseline nacional de 1% de utilização do mecanismo.
+- **Inconsistência dos "9%" na pergunta operacional:** a Versão 3 da pergunta de negócio menciona "destinações de até 9% do IR a fundos sociais", mas os quadros 1 e 2 do PI mostram limites individuais de 6% (Rouanet/Audiovisual/Reciclagem/FDCA/FDI), 7% (Esporte) e 1% (PRONON, PRONAS). A combinação que chega a 9% precisa ser explicitada ou a formulação ajustada para evitar questionamento da banca.
+- **Driver de Ecossistema como visão de médio prazo:** o PI projeta a transição para Driver de Ecossistema em 3-5 anos. Vale deixar explícito na defesa que o foco do PII é validar a versão Omnichannel + primeiro tenant white label (DestineAI), e não entregar o ecossistema nacional. Evita cobrança de entregáveis fora de escopo.
+- **Dados de mercado 2024 para reforçar relevância:** dados do MDHC indicam aproximadamente R$ 353,5 milhões destinados ao FDCA e R$ 145,3 milhões ao FDI em 2024 (cerca de R$ 498,8 milhões somados), ainda muito aquém do potencial. Inserir como evidência empírica de que o problema é real e o mercado está crescendo, mesmo que ainda subutilizado.
+- **Distinção operacional Momento 1 vs Momento 2:** o PI separa bem os dois momentos da destinação (na declaração de março-maio com DARF próprio vs durante o ano-calendário com doação direta). Vale reforçar essa distinção no PII porque afeta o desenho do produto: muitos servidores só decidem em abril, não em julho — a plataforma precisa orquestrar os dois calendários.
 
 ### 13.2 Cronograma de oito semanas (28/abr a 23/jun de 2026)
 
@@ -324,7 +340,129 @@ Recrutamento da organização parceira do mini-piloto deve começar imediatament
 
 ---
 
-## 14. Pontos abertos para conversas futuras
+## 14. Go-live checklist operacional
+
+Para colocar IncentivaBR (core) e DestineAI (tenant piloto) em produção com segurança. Stack atual: Node.js + Express + PostgreSQL + Tailwind + JS Vanilla, multi-tenant, LGPD, PII de servidor público.
+
+### 14.1 Top 10 itens não-negociáveis antes do go-live
+
+São os itens cuja ausência transforma "produção controlada" em "vergonha pública e processo LGPD". Se algum estiver pendente na hora de abrir, não abra.
+
+1. **Isolamento por tenant funcionando de verdade.** Nenhum usuário de um tenant consegue ver dados de outro. Toda query e rota sensível filtra por `tenant_id`. Existem testes negativos de isolamento cruzado.
+2. **Autenticação e autorização robustas com RBAC.** Login seguro, senhas com hash forte, sessão/token bem configurados. Papéis claros (admin core, admin tenant, operador, usuário final). Cada papel só vê o que precisa.
+3. **Backup diário do PostgreSQL com restore real testado.** Ter backup não basta — precisa ter restaurado em outro ambiente e confirmado que sobe íntegro.
+4. **Armazenamento seguro dos comprovantes.** Storage dedicado (não filesystem local). Acesso sempre autenticado e autorizado. Hash do arquivo registrado para auditoria.
+5. **Termos de Uso + Política de Privacidade publicados e aceitos.** Documentos revisados conforme LGPD. Link visível no rodapé e no momento de cadastro. Aceite registrado com timestamp e versão.
+6. **Trilha de auditoria mínima para ações críticas.** Cadastro, destinação, upload, edição, envio de e-mails — tudo com usuário, tenant, ação, timestamp, recurso afetado.
+7. **Observabilidade básica em produção.** Monitor de uptime, logs estruturados de erro, alertas para 5xx e quedas. Sem isso, problema vira caixa-preta.
+8. **Jornada ponta a ponta testada em produção controlada.** Com usuários de teste, percorrer todo o fluxo: cadastro → cálculo → escolha de projeto → documento → upload → e-mails → painel → TINA.
+9. **TINA/copiloto em modo seguro e limitado.** Escopo claro de assistente educacional (não parecer definitivo). Respostas vinculadas só às regras implementadas. Fallbacks prontos para "não sei / valide com seu contador".
+10. **Responsável por incidentes e plano de rollback.** Quem atende se algo crítico acontece. Como suspender novas operações, reverter deploy, preservar dados gerados.
+
+### 14.2 Checklist completo organizado por dimensão
+
+| Item | Responsável | Status | Prioridade | Observação |
+|------|-------------|--------|------------|------------|
+| Definir oficialmente IncentivaBR = core e DestineAI = tenant piloto | Produto / Founder | ✅ | Alta | Decisão registrada no PLANO seção 1 |
+| Congelar escopo v1 de produção (o que entra, o que fica fora) | Produto / Founder | Pendente | Alta | Evitar incluir tarefas de roadmap como parte do go-live |
+| Garantir `tenant_id` em todas as tabelas sensíveis (PostgreSQL) | Backend | Parcial | Alta | Migrations 009/011/013 já preveem; revisar queries existentes |
+| Definir modelo de isolamento (lógico por `tenant_id` ou schema por tenant) | Backend / Arquitetura | ✅ | Alta | Decisão: lógico forte por `tenant_id` + testes |
+| Remover segredos do código e configurar `.env` separados (dev/staging/prod) | Backend / DevOps | ⚠️ | Alta | `backend/.env` hoje rastreado pelo git (GH issue #) — `git rm --cached` |
+| Implementar rate limiting em login, upload e copiloto | Backend | Parcial | Média | rate-limit já instalado no Express; revisar cobertura |
+| Definir dados pessoais mínimos coletados e base legal LGPD | Jurídico / DPO / Produto | Pendente | Alta | Mapear finalidade, base legal, retenção por fluxo |
+| Escrever Termos de Uso e Política de Privacidade v1 | Jurídico / Produto | Pendente | Alta | Publicar em URLs estáveis; referenciar no front |
+| Definir política de retenção e exclusão de dados | Jurídico / DPO | Pendente | Média | Cobrir IR, comprovantes, logs, sessão TINA |
+| Definir armazenamento de comprovantes (bucket/storage seguro) | Backend / DevOps | Pendente | Alta | Hoje em `backend/uploads/` local; migrar para S3/R2/equivalente |
+| Implementar hash dos arquivos de comprovante | Backend | Pendente | Média | Registrar hash + metadados no banco |
+| Congelar papel da TINA em produção (informativo, não parecer) | Produto / Jurídico | Pendente | Alta | Documentar limites; alinhar com seção 6 do PLANO |
+| Definir o que TINA pode e não pode responder | Produto / Jurídico | Pendente | Alta | Criar guidelines internas e testes de comportamento |
+| Implementar mascaramento de PII antes de chamadas à API Anthropic | Backend | Pendente | Alta | Conforme política da seção 6 do PLANO |
+| Criar ambiente de staging (infra semelhante à produção) | DevOps | Parcial | Alta | Railway permite preview environments |
+| Criar ambiente de produção com deploy automatizado e rollback | DevOps | ✅ | Alta | Railway já configurado |
+| Expor endpoint `/health` e, se possível, `/ready` | Backend / DevOps | Pendente | Média | Para uptime monitoring e orquestração |
+| Revisar validação server-side de todas as rotas críticas | Backend | Parcial | Alta | Garantir tipos, limites, formatos, mensagens de erro |
+| Configurar logs estruturados (JSON) com request ID | Backend / DevOps | Pendente | Alta | Enviar para provedor de logs centralizado |
+| Configurar monitor de uptime + alertas de erro | DevOps | Pendente | Alta | Alertar por e-mail/WhatsApp em 5xx e downtime |
+| Configurar backup automático diário do PostgreSQL | DevOps | Parcial | Alta | Verificar se Railway PG faz backup automático |
+| Executar pelo menos um teste de restore do backup | DevOps | Pendente | Alta | Validar que o backup é realmente utilizável |
+| Configurar monitoramento de banco (disco, conexões, queries lentas) | DevOps | Pendente | Média | Evitar gargalo silencioso em produção |
+| Implementar RBAC (admin core, admin tenant, operador, usuário final) | Backend | Parcial | Alta | Migration 011 já tem `is_superadmin` e `is_org_admin` |
+| Testar isolamento entre tenants (acessos indevidos) | QA / Backend | Pendente | Alta | Criar testes negativos explícitos |
+| Validar upload de comprovantes (tamanho, tipo, MIME) | Backend / QA | Parcial | Alta | multer já instalado; revisar limites e validação |
+| Implementar controle de acesso ao download de comprovantes | Backend / QA | Pendente | Alta | Sempre validar tenant, usuário e permissão |
+| Registrar trilha de auditoria (quem, o quê, quando, qual tenant) | Backend | Pendente | Alta | Tabela `audit_log` com referência cruzada |
+| Salvar logs de sessão TINA (pergunta, resposta, etapa, tenant, versão base) | Backend | Pendente | Média | Útil para auditoria e evolução do modelo |
+| Criar mensagens de fallback seguras para TINA | Produto | Pendente | Média | Evitar chute; sugerir contador quando necessário |
+| Parametrizar tema do tenant DestineAI (logo, cores, textos, projetos) | Frontend / Produto | Parcial | Média | `tenant.js` já carrega; refinar configuração |
+| Implementar páginas legais no front (Termos, Privacidade) | Frontend | Pendente | Alta | Link visível no rodapé e na etapa de aceite |
+| Implementar registro versionado do aceite de termos | Backend | Parcial | Alta | Migration 011 tem `accepted_terms`; falta versão e timestamp formal |
+| Criar jornada de teste ponta a ponta em staging | QA / Produto | Pendente | Alta | Cadastro, cálculo, projeto, documento, upload, painel, TINA |
+| Executar jornada E2E em staging (cenários felizes e de erro) | QA | Pendente | Alta | Documentar achados e correções obrigatórias |
+| Executar jornada E2E em produção (com contas de teste controladas) | QA / Produto | Pendente | Alta | Validar ambiente real antes de convidar usuários |
+| Garantir HTTPS e cabeçalhos básicos de segurança | DevOps | ✅ | Alta | Railway gerencia SSL; helmet já instalado |
+| Revisar CORS para apenas domínios esperados | Backend / DevOps | ✅ | Média | server.js já tem CORS travado para domínios conhecidos |
+| Rodar auditoria de dependências (Node.js) | Backend | Pendente | Média | `npm audit` regularmente; atualizar críticas |
+| Publicar Termos e Política em ambiente de produção | Produto / Jurídico | Pendente | Alta | Conferir URLs e conteúdo final |
+| Mapear dados e fluxos (inventário LGPD) | Jurídico / DPO | Pendente | Média | Documento para auditoria futura |
+| Definir processo para pedidos de acesso/retificação/exclusão de dados | Jurídico / Operações | Pendente | Média | Designar responsável e prazos internos |
+| Revisar modelos de PDF (comprovantes) e e-mails automáticos | Produto / Jurídico | Parcial | Média | pdfGenerator já existe; falta revisão jurídica |
+| Definir sponsor interno da organização parceira (piloto) | Produto | Pendente | Alta | Pessoa de referência do lado do parceiro |
+| Combinar KPIs do piloto com a organização parceira | Produto / Dados | Parcial | Alta | KPIs já no PI; alinhar com parceiro |
+| Definir canal de suporte oficial (e-mail, WhatsApp, etc.) | Operações | Pendente | Alta | Comunicar de forma clara para usuários e parceiro |
+| Definir janela de suporte (horários, SLA) | Operações | Pendente | Média | Importante no sprint final de 31/12 |
+| Preparar script de rollback de versão | DevOps | Pendente | Média | Saber como reverter deploy sem perda de dados |
+| Planejar "war room leve" para 1ª semana após go-live | Produto / Tech / Operações | Pendente | Média | Reuniões diárias curtas para revisar erros e métricas |
+| Definir rotina semanal de revisão de logs e incidentes | Tech / Jurídico | Pendente | Média | Incluir incidentes LGPD e erros críticos |
+
+Status sugerido: ✅ pronto · Parcial em andamento · Pendente não iniciado · ⚠️ requer atenção urgente.
+
+### 14.3 Sequência de execução em ondas
+
+**Hoje (Onda 0 — destravar antes de qualquer outra coisa):**
+- Resolver `.env` rastreado no git (`git rm --cached backend/.env`)
+- Congelar escopo v1 de produção (lista do que entra, lista do que fica fora)
+- Confirmar entidades mínimas no banco (tenant, user, role, project, donation, document, audit_log, consent_log, assistant_session)
+
+**Esta semana (Onda 1 — fundamentos de infra):**
+- Staging completo separado de produção
+- Backup diário + teste real de restore
+- Logs estruturados + monitor de uptime
+- Validação de isolamento entre tenants com teste negativo
+- Endpoint `/health` exposto
+
+**Antes de abrir (Onda 2 — gates de produção):**
+- Termos + Política publicados em URLs estáveis
+- Registro versionado do aceite implementado
+- Trilha de auditoria gravando ações críticas
+- Storage de comprovantes migrado para bucket externo
+- Mascaramento de PII nas chamadas à API Anthropic
+- Jornada E2E executada em staging e produção controlada
+- Sponsor da organização parceira confirmado
+- Canal e janela de suporte definidos
+
+**Após abrir (Onda 3 — operação):**
+- War room leve por 7 dias (acompanhar uptime, erros, abandono, dúvidas TINA)
+- Auditoria manual de amostra de jornadas/documentos na primeira semana
+- Retrospectiva técnica e de negócio aos 30 dias
+
+### 14.4 Métricas operacionais para acompanhar em produção
+
+Além dos KPIs de negócio do PI (taxa de conversão, NPS, volume captado), monitorar continuamente:
+
+- Uptime
+- Taxa de erro 5xx por endpoint
+- Tempo médio de conclusão da jornada
+- Taxa de abandono por etapa do funil
+- Taxa de upload válido de comprovante
+- Taxa de e-mail enviado/entregue
+- Tickets de suporte por 100 usuários
+- Incidentes LGPD (meta: zero)
+- Latência média do TINA
+- Taxa de fallback do TINA (quanto ele cai em "não sei / valide com contador")
+
+---
+
+## 15. Pontos abertos para conversas futuras
 
 - Definição final de nomenclatura (LIR vs Recicla+)
 - Precificação exata dos tiers Essencial/Pro/Enterprise
@@ -336,8 +474,10 @@ Recrutamento da organização parceira do mini-piloto deve começar imediatament
 - Parceiro ITP da Fase 3a (mapear quando chegar a hora)
 - Definição da organização parceira do mini-piloto (semana 1-2)
 - Decisão sobre arquitetura de marcas para a defesa (1, 2 ou 3 marcas)
+- Migração do storage local de comprovantes para bucket externo
+- Implementação de mascaramento de PII no pipeline da TINA
 
 ---
 
 **Fim do documento.**
-Quando retomar, começar pela leitura deste arquivo e pela decisão das duas pendências da Seção 10.
+Quando retomar, começar pela leitura deste arquivo e pela decisão das duas pendências da Seção 10. Para o go-live, focar nos 10 itens não-negociáveis da Seção 14.1.
