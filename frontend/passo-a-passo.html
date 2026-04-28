@@ -3,406 +3,285 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Passo a Passo - Lei Rouanet</title>
-  <meta name="description" content="Guia completo passo a passo para destinar seu IR para projetos culturais via Lei Rouanet.">
+  <title>Passo a Passo — Como destinar via Lei Rouanet · DestineAI</title>
+  <meta name="description" content="Guia completo em 6 passos para destinar seu IR para projetos culturais via Lei Rouanet. Simples, seguro e sem custo adicional.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/incentivabr-theme.css">
-  <style>
-    :root {
-      --primary-color: #0D1B3E;
-      --secondary-color: #FFD700;
-      --accent-color: #FFC000;
-      --background-dark: #0D1B3E;
-      --gradient-primary: linear-gradient(135deg, #0D1B3E 0%, #132247 100%);
-    }
-    .logo-text { font-size:22px;font-weight:700;letter-spacing:-0.5px;font-family:'Inter',sans-serif; }
-    body { background: var(--background-light); }
-
-    .hero {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color, #2B5A9E) 100%);
-      padding: 3rem 2rem;
-      text-align: center;
-      color: white;
-    }
-    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .hero p { font-size: 1.2rem; opacity: 0.95; }
-
-    .content-container { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
-
-    .timeline { position: relative; padding-left: 50px; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 24px; top: 0; bottom: 0;
-      width: 4px;
-      background: linear-gradient(180deg, var(--secondary-color, #F7941D) 0%, var(--success-color, #00A859) 100%);
-      border-radius: 2px;
-    }
-
-    .timeline-step { position: relative; margin-bottom: 3rem; }
-    .timeline-step:last-child { margin-bottom: 0; }
-
-    .step-number {
-      position: absolute;
-      left: -50px;
-      width: 48px; height: 48px;
-      background: linear-gradient(135deg, var(--secondary-color, #F7941D) 0%, #FF6B00 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 800;
-      font-size: 1.3rem;
-      box-shadow: 0 4px 15px rgba(247, 148, 29, 0.4);
-      z-index: 1;
-    }
-    .step-number.s2 { background: linear-gradient(135deg, var(--primary-color) 0%, #1E3A5F 100%); box-shadow: 0 4px 15px rgba(30, 58, 95, 0.4); }
-    .step-number.s3 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
-    .step-number.s4 { background: linear-gradient(135deg, #00C9A7 0%, #00A859 100%); box-shadow: 0 4px 15px rgba(0, 168, 89, 0.4); }
-    .step-number.s5 { background: linear-gradient(135deg, #00A859 0%, #006837 100%); box-shadow: 0 4px 15px rgba(0, 168, 89, 0.4); }
-
-    .step-card { background: white; border-radius: 16px; padding: 2rem; box-shadow: var(--shadow-md); }
-    .step-header { display: flex; align-items: center; gap: 16px; margin-bottom: 1.5rem; }
-    .step-icon {
-      width: 60px; height: 60px;
-      background: rgba(247, 148, 29, 0.1);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem;
-      color: var(--secondary-color, #F7941D);
-      flex-shrink: 0;
-    }
-    .s2 .step-icon { background: rgba(30, 58, 95, 0.1); color: var(--primary-color); }
-    .s3 .step-icon { background: rgba(102, 126, 234, 0.1); color: #667eea; }
-    .s4 .step-icon { background: rgba(0, 168, 89, 0.1); color: #00A859; }
-    .s5 .step-icon { background: rgba(0, 168, 89, 0.1); color: #006837; }
-
-    .step-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 4px; }
-    .step-subtitle { color: var(--text-secondary); font-size: 0.95rem; }
-    .step-content { color: var(--text-secondary); line-height: 1.7; }
-    .step-content p { margin-bottom: 1rem; }
-    .step-content ul { margin: 1rem 0; padding-left: 1.5rem; }
-    .step-content li { margin-bottom: 0.5rem; }
-    .step-content strong { color: var(--text-primary); }
-    .step-action { margin-top: 1.5rem; display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .highlight-box {
-      background: rgba(0, 168, 89, 0.08);
-      border-left: 4px solid var(--success-color, #00A859);
-      padding: 1rem 1.25rem;
-      border-radius: 0 8px 8px 0;
-      margin: 1rem 0;
-    }
-    .warning-box {
-      background: rgba(247, 148, 29, 0.08);
-      border-left: 4px solid var(--secondary-color, #F7941D);
-      padding: 1rem 1.25rem;
-      border-radius: 0 8px 8px 0;
-      margin: 1rem 0;
-    }
-
-    .bank-data { background: #f8f9fa; border-radius: 12px; padding: 1.5rem; margin: 1rem 0; font-family: monospace; }
-    .bank-data-title { font-family: var(--font-family, Inter, sans-serif); font-weight: 600; color: var(--primary-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
-    .bank-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 0.95rem; }
-    .bank-row:last-child { border-bottom: none; }
-    .bank-row span:first-child { color: var(--text-secondary); font-family: Inter, sans-serif; }
-    .bank-row strong { color: var(--text-primary); }
-
-    .checklist { background: #f8f9fa; border-radius: 12px; padding: 1.5rem; margin: 1rem 0; }
-    .checklist-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
-    .checklist-item:last-child { margin-bottom: 0; }
-    .checklist-icon {
-      width: 24px; height: 24px;
-      background: var(--success-color, #00A859);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 12px;
-      flex-shrink: 0; margin-top: 2px;
-    }
-
-    .final-cta {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color, #1E3A5F) 100%);
-      color: white;
-      padding: 3rem;
-      border-radius: 20px;
-      text-align: center;
-      margin-top: 3rem;
-    }
-    .final-cta h2 { font-size: 1.8rem; margin-bottom: 1rem; }
-    .final-cta p { opacity: 0.95; margin-bottom: 2rem; }
-    .final-cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 1.8rem; }
-      .timeline { padding-left: 40px; }
-      .timeline::before { left: 18px; }
-      .step-number { left: -40px; width: 40px; height: 40px; font-size: 1.1rem; }
-      .step-card { padding: 1.5rem; }
-      .step-header { flex-direction: column; text-align: center; }
-      .step-title { font-size: 1.3rem; }
-      .step-action { flex-direction: column; }
-      .step-action .btn { width: 100%; justify-content: center; }
-      .final-cta { padding: 2rem 1.5rem; }
-      .final-cta-buttons { flex-direction: column; }
-    }
-  </style>
-</head>
-<body>
-  <header class="header">
-    <a href="index.html" class="logo-link">
-      <span class="logo-text" style="color:white">Destine<span style="color:#FFD700">AI</span></span>
-    </a>
-    <nav>
-      <a href="projetos-rouanet.html">Nosso Projeto</a>
-      <a href="calculadora.html">Calculadora IR</a>
-      <a href="#" id="navAuth" class="btn btn-primary btn-sm">Entrar</a>
-    </nav>
-    <button class="menu-toggle" id="menuToggle">
-      <i class="fas fa-bars"></i>
-    </button>
-  </header>
-
-  <section class="hero">
-    <h1><i class="fas fa-route"></i> Passo a Passo Completo</h1>
-    <p>Guia detalhado para destinar seu IR para a cultura via Lei Rouanet</p>
-  </section>
-
-  <div class="content-container">
-    <div class="timeline">
-
-      <!-- PASSO 1 -->
-      <div class="timeline-step">
-        <div class="step-number">1</div>
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-icon"><i class="fas fa-calculator"></i></div>
-            <div>
-              <h2 class="step-title">Calcule seu IR</h2>
-              <p class="step-subtitle">Descubra quanto pode destinar</p>
-            </div>
-          </div>
-          <div class="step-content">
-            <p>Use nossa calculadora para descobrir quanto de IR você deve e qual é o seu <strong>limite de 6%</strong> para destinação via Lei Rouanet.</p>
-            <p>Você precisará ter em mãos seus rendimentos anuais para o cálculo. Se não souber o valor exato, use uma estimativa — você pode refinar depois.</p>
-            <div class="step-action">
-              <a href="calculadora.html" class="btn btn-primary">
-                <i class="fas fa-calculator"></i> Calcular meu IR
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PASSO 2 -->
-      <div class="timeline-step s2">
-        <div class="step-number s2">2</div>
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-icon"><i class="fas fa-theater-masks"></i></div>
-            <div>
-              <h2 class="step-title">Conheça o Projeto</h2>
-              <p class="step-subtitle">Veja o projeto cultural apoiado</p>
-            </div>
-          </div>
-          <div class="step-content">
-            <p>Acesse a página do projeto para ver todas as informações: área cultural, PRONAC, proponente, meta de captação e situação atual junto ao MinC/SALIC.</p>
-            <div class="step-action">
-              <a href="projetos-rouanet.html" class="btn btn-primary">
-                <i class="fas fa-theater-masks"></i> Ver o projeto
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PASSO 3 -->
-      <div class="timeline-step s3">
-        <div class="step-number s3">3</div>
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-icon"><i class="fas fa-file-alt"></i></div>
-            <div>
-              <h2 class="step-title">Registre a Destinação</h2>
-              <p class="step-subtitle">Informe o valor no sistema</p>
-            </div>
-          </div>
-          <div class="step-content">
-            <p>Clique em <strong>"Destinar para este projeto"</strong> e preencha o formulario com o valor que deseja destinar (respeitando o limite de 6% do seu IR devido).</p>
-            <div class="checklist">
-              <div class="checklist-item">
-                <div class="checklist-icon"><i class="fas fa-check"></i></div>
-                <div>Faca login (ou crie sua conta — e rapido)</div>
-              </div>
-              <div class="checklist-item">
-                <div class="checklist-icon"><i class="fas fa-check"></i></div>
-                <div>Informe o valor que deseja destinar</div>
-              </div>
-              <div class="checklist-item">
-                <div class="checklist-icon"><i class="fas fa-check"></i></div>
-                <div>Confirme seus dados pessoais</div>
-              </div>
-              <div class="checklist-item">
-                <div class="checklist-icon"><i class="fas fa-check"></i></div>
-                <div>Receba os dados bancarios do FNC para o deposito</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PASSO 4 -->
-      <div class="timeline-step s4">
-        <div class="step-number s4">4</div>
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-icon"><i class="fas fa-university"></i></div>
-            <div>
-              <h2 class="step-title">Faca a Transferencia</h2>
-              <p class="step-subtitle">Deposite no Fundo Nacional de Cultura</p>
-            </div>
-          </div>
-          <div class="step-content">
-            <p>Transfira o valor para a conta oficial do <strong>Fundo Nacional de Cultura (FNC)</strong> no Banco do Brasil:</p>
-
-            <div class="bank-data">
-              <div class="bank-data-title"><i class="fas fa-landmark"></i> Dados bancarios do FNC</div>
-              <div class="bank-row"><span>Banco</span><strong>Banco do Brasil (001)</strong></div>
-              <div class="bank-row"><span>Agencia</span><strong>3902-5</strong></div>
-              <div class="bank-row"><span>Conta Corrente</span><strong>170500-8</strong></div>
-              <div class="bank-row"><span>Favorecido</span><strong>Fundo Nacional de Cultura</strong></div>
-            </div>
-
-            <div class="warning-box">
-              <strong><i class="fas fa-exclamation-triangle"></i> Importante:</strong>
-              <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
-                <li>No campo descrição/referência, informe o <strong>PRONAC do projeto</strong></li>
-                <li>Você pode usar PIX, TED ou transferência bancária</li>
-                <li>Guarde o comprovante — print do app do banco funciona!</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PASSO 5 -->
-      <div class="timeline-step s5">
-        <div class="step-number s5">5</div>
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-icon"><i class="fas fa-upload"></i></div>
-            <div>
-              <h2 class="step-title">Envie o Comprovante</h2>
-              <p class="step-subtitle">Finalize o registro no sistema</p>
-            </div>
-          </div>
-          <div class="step-content">
-            <p>Após a transferência, volte ao sistema e envie o comprovante bancário (PDF, JPG ou PNG, até 5MB) para finalizar o registro da sua destinação.</p>
-            <div class="highlight-box">
-              <strong>Pronto!</strong> Você receberá um número de protocolo e um comprovante para seu controle pessoal. O recibo oficial será emitido pelo proponente do projeto em até 60 dias.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PASSO 6 -->
-      <div class="timeline-step" style="margin-bottom: 0;">
-        <div class="step-number" style="background: linear-gradient(135deg, #006837 0%, #003d20 100%); box-shadow: 0 4px 15px rgba(0, 104, 55, 0.4);">6</div>
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-icon" style="background: rgba(0, 104, 55, 0.1); color: #006837;"><i class="fas fa-file-invoice-dollar"></i></div>
-            <div>
-              <h2 class="step-title">Declare no IR</h2>
-              <p class="step-subtitle">Informe na sua declaração anual</p>
-            </div>
-          </div>
-          <div class="step-content">
-            <p>Na próxima declaração anual do IR (DIRPF), informe a destinação na ficha <strong>"Doações Efetuadas"</strong>:</p>
-            <ul>
-              <li><strong>Código:</strong> 41 — Atividade Cultural e Artística (Lei Rouanet)</li>
-              <li><strong>Valor:</strong> o montante transferido</li>
-              <li><strong>Beneficiário:</strong> nome do projeto ou do FNC</li>
-            </ul>
-            <div class="highlight-box">
-              Anexe o comprovante da transferência bancária e o recibo oficial do proponente como documentação de suporte.
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="final-cta">
-      <h2><i class="fas fa-rocket"></i> Pronto para começar?</h2>
-      <p>Todo o processo leva menos de 10 minutos. Seu IR vira cultura brasileira.</p>
-      <div class="final-cta-buttons">
-        <a href="calculadora.html" class="btn btn-white">
-          <i class="fas fa-calculator"></i> Calcular meu IR
-        </a>
-        <a href="projetos-rouanet.html" class="btn btn-outline-white">
-          <i class="fas fa-theater-masks"></i> Ver o projeto
-        </a>
-        <a href="faq.html" class="btn btn-outline-white">
-          <i class="fas fa-question-circle"></i> Duvidas Frequentes
-        </a>
-      </div>
-    </div>
-
-  </div>
-
-  <footer class="footer">
-    <a href="index.html" class="logo-link">
-      <span class="logo-text" style="color:white">Destine<span style="color:#FFD700">AI</span></span>
-    </a>
-    <p class="tagline">Lei Rouanet Simplificada</p>
-    <div class="footer-nav">
-      <a href="como-funciona.html">Como Funciona</a>
-      <a href="faq.html">FAQ</a>
-      <a href="projetos-rouanet.html">Nosso Projeto</a>
-    </div>
-    <div class="footer-bottom">
-      <p>
-        <a href="politica-privacidade.html" class="footer-legal-link">Politica de Privacidade</a> |
-        <a href="termos-uso.html" class="footer-legal-link">Termos de Uso</a>
-      </p>
-      <p class="footer-copyright" id="footerBrandName">&copy; 2026 DestineAI. Todos os direitos reservados.</p>
-      <p style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px;">
-        Powered by <a href="https://incentivabr.com.br" target="_blank" style="color: rgba(255,255,255,0.6);">IncentivaBR</a>
-      </p>
-    </div>
-  </footer>
-
-  <script src="js/auth.js"></script>
-  <script src="js/mobile-menu.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/destineai.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    fetch('/api/config/brand').then(r => r.json()).then(brand => {
-      if (brand.logo_url) {
-        document.getElementById('brandLogo').src = brand.logo_url;
-        document.getElementById('footerLogo').src = brand.logo_url;
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            navy:     '#0D1B3E',
+            navydark: '#0A1530',
+            navymid:  '#132247',
+            gold:     '#FFD700',
+            golddk:   '#FFC000',
+          }
+        }
       }
-      if (brand.name) {
-        document.getElementById('brandLogo').alt = brand.name;
-        document.getElementById('footerLogo').alt = brand.name;
-        document.getElementById('footerBrandName').textContent = `© 2026 ${brand.name}. Todos os direitos reservados.`;
-        document.title = `Passo a Passo - ${brand.name}`;
-      }
-      if (brand.color_primary) document.documentElement.style.setProperty('--primary-color', brand.color_primary);
-      if (brand.color_accent) document.documentElement.style.setProperty('--accent-color', brand.color_accent);
-    }).catch(() => {});
-
-    const navAuth = document.getElementById('navAuth');
-    if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
-      const user = auth.getUser();
-      navAuth.textContent = user.nome ? user.nome.split(' ')[0] : 'Minha Conta';
-      navAuth.href = 'dashboard.html';
-      navAuth.classList.remove('btn', 'btn-primary', 'btn-sm');
-    } else {
-      navAuth.href = 'login.html';
     }
   </script>
-  <script src="js/tenant.js"></script>
+</head>
+<body class="bg-gray-50">
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="relative bg-[#0D1B3E] pt-28 pb-16 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 opacity-[0.03]"
+      style="background-image: linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px); background-size: 48px 48px;">
+    </div>
+    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+
+      <div class="flex items-center justify-center gap-2 mb-8 text-xs font-semibold flex-wrap">
+        <a href="index.html"            class="text-white/35 hover:text-white/60 transition-colors">Início</a>
+        <span class="text-white/20">›</span>
+        <a href="como-funciona.html"    class="text-white/35 hover:text-white/60 transition-colors">Como funciona</a>
+        <span class="text-white/20">›</span>
+        <span class="text-[#FFD700]">Passo a passo</span>
+      </div>
+
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/30 px-5 py-2 mb-6">
+        <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        <span class="text-[#FFD700] font-semibold text-sm">6 passos · menos de 10 minutos</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4 leading-tight">
+        Passo a passo <span class="text-[#FFD700]">completo</span>
+      </h1>
+      <p class="text-white/60 text-lg max-w-xl mx-auto leading-relaxed">
+        Do cálculo ao comprovante — veja exatamente o que fazer em cada etapa para destinar seu IR com segurança.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── TIMELINE ───────────────────────────────────────── -->
+  <section class="py-16 sm:py-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+
+      <!-- Linha de progresso visual -->
+      <div class="relative">
+        <div class="absolute left-[27px] top-8 bottom-8 w-0.5 bg-gradient-to-b from-[#FFD700] via-[#0D1B3E] to-green-500 opacity-20 hidden sm:block"></div>
+
+        <div class="space-y-6">
+
+          <!-- PASSO 1 -->
+          <div class="fade-up flex gap-4 sm:gap-6">
+            <div class="shrink-0 flex flex-col items-center">
+              <div class="w-14 h-14 rounded-2xl bg-[#FFD700] flex items-center justify-center shadow-lg shadow-amber-200/50">
+                <svg class="w-7 h-7 text-[#0D1B3E]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              </div>
+            </div>
+            <div class="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold text-[#FFD700] bg-[#FFD700]/10 px-2 py-0.5 rounded-full">PASSO 1</span>
+                <span class="text-xs text-gray-400 font-medium">~2 minutos</span>
+              </div>
+              <h2 class="text-xl font-bold text-[#0D1B3E] mb-2">Calcule seu limite com o MeuLimite</h2>
+              <p class="text-gray-500 text-sm leading-relaxed mb-4">
+                Antes de tudo, descubra quanto do seu IR você pode destinar. O limite é <strong class="text-[#0D1B3E]">6% do IR Devido</strong> — não do salário. Use o MeuLimite para calcular com base no seu rendimento anual.
+              </p>
+              <div class="rounded-xl bg-amber-50 border border-amber-100 px-4 py-3 text-sm text-amber-800 mb-4">
+                <strong>Não sabe o IR Devido?</strong> O contracheque de dezembro mostra o IRRF acumulado — é uma boa estimativa. Veja o <a href="guia-ir-servidor.html" class="font-bold underline underline-offset-2">Guia do Servidor</a>.
+              </div>
+              <a href="calculadora.html"
+                class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold text-sm px-5 py-2.5 rounded-xl transition-all hover:scale-[1.02]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                Abrir o MeuLimite
+              </a>
+            </div>
+          </div>
+
+          <!-- PASSO 2 -->
+          <div class="fade-up flex gap-4 sm:gap-6">
+            <div class="shrink-0 flex flex-col items-center">
+              <div class="w-14 h-14 rounded-2xl bg-[#0D1B3E] flex items-center justify-center shadow-lg shadow-navy-900/20">
+                <svg class="w-7 h-7 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+            </div>
+            <div class="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold text-white bg-[#0D1B3E] px-2 py-0.5 rounded-full">PASSO 2</span>
+                <span class="text-xs text-gray-400 font-medium">~2 minutos</span>
+              </div>
+              <h2 class="text-xl font-bold text-[#0D1B3E] mb-2">Conheça o Projeto Themis</h2>
+              <p class="text-gray-500 text-sm leading-relaxed mb-4">
+                Acesse a página do projeto para ver o PRONAC, o proponente, a meta de captação e o impacto cultural. Você verifica tudo no SALIC (sistema oficial do governo federal) antes de destinar.
+              </p>
+              <a href="projetos-rouanet.html"
+                class="inline-flex items-center gap-2 bg-[#0D1B3E] hover:bg-[#132247] text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-all hover:scale-[1.02]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                Ver o Projeto Themis
+              </a>
+            </div>
+          </div>
+
+          <!-- PASSO 3 -->
+          <div class="fade-up flex gap-4 sm:gap-6">
+            <div class="shrink-0 flex flex-col items-center">
+              <div class="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center shadow-lg shadow-purple-200/50">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              </div>
+            </div>
+            <div class="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold text-purple-700 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded-full">PASSO 3</span>
+                <span class="text-xs text-gray-400 font-medium">~3 minutos</span>
+              </div>
+              <h2 class="text-xl font-bold text-[#0D1B3E] mb-2">Registre sua destinação no sistema</h2>
+              <p class="text-gray-500 text-sm leading-relaxed mb-4">
+                Clique em "Destinar para este projeto", faça login (ou crie sua conta em segundos) e preencha o valor respeitando o limite de 6%.
+              </p>
+              <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="flex items-start gap-2 text-xs text-gray-600">
+                  <div class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  Login ou cadastro rápido
+                </div>
+                <div class="flex items-start gap-2 text-xs text-gray-600">
+                  <div class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  Informe o valor
+                </div>
+                <div class="flex items-start gap-2 text-xs text-gray-600">
+                  <div class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  Confirme seus dados
+                </div>
+                <div class="flex items-start gap-2 text-xs text-gray-600">
+                  <div class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  Receba os dados do FNC
+                </div>
+              </div>
+              <a href="destinar-rouanet.html?pronac=250347"
+                class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-all hover:scale-[1.02]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+                Iniciar destinação
+              </a>
+            </div>
+          </div>
+
+          <!-- PASSO 4 -->
+          <div class="fade-up flex gap-4 sm:gap-6">
+            <div class="shrink-0 flex flex-col items-center">
+              <div class="w-14 h-14 rounded-2xl bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-200/50">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+              </div>
+            </div>
+            <div class="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">PASSO 4</span>
+                <span class="text-xs text-gray-400 font-medium">~2 minutos</span>
+              </div>
+              <h2 class="text-xl font-bold text-[#0D1B3E] mb-2">Faça a transferência para o FNC</h2>
+              <p class="text-gray-500 text-sm leading-relaxed mb-4">
+                Transfira o valor para a conta oficial do <strong class="text-[#0D1B3E]">Fundo Nacional de Cultura (FNC)</strong> no Banco do Brasil usando PIX, TED ou transferência.
+              </p>
+              <div class="rounded-xl bg-gray-50 border border-gray-200 px-4 py-3 font-mono text-sm space-y-1.5 mb-4">
+                <div><span class="text-gray-400">Banco:</span> <strong class="text-[#0D1B3E]">Banco do Brasil (001)</strong></div>
+                <div><span class="text-gray-400">Agência:</span> <strong class="text-[#0D1B3E]">3902-5</strong></div>
+                <div><span class="text-gray-400">Conta:</span> <strong class="text-[#0D1B3E]">170500-8</strong></div>
+                <div><span class="text-gray-400">Favorecido:</span> <strong class="text-[#0D1B3E]">Fundo Nacional de Cultura</strong></div>
+              </div>
+              <div class="rounded-xl bg-amber-50 border border-amber-100 px-4 py-3 text-xs text-amber-800">
+                No campo <strong>descrição/referência</strong>, informe o <strong>PRONAC do projeto</strong>. Guarde o comprovante — print do app do banco funciona!
+              </div>
+            </div>
+          </div>
+
+          <!-- PASSO 5 -->
+          <div class="fade-up flex gap-4 sm:gap-6">
+            <div class="shrink-0 flex flex-col items-center">
+              <div class="w-14 h-14 rounded-2xl bg-sky-600 flex items-center justify-center shadow-lg shadow-sky-200/50">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              </div>
+            </div>
+            <div class="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full">PASSO 5</span>
+                <span class="text-xs text-gray-400 font-medium">~1 minuto</span>
+              </div>
+              <h2 class="text-xl font-bold text-[#0D1B3E] mb-2">Envie o comprovante</h2>
+              <p class="text-gray-500 text-sm leading-relaxed mb-4">
+                Após a transferência, volte ao sistema e envie o comprovante bancário (PDF, JPG ou PNG, até 5MB) para finalizar o registro.
+              </p>
+              <div class="rounded-xl bg-green-50 border border-green-100 px-4 py-3 text-sm text-green-800">
+                <strong>Pronto!</strong> Você recebe um número de protocolo e um comprovante pessoal. O <strong>Recibo de Mecenato</strong> oficial é emitido pelo proponente em até 60 dias.
+              </div>
+            </div>
+          </div>
+
+          <!-- PASSO 6 -->
+          <div class="fade-up flex gap-4 sm:gap-6">
+            <div class="shrink-0 flex flex-col items-center">
+              <div class="w-14 h-14 rounded-2xl bg-green-700 flex items-center justify-center shadow-lg shadow-green-200/50">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+            </div>
+            <div class="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">PASSO 6 — FINAL</span>
+              </div>
+              <h2 class="text-xl font-bold text-[#0D1B3E] mb-2">Declare no IR — Código 41</h2>
+              <p class="text-gray-500 text-sm leading-relaxed mb-4">
+                Na declaração anual (DIRPF), informe a destinação na ficha <strong class="text-[#0D1B3E]">Doações Efetuadas</strong>:
+              </p>
+              <div class="rounded-xl bg-blue-50 border border-blue-100 px-4 py-3 text-sm text-blue-900 mb-3">
+                <div><strong>Ficha:</strong> Doações Efetuadas</div>
+                <div><strong>Código:</strong> 41 — Atividade Cultural e Artística (Lei Rouanet)</div>
+                <div><strong>Valor:</strong> o montante transferido</div>
+              </div>
+              <p class="text-xs text-gray-400">Guarde o comprovante da transferência e o Recibo de Mecenato por no mínimo 5 anos.</p>
+              <div class="mt-4">
+                <a href="guia-ir-servidor.html" class="inline-flex items-center gap-1.5 text-[#0D1B3E] font-semibold text-sm underline underline-offset-2 hover:text-[#132247] transition-colors">
+                  Ver guia completo para servidores →
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ──────────────────────────────────────── -->
+  <section class="bg-[#0D1B3E] py-20 sm:py-28 overflow-hidden relative">
+    <div class="pointer-events-none absolute inset-0 opacity-[0.04]"
+      style="background-image: radial-gradient(circle at 1px 1px, #FFD700 1px, transparent 0); background-size: 32px 32px;">
+    </div>
+    <div class="fade-up relative z-10 max-w-2xl mx-auto px-6 text-center">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
+        Todo o processo leva <span class="text-[#FFD700]">menos de 10 minutos.</span>
+      </h2>
+      <p class="text-white/60 mb-10 text-lg">Seu IR vira música, arte e cultura para jovens que precisam.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
+        <a href="calculadora.html"
+          class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Começar pelo MeuLimite
+        </a>
+        <a href="faq.html"
+          class="inline-flex items-center gap-2 border border-white/20 text-white hover:bg-white/10 font-semibold px-7 py-3.5 rounded-xl transition-all duration-200">
+          Tirar dúvidas →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/auth.js"></script>
+  <script src="js/layout.js"></script>
+  <script>Layout.init('como');</script>
+  <script src="js/tina.js"></script>
+  <script>if (typeof TINA !== 'undefined') TINA.init();</script>
 </body>
 </html>

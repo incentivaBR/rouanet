@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora IR 2026 — DestineAI</title>
-  <meta name="description" content="Calcule seu Imposto de Renda e descubra quanto pode destinar para projetos culturais via Lei Rouanet.">
+  <title>MeuLimite — Descubra quanto pode destinar · DestineAI</title>
+  <meta name="description" content="Descubra até onde seu IR pode ir. Calcule seu limite de destinação via Lei Rouanet e faça seu imposto virar cultura — sem custo nenhum.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/destineai.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -27,7 +28,6 @@
     }
   </script>
   <style>
-    body { font-family: 'Inter', sans-serif; }
     input:focus, select:focus { outline: none; }
     .result-section { display: none; }
     .result-section.show { display: block; }
@@ -35,31 +35,17 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
 
-  <!-- ── NAV ─────────────────────────────────────────────── -->
-  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 bg-[#0D1B3E]/95 backdrop-blur-md shadow-lg">
-    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-      <a href="index.html" class="text-white font-extrabold text-xl tracking-tight no-underline">
-        Destine<span class="text-[#FFD700]">AI</span>
-      </a>
-      <div class="flex items-center gap-6">
-        <a href="index.html" class="text-white/60 hover:text-white text-sm font-medium transition-colors hidden sm:block">Início</a>
-        <a href="calculadora.html" class="text-[#FFD700] text-sm font-semibold">Calculadora</a>
-        <a href="login.html" id="navAuth" class="text-white/70 hover:text-white text-sm font-medium transition-colors">Entrar</a>
-      </div>
-    </div>
-  </nav>
-
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <section class="bg-[#0D1B3E] pt-24 pb-12">
     <div class="max-w-3xl mx-auto px-6 text-center">
       <div class="inline-flex items-center gap-2 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/30 px-5 py-2 mb-6">
-        <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-        <span class="text-[#FFD700] font-semibold text-sm">Lei Rouanet · até 6% do IR</span>
+        <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span class="text-[#FFD700] font-semibold text-sm">Lei Rouanet · até 6% do IR · sem custo nenhum</span>
       </div>
       <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight mb-3">
-        Calculadora <span class="text-[#FFD700]">Lei Rouanet</span>
+        Meu<span class="text-[#FFD700]">Limite</span>
       </h1>
-      <p class="text-white/60 text-lg">Descubra quanto pode destinar — ano-calendário 2025</p>
+      <p class="text-white/60 text-lg max-w-xl mx-auto">Descubra até onde seu IR pode ir — e transforme imposto em cultura</p>
     </div>
   </section>
 
@@ -120,14 +106,14 @@
       </button>
     </div>
 
-    <!-- ── CALCULADORA RÁPIDA ────────────────────────────── -->
+    <!-- ── MEU LIMITE RÁPIDO ─────────────────────────────── -->
     <div id="formRapida" style="display:none">
       <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 mb-6">
         <h2 class="flex items-center gap-2 text-lg font-bold text-[#0D1B3E] mb-2">
           <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          Calculadora Rápida
+          Cálculo rápido
         </h2>
-        <p class="text-gray-500 text-sm mb-6">Se você já sabe o IR Devido (da declaração anterior), informe o valor e veja seu limite Rouanet.</p>
+        <p class="text-gray-500 text-sm mb-6">Se você já sabe o IR Devido (da declaração anterior), informe o valor e descubra seu limite de destinação.</p>
         <div class="mb-5">
           <label class="block text-sm font-semibold text-[#0D1B3E] mb-2">IR Devido (anual)</label>
           <input type="text" id="irDireto" placeholder="R$ 0,00"
@@ -306,38 +292,13 @@
 
   </div>
 
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <footer class="bg-[#0A1530] py-10">
-    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="text-white/40 text-sm font-semibold">
-        Destine<span class="text-[#FFD700]/60">AI</span>
-      </span>
-      <div class="flex gap-4 text-white/30 text-xs">
-        <a href="politica-privacidade.html" class="hover:text-white/60 transition-colors no-underline">Política de Privacidade</a>
-        <span>|</span>
-        <a href="termos-uso.html" class="hover:text-white/60 transition-colors no-underline">Termos de Uso</a>
-      </div>
-      <p class="text-white/30 text-xs">
-        Plataforma de destinação de IR para projetos culturais · Lei 8.313/1991
-      </p>
-    </div>
-  </footer>
-
   <script src="js/auth.js"></script>
-  <script src="js/mobile-menu.js"></script>
+  <script src="js/layout.js"></script>
+  <script>Layout.init('calculadora');</script>
   <script src="js/api.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/toast.js"></script>
   <script>
-    // Auth nav
-    const navAuth = document.getElementById('navAuth');
-    if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
-      const user = auth.getUser();
-      navAuth.textContent = user.nome ? user.nome.split(' ')[0] : 'Minha Conta';
-      navAuth.href = 'dashboard.html';
-    } else {
-      navAuth.href = 'login.html';
-    }
 
     // Máscaras de moeda
     ['rendimentos', 'rendimento13', 'inss', 'inss-13', 'saude', 'educacao', 'previdencia'].forEach(id => {
