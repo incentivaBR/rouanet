@@ -76,6 +76,7 @@ const globalLimiter = rateLimit({
   max: 300,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => process.env.NODE_ENV === 'test',
   message: { status: 'error', message: 'Muitas requisições. Tente novamente em 15 minutos.' }
 });
 app.use('/api/', globalLimiter);
