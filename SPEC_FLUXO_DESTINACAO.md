@@ -155,7 +155,7 @@ Filtros laterais:
 Grade de cards de projetos (3 por linha em desktop, 1 em mobile):
 - Imagem do projeto (capa, com ícone do ODS sobreposto)
 - Nome do projeto
-- Lei e número (ex: "Rouanet — PRONAC 250347")
+- Lei e número (ex: "Rouanet — PRONAC 252026")
 - Resumo em uma linha (até 80 caracteres)
 - Valor mínimo sugerido
 - Selo "Recomendado para você" se for da lista do nicho do servidor

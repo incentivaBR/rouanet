@@ -43,23 +43,23 @@ P6 — **Saída com retorno.** Servidor que sai sem se cadastrar deve poder volt
 
 **Tempo médio esperado nesta fase:** 4 a 8 minutos.
 
-**Critério de saída:** clique em "Criar conta" ou "Destinar meu IR para o Themis".
+**Critério de saída:** clique em "Criar conta" ou "Destinar meu IR para o Circuito do Forró".
 
 ### 2.1. Tela 1 — Landing page (`index.html`)
 
 Hero principal (visível ao abrir):
 - Headline: "Seu imposto vira música."
-- Subtítulo: "12 jovens de Ceilândia tocaram Vivaldi para 800 pessoas no TJDFT. Com 6% do seu IR — dinheiro que você já pagaria ao governo."
-- Selo de credibilidade abaixo: "R$ 0 do seu bolso · PRONAC 250347 aprovado pelo MinC"
+- Subtítulo: "[TBD: descrição de impacto do Circuito do Forró em 1-2 linhas, com números reais — ex.: 'X músicos levaram forró autêntico a Y comunidades'. Manter o gancho 'Com 6% do seu IR — dinheiro que você já pagaria ao governo.']"
+- Selo de credibilidade abaixo: "R$ 0 do seu bolso · PRONAC 252026 aprovado pelo MinC"
 - Dois botões primários:
-  - "Quero apoiar o Projeto Themis" (rola até a seção do projeto)
+  - "Quero apoiar o Circuito do Forró" (rola até a seção do projeto)
   - "Calcular quanto posso destinar →" (link discreto para `calculadora.html`)
-- Imagem de fundo: foto da orquestra real no TJDFT, com overlay azul navy.
+- Imagem de fundo: foto autêntica do Circuito do Forró em apresentação, com overlay azul navy. Valoriza música popular brasileira e ambiente comunitário.
 
-Seção 2 — Projeto Themis (`#themis`):
-- Card grande com 4 indicadores numéricos (12 jovens, 800 espectadores, TJDFT, R$ 0 custo)
-- Selo "PRONAC 250347 · Aprovado pelo MinC"
-- Botão CTA: "Destinar meu IR para o Themis" (leva ao login se não logado)
+Seção 2 — Circuito do Forró (`#circuito-forro`):
+- Card grande com 4 indicadores numéricos ([TBD: indicador 1], [TBD: indicador 2], [TBD: território/local], R$ 0 custo)
+- Selo "PRONAC 252026 · Aprovado pelo MinC"
+- Botão CTA: "Destinar meu IR para o Circuito do Forró" (leva ao login se não logado)
 
 Seção 3 — Como funciona em 4 passos (`#como-funciona`):
 - 4 cards numerados: (1) Calcule seu IR, (2) Confirme o projeto, (3) Transfira via PIX, (4) Declare no IR — código 41
@@ -159,7 +159,7 @@ Resultado em destaque:
 - Linha de fechamento gritando visualmente: "Seu bolso fica igual. Mas R$ X agora vão para um projeto que você escolhe, e não somem na máquina pública."
 
 CTAs após o resultado:
-- "Quero destinar para o Projeto Themis →" (botão primário, leva ao cadastro/login)
+- "Quero destinar para o Circuito do Forró →" (botão primário, leva ao cadastro/login)
 - "Quero ver outros projetos →" (botão secundário)
 - "Salvar este cálculo no meu e-mail" (captura lead — opcional)
 
@@ -191,7 +191,7 @@ CTAs após o resultado:
 
 Servidor chega à Fase 2 clicando em qualquer botão de conversão das Fases anteriores:
 - "Criar conta" no nav (sempre visível)
-- "Destinar meu IR para o Themis" (botões CTA da landing)
+- "Destinar meu IR para o Circuito do Forró" (botões CTA da landing)
 - "Quero destinar →" (após calcular na calculadora pública)
 - "Pronto para destinar? Criar conta" (FAQ)
 
@@ -295,16 +295,16 @@ Tela rápida (modal ou intersticial) só na primeira vez:
 
 ### 4.1. Passo 1 — Visualização do projeto
 
-Servidor logado clica em "Destinar meu IR para o Themis" (ou qualquer outro projeto). Tela exibe:
+Servidor logado clica em "Destinar meu IR para o Circuito do Forró" (ou qualquer outro projeto). Tela exibe:
 
 Cabeçalho com barra de progresso "1 de 6".
 
 Card grande do projeto:
 - Imagem do projeto
-- Nome: "Projeto Themis"
+- Nome: "Circuito do Forró"
 - PRONAC + lei (Rouanet)
 - Resumo em 2-3 linhas
-- 4 indicadores: 12 jovens, 800 espectadores, TJDFT, R$ 0 custo
+- 4 indicadores: [TBD: indicador 1], [TBD: indicador 2], [TBD: território/local], R$ 0 custo
 - Selo "Aprovado pelo MinC"
 
 Bloco "Antes de continuar, confira":
@@ -326,7 +326,7 @@ Botão "Calcular"
 Resultado:
 - "Você pode destinar até R$ X (6% × R$ Y de IR)"
 - Simulação dos dois cenários lado a lado (mesmo padrão da calculadora pública)
-- Linha de fechamento: "Seu bolso fica igual. R$ X vão para o Projeto Themis em vez de somem na máquina pública."
+- Linha de fechamento: "Seu bolso fica igual. R$ X vão para o Circuito do Forró em vez de somem na máquina pública."
 
 Botão primário: "Definir valor"
 
@@ -397,7 +397,7 @@ Botão primário: "Confirmar destinação"
 Animação de sucesso (confetti + ícone do projeto).
 
 Mensagem central:
-- "Pronto, [primeiro nome]! Sua destinação de R$ X para o Projeto Themis está registrada."
+- "Pronto, [primeiro nome]! Sua destinação de R$ X para o Circuito do Forró está registrada."
 
 Bloco "Próximos passos automáticos":
 - ✅ Recibo oficial em nome do seu CPF chegará em até 48h
@@ -435,7 +435,7 @@ E-mail automático disparado:
 
 ### Fase 1 — Descoberta
 - **Curiosidade:** headline poético ("Seu imposto vira música") gera dúvida produtiva.
-- **Prova concreta:** números reais do projeto (12 jovens, 800 espectadores, TJDFT) eliminam abstração.
+- **Prova concreta:** números reais do projeto (TBD: indicadores oficiais do Circuito do Forró) eliminam abstração.
 - **Reciprocidade:** calculadora gratuita sem cadastro entrega valor antes de pedir algo.
 - **Autoridade:** PRONAC, MinC, INPI ancoram credibilidade institucional.
 - **Quebra de objeção financeira:** "R$ 0 do seu bolso" repetido em todos os CTAs.
@@ -513,7 +513,7 @@ A multiplicação das taxas individuais define a meta agregada. Se cada elo se m
 | Tela | Frase central que NÃO pode faltar | Tom |
 |------|-----------------------------------|-----|
 | Landing hero | "Seu imposto vira música" | Poético, surpreendente |
-| Landing — projeto | "PRONAC 250347 · Aprovado pelo MinC" | Institucional, técnico |
+| Landing — projeto | "PRONAC 252026 · Aprovado pelo MinC" | Institucional, técnico |
 | Como funciona | "4 passos. Menos de 5 minutos." | Direto, simples |
 | FAQ | "Não achou sua dúvida? Fale com a TINA" | Acessível, próximo |
 | Calculadora pública | "Seu bolso fica igual. R$ X vão para um projeto que você escolhe." | Comparativo, claro |
@@ -526,7 +526,7 @@ A multiplicação das taxas individuais define a meta agregada. Se cada elo se m
 
 ## 10. EVOLUÇÃO PREVISTA DESTA SPEC
 
-Versão 2.0 (atual): jornada completa em 3 fases para Rouanet (DestineAI Themis).
+Versão 2.0 (atual): jornada completa em 3 fases para Rouanet (DestineAI Circuito do Forró).
 
 Versão 2.1 (Semana 3 do cronograma TCC): incorporação do nicho profissional no fluxo (Passo 2 da Fase 3) + catálogo personalizado.
 
