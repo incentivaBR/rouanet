@@ -65,7 +65,6 @@
             <div class="text-white/50 text-xs mt-0.5">PRONAC 252026 · Aprovado pelo Ministério da Cultura</div>
           </div>
         </div>
-        <div id="urgencyBadge" class="shrink-0"></div>
       </div>
     </div>
 
@@ -295,18 +294,6 @@
   <script src="js/utils.js"></script>
   <script src="js/toast.js"></script>
   <script>
-
-    // ── Urgency badge (dias restantes para IR 2025) ──────────────
-    (function() {
-      const deadline = new Date('2026-04-30T23:59:59-03:00');
-      const badge = document.getElementById('urgencyBadge');
-      if (!badge) return;
-      const diff = deadline - Date.now();
-      if (diff <= 0) return;
-      const days = Math.ceil(diff / 86400000);
-      const label = days === 1 ? 'Último dia' : `${days} dias`;
-      badge.innerHTML = `<span style="display:inline-flex;align-items:center;gap:5px;background:#EF4444;color:white;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;animation:pulse 2s infinite">⏰ ${label} — Prazo IR</span>`;
-    })();
 
     // ── Preview em tempo real ─────────────────────────────────────
     function showPreview(valor) {
