@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piloto DestineAI — Guia do Participante</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { navy: '#0D1B3E', gold: '#FFD700' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .step-line::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 40px;
+      bottom: -24px;
+      width: 2px;
+      background: #E5E7EB;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- HERO -->
+  <section class="bg-[#0D1B3E] pt-16 pb-14 px-6">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 mb-6 text-[#FFD700] text-sm font-semibold">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Piloto FGV · Maio 2026
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mb-4 leading-tight">
+        Bem-vindo ao piloto<br><span class="text-[#FFD700]">DestineAI</span>
+      </h1>
+      <p class="text-white/60 text-base max-w-lg mx-auto leading-relaxed">
+        Você vai simular — com seus dados reais de IR — como seria destinar parte do seu imposto para o <strong class="text-white">Circuito do Forró</strong>, projeto cultural aprovado pelo Ministério da Cultura. Nenhum valor será transferido.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTEXTO -->
+  <div class="max-w-2xl mx-auto px-6 py-10">
+
+    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-8 flex gap-4">
+      <svg class="w-6 h-6 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div class="text-sm text-amber-800 leading-relaxed">
+        <strong>Modo Simulação ativo.</strong> Todo o fluxo é idêntico ao sistema real — calculadora, dados bancários, comprovante — mas nenhum centavo sai da sua conta. O comprovante gerado é apenas para fins de teste.
+      </div>
+    </div>
+
+    <!-- O QUE VOCÊ VAI PRECISAR -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
+      <h2 class="font-bold text-[#0D1B3E] text-lg mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        O que você vai precisar
+      </h2>
+      <ul class="space-y-3 text-sm text-gray-700">
+        <li class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+          <span>Seu <strong>IR Devido</strong> — o valor que aparece no campo "Imposto Devido" da sua declaração de IR 2024/2025. Você encontra no contracheque, e-CAC ou na declaração do ano passado.</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+          <span>Um <strong>e-mail válido</strong> para criar sua conta no DestineAI (leva menos de 1 minuto).</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+          <span>Cerca de <strong>5 a 10 minutos</strong> para percorrer o fluxo completo.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- PASSO A PASSO -->
+    <h2 class="font-bold text-[#0D1B3E] text-lg mb-5">Passo a passo</h2>
+
+    <div class="space-y-0">
+
+      <!-- Passo 1 -->
+      <div class="relative flex gap-5 pb-6 step-line">
+        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">1</div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
+          <h3 class="font-bold text-[#0D1B3E] mb-1">Crie sua conta</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-3">Acesse o link abaixo e clique em <strong>"Criar conta"</strong>. Use um e-mail real — você receberá o comprovante de simulação por lá.</p>
+          <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=252026%26titulo=Circuito%20do%20Forr%C3%B3"
+            class="inline-flex items-center gap-2 bg-[#FFD700] text-[#0D1B3E] font-bold text-sm px-4 py-2 rounded-xl hover:bg-[#FFC000] transition-colors no-underline">
+            Criar conta →
+          </a>
+        </div>
+      </div>
+
+      <!-- Passo 2 -->
+      <div class="relative flex gap-5 pb-6 step-line">
+        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">2</div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
+          <h3 class="font-bold text-[#0D1B3E] mb-1">Conheça o projeto</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Na <strong>Etapa 1</strong> você verá os dados do <strong>Circuito do Forró</strong> — projeto PRONAC 252026, aprovado pelo MinC. Leia e clique em <strong>"Calcular meu Imposto de Renda"</strong>.</p>
+        </div>
+      </div>
+
+      <!-- Passo 3 -->
+      <div class="relative flex gap-5 pb-6 step-line">
+        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">3</div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
+          <h3 class="font-bold text-[#0D1B3E] mb-1">Calcule seu IR</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-3">Na <strong>Etapa 2</strong> informe seu <strong>IR Devido</strong> — use o modo "Já sei meu IR Devido" se você tiver o valor em mãos, ou preencha pelo holerite para calcular automaticamente.</p>
+          <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-800">
+            <strong>Onde encontrar o IR Devido:</strong> contracheque → campo "IRRF" acumulado no ano, ou declaração IRPF → ficha "Imposto a Pagar / Imposto Devido".
+          </div>
+        </div>
+      </div>
+
+      <!-- Passo 4 -->
+      <div class="relative flex gap-5 pb-6 step-line">
+        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">4</div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
+          <h3 class="font-bold text-[#0D1B3E] mb-1">Defina o valor a destinar</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Na <strong>Etapa 3</strong> o sistema mostra quanto você pode destinar (até 6% do IR). Use o slider para ajustar — ou deixe no máximo para ver o impacto completo. Aceite os termos e clique em "Próximo".</p>
+        </div>
+      </div>
+
+      <!-- Passo 5 -->
+      <div class="relative flex gap-5 pb-6 step-line">
+        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">5</div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
+          <h3 class="font-bold text-[#0D1B3E] mb-1">Veja os dados de pagamento</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Na <strong>Etapa 4</strong> você verá os dados bancários reais do projeto (Banco do Brasil, Ag. 1419-2). Explore a tela — é exatamente o que apareceria numa destinação real. <strong>Não faça nenhuma transferência.</strong></p>
+        </div>
+      </div>
+
+      <!-- Passo 6 -->
+      <div class="relative flex gap-5 pb-6">
+        <div class="w-10 h-10 rounded-full bg-[#FFD700] text-[#0D1B3E] font-black text-lg flex items-center justify-center shrink-0 z-10">6</div>
+        <div class="bg-[#0D1B3E] rounded-2xl p-5 flex-1">
+          <h3 class="font-bold text-white mb-1">Simule e baixe o comprovante</h3>
+          <p class="text-sm text-white/70 leading-relaxed">Clique em <strong class="text-[#FFD700]">"Simular pagamento e gerar comprovante"</strong>. O sistema confirma a destinação fictícia e gera um PDF idêntico ao real — com seu nome, valor, PRONAC e protocolo. Baixe e guarde.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA PRINCIPAL -->
+    <div class="bg-[#0D1B3E] rounded-2xl p-7 text-center mt-4">
+      <div class="text-[#FFD700] font-black text-2xl mb-2">Pronto para começar?</div>
+      <p class="text-white/60 text-sm mb-6">O fluxo completo leva cerca de 5 minutos.</p>
+      <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=252026%26titulo=Circuito%20do%20Forr%C3%B3"
+        class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold px-8 py-4 rounded-xl transition-all hover:scale-[1.02] no-underline text-base">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+        Iniciar simulação
+      </a>
+      <p class="text-white/30 text-xs mt-4">Já tem conta? <a href="login.html?redirect=/destinar-rouanet.html?pronac=252026%26titulo=Circuito%20do%20Forr%C3%B3" class="text-white/50 hover:text-white underline">Fazer login</a></p>
+    </div>
+
+    <!-- DÚVIDAS -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mt-6">
+      <h2 class="font-bold text-[#0D1B3E] mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Dúvidas frequentes
+      </h2>
+      <div class="space-y-4 text-sm">
+        <div>
+          <p class="font-semibold text-[#0D1B3E] mb-1">Meu dinheiro vai realmente sair?</p>
+          <p class="text-gray-600">Não. No modo simulação, nenhuma transferência é realizada. O comprovante gerado é apenas para fins de teste deste piloto.</p>
+        </div>
+        <div>
+          <p class="font-semibold text-[#0D1B3E] mb-1">Preciso usar meu IR real?</p>
+          <p class="text-gray-600">Sim — use um valor próximo ao real para que a experiência faça sentido. Isso também nos ajuda a validar se o sistema calcula corretamente o limite de 6%.</p>
+        </div>
+        <div>
+          <p class="font-semibold text-[#0D1B3E] mb-1">Meus dados ficam guardados?</p>
+          <p class="text-gray-600">Sim, em ambiente seguro. Após o piloto os registros de simulação serão apagados do banco de dados.</p>
+        </div>
+        <div>
+          <p class="font-semibold text-[#0D1B3E] mb-1">Posso usar o assistente TINA?</p>
+          <p class="text-gray-600">Sim! A TINA está disponível em todas as páginas — clique no ícone no canto da tela e tire suas dúvidas sobre Lei Rouanet.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-gray-400 text-xs mt-8">
+      DestineAI · Piloto PA II/FGV · Maio 2026 · <a href="mailto:contato@destineai.com.br" class="underline hover:text-gray-600">contato@destineai.com.br</a>
+    </p>
+
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script>Layout.init('piloto', { skipNav: true });</script>
+</body>
+</html>
