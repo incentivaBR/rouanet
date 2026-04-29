@@ -243,7 +243,7 @@ Por que não virar ITP própria: BACEN exige R$ 100 mil a R$ 500 mil em complian
 
 Para servidores públicos, o canal mais poderoso de captação não é via banco — é via folha de pagamento. SIAPE, SIGEPE, folhas estaduais e municipais suportam **consignação facultativa** (desconto autorizado pelo servidor que sai mensalmente do contracheque e vai direto para a entidade habilitada). É o mesmo mecanismo que paga associação de classe, sindicato, plano de saúde adicional.
 
-Operação: servidor configura uma vez no IncentivaBR (ex.: destinar R$ 50/mês durante 12 meses ao Projeto Themis), o sistema integra com a folha do órgão dele, o desconto sai automaticamente, o repasse ao beneficiário acontece sem nova ação do servidor. Captação distribuída no ano em vez de concentrada em dezembro. Adesão muito mais alta porque a fricção mensal desaparece.
+Operação: servidor configura uma vez no IncentivaBR (ex.: destinar R$ 50/mês durante 12 meses ao Circuito do Forró), o sistema integra com a folha do órgão dele, o desconto sai automaticamente, o repasse ao beneficiário acontece sem nova ação do servidor. Captação distribuída no ano em vez de concentrada em dezembro. Adesão muito mais alta porque a fricção mensal desaparece.
 
 Vantagens: captação automática e recorrente, defensibilidade altíssima (cada integração com folha é barreira contra concorrente), diferencial brutal de venda para o cliente proponente.
 Desafios: cada órgão tem sistema de folha diferente, exige convênio formal de habilitação como entidade consignatária, integração técnica caso a caso.
