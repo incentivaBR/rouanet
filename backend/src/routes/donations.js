@@ -75,6 +75,15 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
     const fncResult = await client.query(`SELECT id FROM official_funds WHERE code = 'FNC' LIMIT 1`);
     const fncId = fncResult.rows[0]?.id || null;
 
+    // Buscar dados bancários do projeto ativo da organização
+    const opResult = await client.query(
+      `SELECT proponente_nome, proponente_cnpj, bank_name, bank_code, bank_agency, bank_account, pix_key, pix_key_type
+       FROM org_projects WHERE organization_id = $1 AND is_active = true
+       ORDER BY is_featured DESC, created_at DESC LIMIT 1`,
+      [org?.id]
+    );
+    const op = opResult.rows[0];
+
     await client.query('BEGIN');
 
     const result = await client.query(`
@@ -116,13 +125,16 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
         fiscal_year,
         status:           'pending',
         created_at:       donation.created_at,
-        // Dados bancários FNC para pagamento
+        // Dados bancários do proponente (vindos do banco de dados)
         banco: {
-          beneficiary_name: 'Fundo Nacional de Cultura — FNC',
-          bank_name:        'Banco do Brasil',
-          bank_code:        '001',
-          bank_agency:      '1419-2',
-          bank_account:     '36.068-6',
+          beneficiary_name: op?.proponente_nome || org?.pronac_proponente || '—',
+          beneficiary_cnpj: op?.proponente_cnpj || null,
+          bank_name:        op?.bank_name   || org?.bank_name   || 'Banco do Brasil',
+          bank_code:        op?.bank_code   || org?.bank_code   || '001',
+          bank_agency:      op?.bank_agency || org?.bank_agency || '—',
+          bank_account:     op?.bank_account|| org?.bank_account|| '—',
+          pix_key:          op?.pix_key     || org?.pix_key     || null,
+          pix_key_type:     op?.pix_key_type|| org?.pix_key_type|| null,
           instrucoes:       'Identificar no comprovante: nome completo, CPF e PRONAC do projeto.'
         }
       }
