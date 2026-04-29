@@ -442,10 +442,10 @@
       <span>API SALIC indisponível — exibindo dados em cache. Informações podem estar desatualizadas.</span>
     </div>
 
-    <!-- Banner Modo Teste -->
-    <div id="testModeBanner" style="display:none;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:none;align-items:center;gap:10px;font-size:13px;color:#92400E">
+    <!-- Banner Modo Simulação -->
+    <div id="testModeBanner" style="display:none;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;margin-bottom:16px;align-items:center;gap:10px;font-size:13px;color:#92400E">
       <i class="fas fa-flask" style="color:#D97706;flex-shrink:0"></i>
-      <span><strong>Modo Teste ativo</strong> — valor máximo de <strong id="testModeMaxLabel">R$ 1,00</strong> por destinação. Use para verificar o fluxo completo sem impacto financeiro.</span>
+      <span><strong>Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
     </div>
 
     <!-- ─── ETAPA 1: Projeto ─────────────────────────────────── -->
@@ -891,7 +891,7 @@
       limite:      null,
       valor:       null,
       donationId:  null,
-      testModeMax: null,   // R$ máximo em modo teste (null = sem restrição)
+      simulationMode: false,
       currentStep: 1,
       calcMode:    'rapida'
     };
@@ -1064,14 +1064,10 @@
 
     // ── Step 3: Controles de valor ──────────────────────────────
     function setupStep3() {
-      const limiteCalc = state.limite || 0;
-      // Aplica cap do modo teste se ativo
-      const limite = state.testModeMax !== null
-        ? Math.min(limiteCalc, state.testModeMax)
-        : limiteCalc;
+      const limite = state.limite || 0;
 
       document.getElementById('resumoIR').textContent    = BRL(state.ir_devido);
-      document.getElementById('resumoLimite').textContent = BRL(limiteCalc);
+      document.getElementById('resumoLimite').textContent = BRL(limite);
       document.getElementById('sliderMax').textContent    = BRL(limite);
 
       const slider = document.getElementById('valorSlider');
@@ -1089,11 +1085,8 @@
     }
 
     function onValorChange() {
-      const v   = parseBRL(document.getElementById('valorDestinar').value);
-      const max = state.testModeMax !== null
-        ? Math.min(state.limite || 0, state.testModeMax)
-        : (state.limite || 0);
-      const clamped = Math.min(v, max);
+      const v       = parseBRL(document.getElementById('valorDestinar').value);
+      const clamped = Math.min(v, state.limite || 0);
       document.getElementById('valorSlider').value = clamped;
       updateResumoValor(clamped);
     }
@@ -1200,8 +1193,8 @@
       document.getElementById('pgReferencia').textContent =
         `PRONAC ${pronac} - ${cpf} - Lei Rouanet`;
 
-      // Modo teste: mostra botão de simulação, esconde o de upload real
-      if (state.testModeMax !== null) {
+      // Modo simulação: mostra botão de simulação, esconde o de upload real
+      if (state.simulationMode) {
         document.getElementById('btnSimularPagamento').style.display  = '';
         document.getElementById('btnJaFizTransferencia').style.display = 'none';
       }
@@ -1403,12 +1396,10 @@
       if (!cfg || cfg.status === 'error') return;
       if (cfg.color_primary) document.documentElement.style.setProperty('--rouanet', cfg.color_primary);
       if (cfg.color_accent)  document.documentElement.style.setProperty('--rouanet-dark', cfg.color_accent);
-      if (cfg.test_mode && cfg.test_mode_max != null) {
-        state.testModeMax = cfg.test_mode_max;
+      if (cfg.simulation_mode) {
+        state.simulationMode = true;
         const banner = document.getElementById('testModeBanner');
-        const label  = document.getElementById('testModeMaxLabel');
         if (banner) banner.style.display = 'flex';
-        if (label)  label.textContent = `R$ ${cfg.test_mode_max.toFixed(2).replace('.', ',')}`;
       }
     }).catch(() => {});
 

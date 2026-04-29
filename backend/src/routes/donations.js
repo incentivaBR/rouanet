@@ -54,14 +54,6 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
       });
     }
 
-    // Modo Teste: limitar valor máximo via variável de ambiente
-    const testMax = process.env.TEST_MODE_MAX_BRL ? parseFloat(process.env.TEST_MODE_MAX_BRL) : null;
-    if (testMax !== null && donation_amount > testMax) {
-      return res.status(400).json({
-        status: 'error',
-        message: `Modo Teste ativo — valor máximo permitido: R$ ${testMax.toFixed(2).replace('.', ',')}.`
-      });
-    }
 
     // Verificar total já destinado no mesmo ano (todos os projetos Rouanet)
     const existingResult = await client.query(`
@@ -160,8 +152,8 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
 
 // POST /api/donations/:id/simulate — confirma pagamento fictício (apenas TEST_MODE)
 router.post('/:id/simulate', authenticateToken, async (req, res) => {
-  if (!process.env.TEST_MODE_MAX_BRL) {
-    return res.status(403).json({ status: 'error', message: 'Modo teste não está ativo.' });
+  if (process.env.SIMULATION_MODE !== 'true') {
+    return res.status(403).json({ status: 'error', message: 'Modo simulação não está ativo.' });
   }
 
   const { id } = req.params;
