@@ -12,7 +12,7 @@ const TINA = (function() {
     whatsappNumber: '5561999682929',
     whatsappMessage: 'Olá! Tenho dúvidas sobre destinação de IR via Lei Rouanet.',
     botName: 'TINA',
-    botAvatar: '🤖',
+    botAvatar: '<img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover">',
     userAvatar: '👤'
   };
 
