@@ -54,6 +54,15 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
       });
     }
 
+    // Modo Teste: limitar valor máximo via variável de ambiente
+    const testMax = process.env.TEST_MODE_MAX_BRL ? parseFloat(process.env.TEST_MODE_MAX_BRL) : null;
+    if (testMax !== null && donation_amount > testMax) {
+      return res.status(400).json({
+        status: 'error',
+        message: `Modo Teste ativo — valor máximo permitido: R$ ${testMax.toFixed(2).replace('.', ',')}.`
+      });
+    }
+
     // Verificar total já destinado no mesmo ano (todos os projetos Rouanet)
     const existingResult = await client.query(`
       SELECT COALESCE(SUM(donation_amount), 0) AS total
