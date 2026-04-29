@@ -158,6 +158,44 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
   }
 });
 
+// POST /api/donations/:id/simulate — confirma pagamento fictício (apenas TEST_MODE)
+router.post('/:id/simulate', authenticateToken, async (req, res) => {
+  if (!process.env.TEST_MODE_MAX_BRL) {
+    return res.status(403).json({ status: 'error', message: 'Modo teste não está ativo.' });
+  }
+
+  const { id } = req.params;
+  const userId  = req.user.userId;
+
+  if (!isValidUUID(id)) {
+    return res.status(400).json({ status: 'error', message: 'ID inválido.' });
+  }
+
+  try {
+    const result = await pool.query(
+      `UPDATE donations
+       SET status = 'test_simulated', confirmed_at = NOW(),
+           receipt_notes = 'Pagamento fictício gerado em modo teste'
+       WHERE id = $1 AND user_id = $2 AND status = 'pending'
+       RETURNING id, donation_amount, projeto_titulo`,
+      [id, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ status: 'error', message: 'Destinação não encontrada ou já processada.' });
+    }
+
+    res.json({
+      status:  'success',
+      message: 'Pagamento fictício registrado. Comprovante disponível.',
+      donation: result.rows[0]
+    });
+  } catch (error) {
+    console.error('Erro ao simular pagamento:', error.message);
+    res.status(500).json({ status: 'error', message: 'Erro interno.' });
+  }
+});
+
 // GET /api/donations - Listar destinações Rouanet do usuário
 router.get('/', authenticateToken, async (req, res) => {
   try {

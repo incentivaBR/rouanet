@@ -751,7 +751,12 @@
             <button class="btn-copy" onclick="copiar('pgReferencia', this)"><i class="fas fa-copy"></i> Copiar</button>
           </div>
 
-          <button class="btn-primary-rouanet" onclick="goTo(5)">
+          <!-- Botão modo teste (visível apenas quando test_mode ativo) -->
+          <button id="btnSimularPagamento" class="btn-primary-rouanet" onclick="simularPagamento()" style="display:none;background:#D97706;color:white">
+            <i class="fas fa-flask"></i> Simular pagamento e gerar comprovante
+          </button>
+
+          <button id="btnJaFizTransferencia" class="btn-primary-rouanet" onclick="goTo(5)">
             <i class="fas fa-upload"></i> Já fiz a transferência — enviar comprovante
           </button>
           <button class="btn-secondary" onclick="goTo(3)">
@@ -821,6 +826,12 @@
                 <li>Guarde o comprovante e o protocolo acima</li>
               </ol>
             </div>
+
+            <!-- Botão comprovante de simulação (aparece só no modo teste) -->
+            <a id="btnDownloadComprovante" href="#" target="_blank"
+              class="btn-primary-rouanet" style="text-decoration:none;margin-bottom:10px;background:#D97706;display:none">
+              <i class="fas fa-file-pdf"></i> Baixar Comprovante de Simulação
+            </a>
 
             <a href="dashboard.html"
               class="btn-primary-rouanet" style="text-decoration:none;margin-bottom:10px">
@@ -1131,6 +1142,38 @@
       }
     }
 
+    // ── Simular pagamento (modo teste) ──────────────────────────
+    async function simularPagamento() {
+      if (!state.donationId) { toast('Destinação não encontrada', 'error'); return; }
+      showLoading('Simulando pagamento...');
+      try {
+        const res  = await fetch(`${BASE}/api/donations/${state.donationId}/simulate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', ...authHeader() }
+        });
+        const data = await res.json();
+        if (data.status !== 'success') throw new Error(data.message);
+
+        document.getElementById('successDonationId').textContent = state.donationId;
+        document.getElementById('successMsg').textContent =
+          'Simulação concluída! Seu comprovante fictício foi gerado — use o botão abaixo para baixar.';
+
+        // Adiciona botão de download do comprovante
+        const dl = document.getElementById('btnDownloadComprovante');
+        if (dl) {
+          dl.href = `${BASE}/api/donations/${state.donationId}/comprovante`;
+          dl.style.display = '';
+        }
+
+        goTo(6);
+        toast('Pagamento fictício gerado com sucesso!', 'success');
+      } catch (err) {
+        toast('Erro: ' + err.message, 'error');
+      } finally {
+        hideLoading();
+      }
+    }
+
     // ── Preencher tela de pagamento ─────────────────────────────
     function preencherPagamento(donation) {
       const banco = donation.banco;
@@ -1156,6 +1199,12 @@
       const cpf    = user?.cpf ? formatCPF(user.cpf) : (user?.nome || '');
       document.getElementById('pgReferencia').textContent =
         `PRONAC ${pronac} - ${cpf} - Lei Rouanet`;
+
+      // Modo teste: mostra botão de simulação, esconde o de upload real
+      if (state.testModeMax !== null) {
+        document.getElementById('btnSimularPagamento').style.display  = '';
+        document.getElementById('btnJaFizTransferencia').style.display = 'none';
+      }
     }
 
     // ── Upload comprovante ──────────────────────────────────────
