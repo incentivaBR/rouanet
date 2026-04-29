@@ -99,16 +99,13 @@ router.get('/organizations', async (req, res) => {
 router.get('/brand', (req, res) => {
   const org = req.organization;
 
-  const testMax = process.env.TEST_MODE_MAX_BRL ? parseFloat(process.env.TEST_MODE_MAX_BRL) : null;
-
   const brand = {
     name:          org?.name          || process.env.BRAND_NAME          || 'DestineAI',
     logo_url:      org?.logo_url      || process.env.BRAND_LOGO_URL      || '/assets/logo-incentivabr.png',
     color_primary: org?.primary_color || process.env.BRAND_COLOR_PRIMARY || '#273F77',
     color_accent:  org?.secondary_color || process.env.BRAND_COLOR_ACCENT || '#EE985C',
     domain:        process.env.BRAND_DOMAIN || 'destineai.com.br',
-    test_mode:     testMax !== null,
-    test_mode_max: testMax,
+    simulation_mode: process.env.SIMULATION_MODE === 'true',
   };
 
   res.json(brand);
