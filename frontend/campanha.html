@@ -66,6 +66,58 @@
       letter-spacing: 0.5px; text-transform: uppercase;
     }
 
+    /* ── Cadeira 47 — card especial ── */
+    .cadeira-47-card {
+      border: 2px dashed rgba(255,215,0,0.35);
+      background: rgba(255,215,0,0.03);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; gap: 1.25rem;
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cadeira-47-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 10% 50%, rgba(255,215,0,0.06), transparent);
+    }
+    .cadeira-47-icon {
+      width: 52px; height: 52px; border-radius: 10px;
+      border: 1.5px dashed rgba(255,215,0,0.4);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cadeira-47-icon .num { font-size: 13px; font-weight: 900; color: rgba(255,215,0,0.6); line-height: 1; }
+    .cadeira-47-icon svg { width: 20px; height: 20px; color: rgba(255,215,0,0.4); }
+
+    /* ── Countdown urgência ── */
+    .countdown-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,215,0,0.08);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.75rem; font-weight: 700;
+      color: rgba(255,215,0,0.8);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    /* ── Impact cards ── */
+    .impact-card {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+      padding: 1.75rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .impact-card:hover { border-color: rgba(255,215,0,0.3); background: rgba(255,215,0,0.03); }
+    .impact-card.destaque {
+      border-color: rgba(255,215,0,0.4);
+      background: rgba(255,215,0,0.05);
+    }
+
     /* ── Credibilidade cards ── */
     .cred-card {
       border-radius: 16px;
@@ -113,18 +165,28 @@
       </div>
 
       <!-- Headline principal -->
-      <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] tracking-tight mb-6">
+      <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] tracking-tight mb-8">
         A Cadeira&nbsp;<span class="text-[#FFD700]">47</span><br>
         <span class="text-white/80 text-4xl sm:text-5xl md:text-6xl font-bold">está esperando.</span>
       </h1>
 
-      <p class="text-lg sm:text-xl md:text-2xl text-white/65 max-w-2xl mx-auto leading-relaxed mb-4">
-        Em Ceilândia, Samambaia e Santa Maria há jovens que descobriram a música.
-        O que falta é a cadeira deles.
-      </p>
+      <!-- Origem do número 47 — âncora emocional -->
+      <div class="max-w-xl mx-auto mb-10 rounded-2xl border border-white/[0.10] bg-white/[0.04] px-7 py-6 text-left">
+        <p class="text-white/75 text-base sm:text-lg leading-relaxed">
+          Toda semana, antes do ensaio, o professor monta
+          <strong class="text-white">47 cadeiras</strong> no ginásio.
+          A orquestra tem 40 jovens de Ceilândia, Samambaia e Santa Maria.
+          Sete ficam vazias.
+        </p>
+        <p class="text-[#FFD700]/90 text-base sm:text-lg leading-relaxed mt-3 font-semibold">
+          A cadeira 47 — a mais distante do palco —<br>
+          espera desde o primeiro ensaio.
+        </p>
+      </div>
+
       <p class="text-base sm:text-lg text-white/45 max-w-xl mx-auto leading-relaxed mb-12">
         Você não sabe o nome de quem vai sentar nela.<br>
-        Mas pode garantir que a vaga existe.
+        Mas pode garantir que existe um lugar para essa pessoa.
       </p>
 
       <!-- CTAs -->
@@ -228,6 +290,10 @@
 
       <!-- Header -->
       <div class="text-center mb-12">
+        <div class="countdown-pill mb-5" id="concertoCountdown">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span id="countdownText">1º Concerto: novembro 2026</span>
+        </div>
         <p class="text-[#FFD700] font-bold text-sm tracking-widest uppercase mb-4">Cadeiras disponíveis</p>
         <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-6">
           40 vagas.<br>
@@ -279,6 +345,97 @@
     </div>
   </section>
 
+  <!-- ── O QUE SUA DESTINAÇÃO GARANTE ────────────────────── -->
+  <section class="relative bg-[#0D1B3E] py-24 sm:py-28 overflow-hidden">
+    <div class="pointer-events-none absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-[#FFD700]/[0.04] blur-[120px]"></div>
+    <div class="fade-up max-w-5xl mx-auto px-6 relative z-10">
+
+      <div class="text-center mb-14">
+        <p class="text-[#FFD700] font-bold text-sm tracking-widest uppercase mb-3">Impacto concreto</p>
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+          Seu IR vai fazer o quê, exatamente?
+        </h2>
+        <p class="text-white/45 text-lg max-w-xl mx-auto">
+          Cada real que você redireciona vai direto para o projeto — instrumento, ensaio, professor, concerto.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5 mb-10">
+
+        <div class="impact-card">
+          <div class="text-2xl font-black text-white mb-1">R$&nbsp;300</div>
+          <div class="text-[#FFD700]/60 text-xs font-bold uppercase tracking-widest mb-4">destinação de exemplo</div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-white/60 text-sm">
+              <svg class="w-4 h-4 text-[#FFD700]/50 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Ensaios semanais por um semestre (24 ensaios)
+            </li>
+            <li class="flex items-start gap-2.5 text-white/60 text-sm">
+              <svg class="w-4 h-4 text-[#FFD700]/50 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Partituras e materiais para 1 jovem
+            </li>
+            <li class="flex items-start gap-2.5 text-white/40 text-sm line-through">
+              <svg class="w-4 h-4 text-white/20 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              Instrumento incluso
+            </li>
+          </ul>
+        </div>
+
+        <div class="impact-card destaque">
+          <div class="inline-block bg-[#FFD700] text-[#0D1B3E] text-xs font-black px-2.5 py-1 rounded-full mb-3 uppercase tracking-wide">Mais escolhido</div>
+          <div class="text-2xl font-black text-white mb-1">R$&nbsp;600</div>
+          <div class="text-[#FFD700]/60 text-xs font-bold uppercase tracking-widest mb-4">destinação de exemplo</div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-white/75 text-sm">
+              <svg class="w-4 h-4 text-[#FFD700] mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Ensaios e materiais por 1 ano inteiro
+            </li>
+            <li class="flex items-start gap-2.5 text-white/75 text-sm">
+              <svg class="w-4 h-4 text-[#FFD700] mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Instrumento emprestado por 6 meses
+            </li>
+            <li class="flex items-start gap-2.5 text-white/75 text-sm">
+              <svg class="w-4 h-4 text-[#FFD700] mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Acesso aos 6 concertos públicos
+            </li>
+          </ul>
+        </div>
+
+        <div class="impact-card">
+          <div class="text-2xl font-black text-white mb-1">R$&nbsp;1.200</div>
+          <div class="text-[#FFD700]/60 text-xs font-bold uppercase tracking-widest mb-4">1 cadeira completa</div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-white/60 text-sm">
+              <svg class="w-4 h-4 text-[#FFD700]/50 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Formação completa de 1 músico por 1 ano
+            </li>
+            <li class="flex items-start gap-2.5 text-white/60 text-sm">
+              <svg class="w-4 h-4 text-[#FFD700]/50 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Instrumento + manutenção o ano todo
+            </li>
+            <li class="flex items-start gap-2.5 text-white/60 text-sm">
+              <svg class="w-4 h-4 text-[#FFD700]/50 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Uma cadeira com nome — no programa do concerto
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="rounded-2xl border border-white/[0.06] bg-white/[0.02] px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-white/40 text-sm">
+          <strong class="text-white/60">Estes são valores de referência.</strong>
+          Sua destinação é limitada a 6% do IR devido — qualquer valor financia parte do projeto.
+        </p>
+        <a href="calculadora.html"
+           class="shrink-0 inline-flex items-center gap-1.5 text-[#FFD700] font-semibold text-sm hover:underline underline-offset-4 whitespace-nowrap">
+          Calcular meu limite →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ── NARRATIVA — OS 3 ATOS ─────────────────────────── -->
   <section class="relative bg-[#0D1B3E] py-24 sm:py-32 overflow-hidden">
     <div class="pointer-events-none absolute -bottom-40 -left-40 w-[600px] h-[600px] rounded-full bg-[#FFD700]/[0.03] blur-[100px]"></div>
@@ -299,10 +456,11 @@
           </div>
           <h3 class="text-white font-bold text-xl mb-3">O início</h3>
           <p class="text-white/50 text-sm leading-relaxed">
-            Em Ceilândia, Samambaia e Santa Maria há jovens que descobriram a música.
-            Ainda não há orquestra. Há um ginásio, alguns instrumentos e professores que aparecem todo sábado.
+            No primeiro ensaio, o professor montou 47 cadeiras e esperou.
+            Nem todas foram ocupadas. Mas ele continuou montando todas elas toda semana,
+            porque acredita que um dia a sala vai estar cheia.
           </p>
-          <p class="text-[#FFD700]/70 text-sm font-semibold mt-4">Onde estamos agora.</p>
+          <p class="text-[#FFD700]/70 text-sm font-semibold mt-4">De onde viemos.</p>
         </div>
 
         <div class="rounded-2xl border border-[#FFD700]/20 bg-[#FFD700]/[0.04] p-8">
@@ -311,9 +469,9 @@
           </div>
           <h3 class="text-white font-bold text-xl mb-3">O processo</h3>
           <p class="text-white/50 text-sm leading-relaxed">
-            Cada destinação garante um instrumento nas mãos de alguém,
-            um ensaio por semana, um professor presente.
-            A Cadeira 47 existe. Quem vai sentar nela ainda está aprendendo.
+            Cada destinação garante ensaio semanal, instrumento nas mãos,
+            professor presente. A orquestra cresce uma cadeira por vez.
+            Quem vai sentar na 47 talvez ainda nem saiba que vai tocar.
           </p>
           <p class="text-[#FFD700]/70 text-sm font-semibold mt-4">O que seu IR financia.</p>
         </div>
@@ -324,9 +482,9 @@
           </div>
           <h3 class="text-white font-bold text-xl mb-3">A visão</h3>
           <p class="text-white/50 text-sm leading-relaxed">
-            Se chegarmos a 40 cadeiras apoiadas, haverá uma orquestra.
-            Não sabemos ainda quem vai ocupar a 47.
-            Mas sabemos que ela existe porque você escolheu.
+            O dia em que a cadeira 47 for ocupada, a sala vai estar cheia pela primeira vez.
+            O professor vai montar as 47 cadeiras — e todas vão ter alguém.
+            É isso que estamos construindo.
           </p>
           <p class="text-[#FFD700]/70 text-sm font-semibold mt-4">O que estamos construindo juntos.</p>
         </div>
@@ -527,6 +685,37 @@
     </div>
   </section>
 
+  <!-- ── COMPARTILHE ──────────────────────────────────────── -->
+  <section class="relative bg-[#080F22] py-16 sm:py-20">
+    <div class="fade-up max-w-2xl mx-auto px-6 text-center">
+      <p class="text-white/30 text-xs font-bold tracking-widest uppercase mb-3">Ampliar o impacto</p>
+      <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+        Conhece alguém que também poderia apoiar?
+      </h3>
+      <p class="text-white/45 text-base mb-8">
+        A destinação de IR é um benefício que 99% das pessoas nunca usou.
+        Compartilhar é a forma mais rápida de lotar as 40 cadeiras.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a id="btnWhatsapp"
+           href="https://wa.me/?text=Descobri%20uma%20forma%20de%20apoiar%20uma%20orquestra%20de%20Bras%C3%ADlia%20sem%20gastar%20nada%20a%20mais%20%E2%80%94%20%C3%A9%20s%C3%B3%20redirecionar%20o%20IR%20que%20voc%C3%AA%20j%C3%A1%20pagaria.%20Olha%20s%C3%B3%3A%20https%3A%2F%2Fwww.destineai.com.br%2Fcampanha.html"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe59] text-white font-bold px-6 py-3.5 rounded-xl transition-all hover:scale-[1.02]">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.1 1.508 5.83L0 24l6.335-1.479A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.499-5.207-1.371l-.374-.217-3.762.877.913-3.651-.24-.384A9.957 9.957 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+          </svg>
+          Enviar pelo WhatsApp
+        </a>
+        <button onclick="copyLink()"
+           class="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white/60 hover:text-white font-semibold px-5 py-3.5 rounded-xl transition-all text-sm" id="copyBtn">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          Copiar link
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- ── FAQ ───────────────────────────────────────────── -->
   <section class="relative bg-[#0D1B3E] py-24 sm:py-32">
     <div class="fade-up max-w-3xl mx-auto px-6">
@@ -605,6 +794,19 @@
 
   <!-- ── SCRIPTS ─────────────────────────────────────────── -->
   <script>
+    // ── Copiar link ──
+    function copyLink() {
+      navigator.clipboard.writeText('https://www.destineai.com.br/campanha.html').then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Copiado!';
+        btn.classList.add('border-[#FFD700]/40', 'text-[#FFD700]');
+        setTimeout(() => {
+          btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg> Copiar link';
+          btn.classList.remove('border-[#FFD700]/40', 'text-[#FFD700]');
+        }, 2500);
+      });
+    }
+
     // ── FAQ accordion ──
     function toggleFaq(btn) {
       const answer  = btn.nextElementSibling;
@@ -624,28 +826,68 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+    // ── Countdown até o concerto ──
+    (function() {
+      const concerto = new Date('2026-11-15T19:00:00');
+      const el = document.getElementById('countdownText');
+      if (!el) return;
+      const diff = concerto - new Date();
+      if (diff <= 0) { el.textContent = '1º Concerto: novembro 2026'; return; }
+      const semanas = Math.ceil(diff / (7 * 24 * 60 * 60 * 1000));
+      el.textContent = semanas > 1
+        ? `Faltam ${semanas} semanas para o 1º Concerto`
+        : 'O 1º Concerto é esta semana!';
+    })();
+
     // ── Grid de cadeiras ──
     const TOTAL_CADEIRAS  = 40;
-    const APOIADAS_DEMO   = [3, 7, 12, 18, 23, 31, 36]; // cadeiras já "ocupadas" no demo
+    const APOIADAS_DEMO   = [3, 7, 12, 18, 23, 31, 36];
+
+    // Ícone SVG de cadeira (vista frontal)
+    const chairIcon = `<svg viewBox="0 0 20 22" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="3" y="1" width="14" height="8" rx="1.5"/>
+      <rect x="2" y="9" width="16" height="3" rx="1"/>
+      <line x1="5" y1="12" x2="5" y2="21" stroke-linecap="round"/>
+      <line x1="15" y1="12" x2="15" y2="21" stroke-linecap="round"/>
+      <line x1="5" y1="17" x2="15" y2="17" stroke-linecap="round"/>
+    </svg>`;
 
     function buildChairs() {
       const grid = document.getElementById('chairGrid');
       if (!grid) return;
-
-      // Ícone SVG de instrumento musical (violino simplificado)
-      const icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-      </svg>`;
 
       for (let i = 1; i <= TOTAL_CADEIRAS; i++) {
         const isApoiada = APOIADAS_DEMO.includes(i);
         const div = document.createElement('div');
         div.className = 'chair' + (isApoiada ? ' apoiada' : '');
         div.title     = isApoiada ? `Cadeira ${i} — Apoiada` : `Cadeira ${i} — Disponível`;
-        div.innerHTML = `<div class="chair-num">${i}</div>${icon}`;
+        div.innerHTML = `<div class="chair-num">${i}</div>${chairIcon}`;
         grid.appendChild(div);
       }
+
+      // Card especial da Cadeira 47
+      const parent = grid.parentElement;
+      const card47 = document.createElement('div');
+      card47.className = 'cadeira-47-card';
+      card47.innerHTML = `
+        <div class="cadeira-47-icon">
+          <span class="num">47</span>
+          ${chairIcon}
+        </div>
+        <div class="relative z-10">
+          <p class="text-[#FFD700]/80 font-bold text-sm mb-0.5">A Cadeira 47</p>
+          <p class="text-white/50 text-sm leading-snug">
+            Fica do lado de fora deste grid. Existe no ginásio.
+            Espera que as 40 sejam preenchidas — então ela vai ter vez.
+          </p>
+        </div>
+        <a href="destinar-rouanet.html?pronac=261847"
+           class="ml-auto shrink-0 inline-flex items-center gap-1.5 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold text-xs px-4 py-2.5 rounded-lg transition-all hover:scale-[1.03] whitespace-nowrap relative z-10">
+          Apoiar agora
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+        </a>
+      `;
+      parent.insertBefore(card47, grid.nextSibling);
 
       // Atualizar contador
       document.getElementById('countApoiadas').textContent  = APOIADAS_DEMO.length;
