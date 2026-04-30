@@ -3,132 +3,215 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Destine até 6% do seu Imposto de Renda para projetos culturais via Lei Rouanet. Zero custo adicional — é imposto que você já pagaria.">
-  <title>DestineAI — Seu imposto vira música.</title>
+  <meta name="description" content="A Cadeira 47 está vazia. Destine 6% do seu IR para jovens das periferias de Brasília — Art. 18, custo zero, 100% de retorno.">
+  <title>DestineAI — A Cadeira 47 está esperando.</title>
 
   <link rel="icon" type="image/png" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/destineai.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif']
+          },
           colors: {
-            navy: '#0D1B3E',
-            navydark: '#0A1530',
+            navy:    '#0D1B3E',
+            navydark:'#0A1530',
             navymid: '#132247',
-            gold: '#FFD700',
-            golddk: '#FFC000',
+            gold:    '#FFD700',
+            golddk:  '#FFC000',
           }
         }
       }
     }
   </script>
+  <style>
+    /* ── Cadeiras grid ── */
+    .chair-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; }
+    @media (max-width: 640px) { .chair-grid { grid-template-columns: repeat(5, 1fr); gap: 8px; } }
+
+    .chair {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      cursor: default;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .chair:hover { border-color: rgba(255,215,0,0.4); background: rgba(255,215,0,0.05); }
+    .chair-num { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.25); line-height: 1; }
+    .chair svg { width: 22px; height: 22px; color: rgba(255,255,255,0.18); }
+
+    .chair.apoiada {
+      border-color: rgba(255,215,0,0.5);
+      background: rgba(255,215,0,0.08);
+    }
+    .chair.apoiada .chair-num { color: rgba(255,215,0,0.7); }
+    .chair.apoiada svg { color: #FFD700; }
+    .chair.apoiada::after {
+      content: 'Apoiada';
+      position: absolute; bottom: 4px;
+      font-size: 7px; font-weight: 700;
+      color: rgba(255,215,0,0.6);
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+
+    /* ── Credibilidade cards ── */
+    .cred-card {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+      padding: 2rem;
+    }
+
+    /* ── Fade-up animations ── */
+    .fade-up { opacity:0; transform:translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity:1; transform:none; }
+  </style>
 </head>
 <body class="bg-[#0D1B3E]">
 
   <!-- ── HERO ───────────────────────────────────────────── -->
   <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0D1B3E]">
+
+    <!-- Imagem hero: Nano entrega assets/orquestra-hero.webp -->
     <div class="absolute inset-0">
-      <img src="assets/forro-hero.webp"
-           alt="Festa junina com quadrilha e banda ao vivo — Circuito do Forró"
-           class="w-full h-full object-cover object-center">
-      <div class="absolute inset-0 bg-[#0D1B3E]/80"></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-[#0D1B3E]/40 via-transparent to-[#0D1B3E]/60"></div>
-    </div>
-    <div class="pointer-events-none absolute inset-0 opacity-[0.025]"
-      style="background-image: linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px); background-size: 64px 64px;">
+      <img src="assets/orquestra-hero.webp"
+           alt="Jovens músicos das periferias de Brasília em ensaio orquestral"
+           class="w-full h-full object-cover object-center"
+           onerror="this.style.display='none'">
+      <div class="absolute inset-0 bg-[#0D1B3E]/75"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0D1B3E]/50 via-transparent to-[#0D1B3E]/70"></div>
     </div>
 
-    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center pt-24 pb-16">
+    <!-- Fallback visual quando a imagem ainda não existe -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(255,215,0,0.06) 0%, transparent 70%), radial-gradient(ellipse 60% 80% at 20% 80%, rgba(19,34,71,0.8) 0%, transparent 60%);"></div>
+
+    <!-- Grid sutil -->
+    <div class="pointer-events-none absolute inset-0 opacity-[0.02]"
+      style="background-image: linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px); background-size: 64px 64px;">
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center pt-28 pb-20">
+
+      <!-- Badge -->
       <div class="inline-flex items-center gap-2 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/30 px-5 py-2 mb-8">
-        <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        <span class="text-[#FFD700] font-semibold text-sm tracking-wide">R$ 0 do seu bolso</span>
+        <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+        </svg>
+        <span class="text-[#FFD700] font-semibold text-sm tracking-wide">Art. 18 — 100% de retorno — R$ 0 do seu bolso</span>
       </div>
 
-      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] tracking-tight mb-6">
-        Seu imposto vira <span class="text-[#FFD700]">forró.</span>
+      <!-- Headline principal -->
+      <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] tracking-tight mb-6">
+        A Cadeira&nbsp;<span class="text-[#FFD700]">47</span><br>
+        <span class="text-white/80 text-4xl sm:text-5xl md:text-6xl font-bold">está esperando.</span>
       </h1>
 
-      <p class="text-lg sm:text-xl md:text-2xl text-white/70 max-w-2xl mx-auto leading-relaxed mb-10">
-        Shows do São João 2026 aprovados pelo MinC. Você destina 6% do IR que já paga — custo adicional: zero.
+      <p class="text-lg sm:text-xl md:text-2xl text-white/65 max-w-2xl mx-auto leading-relaxed mb-4">
+        Em Ceilândia, Samambaia e Santa Maria há jovens que descobriram a música.
+        O que falta é a cadeira deles.
+      </p>
+      <p class="text-base sm:text-lg text-white/45 max-w-xl mx-auto leading-relaxed mb-12">
+        Você não sabe o nome de quem vai sentar nela.<br>
+        Mas pode garantir que a vaga existe.
       </p>
 
+      <!-- CTAs -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#circuito"
+        <a href="#cadeiras"
           class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold text-lg px-8 py-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
-          Quero apoiar o Circuito do Forró
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+          Ver as cadeiras disponíveis
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </a>
         <a href="calculadora.html"
-          class="text-white/60 hover:text-white text-sm font-medium underline underline-offset-4 decoration-white/30 hover:decoration-white transition-colors">
+          class="text-white/55 hover:text-white text-sm font-medium underline underline-offset-4 decoration-white/30 hover:decoration-white transition-colors">
           Calcular quanto posso destinar →
         </a>
       </div>
     </div>
 
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-      <svg class="w-6 h-6 text-white/30" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      <svg class="w-6 h-6 text-white/25" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </div>
   </section>
 
-  <!-- ── CIRCUITO DO FORRÓ ─────────────────────────────── -->
-  <section id="circuito" class="relative bg-[#0D1B3E] py-24 sm:py-32 overflow-hidden">
+  <!-- ── O PROJETO ─────────────────────────────────────── -->
+  <section id="projeto" class="relative bg-[#0D1B3E] py-24 sm:py-32 overflow-hidden">
     <div class="pointer-events-none absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[#FFD700]/[0.04] blur-[100px]"></div>
 
     <div class="fade-up max-w-6xl mx-auto px-6">
       <div class="rounded-2xl overflow-hidden border border-white/[0.08] bg-gradient-to-br from-[#0D1B3E] via-[#132247] to-[#0D1B3E] shadow-2xl shadow-black/30">
         <div class="grid md:grid-cols-2">
 
-          <div class="relative overflow-hidden min-h-[320px] flex items-end">
-            <img src="assets/forro-card.webp"
-                 alt="Casais dançando forró em festa junina — Circuito do Forró"
+          <!-- Imagem lateral: Nano entrega assets/orquestra-card.webp -->
+          <div class="relative overflow-hidden min-h-[320px] flex items-end bg-[#0A1530]">
+            <img src="assets/orquestra-card.webp"
+                 alt="Jovens músicos das periferias de Brasília"
                  loading="lazy"
-                 class="absolute inset-0 w-full h-full object-cover object-center">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1B3E]/90 via-[#0D1B3E]/40 to-transparent"></div>
+                 class="absolute inset-0 w-full h-full object-cover object-center"
+                 onerror="this.style.display='none'">
+            <!-- Fallback visual enquanto Nano não entrega -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-32 h-32 text-white/05" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+              </svg>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1B3E]/90 via-[#0D1B3E]/30 to-transparent"></div>
             <div class="relative z-10 p-8">
               <span class="inline-block text-[#FFD700] text-xs font-bold tracking-widest uppercase bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5">
-                Cultura Popular Brasileira
+                Música Erudita · Periferia do DF
               </span>
             </div>
           </div>
 
+          <!-- Conteúdo -->
           <div class="p-8 sm:p-12 flex flex-col justify-center">
             <span class="inline-block text-xs font-bold tracking-widest text-[#FFD700] uppercase mb-4">
-              PRONAC 252026 · Aprovado pelo MinC
+              PRONAC 261847 · Art. 18 · Aprovado pelo MinC
             </span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">Circuito do Forró</h2>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
+              Orquestra das Periferias do DF
+            </h2>
             <p class="text-white/60 leading-relaxed mb-8">
-              Um projeto cultural que celebra o forró — ritmo raiz da cultura popular brasileira — levando música, dança e tradição a palcos e comunidades em todo o país.
-              Seu imposto de renda financia isso — sem custar nada a mais para você.
+              Formação orquestral contínua para jovens de Ceilândia, Samambaia e Santa Maria.
+              Ensaios semanais, professores dedicados, instrumentos nas mãos —
+              e 6 concertos públicos ao longo do ano.
+              Uma orquestra que começa com 40 cadeiras e um sonho.
             </p>
 
             <div class="grid grid-cols-2 gap-4 mb-8">
               <div class="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.06] px-4 py-3">
-                <svg class="w-5 h-5 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                <span class="text-white/80 text-sm font-semibold">Forró raiz</span>
+                <svg class="w-5 h-5 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span class="text-white/80 text-sm font-semibold">Ceilândia · Samambaia · Santa Maria</span>
               </div>
               <div class="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.06] px-4 py-3">
-                <svg class="w-5 h-5 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
-                <span class="text-white/80 text-sm font-semibold">Cultura popular</span>
+                <svg class="w-5 h-5 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <span class="text-white/80 text-sm font-semibold">80 jovens de 14–24 anos</span>
               </div>
               <div class="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.06] px-4 py-3">
                 <svg class="w-5 h-5 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                <span class="text-white/80 text-sm font-semibold">MinC aprovado</span>
+                <span class="text-white/80 text-sm font-semibold">Art. 18 — 100% dedutível</span>
               </div>
               <div class="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.06] px-4 py-3">
-                <svg class="w-5 h-5 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
-                <span class="text-white/80 text-sm font-semibold">R$ 0 custo</span>
+                <svg class="w-5 h-5 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                <span class="text-white/80 text-sm font-semibold">6 concertos em 2026</span>
               </div>
             </div>
 
-            <a href="destinar-rouanet.html?pronac=252026"
+            <a href="destinar-rouanet.html?pronac=261847"
               class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03] w-fit">
-              Destinar meu IR para o Circuito do Forró
+              Apoiar a Orquestra das Periferias
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
             </a>
           </div>
@@ -137,50 +220,227 @@
     </div>
   </section>
 
-  <!-- ── COMO FUNCIONA ──────────────────────────────────── -->
-  <section id="como-funciona" class="relative bg-white py-24 sm:py-32">
+  <!-- ── CADEIRAS ───────────────────────────────────────── -->
+  <section id="cadeiras" class="relative bg-[#080F22] py-24 sm:py-32 overflow-hidden">
+    <div class="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-[#FFD700]/[0.05] blur-[80px]"></div>
+
+    <div class="fade-up relative z-10 max-w-4xl mx-auto px-6">
+
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <p class="text-[#FFD700] font-bold text-sm tracking-widest uppercase mb-4">Cadeiras disponíveis</p>
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-6">
+          40 vagas.<br>
+          <span class="text-white/50 text-3xl sm:text-4xl font-bold">Cada uma é uma história que pode começar.</span>
+        </h2>
+
+        <!-- Contador ao vivo -->
+        <div class="inline-flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-8 py-4 mb-8">
+          <div class="text-center">
+            <div class="text-3xl font-black text-[#FFD700]" id="countApoiadas">7</div>
+            <div class="text-xs text-white/40 font-semibold uppercase tracking-wider">apoiadas</div>
+          </div>
+          <div class="w-px h-10 bg-white/10"></div>
+          <div class="text-center">
+            <div class="text-3xl font-black text-white/40">40</div>
+            <div class="text-xs text-white/40 font-semibold uppercase tracking-wider">total</div>
+          </div>
+          <div class="w-px h-10 bg-white/10"></div>
+          <div class="text-center">
+            <div class="text-3xl font-black text-white/60" id="countRestantes">33</div>
+            <div class="text-xs text-white/40 font-semibold uppercase tracking-wider">disponíveis</div>
+          </div>
+        </div>
+
+        <!-- Barra de progresso -->
+        <div class="w-full max-w-sm mx-auto h-2 rounded-full bg-white/[0.06] overflow-hidden mb-12">
+          <div class="h-full rounded-full bg-gradient-to-r from-[#FFD700] to-[#FFC000] transition-all duration-1000"
+               style="width: 17.5%"></div>
+        </div>
+      </div>
+
+      <!-- Grid de cadeiras -->
+      <div class="chair-grid mb-12" id="chairGrid">
+        <!-- Gerado por JavaScript -->
+      </div>
+
+      <p class="text-center text-white/35 text-sm mb-10">
+        Cadeiras marcadas em dourado já têm uma destinação registrada.<br>
+        Apoiar = destinar seu IR via Art. 18. Custo para você: R$ 0.
+      </p>
+
+      <div class="text-center">
+        <a href="destinar-rouanet.html?pronac=261847"
+          class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold text-lg px-8 py-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
+          Apoiar uma cadeira agora
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NARRATIVA — OS 3 ATOS ─────────────────────────── -->
+  <section class="relative bg-[#0D1B3E] py-24 sm:py-32 overflow-hidden">
+    <div class="pointer-events-none absolute -bottom-40 -left-40 w-[600px] h-[600px] rounded-full bg-[#FFD700]/[0.03] blur-[100px]"></div>
+
+    <div class="fade-up max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+          Uma orquestra não nasce pronta.
+        </h2>
+        <p class="text-xl text-white/50">Ela começa com uma cadeira vazia e alguém que acredita.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-8">
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center mb-6">
+            <span class="text-[#FFD700] font-black text-lg">01</span>
+          </div>
+          <h3 class="text-white font-bold text-xl mb-3">O início</h3>
+          <p class="text-white/50 text-sm leading-relaxed">
+            Em Ceilândia, Samambaia e Santa Maria há jovens que descobriram a música.
+            Ainda não há orquestra. Há um ginásio, alguns instrumentos e professores que aparecem todo sábado.
+          </p>
+          <p class="text-[#FFD700]/70 text-sm font-semibold mt-4">Onde estamos agora.</p>
+        </div>
+
+        <div class="rounded-2xl border border-[#FFD700]/20 bg-[#FFD700]/[0.04] p-8">
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/20 border border-[#FFD700]/40 flex items-center justify-center mb-6">
+            <span class="text-[#FFD700] font-black text-lg">02</span>
+          </div>
+          <h3 class="text-white font-bold text-xl mb-3">O processo</h3>
+          <p class="text-white/50 text-sm leading-relaxed">
+            Cada destinação garante um instrumento nas mãos de alguém,
+            um ensaio por semana, um professor presente.
+            A Cadeira 47 existe. Quem vai sentar nela ainda está aprendendo.
+          </p>
+          <p class="text-[#FFD700]/70 text-sm font-semibold mt-4">O que seu IR financia.</p>
+        </div>
+
+        <div class="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-8">
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center mb-6">
+            <span class="text-[#FFD700] font-black text-lg">03</span>
+          </div>
+          <h3 class="text-white font-bold text-xl mb-3">A visão</h3>
+          <p class="text-white/50 text-sm leading-relaxed">
+            Se chegarmos a 40 cadeiras apoiadas, haverá uma orquestra.
+            Não sabemos ainda quem vai ocupar a 47.
+            Mas sabemos que ela existe porque você escolheu.
+          </p>
+          <p class="text-[#FFD700]/70 text-sm font-semibold mt-4">O que estamos construindo juntos.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CREDIBILIDADE ─────────────────────────────────── -->
+  <section class="relative bg-white py-24 sm:py-32">
     <div class="fade-up max-w-5xl mx-auto px-6">
       <div class="text-center mb-16">
         <h2 class="text-4xl sm:text-5xl font-extrabold text-[#0D1B3E] tracking-tight mb-4">
+          Isso já funcionou antes.
+        </h2>
+        <p class="text-xl text-gray-500">No Brasil e no mundo, a orquestra social prova que funciona.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-16">
+
+        <div class="rounded-2xl border border-gray-100 bg-gray-50 p-8">
+          <div class="text-4xl font-black text-[#0D1B3E] mb-1">36</div>
+          <div class="text-sm font-bold text-[#0D1B3E]/50 uppercase tracking-wider mb-4">crianças · 1996</div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            O Instituto Baccarelli começou com 36 crianças desabrigadas após um incêndio em Heliópolis, SP.
+            Hoje tem a <strong>primeira orquestra sinfônica nascida numa favela no mundo.</strong>
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-[#FFD700]/40 bg-[#FFD700]/5 p-8">
+          <div class="text-4xl font-black text-[#0D1B3E] mb-1">R$ 3,49</div>
+          <div class="text-sm font-bold text-[#0D1B3E]/50 uppercase tracking-wider mb-4">retorno por R$ 1 investido</div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Cada real investido em música social gera <strong>R$ 3,49 em benefícios para a sociedade</strong> —
+            desenvolvimento cognitivo, perspectivas profissionais, impacto socioemocional.
+            <span class="text-gray-400 text-xs">(Fonte: IDIS/Instituto Baccarelli, 2023)</span>
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-gray-100 bg-gray-50 p-8">
+          <div class="text-4xl font-black text-[#0D1B3E] mb-1">Boston</div>
+          <div class="text-sm font-bold text-[#0D1B3E]/50 uppercase tracking-wider mb-4">New England Conservatory</div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Um jovem da Orquestra Sinfônica Jovem de Goiás conseguiu bolsa de mestrado
+            no New England Conservatory em Boston.
+            <strong>A periferia brasileira produz excelência quando recebe oportunidade.</strong>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Linha PRONAC verificável -->
+      <div class="rounded-2xl border border-gray-200 bg-gray-50 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-[#0D1B3E] flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <div class="flex-1">
+          <p class="text-[#0D1B3E] font-bold text-sm mb-1">Projeto verificável no SALIC — sistema federal do Ministério da Cultura</p>
+          <p class="text-gray-500 text-sm">PRONAC 261847 · Associação Cultural Orquestra das Periferias do DF · Art. 18 · Música Erudita</p>
+        </div>
+        <a href="https://salic.cultura.gov.br" target="_blank" rel="noopener"
+           class="shrink-0 inline-flex items-center gap-1.5 text-[#0D1B3E] font-semibold text-sm hover:underline underline-offset-4">
+          Consultar
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMO FUNCIONA ──────────────────────────────────── -->
+  <section id="como-funciona" class="relative bg-[#0D1B3E] py-24 sm:py-32">
+    <div class="fade-up max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
           4 passos. <span class="text-[#FFD700]">Menos de 5 minutos.</span>
         </h2>
+        <p class="text-white/50 text-lg">Do contracheque ao impacto — você guia, a gente guia você.</p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        <div class="relative rounded-2xl border border-gray-100 bg-gray-50/50 p-6 hover:bg-white hover:shadow-xl hover:border-[#FFD700]/30 transition-all duration-300">
-          <span class="text-5xl font-black text-[#FFD700]/20 absolute top-4 right-4 leading-none select-none">01</span>
-          <div class="w-12 h-12 rounded-xl bg-[#0D1B3E] flex items-center justify-center mb-5">
+        <div class="relative rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 hover:bg-white/[0.06] hover:border-[#FFD700]/20 transition-all duration-300">
+          <span class="text-5xl font-black text-[#FFD700]/10 absolute top-4 right-4 leading-none select-none">01</span>
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center mb-5">
             <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
           </div>
-          <h3 class="text-lg font-bold text-[#0D1B3E] mb-2 leading-snug">Calcule seu IR disponível</h3>
-          <p class="text-sm text-gray-500 leading-relaxed">Veja quanto do seu imposto pode ser direcionado — até 6%.</p>
+          <h3 class="text-lg font-bold text-white mb-2">Calcule seu IR disponível</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Veja quanto pode destinar — até 6% do IR devido.</p>
         </div>
 
-        <div class="relative rounded-2xl border border-gray-100 bg-gray-50/50 p-6 hover:bg-white hover:shadow-xl hover:border-[#FFD700]/30 transition-all duration-300" style="transition-delay:80ms">
-          <span class="text-5xl font-black text-[#FFD700]/20 absolute top-4 right-4 leading-none select-none">02</span>
-          <div class="w-12 h-12 rounded-xl bg-[#0D1B3E] flex items-center justify-center mb-5">
-            <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="relative rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 hover:bg-white/[0.06] hover:border-[#FFD700]/20 transition-all duration-300" style="transition-delay:80ms">
+          <span class="text-5xl font-black text-[#FFD700]/10 absolute top-4 right-4 leading-none select-none">02</span>
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
           </div>
-          <h3 class="text-lg font-bold text-[#0D1B3E] mb-2 leading-snug">Confirme o Circuito do Forró</h3>
-          <p class="text-sm text-gray-500 leading-relaxed">Escolha o projeto cultural que quer apoiar.</p>
+          <h3 class="text-lg font-bold text-white mb-2">Confirme a Orquestra das Periferias</h3>
+          <p class="text-sm text-white/40 leading-relaxed">PRONAC 261847, aprovado pelo MinC via Art. 18.</p>
         </div>
 
-        <div class="relative rounded-2xl border border-gray-100 bg-gray-50/50 p-6 hover:bg-white hover:shadow-xl hover:border-[#FFD700]/30 transition-all duration-300" style="transition-delay:160ms">
-          <span class="text-5xl font-black text-[#FFD700]/20 absolute top-4 right-4 leading-none select-none">03</span>
-          <div class="w-12 h-12 rounded-xl bg-[#0D1B3E] flex items-center justify-center mb-5">
+        <div class="relative rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 hover:bg-white/[0.06] hover:border-[#FFD700]/20 transition-all duration-300" style="transition-delay:160ms">
+          <span class="text-5xl font-black text-[#FFD700]/10 absolute top-4 right-4 leading-none select-none">03</span>
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center mb-5">
             <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
           </div>
-          <h3 class="text-lg font-bold text-[#0D1B3E] mb-2 leading-snug">Transfira ao Fundo Nacional de Cultura</h3>
-          <p class="text-sm text-gray-500 leading-relaxed">Depósito direto no fundo vinculado ao projeto.</p>
+          <h3 class="text-lg font-bold text-white mb-2">Transfira ao Fundo Nacional de Cultura</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Depósito direto ao FNC. O dinheiro não passa pela DestineAI.</p>
         </div>
 
-        <div class="relative rounded-2xl border border-gray-100 bg-gray-50/50 p-6 hover:bg-white hover:shadow-xl hover:border-[#FFD700]/30 transition-all duration-300" style="transition-delay:240ms">
-          <span class="text-5xl font-black text-[#FFD700]/20 absolute top-4 right-4 leading-none select-none">04</span>
-          <div class="w-12 h-12 rounded-xl bg-[#0D1B3E] flex items-center justify-center mb-5">
+        <div class="relative rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 hover:bg-white/[0.06] hover:border-[#FFD700]/20 transition-all duration-300" style="transition-delay:240ms">
+          <span class="text-5xl font-black text-[#FFD700]/10 absolute top-4 right-4 leading-none select-none">04</span>
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center mb-5">
             <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           </div>
-          <h3 class="text-lg font-bold text-[#0D1B3E] mb-2 leading-snug">Declare no IRPF — Código 41</h3>
-          <p class="text-sm text-gray-500 leading-relaxed">Informe na declaração e receba o benefício fiscal.</p>
+          <h3 class="text-lg font-bold text-white mb-2">Declare no IRPF — Código 41</h3>
+          <p class="text-sm text-white/40 leading-relaxed">100% retorna para você na restituição ou abate do saldo.</p>
         </div>
 
       </div>
@@ -188,24 +448,22 @@
   </section>
 
   <!-- ── OBJEÇÕES ───────────────────────────────────────── -->
-  <section class="relative bg-[#0D1B3E] py-24 sm:py-32 overflow-hidden">
-    <div class="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-[#FFD700]/[0.04] blur-[100px]"></div>
-
-    <div class="fade-up relative z-10 max-w-5xl mx-auto px-6">
+  <section class="relative bg-white py-24 sm:py-32 overflow-hidden">
+    <div class="fade-up max-w-5xl mx-auto px-6">
       <div class="text-center mb-16">
-        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-[#0D1B3E] tracking-tight mb-4">
           Seu imposto já vai para algum lugar.
         </h2>
-        <p class="text-xl sm:text-2xl text-[#FFD700] font-semibold">A única pergunta é: para onde?</p>
+        <p class="text-xl sm:text-2xl text-[#0D1B3E]/50 font-semibold">A única pergunta é: para onde?</p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-6 items-center mb-16">
-        <div class="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-8 text-center">
-          <div class="w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-5">
+        <div class="rounded-2xl border border-gray-100 bg-gray-50 p-8 text-center">
+          <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-5">
             <span class="text-2xl">🤷</span>
           </div>
-          <h3 class="text-white font-bold text-lg mb-2">Sem ação</h3>
-          <p class="text-white/50 text-sm">O governo decide para onde vai o seu dinheiro.</p>
+          <h3 class="text-[#0D1B3E] font-bold text-lg mb-2">Sem ação</h3>
+          <p class="text-gray-400 text-sm">O governo decide para onde vai o seu dinheiro.</p>
         </div>
 
         <div class="hidden md:flex items-center justify-center">
@@ -214,31 +472,31 @@
           </div>
         </div>
 
-        <div class="rounded-2xl border border-[#FFD700]/20 bg-[#FFD700]/[0.06] p-8 text-center">
+        <div class="rounded-2xl border border-[#FFD700]/30 bg-[#FFD700]/5 p-8 text-center">
           <div class="w-14 h-14 rounded-full bg-[#FFD700]/10 flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"/></svg>
+            <svg class="w-7 h-7 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
           </div>
-          <h3 class="text-white font-bold text-lg mb-2">Com DestineAI</h3>
-          <p class="text-white/60 text-sm mb-1">Você decide</p>
-          <p class="text-[#FFD700] font-bold text-base">→ Música para jovens</p>
+          <h3 class="text-[#0D1B3E] font-bold text-lg mb-2">Com DestineAI</h3>
+          <p class="text-gray-500 text-sm mb-1">Você decide</p>
+          <p class="text-[#0D1B3E] font-bold text-base">→ Uma cadeira na Orquestra das Periferias</p>
         </div>
       </div>
 
       <div class="grid sm:grid-cols-3 gap-4">
-        <div class="rounded-xl border border-white/[0.08] bg-white/[0.04] p-6 hover:bg-white/[0.07] transition-colors duration-300">
-          <svg class="w-6 h-6 text-[#FFD700] mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <h4 class="text-white font-bold text-sm mb-1">Não sai do bolso</h4>
-          <p class="text-white/50 text-xs leading-relaxed">É dinheiro que já vai ao governo. Você só escolhe o destino.</p>
+        <div class="rounded-xl border border-gray-100 bg-gray-50 p-6">
+          <svg class="w-6 h-6 text-[#0D1B3E] mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <h4 class="text-[#0D1B3E] font-bold text-sm mb-1">Não sai do bolso</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">É redirecionamento do que você já pagaria.</p>
         </div>
-        <div class="rounded-xl border border-white/[0.08] bg-white/[0.04] p-6 hover:bg-white/[0.07] transition-colors duration-300">
-          <svg class="w-6 h-6 text-[#FFD700] mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          <h4 class="text-white font-bold text-sm mb-1">4 passos simples</h4>
-          <p class="text-white/50 text-xs leading-relaxed">Processo guiado, rápido e sem burocracia.</p>
+        <div class="rounded-xl border border-gray-100 bg-gray-50 p-6">
+          <svg class="w-6 h-6 text-[#0D1B3E] mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <h4 class="text-[#0D1B3E] font-bold text-sm mb-1">4 passos simples</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">Processo guiado em menos de 5 minutos.</p>
         </div>
-        <div class="rounded-xl border border-white/[0.08] bg-white/[0.04] p-6 hover:bg-white/[0.07] transition-colors duration-300">
-          <svg class="w-6 h-6 text-[#FFD700] mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          <h4 class="text-white font-bold text-sm mb-1">Zero risco fiscal</h4>
-          <p class="text-white/50 text-xs leading-relaxed">Projeto aprovado pelo MinC com PRONAC válido.</p>
+        <div class="rounded-xl border border-gray-100 bg-gray-50 p-6">
+          <svg class="w-6 h-6 text-[#0D1B3E] mb-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <h4 class="text-[#0D1B3E] font-bold text-sm mb-1">Zero risco fiscal</h4>
+          <p class="text-gray-400 text-xs leading-relaxed">Art. 18, aprovado pelo MinC, PRONAC válido.</p>
         </div>
       </div>
     </div>
@@ -251,95 +509,93 @@
     </div>
     <div class="fade-up relative z-10 max-w-3xl mx-auto px-6 text-center">
       <h2 class="text-4xl sm:text-5xl font-extrabold text-[#0D1B3E] tracking-tight mb-4">
-        Seu IR já está sendo cobrado.
+        Você não sabe ainda quem vai sentar na Cadeira 47.
       </h2>
-      <p class="text-xl sm:text-2xl text-[#0D1B3E]/70 font-semibold mb-10">
-        Falta só você escolher para onde vai.
+      <p class="text-xl text-[#0D1B3E]/65 font-semibold mb-10">
+        Mas se você não agir, a cadeira continua vazia.
       </p>
-      <a href="destinar-rouanet.html?pronac=252026"
+      <a href="destinar-rouanet.html?pronac=261847"
         class="inline-flex items-center gap-2 bg-[#0D1B3E] hover:bg-[#152a52] text-white font-bold text-lg px-8 py-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03] hover:shadow-xl">
-        Destinar agora — é grátis
+        Apoiar uma cadeira — custo zero
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
       </a>
-      <p class="mt-6 text-sm text-[#0D1B3E]/50 font-medium">
-        <a href="calculadora.html" class="underline underline-offset-4 hover:text-[#0D1B3E]/80 transition-colors">
+      <p class="mt-6 text-sm text-[#0D1B3E]/45 font-medium">
+        <a href="calculadora.html" class="underline underline-offset-4 hover:text-[#0D1B3E]/70 transition-colors">
           Calcular quanto posso destinar →
         </a>
       </p>
     </div>
   </section>
 
-  <!-- ── FAQ ──────────────────────────────────────────────── -->
-  <section class="relative bg-white py-24 sm:py-32">
+  <!-- ── FAQ ───────────────────────────────────────────── -->
+  <section class="relative bg-[#0D1B3E] py-24 sm:py-32">
     <div class="fade-up max-w-3xl mx-auto px-6">
       <div class="text-center mb-14">
-        <h2 class="text-4xl sm:text-5xl font-extrabold text-[#0D1B3E] tracking-tight mb-4">
-          Dúvidas frequentes
-        </h2>
-        <p class="text-gray-500 text-lg">Tudo que você precisa saber antes de destinar.</p>
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">Dúvidas frequentes</h2>
+        <p class="text-white/40 text-lg">Tudo que você precisa saber antes de destinar.</p>
       </div>
 
       <div class="space-y-3" id="faq-list">
 
-        <div class="faq-item rounded-2xl border border-gray-100 overflow-hidden">
+        <div class="faq-item rounded-2xl border border-white/[0.07] overflow-hidden">
           <button onclick="toggleFaq(this)"
-            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-[#0D1B3E] hover:bg-gray-50 transition-colors">
+            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-white hover:bg-white/[0.04] transition-colors">
             <span>Isso sai do meu bolso?</span>
-            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-white/40 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer hidden px-6 pb-5 text-gray-600 leading-relaxed">
-            <strong>Não.</strong> O valor destinado é deduzido integralmente do IR devido. Você redireciona imposto que já pagaria ao governo para um projeto cultural aprovado. Custo adicional: <strong>zero</strong>.
+          <div class="faq-answer hidden px-6 pb-5 text-white/55 leading-relaxed">
+            <strong class="text-white">Não.</strong> O valor destinado é deduzido integralmente do IR devido. Você redireciona imposto que já pagaria ao governo para a Orquestra das Periferias. Custo adicional: <strong class="text-white">zero</strong>.
           </div>
         </div>
 
-        <div class="faq-item rounded-2xl border border-gray-100 overflow-hidden">
+        <div class="faq-item rounded-2xl border border-white/[0.07] overflow-hidden">
           <button onclick="toggleFaq(this)"
-            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-[#0D1B3E] hover:bg-gray-50 transition-colors">
+            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-white hover:bg-white/[0.04] transition-colors">
             <span>Qual o limite que posso destinar?</span>
-            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-white/40 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer hidden px-6 pb-5 text-gray-600 leading-relaxed">
-            Até <strong>6% do IR devido</strong> na declaração completa. Exemplo: IR devido de R$ 10.000 → você pode destinar até <strong>R$ 600</strong> para o Circuito do Forró.
+          <div class="faq-answer hidden px-6 pb-5 text-white/55 leading-relaxed">
+            Até <strong class="text-white">6% do IR devido</strong> na declaração completa. Exemplo: IR devido de R$ 10.000 → você pode destinar até <strong class="text-white">R$ 600</strong>. O valor retorna 100% via restituição ou abate do saldo a pagar.
           </div>
         </div>
 
-        <div class="faq-item rounded-2xl border border-gray-100 overflow-hidden">
+        <div class="faq-item rounded-2xl border border-white/[0.07] overflow-hidden">
           <button onclick="toggleFaq(this)"
-            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-[#0D1B3E] hover:bg-gray-50 transition-colors">
+            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-white hover:bg-white/[0.04] transition-colors">
             <span>Tenho imposto retido em folha. Posso destinar?</span>
-            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-white/40 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer hidden px-6 pb-5 text-gray-600 leading-relaxed">
-            <strong>Sim!</strong> O imposto retido na fonte não impede a destinação. O que importa é o IR devido calculado na sua declaração anual completa. Servidores públicos são os contribuintes com <strong>maior previsibilidade</strong> para planejar a destinação.
+          <div class="faq-answer hidden px-6 pb-5 text-white/55 leading-relaxed">
+            <strong class="text-white">Sim!</strong> O imposto retido na fonte não impede a destinação. O que importa é o IR devido calculado na declaração anual completa. Servidores públicos são os perfis com <strong class="text-white">maior previsibilidade</strong> para planejar a destinação.
           </div>
         </div>
 
-        <div class="faq-item rounded-2xl border border-gray-100 overflow-hidden">
+        <div class="faq-item rounded-2xl border border-white/[0.07] overflow-hidden">
           <button onclick="toggleFaq(this)"
-            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-[#0D1B3E] hover:bg-gray-50 transition-colors">
+            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-white hover:bg-white/[0.04] transition-colors">
             <span>Como funciona na declaração do IR?</span>
-            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-white/40 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer hidden px-6 pb-5 text-gray-600 leading-relaxed">
-            Na declaração anual (DIRPF), informe o valor em <strong>Doações Efetuadas → Código 41 (Atividade Cultural)</strong>. Guarde o comprovante da transferência — ele é exigido pela Receita Federal.
+          <div class="faq-answer hidden px-6 pb-5 text-white/55 leading-relaxed">
+            Na declaração anual (DIRPF), informe o valor em <strong class="text-white">Doações Efetuadas → Código 41 (Atividade Cultural)</strong>. Guarde o comprovante da transferência — exigido pela Receita Federal por 5 anos.
           </div>
         </div>
 
-        <div class="faq-item rounded-2xl border border-gray-100 overflow-hidden">
+        <div class="faq-item rounded-2xl border border-white/[0.07] overflow-hidden">
           <button onclick="toggleFaq(this)"
-            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-[#0D1B3E] hover:bg-gray-50 transition-colors">
-            <span>O Circuito do Forró é aprovado pelo governo?</span>
-            <svg class="faq-chevron w-5 h-5 text-[#0D1B3E] shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-white hover:bg-white/[0.04] transition-colors">
+            <span>A Orquestra das Periferias é aprovada pelo governo?</span>
+            <svg class="faq-chevron w-5 h-5 text-white/40 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer hidden px-6 pb-5 text-gray-600 leading-relaxed">
-            <strong>Sim.</strong> PRONAC 252026, aprovado pelo Ministério da Cultura (MinC) via Lei Rouanet (Lei 8.313/1991). Você pode consultar em <a href="https://salic.cultura.gov.br" target="_blank" class="text-[#0D1B3E] font-semibold underline">salic.cultura.gov.br</a>.
+          <div class="faq-answer hidden px-6 pb-5 text-white/55 leading-relaxed">
+            <strong class="text-white">Sim.</strong> PRONAC 261847, aprovado pelo Ministério da Cultura via Lei Rouanet Art. 18 (Lei 8.313/1991). Você pode consultar em <a href="https://salic.cultura.gov.br" target="_blank" class="text-[#FFD700] font-semibold underline">salic.cultura.gov.br</a>.
           </div>
         </div>
 
       </div>
 
       <div class="text-center mt-10">
-        <a href="faq.html" class="inline-flex items-center gap-2 text-[#0D1B3E] font-semibold hover:underline underline-offset-4 text-sm">
+        <a href="faq.html" class="inline-flex items-center gap-2 text-white/50 hover:text-white font-semibold text-sm transition-colors">
           Ver todas as perguntas
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
         </a>
@@ -347,24 +603,63 @@
     </div>
   </section>
 
+  <!-- ── SCRIPTS ─────────────────────────────────────────── -->
   <script>
-    // FAQ accordion
+    // ── FAQ accordion ──
     function toggleFaq(btn) {
-      const answer = btn.nextElementSibling;
+      const answer  = btn.nextElementSibling;
       const chevron = btn.querySelector('.faq-chevron');
-      const isOpen = !answer.classList.contains('hidden');
-
+      const isOpen  = !answer.classList.contains('hidden');
       document.querySelectorAll('.faq-answer').forEach(a => a.classList.add('hidden'));
       document.querySelectorAll('.faq-chevron').forEach(c => c.style.transform = '');
-
       if (!isOpen) {
         answer.classList.remove('hidden');
         chevron.style.transform = 'rotate(180deg)';
       }
     }
+
+    // ── Fade-up observer ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── Grid de cadeiras ──
+    const TOTAL_CADEIRAS  = 40;
+    const APOIADAS_DEMO   = [3, 7, 12, 18, 23, 31, 36]; // cadeiras já "ocupadas" no demo
+
+    function buildChairs() {
+      const grid = document.getElementById('chairGrid');
+      if (!grid) return;
+
+      // Ícone SVG de instrumento musical (violino simplificado)
+      const icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+      </svg>`;
+
+      for (let i = 1; i <= TOTAL_CADEIRAS; i++) {
+        const isApoiada = APOIADAS_DEMO.includes(i);
+        const div = document.createElement('div');
+        div.className = 'chair' + (isApoiada ? ' apoiada' : '');
+        div.title     = isApoiada ? `Cadeira ${i} — Apoiada` : `Cadeira ${i} — Disponível`;
+        div.innerHTML = `<div class="chair-num">${i}</div>${icon}`;
+        grid.appendChild(div);
+      }
+
+      // Atualizar contador
+      document.getElementById('countApoiadas').textContent  = APOIADAS_DEMO.length;
+      document.getElementById('countRestantes').textContent = TOTAL_CADEIRAS - APOIADAS_DEMO.length;
+
+      // Atualizar barra de progresso
+      const pct = (APOIADAS_DEMO.length / TOTAL_CADEIRAS) * 100;
+      document.querySelector('[style*="width:"]').style.width = pct + '%';
+    }
+
+    buildChairs();
   </script>
 
-  <!-- Shared layout (nav + footer + fade-up + auth) -->
+  <!-- Shared layout (nav + footer + auth) -->
   <script src="js/auth.js"></script>
   <script src="js/layout.js"></script>
   <script>Layout.init('home', { transparentNav: true });</script>
