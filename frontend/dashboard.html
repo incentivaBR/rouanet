@@ -648,13 +648,6 @@
       <h1 id="welcomeTitle">Olá!</h1>
       <p>Acompanhe suas destinações culturais via Lei Rouanet</p>
 
-      <!-- Link Admin (visivel apenas para admins) -->
-      <div id="adminLinkContainer" style="margin: 1.5rem 0; display: none;">
-        <a href="admin.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: rgba(255,255,255,0.2); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);">
-          <i class="fas fa-chart-bar"></i> Painel Administrativo (Fundo)
-        </a>
-      </div>
-
       <div class="stats-row">
         <div class="stat-card">
           <div class="value" id="statTotalDonated">R$ 0</div>
@@ -662,7 +655,7 @@
         </div>
         <div class="stat-card">
           <div class="value" id="statTotalDonations">0</div>
-          <div class="label">Destinacoes</div>
+          <div class="label">Destinações</div>
         </div>
         <div class="stat-card">
           <div class="value" id="statIRDue">-</div>
@@ -674,7 +667,7 @@
     <!-- IR Summary -->
     <div id="irSummarySection" style="display:none">
       <div class="ir-summary">
-        <h4><i class="fas fa-calculator"></i> Seu Calculo IR 2026</h4>
+        <h4><i class="fas fa-calculator"></i> Seu Cálculo IR 2026</h4>
         <div class="ir-grid">
           <div class="ir-item">
             <div class="value" id="irRendimentos">-</div>
@@ -690,7 +683,7 @@
           </div>
           <div class="ir-item">
             <div class="value" id="irDisponivel">-</div>
-            <div class="label">Disponivel</div>
+            <div class="label">Disponível</div>
           </div>
         </div>
       </div>
@@ -763,10 +756,6 @@
       document.getElementById('welcomeTitle').textContent = `Ola, ${firstName}!`;
       document.getElementById('statTotalDonated').textContent = utils.formatCurrency(user.total_donated || 0);
 
-      // Mostrar link admin se usuario for admin
-      if (user.is_admin) {
-        document.getElementById('adminLinkContainer').style.display = 'block';
-      }
     }
 
     // Load fresh user data

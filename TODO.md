@@ -1,14 +1,14 @@
 # TODO — IncentivaBR Rouanet
 
 ## Em andamento
-- [ ] Adaptar `server.js` para remover rotas GDF (funds, admin, orgDashboard)
-- [ ] Adaptar `backend/package.json` (nome: `incentivabr-rouanet`)
-- [ ] Revisar `frontend/index.html` — remover referências FDI/FDCA/GDF
-- [ ] Revisar `frontend/dashboard.html` — limpar módulos não-Rouanet
-- [ ] Parametrizar brand no frontend via variável injetada pelo backend (`/api/config/brand`)
+- [x] Adaptar `server.js` para remover rotas GDF — removidos `projectsRoutes` e `organizationsRoutes` (tabelas GDF inexistentes neste DB)
+- [x] Adaptar `backend/package.json` (nome: `incentivabr-rouanet`) — já estava correto
+- [x] Revisar `frontend/index.html` — sem referências GDF/FDI/FDCA
+- [x] Revisar `frontend/dashboard.html` — removido link morto para `admin.html` (Painel do Fundo)
+- [x] Parametrizar brand no frontend via `/api/config/brand` — adicionado `loadBrand()` em `tenant.js`
 
 ## Próximas tarefas
-- [ ] Criar `.env.example` completo com todas as variáveis necessárias
+- [x] Criar `.env.example` completo — adicionado `SIMULATION_MODE` e `ANTHROPIC_API_KEY`
 - [ ] Testar fluxo completo: busca SALIC → wizard → comprovante
 - [ ] Criar README.md comercial (para clientes white-label)
 - [ ] Configurar deploy na Railway com nixpacks
