@@ -64,6 +64,7 @@ const Layout = {
           <a href="termos-uso.html" class="dai-footer__link">Termos de Uso</a>
         </div>
         <p class="dai-footer__legal">Plataforma de destinação de IR · Lei 8.313/1991</p>
+        <p class="dai-footer__legal" style="margin-top:4px;opacity:0.65">DestineAI é um produto <strong>IncentivaBR®</strong> · INPI nº BR512025000647-0 · © 2025–2026 IncentivaBR · Todos os direitos reservados · Reprodução proibida</p>
       </div>`;
 
     document.body.appendChild(footer);
