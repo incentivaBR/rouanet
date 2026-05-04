@@ -9,9 +9,10 @@
 
 ## Próximas tarefas
 - [x] Criar `.env.example` completo — adicionado `SIMULATION_MODE` e `ANTHROPIC_API_KEY`
-- [ ] Testar fluxo completo: busca SALIC → wizard → comprovante
+- [x] Testar fluxo completo: busca SALIC → wizard → comprovante — testado em prod (2026-05-04)
+- [x] Configurar deploy na Railway com nixpacks — Railway detecta automaticamente
+- [x] `SIMULATION_MODE=true` na Railway — ativo para piloto FGV
 - [ ] Criar README.md comercial (para clientes white-label)
-- [ ] Configurar deploy na Railway com nixpacks
 - [ ] Subdomínio `destinai.com.br` apontando para o deploy
 
 ## Backlog
