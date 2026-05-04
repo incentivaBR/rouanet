@@ -153,10 +153,59 @@ const tenant = {
   getSlug() {
     const org = this.getOrganization();
     return org ? org.slug : 'www';
+  },
+
+  /**
+   * Carrega configuração de marca via /api/config/brand
+   * Mais leve que loadOrganizationConfig — ideal para inicialização rápida.
+   */
+  async loadBrand() {
+    try {
+      const baseUrl = typeof api !== 'undefined' && api.baseUrl ? api.baseUrl : '';
+      const response = await fetch(`${baseUrl}/api/config/brand`);
+      if (!response.ok) return;
+      const brand = await response.json();
+      this._applyBrand(brand);
+      return brand;
+    } catch (error) {
+      console.error('Erro ao carregar brand:', error);
+    }
+    return null;
+  },
+
+  _applyBrand(brand) {
+    if (!brand) return;
+
+    if (brand.color_primary) {
+      document.documentElement.style.setProperty('--primary-color', brand.color_primary);
+    }
+    if (brand.color_accent) {
+      document.documentElement.style.setProperty('--secondary-color', brand.color_accent);
+      document.documentElement.style.setProperty('--accent-color', brand.color_accent);
+    }
+
+    // Atualizar elementos com classe .brand-name
+    document.querySelectorAll('.brand-name').forEach(el => {
+      el.textContent = brand.name;
+    });
+
+    // Atualizar logotipos com classe .brand-logo
+    if (brand.logo_url) {
+      document.querySelectorAll('.brand-logo').forEach(el => {
+        if (el.tagName === 'IMG') el.src = brand.logo_url;
+      });
+    }
+
+    // Expor simulation_mode globalmente
+    window.SIMULATION_MODE = brand.simulation_mode === true;
+
+    window.dispatchEvent(new CustomEvent('brandLoaded', { detail: brand }));
   }
 };
 
 // Carregar automaticamente ao iniciar a página
-document.addEventListener('DOMContentLoaded', () => {
+// loadBrand primeiro (rápido, usa .env) → loadOrganizationConfig depois (org sobrescreve se tiver cores próprias)
+document.addEventListener('DOMContentLoaded', async () => {
+  await tenant.loadBrand();
   tenant.loadOrganizationConfig();
 });

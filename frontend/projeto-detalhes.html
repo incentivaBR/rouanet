@@ -989,37 +989,77 @@
       if (el) el.textContent = formatted;
     }
 
-    // Carregar projeto — usa demo local se disponível, senão consulta SALIC
+    // Normaliza dados do org-project (estrutura SALIC) para o formato de renderProjeto
+    function normalizeOrgProject(data) {
+      const p = data.projeto || {};
+      const o = data.organizacao || {};
+      const local = DEMO_PROJETOS[p.pronac] || {};
+      return {
+        pronac:        p.pronac,
+        titulo:        local.titulo || p.nome,
+        nome:          p.nome,
+        segmento:      local.segmento || p.segmento,
+        area:          local.area     || p.area,
+        uf:            local.uf       || p.uf,
+        municipio:     local.municipio || p.municipio,
+        situacao:      p.situacao,
+        proponente:    { razao_social: p.proponente?.nome },
+        valor_aprovado: p.valores?.aprovado || local.valor_aprovado,
+        valor_captado:  p.valores?.captado  || local.valor_captado,
+        descricao:     local.descricao || p.objetivos || p.resumo || '',
+        mecanismo:     local.mecanismo || p.mecanismo || '',
+        art18:         local.art18 || false,
+        updates:       local.updates,
+        orcamento:     local.orcamento,
+        cadeiras:      local.cadeiras
+      };
+    }
+
+    function afterRender() {
+      setTimeout(() => {
+        const input = document.getElementById('sidebarAmount');
+        if (input) input.addEventListener('input', updateAmountDisplay);
+        buildDetalheCadeiras();
+      }, 100);
+    }
+
+    // Carregar projeto:
+    //  1. org-project (banco — correto para white-label e simulação)
+    //  2. DEMO_PROJETOS (fallback offline com conteúdo narrativo rico)
+    //  3. SALIC direto (para qualquer outro PRONAC real)
     async function loadProjeto() {
       if (!pronac) {
         renderError('Nenhum PRONAC informado na URL.');
         return;
       }
 
-      // Projetos demo com dados locais (sem depender do SALIC)
+      // 1 — Tentar dados do banco via org-project
+      try {
+        const res = await fetch('/api/salic/org-project');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.status === 'success' && data.projeto?.pronac === pronac) {
+            renderProjeto(normalizeOrgProject(data));
+            afterRender();
+            return;
+          }
+        }
+      } catch (e) { /* sem banco ou org não configurada — continuar */ }
+
+      // 2 — Dados locais (narrativa rica para PRONACs conhecidos)
       if (DEMO_PROJETOS[pronac]) {
         renderProjeto(DEMO_PROJETOS[pronac]);
-        setTimeout(() => {
-          const input = document.getElementById('sidebarAmount');
-          if (input) input.addEventListener('input', updateAmountDisplay);
-          buildDetalheCadeiras();
-        }, 100);
+        afterRender();
         return;
       }
 
+      // 3 — SALIC direto (projetos reais não configurados no banco)
       try {
         const res = await fetch(`/api/salic/projetos/${pronac}`);
         if (!res.ok) throw new Error('Projeto não encontrado');
         const data = await res.json();
-        const projeto = data.projeto || data;
-        renderProjeto(projeto);
-
-        setTimeout(() => {
-          const input = document.getElementById('sidebarAmount');
-          if (input) input.addEventListener('input', updateAmountDisplay);
-          buildDetalheCadeiras();
-        }, 100);
-
+        renderProjeto(data.projeto || data);
+        afterRender();
       } catch (err) {
         renderError(err.message);
       }

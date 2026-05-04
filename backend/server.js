@@ -13,8 +13,6 @@ import { initEmailService, getEmailStatus } from './src/services/emailService.js
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import authRoutes from './src/routes/auth.js';
-import projectsRoutes from './src/routes/projects.js';
-import organizationsRoutes from './src/routes/organizations.js';
 import calculatorRoutes from './src/routes/calculator.js';
 import donationsRoutes from './src/routes/donations.js';
 import uploadsRoutes from './src/routes/uploads.js';
@@ -192,8 +190,6 @@ app.get('/diagnostico', async (req, res) => {
 
 // Rotas da API
 app.use('/api/auth', authRoutes);
-app.use('/api/projects', projectsRoutes);
-app.use('/api/organizations', organizationsRoutes);
 app.use('/api/calculator', calculatorRoutes);
 app.use('/api/donations', donationsRoutes);
 app.use('/api/uploads', uploadsRoutes);
