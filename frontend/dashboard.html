@@ -38,6 +38,7 @@
   <style>
     body {
       background: var(--background-light);
+      visibility: visible;
     }
 
     .user-menu {
@@ -642,6 +643,17 @@
 </head>
 <body>
 
+  <!-- Nav simples — substituí o Layout.init nav público -->
+  <nav style="position:fixed;top:0;inset-inline:0;z-index:50;height:60px;background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);box-shadow:0 4px 24px rgba(0,0,0,0.18)">
+    <div style="max-width:720px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:100%">
+      <a href="index.html" style="color:white;font-weight:900;font-size:20px;text-decoration:none">Destine<span style="color:#FFD700">AI</span></a>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span id="navUserName" style="color:rgba(255,255,255,0.7);font-size:14px"></span>
+        <button onclick="auth.logout()" style="background:none;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.6);padding:6px 14px;border-radius:8px;font-size:13px;cursor:pointer">Sair</button>
+      </div>
+    </div>
+  </nav>
+
   <div class="container" style="padding-top: 80px; padding-bottom: 60px;">
     <!-- Welcome Section -->
     <div class="welcome-section">
@@ -693,7 +705,7 @@
     <div class="section">
       <div class="section-header">
         <h2 class="section-title"><i class="fas fa-heart"></i> Meu Impacto Cultural</h2>
-        <a href="projetos-rouanet.html" class="btn btn-outline">
+        <a id="btnNovaDestinacao" href="destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF" class="btn btn-outline">
           <i class="fas fa-plus"></i> Nova Destinação
         </a>
       </div>
@@ -707,26 +719,19 @@
     </div>
 
     <!-- Acoes -->
-    <div class="section">
+    <div class="section" id="sectionContinue">
       <h2 class="section-title"><i class="fas fa-rocket"></i> Continue Destinando</h2>
 
-      <div class="actions-grid">
-        <a href="calculadora.html" class="action-card">
-          <i class="fas fa-calculator"></i>
-          <h3>Calcular IR 2026</h3>
-          <p>Descubra quanto pode destinar via Lei Rouanet</p>
+      <div class="actions-grid" id="actionsGrid">
+        <a href="destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF" class="action-card">
+          <i class="fas fa-play"></i>
+          <h3>Nova Simulação</h3>
+          <p>Simule novamente a destinação do seu IR para a Orquestra das Periferias</p>
         </a>
-
-        <a href="projetos-rouanet.html" class="action-card">
-          <i class="fas fa-theater-masks"></i>
-          <h3>Nosso Projeto Cultural</h3>
-          <p>Veja o projeto aprovado pelo MinC e destine</p>
-        </a>
-
-        <a href="como-funciona.html" class="action-card">
-          <i class="fas fa-landmark"></i>
-          <h3>Lei Rouanet</h3>
-          <p>Entenda como funciona a destinação cultural</p>
+        <a href="piloto.html" class="action-card">
+          <i class="fas fa-book-open"></i>
+          <h3>Guia do Piloto</h3>
+          <p>Consulte o passo a passo do piloto FGV</p>
         </a>
       </div>
     </div>
@@ -735,7 +740,7 @@
 
   <script src="js/auth.js"></script>
   <script src="js/layout.js"></script>
-  <script>Layout.init('');</script>
+  <script>Layout.init('', { skipNav: true, skipFooter: true });</script>
   <script src="js/api.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/toast.js"></script>
@@ -751,9 +756,11 @@
     // Update UI with user data
     function updateUserUI() {
       const firstName = user.nome ? user.nome.split(' ')[0] : 'Usuario';
-      document.getElementById('userName').textContent = firstName;
-      document.getElementById('userAvatar').textContent = firstName.charAt(0).toUpperCase();
-      document.getElementById('welcomeTitle').textContent = `Ola, ${firstName}!`;
+      const navName = document.getElementById('navUserName');
+      if (navName) navName.textContent = firstName;
+      if (document.getElementById('userName')) document.getElementById('userName').textContent = firstName;
+      if (document.getElementById('userAvatar')) document.getElementById('userAvatar').textContent = firstName.charAt(0).toUpperCase();
+      document.getElementById('welcomeTitle').textContent = `Olá, ${firstName}!`;
       document.getElementById('statTotalDonated').textContent = utils.formatCurrency(user.total_donated || 0);
 
     }
@@ -868,11 +875,12 @@
 
     function getStatusInfo(status) {
       const map = {
-        pending: { label: 'Pendente', cls: 'status-pending', icon: 'fa-clock' },
-        confirmed: { label: 'Confirmada', cls: 'status-confirmed', icon: 'fa-circle-check' },
-        processed: { label: 'Processada', cls: 'status-processed', icon: 'fa-star' },
-        rejected: { label: 'Recusada', cls: 'status-pending', icon: 'fa-times-circle' },
-        cancelled: { label: 'Cancelada', cls: 'status-pending', icon: 'fa-ban' },
+        pending:          { label: 'Pendente',          cls: 'status-pending',    icon: 'fa-clock' },
+        confirmed:        { label: 'Confirmada',        cls: 'status-confirmed',  icon: 'fa-circle-check' },
+        processed:        { label: 'Processada',        cls: 'status-processed',  icon: 'fa-star' },
+        test_simulated:   { label: 'Simulada ✓',        cls: 'status-confirmed',  icon: 'fa-flask' },
+        rejected:         { label: 'Recusada',          cls: 'status-pending',    icon: 'fa-times-circle' },
+        cancelled:        { label: 'Cancelada',         cls: 'status-pending',    icon: 'fa-ban' },
       };
       return map[status] || map.pending;
     }
@@ -947,9 +955,9 @@
               <i class="fas ${statusInfo.icon}"></i> ${statusInfo.label}
             </span>
             <div class="impact-footer-actions">
-              ${donation.status === 'confirmed' ? `
+              ${(donation.status === 'confirmed' || donation.status === 'test_simulated') ? `
                 <button onclick="baixarComprovante('${donation.id}')" class="btn-download comprovante">
-                  <i class="fas fa-file-pdf"></i> Comprovante IR
+                  <i class="fas fa-file-pdf"></i> Comprovante PDF
                 </button>
               ` : ''}
               ${donation.pronac && !(window.__brand && window.__brand.simulation_mode) ? `
