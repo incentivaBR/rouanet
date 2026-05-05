@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guia IR para Servidores — Como declarar a destinação · DestineAI</title>
-  <meta name="description" content="Guia passo a passo: onde encontrar o IR Devido (e-CAC, contracheque, SIGEPE) e como lançar corretamente a destinação Lei Rouanet na declaração anual de IR.">
+  <meta name="description" content="Guia passo a passo: onde encontrar o IR Devido (Resumo da declaração IRPF, e-CAC, SIGEPE) e como lançar corretamente a destinação Lei Rouanet na declaração anual de IR.">
   <link rel="icon" type="image/png" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -128,9 +128,21 @@
         </h2>
       </div>
 
+      <!-- Frame custo zero -->
+      <div class="bg-[#0D1B3E] rounded-2xl p-5 mb-6 text-white">
+        <p class="text-sm font-bold text-[#FFD700] mb-3">O que você destina pode voltar pra você</p>
+        <div class="font-mono text-sm space-y-1 text-white/90 mb-3">
+          <div class="flex justify-between"><span>Imposto retido na fonte (ano)</span><span>R$ 10.000</span></div>
+          <div class="flex justify-between"><span>Destinação Rouanet (6%)</span><span class="text-red-300">− R$ 600</span></div>
+          <div class="border-t border-white/20 mt-2 pt-2 flex justify-between font-bold"><span>Restituição extra</span><span class="text-[#FFD700]">+ R$ 600</span></div>
+          <div class="flex justify-between"><span>Custo líquido pro seu bolso</span><span class="text-green-300 font-bold">R$ 0</span></div>
+        </div>
+        <p class="text-white/60 text-xs">O projeto ganha. Você não perde nada. Quem "paga" é o governo — não você.</p>
+      </div>
+
       <p class="text-[15px] text-slate-600 leading-relaxed mb-7">
-        O <strong>IR Devido</strong> é o imposto calculado sobre sua renda, <em>antes</em> de abater o que já foi retido em folha.
-        Você precisa desse número para saber o limite que pode destinar (6% do IR Devido). Há três formas de encontrá-lo:
+        O <strong>IR Devido</strong> é o imposto calculado sobre sua renda, <em>antes</em> de abater o que já foi retido na fonte.
+        Você precisa desse número para calcular o limite de destinação (6% do IR Devido). Há três formas de encontrá-lo:
       </p>
 
       <!-- Método 1: e-CAC -->
@@ -216,14 +228,14 @@
       <details class="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden">
         <summary class="flex items-center gap-3 px-6 py-5 cursor-pointer hover:bg-slate-50 transition-colors">
           <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">2</div>
-          <h3 class="font-bold text-[#0D1B3E] flex-1 text-[15px]">Via contracheque / holerite</h3>
+          <h3 class="font-bold text-[#0D1B3E] flex-1 text-[15px]">Via imposto retido na fonte (quando não tem a declaração em mãos)</h3>
           <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-700 uppercase tracking-wide flex-shrink-0 hidden sm:inline">Estimativa</span>
           <i class="fas fa-chevron-down text-slate-400 chevron transition-transform duration-200 flex-shrink-0 ml-1"></i>
         </summary>
         <div class="px-6 py-6 border-t border-slate-100">
           <p class="text-sm text-slate-600 leading-relaxed mb-5">
-            Seu contracheque mensal mostra o <strong>IR retido na fonte</strong> de cada mês.
-            A soma de 12 meses é uma boa aproximação do IR Devido anual.
+            Se você não tem a declaração IRPF em mãos, pode usar o <strong>imposto retido na fonte</strong> ao longo do ano como estimativa.
+            Esse valor aparece nos seus contracheques mensais e é uma aproximação razoável — mas o valor exato está na declaração.
           </p>
           <ol class="space-y-5">
             <li class="flex gap-4 items-start">
