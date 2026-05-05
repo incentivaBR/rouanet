@@ -604,10 +604,10 @@
             <button class="btn-primary-rouanet" id="btnCalcular" onclick="calcular()">
               <i class="fas fa-calculator"></i> Calcular
             </button>
+            <button class="btn-primary-rouanet" id="btnProStep3" onclick="goTo(3)" style="display:none">
+              Definir valor a destinar <i class="fas fa-arrow-right"></i>
+            </button>
           </div>
-          <button class="btn-secondary" id="btnProStep3" onclick="goTo(3)" style="display:none;margin-top:10px">
-            Definir valor a destinar <i class="fas fa-arrow-right"></i>
-          </button>
 
         </div>
       </div>
@@ -1005,6 +1005,7 @@
       document.getElementById('calcCompleta').style.display = mode === 'completa' ? '' : 'none';
       document.getElementById('calcResultBox').style.display = 'none';
       document.getElementById('btnProStep3').style.display   = 'none';
+      document.getElementById('btnCalcular').style.display   = '';
     }
 
     // ── Calcular IR ─────────────────────────────────────────────
@@ -1050,6 +1051,7 @@
         document.getElementById('resAliquota').textContent = `${data.aliquota_efetiva}%`;
         document.getElementById('resLimite').textContent   = BRL(limite);
         document.getElementById('calcResultBox').style.display = '';
+        document.getElementById('btnCalcular').style.display   = 'none';
         document.getElementById('btnProStep3').style.display   = '';
 
       } catch (err) {
@@ -1080,6 +1082,7 @@
         document.getElementById('resAliquota').textContent = '—';
         document.getElementById('resLimite').textContent   = BRL(limite);
         document.getElementById('calcResultBox').style.display = '';
+        document.getElementById('btnCalcular').style.display   = 'none';
         document.getElementById('btnProStep3').style.display   = '';
 
       } catch (err) {

@@ -168,8 +168,7 @@ router.post('/:id/simulate', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query(
       `UPDATE donations
-       SET status = 'confirmed', confirmed_at = NOW(),
-           receipt_notes = 'Simulação — piloto FGV. Nenhum valor transferido.'
+       SET status = 'confirmed', confirmed_at = NOW()
        WHERE id = $1 AND user_id = $2 AND status = 'pending'
        RETURNING id, donation_amount, projeto_titulo`,
       [id, userId]
