@@ -142,6 +142,14 @@
       transition: border-color 0.15s;
     }
     .btn-nova:hover { border-color: #0D1B3E; color: #0D1B3E; }
+    .btn-cancel {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: none; border: 1.5px solid #FCA5A5; color: #B91C1C;
+      border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 600;
+      font-family: 'Inter', sans-serif; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-cancel:hover { background: #FEE2E2; border-color: #B91C1C; }
 
     /* ── Caixa de instrução IRPF ── */
     .irpf-box {
@@ -387,9 +395,14 @@
               ? `<button class="btn-comprovante" onclick="baixarComprovante('${d.id}', this)">
                    <i class="fas fa-file-pdf"></i> Baixar Comprovante PDF
                  </button>`
-              : `<span style="font-size:13px;color:#92400E;background:#FEF9C3;padding:8px 14px;border-radius:8px">
-                   <i class="fas fa-clock"></i> Comprovante disponível após confirmação do pagamento
-                 </span>`
+              : `<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                   <span style="font-size:13px;color:#92400E;background:#FEF9C3;padding:8px 14px;border-radius:8px">
+                     <i class="fas fa-clock"></i> Aguardando pagamento
+                   </span>
+                   <button class="btn-cancel" onclick="cancelarDoacao('${d.id}', this)">
+                     <i class="fas fa-trash-alt"></i> Remover
+                   </button>
+                 </div>`
             }
             <a href="destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF" class="btn-nova">
               <i class="fas fa-plus"></i> Nova destinação
@@ -397,6 +410,26 @@
           </div>
         </div>
       `;
+    }
+
+    async function cancelarDoacao(id, btn) {
+      if (!confirm('Remover esta simulação da sua lista?')) return;
+      const token = localStorage.getItem('incentivabr_token');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      try {
+        const resp = await fetch(`/api/donations/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message || 'Erro');
+        await loadDonations();
+      } catch (e) {
+        alert('Erro ao remover: ' + e.message);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-trash-alt"></i> Remover';
+      }
     }
 
     async function loadDonations() {

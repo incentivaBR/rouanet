@@ -152,6 +152,34 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
   }
 });
 
+// DELETE /api/donations/:id — cancela destinação pendente (usuário pode remover simulação)
+router.delete('/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const userId  = req.user.userId;
+
+  if (!isValidUUID(id)) {
+    return res.status(400).json({ status: 'error', message: 'ID inválido.' });
+  }
+
+  try {
+    const result = await pool.query(
+      `UPDATE donations SET status = 'cancelled'
+       WHERE id = $1 AND user_id = $2 AND status = 'pending'
+       RETURNING id`,
+      [id, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ status: 'error', message: 'Destinação não encontrada ou não pode ser cancelada.' });
+    }
+
+    res.json({ status: 'success', message: 'Destinação cancelada.' });
+  } catch (error) {
+    console.error('Erro ao cancelar destinação:', error.message);
+    res.status(500).json({ status: 'error', message: 'Erro interno.' });
+  }
+});
+
 // POST /api/donations/:id/simulate — confirma pagamento fictício (apenas TEST_MODE)
 router.post('/:id/simulate', authenticateToken, async (req, res) => {
   if (process.env.SIMULATION_MODE !== 'true') {
