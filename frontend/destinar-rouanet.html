@@ -846,10 +846,10 @@
               Compartilhar com colegas no WhatsApp
             </a>
 
-            <a id="btnDownloadComprovante" href="#" target="_blank"
-              style="display:none;align-items:center;justify-content:center;gap:8px;background:#D97706;color:white;font-weight:600;font-size:14px;padding:12px 20px;border-radius:12px;text-decoration:none;margin-bottom:10px;width:100%;box-sizing:border-box">
+            <button id="btnDownloadComprovante" onclick="baixarComprovanteWizard()"
+              style="display:none;align-items:center;justify-content:center;gap:8px;background:#FFD700;color:#0D1B3E;font-weight:700;font-size:14px;padding:12px 20px;border-radius:12px;border:none;cursor:pointer;margin-bottom:10px;width:100%;box-sizing:border-box;font-family:'Inter',sans-serif">
               <i class="fas fa-file-pdf"></i> Baixar Comprovante PDF
-            </a>
+            </button>
 
             <a href="dashboard.html"
               class="btn-primary-rouanet" style="text-decoration:none;margin-bottom:16px">
@@ -1165,6 +1165,33 @@
       }
     }
 
+    // ── Download comprovante com autenticação ───────────────────
+    async function baixarComprovanteWizard() {
+      const btn = document.getElementById('btnDownloadComprovante');
+      if (!state.donationId) { toast('ID da destinação não encontrado', 'error'); return; }
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando PDF...';
+      try {
+        const resp = await fetch(`${BASE}/api/donations/${state.donationId}/comprovante`, {
+          headers: authHeader()
+        });
+        if (!resp.ok) throw new Error('Erro ao gerar PDF');
+        const blob = await resp.blob();
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = `comprovante-rouanet-${state.donationId.substring(0,8)}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        toast('Erro ao baixar comprovante: ' + e.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
+    }
+
     // ── Simular pagamento (modo teste) ──────────────────────────
     async function simularPagamento() {
       if (!state.donationId) { toast('Destinação não encontrada', 'error'); return; }
@@ -1190,10 +1217,7 @@
 
         // Comprovante PDF
         const dl = document.getElementById('btnDownloadComprovante');
-        if (dl) {
-          dl.href = `${BASE}/api/donations/${state.donationId}/comprovante`;
-          dl.style.display = 'flex';
-        }
+        if (dl) dl.style.display = 'flex';
 
         // WhatsApp share
         const user = auth.getUser();
