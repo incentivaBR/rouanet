@@ -78,9 +78,10 @@
     <div class="absolute inset-0">
       <img src="assets/orquestra-hero.webp"
            alt="Jovens músicos da Orquestra das Periferias do DF em concerto de gala"
-           class="w-full h-full object-cover object-center" loading="eager">
-      <div class="absolute inset-0 bg-[#0D1B3E]/82"></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-[#0D1B3E]/60 via-[#0D1B3E]/30 to-[#0D1B3E]/85"></div>
+           class="w-full h-full object-cover object-center" loading="eager"
+           style="filter: brightness(0.22) saturate(0.6);">
+      <!-- Apenas fade nas bordas superior/inferior para transição com nav e próxima seção -->
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0D1B3E]/70 via-transparent to-[#0D1B3E]/80"></div>
     </div>
 
     <div class="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20 pb-16">
@@ -91,17 +92,19 @@
       </div>
 
       <!-- Headline -->
-      <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6">
+      <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6"
+          style="text-shadow: 0 2px 24px rgba(0,0,0,0.85), 0 1px 6px rgba(0,0,0,0.7);">
         80 jovens de Brasília<br>
         <span class="text-[#FFD700]">estão tocando.</span>
       </h1>
 
-      <p class="text-xl sm:text-2xl text-white/70 font-semibold mb-8">
+      <p class="text-xl sm:text-2xl text-white/85 font-semibold mb-8"
+         style="text-shadow: 0 1px 12px rgba(0,0,0,0.7);">
         Com o IR de quem decidiu fazer diferença.
       </p>
 
       <!-- Âncora emocional -->
-      <div class="max-w-xl mx-auto mb-10 rounded-2xl border border-white/[0.10] bg-white/[0.05] px-7 py-6 text-left">
+      <div class="max-w-xl mx-auto mb-10 rounded-2xl border border-white/[0.15] bg-[#050C1E]/75 px-7 py-6 text-left backdrop-blur-sm">
         <p class="text-white/80 text-base sm:text-lg leading-relaxed">
           São jovens de <strong class="text-white">14 a 24 anos</strong> de Ceilândia, Samambaia e Santa Maria.
           Eles ensaiam toda semana, carregam seus instrumentos para casa, sonham com o palco.
@@ -112,9 +115,10 @@
         </p>
       </div>
 
-      <p class="text-base sm:text-lg text-white/45 max-w-xl mx-auto leading-relaxed mb-12">
-        Você tem até <strong class="text-white/70">6% do seu IR</strong> disponível para isso.<br>
-        <strong class="text-white/60">Não sai do seu bolso. Não é doação. É seu direito.</strong>
+      <p class="text-base sm:text-lg text-white/70 max-w-xl mx-auto leading-relaxed mb-12"
+         style="text-shadow: 0 1px 10px rgba(0,0,0,0.65);">
+        Você tem até <strong class="text-white">6% do seu IR</strong> disponível para isso.<br>
+        <strong class="text-white/85">Não sai do seu bolso. Não é doação. É seu direito.</strong>
       </p>
 
       <!-- CTAs -->
