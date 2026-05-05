@@ -435,7 +435,7 @@
     async function loadDonations() {
       const container = document.getElementById('donationsList');
       try {
-        const resp = await api.getMyDonations({ fiscal_year: 2026 });
+        const resp = await api.getMyDonations({ fiscal_year: 2026, limit: 1 });
         const donations = resp.donations || [];
 
         if (donations.length === 0) {
@@ -459,8 +459,6 @@
         // Banner de confirmação
         const banner = document.getElementById('confirmBanner');
         banner.style.display = 'flex';
-        const plural = count > 1 ? `${count} destinações registradas` : 'Destinação registrada';
-        document.getElementById('confirmTitle').textContent = plural;
 
         // Cards
         container.innerHTML = donations.map(renderDonation).join('');
