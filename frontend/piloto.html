@@ -3,259 +3,705 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Piloto DestineAI — Guia do Participante</title>
+  <title>DestineAI — A Cadeira 47 está esperando. | Piloto FGV</title>
+  <meta name="description" content="Destine 6% do seu IR para jovens das periferias de Brasília. Art. 18, 100% de retorno, R$0 do seu bolso. Piloto FGV — Maio 2026.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: { navy: '#0D1B3E', gold: '#FFD700' }
+          fontFamily: {
+            sans:  ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif']
+          },
+          colors: {
+            navy:    '#0D1B3E',
+            navydark:'#0A1530',
+            gold:    '#FFD700',
+          }
         }
       }
     }
   </script>
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .step-line::before {
-      content: '';
-      position: absolute;
-      left: 19px;
-      top: 40px;
-      bottom: -24px;
-      width: 2px;
-      background: #E5E7EB;
+    /* ── Chair grid ── */
+    .chair-grid { display:grid; grid-template-columns:repeat(8,1fr); gap:8px; }
+    @media(max-width:640px){ .chair-grid{ grid-template-columns:repeat(5,1fr); gap:7px; } }
+    .chair {
+      aspect-ratio:1; border-radius:8px;
+      border:1.5px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.02);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
     }
+    .chair-num { font-size:10px; font-weight:700; color:rgba(255,255,255,0.22); }
+    .chair svg  { width:18px; height:18px; color:rgba(255,255,255,0.15); }
+    .chair.ap   { border-color:rgba(255,215,0,0.45); background:rgba(255,215,0,0.07); }
+    .chair.ap .chair-num { color:rgba(255,215,0,0.65); }
+    .chair.ap svg        { color:#FFD700; }
+    /* ── Atos ── */
+    .ato { position:relative; border-radius:16px; overflow:hidden; min-height:200px; }
+    .ato img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    /* ── Fade-up ── */
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity .55s ease, transform .55s ease; }
+    .fade-up.visible { opacity:1; transform:none; }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-[#0D1B3E] font-sans">
 
-  <!-- HERO -->
-  <section class="bg-[#0D1B3E] pt-14 pb-12 px-6">
-    <div class="max-w-2xl mx-auto text-center">
-      <div class="inline-flex items-center gap-2 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 mb-8 text-[#FFD700] text-xs font-bold tracking-wide uppercase">
-        🎓 Piloto FGV · Modo Simulação · Maio 2026
+  <!-- ─────────────────────────────────────────────────────────
+       NAV (minimal, sem distrações)
+  ──────────────────────────────────────────────────────────── -->
+  <nav class="fixed top-0 inset-x-0 z-50 bg-[#0D1B3E]/95 backdrop-blur-md border-b border-white/[0.06]" style="height:56px">
+    <div class="max-w-5xl mx-auto flex items-center justify-between px-6 h-full">
+      <span class="text-white font-extrabold text-lg tracking-tight">
+        Destine<span class="text-[#FFD700]">AI</span>
+        <span class="ml-2 text-[#FFD700]/40 text-xs font-normal">por IncentivaBR</span>
+      </span>
+      <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
+         class="hidden sm:inline-flex items-center gap-2 bg-[#FFD700] text-[#0D1B3E] font-bold text-sm px-5 py-2 rounded-xl hover:bg-[#FFC000] transition-colors">
+        Destinar meu IR →
+      </a>
+    </div>
+  </nav>
+
+  <!-- ─────────────────────────────────────────────────────────
+       HERO — EMOÇÃO PRIMEIRO
+  ──────────────────────────────────────────────────────────── -->
+  <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0D1B3E]" style="padding-top:56px">
+
+    <!-- Foto de fundo -->
+    <div class="absolute inset-0">
+      <img src="assets/orquestra-hero.webp"
+           alt="Jovens músicos da Orquestra das Periferias do DF em concerto de gala"
+           class="w-full h-full object-cover object-center" loading="eager">
+      <div class="absolute inset-0 bg-[#0D1B3E]/72"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0D1B3E]/40 via-transparent to-[#0D1B3E]/80"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20 pb-16">
+
+      <!-- Badge FGV -->
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/25 px-5 py-2 mb-8 text-[#FFD700] text-xs font-bold tracking-widest uppercase">
+        🎓 Piloto FGV · Simulação · Maio 2026
       </div>
 
-      <h1 class="text-3xl sm:text-4xl font-black text-white mb-4 leading-tight">
-        80 jovens de Ceilândia<br>estão esperando.
+      <!-- Headline -->
+      <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6">
+        80 jovens de Brasília<br>
+        <span class="text-[#FFD700]">estão tocando.</span>
       </h1>
-      <p class="text-white/70 text-base max-w-lg mx-auto leading-relaxed mb-8">
-        Você tem <strong class="text-[#FFD700]">até 6% do seu IR</strong> disponível para financiar a Orquestra das Periferias do DF —
-        projeto aprovado pelo Ministério da Cultura. <strong class="text-white">O dinheiro iria para a Receita de qualquer jeito.</strong>
+
+      <p class="text-xl sm:text-2xl text-white/70 font-semibold mb-8">
+        Com o IR de quem decidiu fazer diferença.
       </p>
 
-      <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
-        class="inline-flex items-center gap-3 bg-[#FFD700] text-[#0D1B3E] font-black text-lg px-8 py-4 rounded-2xl hover:bg-[#FFC000] transition-all shadow-lg shadow-[#FFD700]/20">
-        Quero destinar meu IR →
-      </a>
-      <p class="text-white/30 text-xs mt-4">Simulação completa · nenhum valor é transferido · leva ~10 minutos</p>
-    </div>
-
-    <!-- FOTO DA ORQUESTRA -->
-    <div class="max-w-3xl mx-auto mt-10 px-4">
-      <div class="rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10">
-        <img src="assets/orquestra-hero.webp"
-             alt="Jovens músicos da Orquestra das Periferias do DF em apresentação — palco, luz e sorrisos"
-             class="w-full block"
-             loading="eager">
-        <div class="bg-[#0A1530] px-5 py-3 flex items-center justify-between">
-          <span class="text-white/60 text-xs">Orquestra das Periferias do DF · PRONAC 261847 · Art. 18</span>
-          <span class="text-[#FFD700] text-xs font-bold">100% dedutível</span>
-        </div>
+      <!-- Âncora emocional -->
+      <div class="max-w-xl mx-auto mb-10 rounded-2xl border border-white/[0.10] bg-white/[0.05] px-7 py-6 text-left">
+        <p class="text-white/80 text-base sm:text-lg leading-relaxed">
+          São jovens de <strong class="text-white">14 a 24 anos</strong> de Ceilândia, Samambaia e Santa Maria.
+          Eles ensaiam toda semana, carregam seus instrumentos para casa, sonham com o palco.
+        </p>
+        <p class="text-[#FFD700]/90 text-base sm:text-lg leading-relaxed mt-3 font-semibold">
+          A música que eles tocam foi paga com imposto<br>
+          que alguém já devia ao governo de qualquer jeito.
+        </p>
       </div>
+
+      <p class="text-base sm:text-lg text-white/45 max-w-xl mx-auto leading-relaxed mb-12">
+        Você tem até <strong class="text-white/70">6% do seu IR</strong> disponível para isso.<br>
+        <strong class="text-white/60">Não sai do seu bolso. Não é doação. É seu direito.</strong>
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
+           class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold text-lg px-8 py-4 rounded-xl shadow-lg transition-all hover:scale-[1.03]">
+          Quero destinar meu IR
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+        </a>
+        <a href="#mecanismo"
+           class="text-white/50 hover:text-white text-sm font-medium underline underline-offset-4 decoration-white/25 hover:decoration-white transition-colors">
+          Entender como funciona ↓
+        </a>
+      </div>
+
+      <p class="text-white/25 text-xs mt-5">Simulação completa · nenhum valor é transferido · leva ~10 minutos</p>
     </div>
 
+    <div class="absolute bottom-7 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-white/20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+    </div>
   </section>
 
-  <!-- CONTEXTO -->
-  <div class="max-w-2xl mx-auto px-6 py-10">
+  <!-- ─────────────────────────────────────────────────────────
+       O MECANISMO — POR QUE CUSTA R$0
+  ──────────────────────────────────────────────────────────── -->
+  <section id="mecanismo" class="relative bg-[#080F22] py-20 sm:py-28 overflow-hidden">
+    <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-[#FFD700]/[0.05] blur-[80px]"></div>
 
-    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-8 flex gap-4">
-      <svg class="w-6 h-6 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      <div class="text-sm text-amber-800 leading-relaxed">
-        <strong>Modo Simulação ativo.</strong> Todo o fluxo é idêntico ao sistema real — calculadora, dados bancários, comprovante — mas nenhum centavo sai da sua conta. O comprovante gerado é apenas para fins de teste.
+    <div class="fade-up max-w-4xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-12">
+        <span class="text-[#FFD700] font-bold text-xs tracking-widest uppercase">A lógica fiscal</span>
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-3 mb-4">
+          Por que sai R$&nbsp;0<br>do seu bolso?
+        </h2>
+        <p class="text-white/50 text-lg max-w-lg mx-auto">
+          Não é doação. É redirecionamento de imposto que você <em>já pagaria</em> ao governo de qualquer forma.
+        </p>
+      </div>
+
+      <!-- Tabela-impacto -->
+      <div class="max-w-lg mx-auto rounded-2xl overflow-hidden border border-white/[0.08] mb-12">
+        <div class="bg-white/[0.04] px-6 py-4 border-b border-white/[0.06] flex justify-between items-center">
+          <span class="text-white/60 text-sm font-medium">Exemplo — IR Devido R$&nbsp;10.000</span>
+          <span class="text-[#FFD700] text-xs font-bold">Art. 18 · 6%</span>
+        </div>
+        <div class="divide-y divide-white/[0.05]">
+          <div class="px-6 py-4 flex justify-between items-center">
+            <span class="text-white/70 text-sm">Imposto Devido total</span>
+            <span class="text-white font-bold">R$ 10.000</span>
+          </div>
+          <div class="px-6 py-4 flex justify-between items-center">
+            <span class="text-white/70 text-sm">Destinação Rouanet (6%)</span>
+            <span class="text-[#FFD700] font-bold">− R$ 600 → Orquestra</span>
+          </div>
+          <div class="px-6 py-4 flex justify-between items-center">
+            <span class="text-white/70 text-sm">IR restante pago</span>
+            <span class="text-white font-bold">R$ 9.400</span>
+          </div>
+          <div class="px-6 py-4 flex justify-between items-center bg-[#FFD700]/[0.06]">
+            <span class="text-white font-bold text-sm">Custo líquido pro seu bolso</span>
+            <span class="text-[#FFD700] font-black text-lg">R$ 0,00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-5">
+        <div class="rounded-xl border border-white/[0.07] bg-white/[0.03] p-5 text-center">
+          <div class="text-3xl font-black text-[#FFD700] mb-1">6%</div>
+          <div class="text-white/50 text-sm">do IR Devido<br>pode ser redirecionado</div>
+        </div>
+        <div class="rounded-xl border border-white/[0.07] bg-white/[0.03] p-5 text-center">
+          <div class="text-3xl font-black text-[#FFD700] mb-1">100%</div>
+          <div class="text-white/50 text-sm">Art. 18 — dedução integral<br>sem os 20% do Art. 26</div>
+        </div>
+        <div class="rounded-xl border border-[#FFD700]/[0.25] bg-[#FFD700]/[0.05] p-5 text-center">
+          <div class="text-3xl font-black text-[#FFD700] mb-1">R$&nbsp;0</div>
+          <div class="text-white/70 text-sm font-semibold">custo real<br>para o servidor</div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- ARGUMENTO DO RETORNO -->
-    <div class="bg-[#0D1B3E] rounded-2xl p-6 mb-6 text-white">
-      <div class="flex items-start gap-4">
-        <div class="text-3xl shrink-0">💡</div>
-        <div>
-          <h2 class="font-black text-[#FFD700] text-base mb-2">O que você destina pode voltar pra você</h2>
-          <p class="text-white/80 text-sm leading-relaxed mb-3">
-            Na sua declaração IRPF há um campo chamado <strong class="text-white">"Total do imposto devido"</strong>. Até 6% desse valor pode ser redirecionado para um projeto cultural aprovado pelo MinC — e como você já pagou imposto ao longo do ano, esse valor retorna como restituição extra.
+  <!-- ─────────────────────────────────────────────────────────
+       O PROJETO — QUEM RECEBE
+  ──────────────────────────────────────────────────────────── -->
+  <section class="relative bg-[#0D1B3E] py-20 sm:py-28 overflow-hidden">
+    <div class="pointer-events-none absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#FFD700]/[0.04] blur-[100px]"></div>
+
+    <div class="fade-up max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="text-[#FFD700] font-bold text-xs tracking-widest uppercase">Quem recebe o seu IR</span>
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-3">
+          Orquestra das Periferias do DF
+        </h2>
+      </div>
+
+      <div class="rounded-2xl overflow-hidden border border-white/[0.08] bg-gradient-to-br from-[#0D1B3E] via-[#132247] to-[#0D1B3E] shadow-2xl shadow-black/30">
+        <div class="grid md:grid-cols-2">
+
+          <!-- Foto -->
+          <div class="relative overflow-hidden min-h-[280px] flex items-end bg-[#0A1530]">
+            <img src="assets/orquestra-card.webp"
+                 alt="Jovens músicos das periferias de Brasília sorrindo com seus instrumentos"
+                 class="absolute inset-0 w-full h-full object-cover object-center" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1B3E]/90 via-[#0D1B3E]/20 to-transparent"></div>
+            <div class="relative z-10 p-7">
+              <span class="inline-block text-[#FFD700] text-xs font-bold tracking-widest uppercase bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5">
+                Música Erudita · Periferia do DF
+              </span>
+            </div>
+          </div>
+
+          <!-- Info -->
+          <div class="p-8 sm:p-10 flex flex-col justify-center">
+            <span class="inline-block text-xs font-bold tracking-widest text-[#FFD700] uppercase mb-4">
+              PRONAC 261847 · Art. 18 · Aprovado pelo MinC
+            </span>
+            <p class="text-white/65 leading-relaxed mb-7">
+              Formação orquestral contínua para <strong class="text-white">80 jovens de 14 a 24 anos</strong>
+              de Ceilândia, Samambaia e Santa Maria.
+              Ensaios semanais, professores dedicados, 6 concertos públicos gratuitos por ano.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3 mb-8">
+              <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
+                <svg class="w-4 h-4 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span class="text-white/75 text-xs font-semibold">Ceilândia · Samambaia · Santa Maria</span>
+              </div>
+              <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
+                <svg class="w-4 h-4 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <span class="text-white/75 text-xs font-semibold">80 jovens · 14–24 anos</span>
+              </div>
+              <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
+                <svg class="w-4 h-4 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                <span class="text-white/75 text-xs font-semibold">Art. 18 — 100% dedutível</span>
+              </div>
+              <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
+                <svg class="w-4 h-4 text-[#FFD700] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                <span class="text-white/75 text-xs font-semibold">6 concertos públicos · 2026</span>
+              </div>
+            </div>
+
+            <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
+               class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all hover:scale-[1.02] w-fit text-sm">
+              Apoiar a Orquestra das Periferias
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────
+       O QUE SUA DESTINAÇÃO FAZ — IMPACTO CONCRETO
+  ──────────────────────────────────────────────────────────── -->
+  <section class="relative bg-[#080F22] py-20 sm:py-28 overflow-hidden">
+    <div class="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] rounded-full bg-[#FFD700]/[0.04] blur-[70px]"></div>
+
+    <div class="fade-up relative z-10 max-w-4xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="text-[#FFD700] font-bold text-xs tracking-widest uppercase mb-3">Impacto direto</p>
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+          Seu IR vai fazer o quê,<br>
+          <span class="text-white/50 text-3xl sm:text-4xl">exatamente?</span>
+        </h2>
+        <p class="text-white/45 text-lg max-w-lg mx-auto">
+          Cada real redirecionado vai direto para o projeto —
+          instrumento, ensaio, professor, concerto.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-5 mb-10">
+        <div class="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-7">
+          <div class="text-2xl font-black text-white mb-1">R$&nbsp;300</div>
+          <div class="text-[#FFD700]/50 text-xs font-bold uppercase tracking-widest mb-4">exemplo de destinação</div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2 text-white/60 text-sm"><svg class="w-4 h-4 text-[#FFD700]/40 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Ensaios semanais por um semestre</li>
+            <li class="flex items-start gap-2 text-white/60 text-sm"><svg class="w-4 h-4 text-[#FFD700]/40 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Partituras e materiais para 1 jovem</li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-[#FFD700]/30 bg-[#FFD700]/[0.06] p-7">
+          <div class="inline-block bg-[#FFD700] text-[#0D1B3E] text-xs font-black px-2.5 py-1 rounded-full mb-3 uppercase tracking-wide">Mais escolhido</div>
+          <div class="text-2xl font-black text-white mb-1">R$&nbsp;600</div>
+          <div class="text-[#FFD700]/50 text-xs font-bold uppercase tracking-widest mb-4">exemplo de destinação</div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2 text-white/75 text-sm"><svg class="w-4 h-4 text-[#FFD700] mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Ensaios e materiais por 1 ano inteiro</li>
+            <li class="flex items-start gap-2 text-white/75 text-sm"><svg class="w-4 h-4 text-[#FFD700] mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Instrumento emprestado por 6 meses</li>
+            <li class="flex items-start gap-2 text-white/75 text-sm"><svg class="w-4 h-4 text-[#FFD700] mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Acesso aos 6 concertos públicos</li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-7">
+          <div class="text-2xl font-black text-white mb-1">R$&nbsp;1.200</div>
+          <div class="text-[#FFD700]/50 text-xs font-bold uppercase tracking-widest mb-4">formação completa</div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2 text-white/60 text-sm"><svg class="w-4 h-4 text-[#FFD700]/40 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>1 músico formado por 1 ano completo</li>
+            <li class="flex items-start gap-2 text-white/60 text-sm"><svg class="w-4 h-4 text-[#FFD700]/40 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Instrumento + manutenção o ano todo</li>
+            <li class="flex items-start gap-2 text-white/60 text-sm"><svg class="w-4 h-4 text-[#FFD700]/40 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Concerto público com seu apoio reconhecido</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-white/[0.06] bg-white/[0.02] px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-white/40 text-sm">
+          <strong class="text-white/60">Qualquer valor financia parte da jornada.</strong>
+          Sua destinação é limitada a 6% do IR devido.
+        </p>
+        <a href="calculadora.html"
+           class="shrink-0 inline-flex items-center gap-1.5 text-[#FFD700] font-semibold text-sm hover:underline underline-offset-4 whitespace-nowrap">
+          Calcular meu limite →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────
+       OS 3 ATOS — NARRATIVA CINEMATOGRÁFICA
+  ──────────────────────────────────────────────────────────── -->
+  <section class="relative bg-[#080F22] py-6 pb-20 sm:pb-28 overflow-hidden">
+    <div class="fade-up max-w-5xl mx-auto px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+          Uma vida muda quando<br>alguém decide destinar.
+        </h2>
+        <p class="text-xl text-white/40">A jornada de quem recebe o seu IR.</p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Ato 01 -->
+        <div class="ato" style="aspect-ratio:16/7">
+          <img src="assets/ato-01-cadeiras-vazias.png" alt="Ginásio de Samambaia — primeiro ensaio" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-r from-[#080F22]/90 via-[#080F22]/50 to-transparent"></div>
+          <div class="absolute inset-0 flex items-center px-8 sm:px-12">
+            <div class="max-w-xs">
+              <span class="text-[#FFD700]/50 text-xs font-black tracking-widest uppercase mb-2 block">O começo</span>
+              <h3 class="text-white font-extrabold text-2xl sm:text-3xl mb-3 leading-tight">Um jovem entra<br>no ginásio pela primeira vez.</h3>
+              <p class="text-white/60 text-sm leading-relaxed">
+                De Ceilândia, Samambaia ou Santa Maria.
+                Nunca tocou um instrumento. Mas aceitou o convite.
+                A partir daí, tudo muda.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ato 02 -->
+        <div class="ato" style="aspect-ratio:16/7">
+          <img src="assets/ato-02-ensaio-processo.png" alt="Jovens da Orquestra em ensaio semanal" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-l from-[#080F22]/90 via-[#080F22]/50 to-transparent"></div>
+          <div class="absolute inset-0 flex items-center justify-end px-8 sm:px-12">
+            <div class="max-w-xs text-right">
+              <span class="text-[#FFD700]/50 text-xs font-black tracking-widest uppercase mb-2 block">O processo</span>
+              <h3 class="text-white font-extrabold text-2xl sm:text-3xl mb-3 leading-tight">Semana após semana,<br>o instrumento vira extensão.</h3>
+              <p class="text-white/60 text-sm leading-relaxed">
+                Ensaios toda semana. Professor presente.
+                Disciplina, trabalho em equipe, identidade.
+                Isso é o que o seu IR financia, diretamente.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ato 03 -->
+        <div class="ato" style="aspect-ratio:16/7">
+          <img src="assets/ato-03-sala-cheia.png" alt="Orquestra das Periferias — concerto público lotado" loading="lazy">
+          <div class="absolute inset-0 bg-[#080F22]/60"></div>
+          <div class="absolute inset-0 flex items-center justify-center px-8">
+            <div class="text-center max-w-sm">
+              <span class="text-[#FFD700]/60 text-xs font-black tracking-widest uppercase mb-2 block">O resultado</span>
+              <h3 class="text-white font-extrabold text-2xl sm:text-3xl mb-3 leading-tight">Ele está no palco.<br>A sala está cheia.</h3>
+              <p class="text-white/65 text-sm leading-relaxed">
+                Seis concertos públicos gratuitos por ano.
+                A família na plateia. A periferia no palco.
+                <strong class="text-[#FFD700]">Foi o seu IR que tornou isso possível.</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────
+       CREDIBILIDADE — ISSO JÁ FUNCIONOU ANTES
+  ──────────────────────────────────────────────────────────── -->
+  <section class="relative bg-white py-20 sm:py-28">
+    <div class="fade-up max-w-5xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-[#0D1B3E] tracking-tight mb-3">
+          Isso já funcionou antes.
+        </h2>
+        <p class="text-xl text-gray-500">No Brasil e no mundo, a orquestra social prova que dá certo.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-10">
+
+        <div class="rounded-2xl border border-gray-100 overflow-hidden">
+          <div class="relative h-36 bg-gray-100">
+            <img src="assets/cred-orquestra-favela.png" alt="Instituto Baccarelli" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-white/70 to-transparent"></div>
+          </div>
+          <div class="p-6">
+            <div class="text-4xl font-black text-[#0D1B3E] mb-1">36</div>
+            <div class="text-xs font-bold text-[#0D1B3E]/40 uppercase tracking-wider mb-3">crianças · 1996</div>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              O Instituto Baccarelli começou com 36 crianças desabrigadas em Heliópolis.
+              Hoje tem a <strong>1ª orquestra sinfônica nascida numa favela no mundo.</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-[#FFD700]/40 bg-[#FFD700]/5 p-8 flex flex-col justify-center">
+          <div class="text-5xl font-black text-[#0D1B3E] mb-1">R$&nbsp;3,49</div>
+          <div class="text-xs font-bold text-[#0D1B3E]/40 uppercase tracking-wider mb-4">retorno por R$&nbsp;1 investido</div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Cada real investido em música social gera <strong>R$&nbsp;3,49 em benefícios para a sociedade</strong> —
+            desenvolvimento cognitivo, perspectivas profissionais, impacto socioemocional.
           </p>
-          <div class="bg-white/10 rounded-xl p-4 text-sm font-mono space-y-1 text-white/90">
-            <div class="flex justify-between"><span>Imposto Devido</span><span class="text-white">R$ 10.000</span></div>
-            <div class="flex justify-between"><span>Destinação Rouanet (6%)</span><span class="text-red-300">- R$ 600</span></div>
-            <div class="border-t border-white/20 mt-2 pt-2 flex justify-between font-bold"><span>Restituição extra</span><span class="text-[#FFD700]">+ R$ 600</span></div>
-            <div class="flex justify-between"><span>Custo líquido pro seu bolso</span><span class="text-green-300 font-bold">R$ 0</span></div>
+          <span class="text-gray-400 text-xs mt-3">Fonte: IDIS / Instituto Baccarelli, 2023</span>
+        </div>
+
+        <div class="rounded-2xl border border-gray-100 overflow-hidden">
+          <div class="relative h-36 bg-gray-100">
+            <img src="assets/cred-impacto.png" alt="Jovem músico com diploma" class="w-full h-full object-cover object-top" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-white/70 to-transparent"></div>
           </div>
-          <p class="text-white/50 text-xs mt-3">O projeto ganha. Você não perde nada.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- DIREITO GARANTIDO -->
-    <div class="rounded-2xl mb-6 overflow-hidden border border-[#FFD700]/20">
-      <div class="bg-[#FFD700] px-5 py-3 flex items-center gap-2">
-        <span class="text-lg">⚖️</span>
-        <span class="text-[#0D1B3E] font-black text-sm tracking-wide uppercase">Isso não é benefício. É direito seu.</span>
-      </div>
-      <div class="bg-[#0D1B3E] px-5 py-5">
-        <p class="text-white/90 text-sm leading-relaxed mb-4">
-          A <strong class="text-[#FFD700]">Lei 8.313/1991</strong> garante ao contribuinte o direito de destinar até 6% do Imposto de Renda para projetos culturais aprovados pelo Ministério da Cultura.
-          Criado pelo governo. Auditável pela Receita Federal. Sem burocracia extra.
-        </p>
-        <p class="text-white font-bold text-base leading-snug">
-          Você conhece as normas. Conhece seus direitos.<br>
-          <span class="text-[#FFD700]">Esse você ainda não exerceu.</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- O QUE VOCÊ VAI PRECISAR -->
-    <div class="bg-[#0D1B3E] rounded-2xl p-5 mb-6 flex items-start gap-4">
-      <div class="text-2xl shrink-0">📄</div>
-      <div>
-        <p class="text-[#FFD700] font-bold text-sm mb-1">Só uma coisa antes de começar</p>
-        <p class="text-white/80 text-sm leading-relaxed">
-          Tenha em mãos o <strong class="text-white">Total do imposto devido</strong> da sua declaração IRPF.
-          Você encontra esse valor no Resumo da declaração — seção <strong class="text-white">"Imposto Devido"</strong>
-          (programa da Receita Federal ou e-CAC). É com ele que calculamos quanto você pode destinar.
-        </p>
-      </div>
-    </div>
-
-    <!-- PASSO A PASSO -->
-    <h2 class="font-bold text-[#0D1B3E] text-lg mb-5">Passo a passo</h2>
-
-    <div class="space-y-0">
-
-      <!-- Passo 1 -->
-      <div class="relative flex gap-5 pb-6 step-line">
-        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">1</div>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
-          <h3 class="font-bold text-[#0D1B3E] mb-1">Crie sua conta</h3>
-          <p class="text-sm text-gray-600 leading-relaxed mb-3">Acesse o link abaixo e clique em <strong>"Criar conta"</strong>. Use um e-mail real — você receberá o comprovante de simulação por lá.</p>
-          <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
-            class="inline-flex items-center gap-2 bg-[#FFD700] text-[#0D1B3E] font-bold text-sm px-4 py-2 rounded-xl hover:bg-[#FFC000] transition-colors no-underline">
-            Criar conta →
-          </a>
-        </div>
-      </div>
-
-      <!-- Passo 2 -->
-      <div class="relative flex gap-5 pb-6 step-line">
-        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">2</div>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
-          <h3 class="font-bold text-[#0D1B3E] mb-1">Conheça o projeto</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">Na <strong>Etapa 1</strong> você verá os dados da <strong>Orquestra das Periferias do DF</strong> — PRONAC 261847, Art. 18 (100% dedutível), aprovado pelo MinC. Leia e clique em <strong>"Calcular meu Imposto de Renda"</strong>.</p>
-        </div>
-      </div>
-
-      <!-- Passo 3 -->
-      <div class="relative flex gap-5 pb-6 step-line">
-        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">3</div>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
-          <h3 class="font-bold text-[#0D1B3E] mb-1">Calcule seu IR</h3>
-          <p class="text-sm text-gray-600 leading-relaxed mb-3">Na <strong>Etapa 2</strong> informe seu <strong>IR Devido</strong> — você encontra esse valor no <strong>Resumo da sua declaração IRPF</strong> (programa da Receita Federal ou e-CAC).</p>
-          <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-800">
-            <strong>Onde encontrar:</strong> abra o Resumo da declaração IRPF → seção <strong>"Imposto Devido"</strong> → campo <strong>"Total do imposto devido"</strong>.<br>
-            <span class="text-blue-600 mt-1 block">⚠️ Não confunda com "Imposto a Restituir" — esse é o valor que a Receita já vai te devolver. O que você precisa é o <strong>Total do imposto devido</strong>.</span>
+          <div class="p-6">
+            <div class="text-4xl font-black text-[#0D1B3E] mb-1">Boston</div>
+            <div class="text-xs font-bold text-[#0D1B3E]/40 uppercase tracking-wider mb-3">New England Conservatory</div>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              Um jovem da Orquestra Jovem de Goiás conquistou bolsa no New England Conservatory.
+              <strong>A periferia produz excelência quando recebe oportunidade.</strong>
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- Passo 4 -->
-      <div class="relative flex gap-5 pb-6 step-line">
-        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">4</div>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
-          <h3 class="font-bold text-[#0D1B3E] mb-1">Defina o valor a destinar</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">Na <strong>Etapa 3</strong> o sistema mostra quanto você pode destinar (até 6% do IR). Use o slider para ajustar — ou deixe no máximo para ver o impacto completo. Aceite os termos e clique em "Próximo".</p>
+      <!-- SALIC -->
+      <div class="rounded-2xl border border-gray-200 bg-gray-50 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-[#0D1B3E] flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <div class="flex-1">
+          <p class="text-[#0D1B3E] font-bold text-sm mb-1">Projeto verificável no SALIC — sistema federal do Ministério da Cultura</p>
+          <p class="text-gray-500 text-sm">PRONAC 261847 · Assoc. Cultural Orquestra das Periferias do DF · Art. 18 · Música Erudita</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────
+       O CONTADOR — SEU MAIOR ALIADO
+  ──────────────────────────────────────────────────────────── -->
+  <section class="relative bg-[#0D1B3E] py-20 sm:py-24 overflow-hidden">
+    <div class="pointer-events-none absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[#FFD700]/[0.04] blur-[100px]"></div>
+
+    <div class="fade-up max-w-4xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-12">
+        <span class="text-[#FFD700] font-bold text-xs tracking-widest uppercase">Para quem usa contador</span>
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-3 mb-4">
+          70% dos servidores<br>
+          <span class="text-white/55 text-3xl sm:text-4xl">entregam a declaração<br>para um contador.</span>
+        </h2>
+        <p class="text-white/50 text-lg max-w-lg mx-auto">
+          Se você está nesse grupo, o seu contador é a peça mais importante desse processo.
+          E ele provavelmente ainda não te falou sobre isso.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6 mb-10">
+
+        <div class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-7">
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-white font-bold text-lg mb-3">O que o contador sabe fazer</h3>
+          <ul class="space-y-2 text-white/60 text-sm">
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-[#FFD700]/50 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Calcular o <strong class="text-white">IR Devido exato</strong> — o valor que você precisa para iniciar a destinação
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-[#FFD700]/50 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Confirmar o <strong class="text-white">limite de 6%</strong> considerando todas as suas deduções
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-[#FFD700]/50 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Incluir o Código 41 na declaração com <strong class="text-white">zero risco de malha fina</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-[#FFD700]/20 bg-[#FFD700]/[0.05] p-7">
+          <div class="w-12 h-12 rounded-xl bg-[#FFD700]/15 border border-[#FFD700]/30 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <h3 class="text-white font-bold text-lg mb-3">O que perguntar ao seu contador</h3>
+          <div class="space-y-3">
+            <div class="bg-white/[0.06] rounded-xl px-4 py-3">
+              <p class="text-white/80 text-sm italic">"Qual é o meu <strong class="text-[#FFD700]">Total do Imposto Devido</strong> na minha declaração?"</p>
+            </div>
+            <div class="bg-white/[0.06] rounded-xl px-4 py-3">
+              <p class="text-white/80 text-sm italic">"Posso destinar 6% para a Lei Rouanet? <strong class="text-[#FFD700]">Quanto dá?</strong>"</p>
+            </div>
+            <div class="bg-white/[0.06] rounded-xl px-4 py-3">
+              <p class="text-white/80 text-sm italic">"Você pode incluir o <strong class="text-[#FFD700]">Código 41</strong> na minha declaração este ano?"</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Passo 5 -->
-      <div class="relative flex gap-5 pb-6 step-line">
-        <div class="w-10 h-10 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-lg flex items-center justify-center shrink-0 z-10">5</div>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex-1">
-          <h3 class="font-bold text-[#0D1B3E] mb-1">Veja os dados de pagamento</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">Na <strong>Etapa 4</strong> você verá os dados bancários do projeto (Banco do Brasil, Ag. 3217-4). Explore a tela — é exatamente o que apareceria numa destinação real. <strong>Não faça nenhuma transferência.</strong></p>
+      <div class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 flex gap-4 items-start">
+        <svg class="w-6 h-6 text-[#FFD700] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div>
+          <p class="text-white font-semibold text-sm mb-1">Não usa contador? Tudo bem.</p>
+          <p class="text-white/55 text-sm leading-relaxed">
+            Você encontra o IR Devido no <strong class="text-white">programa da Receita Federal (IRPF)</strong> →
+            Resumo da Declaração → campo "Total do Imposto Devido".
+            Também aparece no <strong class="text-white">e-CAC</strong> ou no seu contracheque SIGEPE (estimativa).
+            A TINA pode te ajudar com qualquer dúvida — clique no ícone no canto da tela.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────
+       PILOTO FGV — CONTEXTO E MECÂNICA
+  ──────────────────────────────────────────────────────────── -->
+  <section class="relative bg-white py-20 sm:py-24">
+    <div class="fade-up max-w-3xl mx-auto px-6">
+
+      <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-10 flex gap-4">
+        <svg class="w-6 h-6 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="text-sm text-amber-800 leading-relaxed">
+          <strong>Modo Simulação ativo.</strong> Todo o fluxo é idêntico ao sistema real — calculadora, dados bancários, comprovante PDF —
+          mas <strong>nenhum centavo sai da sua conta</strong>. Este piloto valida a usabilidade da plataforma para a pesquisa FGV.
         </div>
       </div>
 
-      <!-- Passo 6 -->
-      <div class="relative flex gap-5 pb-6">
-        <div class="w-10 h-10 rounded-full bg-[#FFD700] text-[#0D1B3E] font-black text-lg flex items-center justify-center shrink-0 z-10">6</div>
-        <div class="bg-[#0D1B3E] rounded-2xl p-5 flex-1">
-          <h3 class="font-bold text-white mb-1">Simule e baixe o comprovante</h3>
-          <p class="text-sm text-white/70 leading-relaxed">Clique em <strong class="text-[#FFD700]">"Simular pagamento e gerar comprovante"</strong>. O sistema confirma a destinação fictícia e gera um PDF idêntico ao real — com seu nome, valor, PRONAC e protocolo. Baixe e guarde.</p>
+      <div class="text-center mb-10">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0D1B3E] tracking-tight mb-3">Como funciona o piloto</h2>
+        <p class="text-gray-500">6 passos · ~10 minutos · simulação completa</p>
+      </div>
+
+      <div class="space-y-4 mb-10">
+        <!-- Passos -->
+        <div class="flex gap-5 items-start">
+          <div class="w-9 h-9 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-sm flex items-center justify-center shrink-0 mt-0.5">1</div>
+          <div class="bg-gray-50 border border-gray-100 rounded-2xl p-5 flex-1">
+            <h3 class="font-bold text-[#0D1B3E] mb-1">Crie sua conta</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Clique em "Quero destinar meu IR" e cadastre-se. Use um e-mail real — o comprovante chega por lá.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start">
+          <div class="w-9 h-9 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-sm flex items-center justify-center shrink-0 mt-0.5">2</div>
+          <div class="bg-gray-50 border border-gray-100 rounded-2xl p-5 flex-1">
+            <h3 class="font-bold text-[#0D1B3E] mb-1">Conheça o projeto</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Você verá os dados completos da Orquestra das Periferias do DF — PRONAC, Art. 18, aprovação MinC.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start">
+          <div class="w-9 h-9 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-sm flex items-center justify-center shrink-0 mt-0.5">3</div>
+          <div class="bg-gray-50 border border-gray-100 rounded-2xl p-5 flex-1">
+            <h3 class="font-bold text-[#0D1B3E] mb-1">Calcule seu IR</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Informe o <strong>Total do Imposto Devido</strong>. A calculadora mostra seu limite de 6% em segundos.</p>
+            <div class="mt-3 bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-800">
+              <strong>Onde encontrar:</strong> programa IRPF → Resumo da Declaração → "Total do Imposto Devido".
+              Ou pergunte ao seu contador — leva 30 segundos.
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start">
+          <div class="w-9 h-9 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-sm flex items-center justify-center shrink-0 mt-0.5">4</div>
+          <div class="bg-gray-50 border border-gray-100 rounded-2xl p-5 flex-1">
+            <h3 class="font-bold text-[#0D1B3E] mb-1">Defina o valor</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Use o slider para ajustar até 6% do seu IR. Deixe no máximo para ver o impacto completo.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start">
+          <div class="w-9 h-9 rounded-full bg-[#0D1B3E] text-[#FFD700] font-black text-sm flex items-center justify-center shrink-0 mt-0.5">5</div>
+          <div class="bg-gray-50 border border-gray-100 rounded-2xl p-5 flex-1">
+            <h3 class="font-bold text-[#0D1B3E] mb-1">Veja os dados de pagamento</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Banco do Brasil, Ag. 3217-4 — exatamente o que apareceria numa destinação real. <strong>Não faça nenhuma transferência.</strong></p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start">
+          <div class="w-9 h-9 rounded-full bg-[#FFD700] text-[#0D1B3E] font-black text-sm flex items-center justify-center shrink-0 mt-0.5">6</div>
+          <div class="bg-[#0D1B3E] rounded-2xl p-5 flex-1">
+            <h3 class="font-bold text-white mb-1">Simule e baixe o comprovante</h3>
+            <p class="text-sm text-white/70 leading-relaxed">Clique em <strong class="text-[#FFD700]">"Simular pagamento"</strong>. O sistema gera um PDF idêntico ao real — com seu nome, valor, PRONAC e protocolo.</p>
+          </div>
         </div>
       </div>
 
+      <!-- FAQ mínimo -->
+      <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
+        <h3 class="font-bold text-[#0D1B3E] mb-4 text-sm uppercase tracking-wide">Dúvidas rápidas</h3>
+        <div class="space-y-4 text-sm">
+          <div>
+            <p class="font-semibold text-[#0D1B3E] mb-1">Meu dinheiro vai sair de verdade?</p>
+            <p class="text-gray-500">Não. Modo simulação — nenhuma transferência é realizada. O comprovante é apenas para o piloto.</p>
+          </div>
+          <div>
+            <p class="font-semibold text-[#0D1B3E] mb-1">Preciso do IR Devido real?</p>
+            <p class="text-gray-500">Sim — use um valor próximo ao real para que a experiência faça sentido e a calculadora funcione corretamente.</p>
+          </div>
+          <div>
+            <p class="font-semibold text-[#0D1B3E] mb-1">E se eu não souber meu IR Devido?</p>
+            <p class="text-gray-500">Pergunte ao seu contador (leva 30 segundos) ou abra o programa IRPF → Resumo → "Total do Imposto Devido". A TINA também te ajuda no chat.</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- AVISO DE MARCA -->
-    <div class="border border-gray-200 rounded-2xl p-4 mt-4 mb-4 flex gap-3 items-start bg-white">
-      <svg class="w-5 h-5 text-gray-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-      <p class="text-xs text-gray-500 leading-relaxed">
-        <strong class="text-gray-700">DestineAI é um produto IncentivaBR®</strong> — marca registrada no INPI (nº BR512025000647-0) e com registro cartorial de software. Reprodução, cópia ou comercialização não autorizada é proibida e sujeita às penalidades da Lei 9.279/1996 (Propriedade Industrial) e Lei 9.610/1998 (Direitos Autorais). © 2025–2026 IncentivaBR · Todos os direitos reservados.
-      </p>
-    </div>
-
-    <!-- CTA FINAL -->
-    <div class="bg-[#0D1B3E] rounded-2xl p-7 text-center mt-4">
-      <div class="text-5xl mb-3">🎻</div>
-      <div class="text-[#FFD700] font-black text-xl mb-2">Seu IR pode ser a diferença.</div>
-      <p class="text-white/60 text-sm mb-6 max-w-sm mx-auto">Não sai do seu bolso. Não é doação. É o seu imposto, redirecionado com propósito.</p>
-      <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
-        class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black px-8 py-4 rounded-xl transition-all hover:scale-[1.02] no-underline text-base shadow-lg shadow-[#FFD700]/20">
-        Quero destinar meu IR →
-      </a>
-      <p class="text-white/30 text-xs mt-4">Já tem conta? <a href="login.html?redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF" class="text-white/50 hover:text-white underline">Fazer login</a></p>
-    </div>
-
-    <!-- DÚVIDAS -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mt-6">
-      <h2 class="font-bold text-[#0D1B3E] mb-4 flex items-center gap-2">
-        <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Dúvidas frequentes
+  <!-- ─────────────────────────────────────────────────────────
+       CTA FINAL
+  ──────────────────────────────────────────────────────────── -->
+  <section class="relative bg-[#0D1B3E] py-20 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#FFD700]/[0.03] to-transparent"></div>
+    <div class="fade-up max-w-2xl mx-auto px-6 text-center relative z-10">
+      <div class="mb-6 rounded-2xl overflow-hidden max-w-md mx-auto shadow-2xl shadow-black/40">
+        <img src="assets/orquestra-card.webp"
+             alt="Jovens músicos da Orquestra das Periferias do DF sorrindo"
+             class="w-full block" loading="lazy">
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        O sorriso deles<br>
+        <span class="text-[#FFD700]">não custa nada para você.</span>
       </h2>
-      <div class="space-y-4 text-sm">
-        <div>
-          <p class="font-semibold text-[#0D1B3E] mb-1">Meu dinheiro vai realmente sair?</p>
-          <p class="text-gray-600">Não. No modo simulação, nenhuma transferência é realizada. O comprovante gerado é apenas para fins de teste deste piloto.</p>
-        </div>
-        <div>
-          <p class="font-semibold text-[#0D1B3E] mb-1">Preciso usar meu IR real?</p>
-          <p class="text-gray-600">Sim — use um valor próximo ao real para que a experiência faça sentido. Isso também nos ajuda a validar se o sistema calcula corretamente o limite de 6%.</p>
-        </div>
-        <div>
-          <p class="font-semibold text-[#0D1B3E] mb-1">Meus dados ficam guardados?</p>
-          <p class="text-gray-600">Sim, em ambiente seguro. Após o piloto os registros de simulação serão apagados do banco de dados.</p>
-        </div>
-        <div>
-          <p class="font-semibold text-[#0D1B3E] mb-1">Posso usar o assistente TINA?</p>
-          <p class="text-gray-600">Sim! A TINA está disponível em todas as páginas — clique no ícone no canto da tela e tire suas dúvidas sobre Lei Rouanet.</p>
-        </div>
+      <p class="text-white/50 text-lg mb-10 max-w-md mx-auto leading-relaxed">
+        É o seu imposto, redirecionado com propósito.
+        <strong class="text-white">Eles ensaiam toda semana esperando por isso.</strong>
+      </p>
+      <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
+         class="inline-flex items-center gap-3 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black text-xl px-10 py-5 rounded-2xl shadow-2xl shadow-[#FFD700]/20 transition-all hover:scale-[1.03]">
+        Quero destinar meu IR
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+      </a>
+      <p class="text-white/30 text-sm mt-5">
+        Já tem conta?
+        <a href="login.html?redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
+           class="text-white/50 hover:text-white underline ml-1">Fazer login</a>
+      </p>
+      <div class="mt-10 pt-8 border-t border-white/[0.07]">
+        <p class="text-gray-500 text-xs">
+          DestineAI · Piloto PA&nbsp;II/FGV · Maio 2026 ·
+          <a href="mailto:contato@destineai.com.br" class="underline hover:text-gray-300">contato@destineai.com.br</a>
+        </p>
+        <p class="text-gray-600 text-xs mt-1">
+          Um produto IncentivaBR® · INPI nº BR512025000647-0 ·
+          <a href="termos-uso.html" class="underline hover:text-gray-300">Termos de Uso</a> ·
+          <a href="politica-privacidade.html" class="underline hover:text-gray-300">Privacidade</a>
+        </p>
       </div>
     </div>
+  </section>
 
-    <p class="text-center text-gray-400 text-xs mt-8">
-      DestineAI · Piloto PA II/FGV · Maio 2026 · <a href="mailto:contato@destineai.com.br" class="underline hover:text-gray-600">contato@destineai.com.br</a><br>
-      <span class="text-gray-300">Um produto IncentivaBR® · INPI nº BR512025000647-0</span>
-    </p>
+  <!-- ─────────────────────────────────────────────────────────
+       SCRIPTS
+  ──────────────────────────────────────────────────────────── -->
+  <script>
+    // Chair grid
+    const APOIADAS = [3,7,12,18,23,31,36];
+    const grid = document.getElementById('chairGrid');
+    const chairIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10V6a2 2 0 012-2h10a2 2 0 012 2v4M5 10h14M5 10l-1 10h16l-1-10M8 20v-4h8v4"/></svg>`;
+    for(let i=1; i<=40; i++){
+      const d = document.createElement('div');
+      d.className = 'chair' + (APOIADAS.includes(i) ? ' ap' : '');
+      d.innerHTML = `<div class="chair-num">${i}</div>${chairIcon}`;
+      if(i===47) d.style.border = '1.5px dashed rgba(255,215,0,0.4)';
+      grid.appendChild(d);
+    }
 
-  </div>
+    // Fade-up observer
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
 
   <script src="js/layout.js"></script>
   <script>Layout.init('piloto', { skipNav: true });</script>
+
 </body>
 </html>
