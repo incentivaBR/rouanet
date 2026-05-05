@@ -321,6 +321,44 @@ router.get('/org-project', async (req, res) => {
       return res.status(404).json({ status: 'error', message: 'Organização não encontrada.' });
     }
 
+    // Em modo simulação, retorna projeto fictício sem consultar SALIC
+    if (process.env.SIMULATION_MODE === 'true') {
+      return res.json({
+        status: 'success',
+        source: 'simulation',
+        lei: 'Lei Rouanet (Lei 8.313/1991)',
+        organizacao: {
+          slug:             org.slug,
+          name:             org.name,
+          pronac:           '261847',
+          max_percentage:   6.00,
+          contact_email:    org.contact_email,
+          contact_phone:    org.contact_phone,
+          bank_name:        'Banco do Brasil',
+          bank_code:        '001',
+          bank_agency:      '3217-4',
+          bank_account:     '12345-6',
+          pix_key:          null,
+          pix_key_type:     null,
+          beneficiary_name: 'Orquestra das Periferias do DF',
+          beneficiary_cnpj: '00.000.000/0001-00'
+        },
+        projeto: {
+          pronac:     '261847',
+          nome:       'Orquestra das Periferias do DF',
+          area:       'Música',
+          segmento:   'Música Erudita / Orquestral',
+          uf:         'DF',
+          municipio:  'Brasília',
+          mecanismo:  'Art. 18 (100% dedutível)',
+          proponente: { nome: 'Associação Cultural das Periferias do DF' },
+          situacao:   'Em execução',
+          valores:    { aprovado: 480000, captado: 0 },
+          link_salic: 'https://salic.cultura.gov.br/cidadao/projeto/detalharProjeto/261847/versao/1'
+        }
+      });
+    }
+
     // Buscar projeto em destaque na tabela org_projects (nova estrutura)
     const projectResult = await import('../../config/database.js').then(m =>
       m.default.query(
