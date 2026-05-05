@@ -2,7 +2,7 @@ import { test, describe, before } from 'node:test';
 import assert from 'node:assert/strict';
 import { req, login, hasFields } from './helpers.js';
 
-const PRONAC = '252026';
+const PRONAC = '261847';
 const IR_TOTAL = 20000;
 const LIMITE_6PCT = IR_TOTAL * 0.06; // 1200
 
@@ -65,7 +65,7 @@ describe('Donations — POST /api/donations/rouanet', () => {
         ir_total:        IR_TOTAL,
         donation_amount: valor,
         fiscal_year:     2026,
-        projeto_titulo:  'Circuito do Forró — Cultura Popular Brasileira',
+        projeto_titulo:  'Orquestra das Periferias do DF',
       },
     });
     assert.ok(
