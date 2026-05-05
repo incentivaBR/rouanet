@@ -35,18 +35,27 @@
 <body class="bg-gray-50 min-h-screen">
 
   <!-- HERO -->
-  <section class="bg-[#0D1B3E] pt-16 pb-14 px-6">
+  <section class="bg-[#0D1B3E] pt-14 pb-12 px-6">
     <div class="max-w-2xl mx-auto text-center">
-      <div class="inline-flex items-center gap-2 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 mb-6 text-[#FFD700] text-sm font-semibold">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Piloto FGV · Maio 2026
+      <div class="inline-flex items-center gap-2 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-full px-4 py-1.5 mb-8 text-[#FFD700] text-xs font-bold tracking-wide uppercase">
+        🎓 Piloto FGV · Modo Simulação · Maio 2026
       </div>
+
+      <div class="text-6xl mb-5">🎻</div>
+
       <h1 class="text-3xl sm:text-4xl font-black text-white mb-4 leading-tight">
-        Bem-vindo ao piloto<br><span class="text-[#FFD700]">DestineAI</span>
+        80 jovens de Ceilândia<br>estão esperando.
       </h1>
-      <p class="text-white/60 text-base max-w-lg mx-auto leading-relaxed">
-        Você vai simular — com seus dados reais de IR — como seria destinar parte do seu imposto para a <strong class="text-white">Orquestra das Periferias do DF</strong>, projeto cultural aprovado pelo Ministério da Cultura (Art. 18). Nenhum valor será transferido.
+      <p class="text-white/70 text-base max-w-lg mx-auto leading-relaxed mb-8">
+        Você tem <strong class="text-[#FFD700]">até 6% do seu IR</strong> disponível para financiar a Orquestra das Periferias do DF —
+        projeto aprovado pelo Ministério da Cultura. <strong class="text-white">O dinheiro iria para a Receita de qualquer jeito.</strong>
       </p>
+
+      <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
+        class="inline-flex items-center gap-3 bg-[#FFD700] text-[#0D1B3E] font-black text-lg px-8 py-4 rounded-2xl hover:bg-[#FFC000] transition-all shadow-lg shadow-[#FFD700]/20">
+        Quero destinar meu IR →
+      </a>
+      <p class="text-white/30 text-xs mt-4">Simulação completa · nenhum valor é transferido · leva ~10 minutos</p>
     </div>
   </section>
 
@@ -81,25 +90,16 @@
     </div>
 
     <!-- O QUE VOCÊ VAI PRECISAR -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
-      <h2 class="font-bold text-[#0D1B3E] text-lg mb-4 flex items-center gap-2">
-        <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-        O que você vai precisar
-      </h2>
-      <ul class="space-y-3 text-sm text-gray-700">
-        <li class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
-          <span>Seu <strong>IR Devido</strong> — seção <strong>"Imposto Devido"</strong> da sua declaração IRPF, campo <strong>"Total do imposto devido"</strong> (programa da Receita Federal ou e-CAC). Se tiver dúvida, pergunte ao seu contador.</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
-          <span>Um <strong>e-mail válido</strong> para criar sua conta no DestineAI (leva menos de 1 minuto).</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
-          <span>Cerca de <strong>5 a 10 minutos</strong> para percorrer o fluxo completo.</span>
-        </li>
-      </ul>
+    <div class="bg-[#0D1B3E] rounded-2xl p-5 mb-6 flex items-start gap-4">
+      <div class="text-2xl shrink-0">📄</div>
+      <div>
+        <p class="text-[#FFD700] font-bold text-sm mb-1">Só uma coisa antes de começar</p>
+        <p class="text-white/80 text-sm leading-relaxed">
+          O <strong class="text-white">Total do imposto devido</strong> da sua declaração IRPF —
+          seção "Imposto Devido" no Resumo da declaração (programa da Receita Federal ou e-CAC).
+        </p>
+        <p class="text-white/40 text-xs mt-2">Leva ~10 minutos · e-mail real · nenhum centavo sai da sua conta</p>
+      </div>
     </div>
 
     <!-- PASSO A PASSO -->
@@ -179,14 +179,14 @@
       </p>
     </div>
 
-    <!-- CTA PRINCIPAL -->
+    <!-- CTA FINAL -->
     <div class="bg-[#0D1B3E] rounded-2xl p-7 text-center mt-4">
-      <div class="text-[#FFD700] font-black text-2xl mb-2">Pronto para começar?</div>
-      <p class="text-white/60 text-sm mb-6">O fluxo completo leva cerca de 5 minutos.</p>
+      <div class="text-5xl mb-3">🎻</div>
+      <div class="text-[#FFD700] font-black text-xl mb-2">Seu IR pode ser a diferença.</div>
+      <p class="text-white/60 text-sm mb-6 max-w-sm mx-auto">Não sai do seu bolso. Não é doação. É o seu imposto, redirecionado com propósito.</p>
       <a href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
-        class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold px-8 py-4 rounded-xl transition-all hover:scale-[1.02] no-underline text-base">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
-        Iniciar simulação
+        class="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black px-8 py-4 rounded-xl transition-all hover:scale-[1.02] no-underline text-base shadow-lg shadow-[#FFD700]/20">
+        Quero destinar meu IR →
       </a>
       <p class="text-white/30 text-xs mt-4">Já tem conta? <a href="login.html?redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF" class="text-white/50 hover:text-white underline">Fazer login</a></p>
     </div>
