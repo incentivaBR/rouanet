@@ -952,7 +952,7 @@
                   <i class="fas fa-file-pdf"></i> Comprovante IR
                 </button>
               ` : ''}
-              ${donation.pronac ? `
+              ${donation.pronac && !(window.__brand && window.__brand.simulation_mode) ? `
                 <a href="projeto-detalhes.html?pronac=${donation.pronac}" class="btn-download recibo">
                   <i class="fas fa-arrow-right"></i> Ver projeto
                 </a>
@@ -973,14 +973,15 @@
         document.getElementById('statTotalDonated').textContent = utils.formatCurrency(response.summary.total_donated);
 
         if (response.donations.length === 0) {
+          const brand = window.__brand || {};
+          const ctaHref = brand.simulation_mode ? 'destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF' : 'projetos-rouanet.html';
+          const ctaLabel = brand.simulation_mode ? '<i class="fas fa-play"></i> Iniciar simulação' : '<i class="fas fa-search"></i> Escolher um Projeto';
           container.innerHTML = `
             <div class="empty-state" style="background:white;border-radius:18px;box-shadow:0 4px 20px rgba(22,78,99,0.10)">
               <i class="fas fa-theater-masks"></i>
               <h3>Você ainda não apoiou nenhum projeto</h3>
               <p>Destine parte do seu IR para projetos culturais aprovados pelo MinC.</p>
-              <a href="projetos-rouanet.html" class="btn btn-primary" style="margin-top:20px">
-                <i class="fas fa-search"></i> Escolher um Projeto
-              </a>
+              <a href="${ctaHref}" class="btn btn-primary" style="margin-top:20px">${ctaLabel}</a>
             </div>
           `;
           return;

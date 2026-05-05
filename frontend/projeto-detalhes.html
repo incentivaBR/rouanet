@@ -954,9 +954,10 @@
             <a href="destinar-rouanet.html${pronac ? '?pronac=' + pronac : ''}" class="btn btn-white">
               <i class="fas fa-${isOrquestra ? 'chair' : 'heart'}"></i> ${isOrquestra ? 'Reservar minha cadeira' : 'Destinar via Lei Rouanet'}
             </a>
+            ${window.__brand && window.__brand.simulation_mode ? '' : `
             <a href="projetos-rouanet.html" class="btn btn-outline-white">
               <i class="fas fa-search"></i> Ver outros projetos
-            </a>
+            </a>`}
           </div>
         </section>
       `;
