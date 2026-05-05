@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/destineai.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -53,7 +52,7 @@
       --shadow-md:  0 4px 16px rgba(0,0,0,0.08);
     }
 
-    body { font-family: 'Inter', sans-serif; background: var(--background-light); }
+    body { font-family: 'Inter', sans-serif; background: var(--background-light); visibility: visible; }
 
     /* ── Loading overlay ───────────────────────────────────────── */
     .loading-overlay {
@@ -129,12 +128,11 @@
       border: 1px solid var(--border-light);
     }
     .card-header {
-      background: var(--rouanet-light);
-      border-bottom: 1px solid rgba(13,27,62,0.08);
+      background: var(--rouanet);
       padding: 16px 24px; display: flex; align-items: center; gap: 12px;
     }
-    .card-header i { color: var(--rouanet); font-size: 17px; }
-    .card-header h2 { font-size: 15px; font-weight: 700; color: var(--rouanet); margin: 0; }
+    .card-header i { color: var(--gold); font-size: 17px; }
+    .card-header h2 { font-size: 15px; font-weight: 700; color: white; margin: 0; }
     .card-body { padding: 24px; }
 
     /* ── Step 1: Projeto ───────────────────────────────────────── */
@@ -443,9 +441,9 @@
     </div>
 
     <!-- Banner Modo Simulação -->
-    <div id="testModeBanner" style="display:none;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;margin-bottom:16px;align-items:center;gap:10px;font-size:13px;color:#92400E">
-      <i class="fas fa-flask" style="color:#D97706;flex-shrink:0"></i>
-      <span><strong>Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
+    <div id="testModeBanner" style="display:none;background:#0D1B3E;border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
+      <span style="font-size:18px;flex-shrink:0">🧪</span>
+      <span><strong style="color:#FFD700">Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
     </div>
 
     <!-- ─── ETAPA 1: Projeto ─────────────────────────────────── -->
@@ -757,8 +755,8 @@
             <button class="btn-copy" onclick="copiar('pgReferencia', this)"><i class="fas fa-copy"></i> Copiar</button>
           </div>
 
-          <button id="btnSimularPagamento" class="btn-primary-rouanet" onclick="simularPagamento()" style="display:none;background:#D97706;color:white">
-            <i class="fas fa-flask"></i> Simular pagamento e gerar comprovante
+          <button id="btnSimularPagamento" class="btn-primary-rouanet" onclick="simularPagamento()" style="display:none">
+            🧪 Simular pagamento e gerar comprovante
           </button>
 
           <button id="btnJaFizTransferencia" class="btn-primary-rouanet" onclick="goTo(5)">
