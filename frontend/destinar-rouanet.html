@@ -1436,8 +1436,6 @@
     // ── Brand dinâmica + Modo Teste ────────────────────────────
     fetch('/api/config/brand').then(r => r.json()).then(cfg => {
       if (!cfg || cfg.status === 'error') return;
-      if (cfg.color_primary) document.documentElement.style.setProperty('--rouanet', cfg.color_primary);
-      if (cfg.color_accent)  document.documentElement.style.setProperty('--rouanet-dark', cfg.color_accent);
       if (cfg.simulation_mode) {
         state.simulationMode = true;
         const banner = document.getElementById('testModeBanner');
