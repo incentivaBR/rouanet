@@ -43,7 +43,7 @@ const TINA = (function() {
     },
     calculadora: {
       keywords: ['calcular', 'calculadora', 'quanto posso', 'limite', 'valor'],
-      response: '🧮 <strong>USE NOSSA CALCULADORA:</strong><br>• <strong>Rápida:</strong> Se já sabe seu salário (10 segundos)<br>• <strong>Completa:</strong> Para cálculo detalhado com deduções<br><br>O limite é de até 6% do IR devido (9% se incluir esporte, oncologia e PCD).'
+      response: '🧮 <strong>USE NOSSA CALCULADORA:</strong><br>• <strong>Rápida:</strong> Se já sabe seu salário (10 segundos)<br>• <strong>Completa:</strong> Para cálculo detalhado com deduções<br><br>O limite é de até 6% do IR devido (até 8% se incluir também oncologia e PCD — PRONON/PRONAS).'
     },
     ir: {
       keywords: ['ir devido', 'imposto devido', 'encontrar ir', 'onde acho'],
@@ -77,7 +77,7 @@ const TINA = (function() {
     },
     dividir: {
       keywords: ['dividir', 'dois fundos', 'metade'],
-      response: '🔄 <strong>DIVIDIR ENTRE FUNDOS:</strong> Sim! Você pode fazer destinações separadas para diferentes fundos, respeitando o limite total de 6-9% do seu IR.'
+      response: '🔄 <strong>DIVIDIR ENTRE FUNDOS:</strong> Sim! Você pode fazer destinações separadas para diferentes fundos, respeitando o limite total de 6-8% do seu IR.'
     },
     erro: {
       keywords: ['errar', 'corrigir', 'erro', 'errei'],
@@ -147,7 +147,7 @@ const TINA = (function() {
     // Simplificada x Completa
     simplificada: {
       keywords: ['simplificada', 'mudar para completa', 'tipo de declaração', 'qual declaração'],
-      response: '📊 <strong>DECLARAÇÃO:</strong><br>• <strong>Simplificada:</strong> NÃO permite destinação<br>• <strong>Completa:</strong> Permite destinação de até 9%<br><br>Você pode mudar de simplificada para completa! O programa do IR mostra qual é mais vantajosa.'
+      response: '📊 <strong>DECLARAÇÃO:</strong><br>• <strong>Simplificada:</strong> NÃO permite destinação<br>• <strong>Completa:</strong> Permite destinação de até 8%<br><br>Você pode mudar de simplificada para completa! O programa do IR mostra qual é mais vantajosa.'
     },
 
     // Ano base
@@ -159,7 +159,7 @@ const TINA = (function() {
     // Servidor público
     servidorPublico: {
       keywords: ['servidor', 'público', 'federal', 'estadual', 'municipal', 'gdf'],
-      response: '👔 <strong>SERVIDORES PÚBLICOS:</strong> Sim, você pode destinar! A plataforma foi feita especialmente para vocês. Não importa se é federal, estadual ou municipal - se faz declaração completa, pode destinar até 9% do IR.'
+      response: '👔 <strong>SERVIDORES PÚBLICOS:</strong> Sim, você pode destinar! A plataforma foi feita especialmente para vocês. Não importa se é federal, estadual ou municipal - se faz declaração completa, pode destinar até 8% do IR.'
     },
 
     // Impacto real
