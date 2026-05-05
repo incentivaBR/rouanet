@@ -175,6 +175,7 @@ const tenant = {
 
   _applyBrand(brand) {
     if (!brand) return;
+    window.__brand = brand;
 
     if (brand.color_primary) {
       document.documentElement.style.setProperty('--primary-color', brand.color_primary);
