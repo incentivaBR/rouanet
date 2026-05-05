@@ -421,8 +421,8 @@
     </div>
   </div>
 
-  <!-- ── Progress steps ──────────────────────────────────────── -->
-  <div class="progress-wrap">
+  <!-- ── Progress steps (oculto até confirmar o projeto) ──────── -->
+  <div class="progress-wrap" id="progressWrap" style="display:none">
     <div class="progress-steps">
       <div class="step-tab active"  id="tab1"><div class="step-num">1</div><div class="step-label">Projeto</div></div>
       <div class="step-tab"         id="tab2"><div class="step-num">2</div><div class="step-label">Calculadora</div></div>
@@ -440,7 +440,114 @@
       <span>API SALIC indisponível — exibindo dados em cache. Informações podem estar desatualizadas.</span>
     </div>
 
-    <!-- Banner Modo Simulação -->
+    <!-- ─── ETAPA 0: Apresentação do projeto ─────────────────── -->
+    <div id="step0">
+
+      <!-- Banner simulação (aparece aqui antes de entrar no wizard) -->
+      <div id="testModeBannerStep0" style="display:none;background:#0D1B3E;border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
+        <span style="font-size:18px;flex-shrink:0">🧪</span>
+        <span><strong style="color:#FFD700">Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
+      </div>
+
+      <!-- Card hero do projeto -->
+      <div style="background:linear-gradient(160deg,#0A1530 0%,#0D1B3E 60%,#0f2456 100%);border-radius:20px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(255,215,0,0.15)">
+
+        <!-- Topo: convite -->
+        <div style="padding:20px 28px 0;display:flex;align-items:center;gap:10px">
+          <span style="background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">Projeto aprovado pelo MinC</span>
+          <span id="step0SimBadge" style="display:none;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-size:11px;padding:4px 10px;border-radius:20px">Simulação</span>
+        </div>
+
+        <!-- Nome e proponente -->
+        <div style="padding:20px 28px 24px">
+          <div style="display:flex;align-items:flex-start;gap:18px">
+            <div style="width:64px;height:64px;border-radius:14px;background:rgba(255,215,0,0.12);border:1.5px solid rgba(255,215,0,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px">🎻</div>
+            <div style="flex:1;min-width:0">
+              <h2 id="s0Title" style="margin:0 0 6px;font-size:22px;font-weight:900;color:white;line-height:1.2">Carregando projeto...</h2>
+              <p id="s0Proponente" style="margin:0;font-size:13px;color:rgba(255,255,255,0.55)"></p>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap">
+                <span id="s0Pronac" style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.35);color:#FFD700;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:10px"></span>
+                <span id="s0Area"   style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6);font-size:11px;padding:3px 10px;border-radius:10px"></span>
+                <span id="s0Local"  style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6);font-size:11px;padding:3px 10px;border-radius:10px"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Descrição / missão -->
+          <p id="s0Desc" style="margin:20px 0 0;font-size:14px;color:rgba(255,255,255,0.75);line-height:1.7">
+            Carregando...
+          </p>
+        </div>
+
+        <!-- Barra de captação -->
+        <div style="padding:0 28px 22px" id="s0ValoresWrap" style="display:none">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center">
+              <div style="font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Valor aprovado</div>
+              <div id="s0ValAprovado" style="font-size:16px;font-weight:800;color:white">—</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center">
+              <div style="font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Captado</div>
+              <div id="s0ValCaptado" style="font-size:16px;font-weight:800;color:#4ade80">—</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center">
+              <div style="font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">A captar</div>
+              <div id="s0ValRestante" style="font-size:16px;font-weight:800;color:#FFD700">—</div>
+            </div>
+          </div>
+          <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden">
+            <div id="s0CapBar" style="height:100%;background:linear-gradient(90deg,#FFD700,#FFC000);border-radius:3px;width:0%;transition:width 1s"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card "custo zero" -->
+      <div style="background:white;border-radius:16px;border:1px solid #E8ECF4;overflow:hidden;margin-bottom:16px">
+        <div style="background:#0D1B3E;padding:14px 24px;display:flex;align-items:center;gap:10px">
+          <i class="fas fa-shield-halved" style="color:#FFD700;font-size:16px"></i>
+          <strong style="color:white;font-size:14px;font-weight:700">O que significa destinar via Lei Rouanet?</strong>
+        </div>
+        <div style="padding:20px 24px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+            <div style="background:#F4F6FB;border-radius:10px;padding:14px;text-align:center">
+              <div style="font-size:22px;margin-bottom:6px">⚖️</div>
+              <div style="font-size:12px;font-weight:700;color:#0D1B3E;margin-bottom:2px">Art. 18 — 100% dedutível</div>
+              <div style="font-size:11px;color:#6B7280">Dedução integral do IR</div>
+            </div>
+            <div style="background:#F4F6FB;border-radius:10px;padding:14px;text-align:center">
+              <div style="font-size:22px;margin-bottom:6px">🔒</div>
+              <div style="font-size:12px;font-weight:700;color:#0D1B3E;margin-bottom:2px">Sem custo para você</div>
+              <div style="font-size:11px;color:#6B7280">Usa imposto que você já paga</div>
+            </div>
+            <div style="background:#F4F6FB;border-radius:10px;padding:14px;text-align:center">
+              <div style="font-size:22px;margin-bottom:6px">📋</div>
+              <div style="font-size:12px;font-weight:700;color:#0D1B3E;margin-bottom:2px">Comprovante para a Receita</div>
+              <div style="font-size:11px;color:#6B7280">Usado na sua declaração IRPF</div>
+            </div>
+            <div style="background:#F4F6FB;border-radius:10px;padding:14px;text-align:center">
+              <div style="font-size:22px;margin-bottom:6px">🏛️</div>
+              <div style="font-size:12px;font-weight:700;color:#0D1B3E;margin-bottom:2px">Lei 8.313/1991</div>
+              <div style="font-size:11px;color:#6B7280">Aprovado pelo MinC</div>
+            </div>
+          </div>
+          <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;font-size:13px;color:#78350F;display:flex;gap:10px;align-items:flex-start">
+            <i class="fas fa-lightbulb" style="margin-top:2px;flex-shrink:0;color:#D97706"></i>
+            <span>Você usará uma parte do imposto que <strong>já vai pagar de qualquer forma</strong>. Nenhum centavo a mais sai do seu bolso.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button onclick="confirmarProjeto()" style="width:100%;background:#FFD700;color:#0D1B3E;border:none;border-radius:14px;padding:16px 24px;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s;margin-bottom:12px">
+        Quero destinar para este projeto <i class="fas fa-arrow-right"></i>
+      </button>
+      <p style="text-align:center;font-size:12px;color:#8B96A8;margin:0">
+        Ao continuar você usará sua calculadora de IR para definir o valor exato.
+      </p>
+
+    </div><!-- /step0 -->
+
+    <!-- Banner Modo Simulação (dentro do wizard, a partir da etapa 1) -->
     <div id="testModeBanner" style="display:none;background:#0D1B3E;border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
       <span style="font-size:18px;flex-shrink:0">🧪</span>
       <span><strong style="color:#FFD700">Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
@@ -969,12 +1076,23 @@
     }
 
     // ── Navegação entre etapas ──────────────────────────────────
+    function confirmarProjeto() {
+      document.getElementById('step0').style.display = 'none';
+      document.getElementById('progressWrap').style.display = '';
+      goTo(1);
+    }
+
     function goTo(step) {
       if (step === 3 && (!state.ir_devido || !state.limite)) {
         toast('Calcule o IR primeiro', 'error');
         return;
       }
       if (step === 3) setupStep3();
+
+      // Oculta step0 ao entrar no wizard
+      const s0 = document.getElementById('step0');
+      if (s0) s0.style.display = 'none';
+      document.getElementById('progressWrap').style.display = '';
 
       for (let i = 1; i <= 6; i++) {
         const el = document.getElementById(`step${i}`);
@@ -1412,6 +1530,33 @@
         document.getElementById('projectTitle').textContent  = p.nome || 'Projeto sem título';
         document.getElementById('projectProponente').textContent = p.proponente?.nome || '';
 
+        // ── Popular step0 com dados reais do projeto ──────────
+        document.getElementById('s0Title').textContent      = p.nome || 'Projeto sem título';
+        document.getElementById('s0Proponente').textContent = p.proponente?.nome || '';
+        document.getElementById('s0Pronac').textContent     = `PRONAC ${p.pronac}`;
+        if (p.area)     document.getElementById('s0Area').textContent  = p.area;
+        if (p.uf)       document.getElementById('s0Local').textContent = `${p.uf}${p.municipio ? ' · '+p.municipio : ''}`;
+
+        // Descrição contextual baseada no segmento
+        const segDesc = {
+          'Música Erudita / Orquestral': 'Leva música erudita e orquestral para comunidades que nunca tiveram acesso a esse tipo de arte. Com seu apoio, este projeto expande a formação cultural e artística no Distrito Federal — sem custo algum para você.',
+          'Música Popular': 'Fomenta a produção e difusão da música popular brasileira, fortalecendo artistas e comunidades locais.'
+        };
+        const desc = segDesc[p.segmento] || `Projeto cultural aprovado pelo Ministério da Cultura, enquadrado como ${p.mecanismo || 'Art. 18 — 100% dedutível'}. Sua destinação fortalece a cultura brasileira sem custo adicional para você.`;
+        document.getElementById('s0Desc').textContent = desc;
+
+        if (p.valores?.aprovado != null) {
+          const BRLs = v => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);
+          document.getElementById('s0ValAprovado').textContent = BRLs(p.valores.aprovado);
+          document.getElementById('s0ValCaptado').textContent  = BRLs(p.valores.captado);
+          const rest = Math.max(0, (p.valores.aprovado||0) - (p.valores.captado||0));
+          document.getElementById('s0ValRestante').textContent = BRLs(rest);
+          const pctCap = p.valores.aprovado > 0 ? Math.round((p.valores.captado / p.valores.aprovado) * 100) : 0;
+          document.getElementById('s0CapBar').style.width = `${pctCap}%`;
+          document.getElementById('s0ValoresWrap').style.display = '';
+        }
+        // ─────────────────────────────────────────────────────
+
         const chips = [];
         if (p.area)      chips.push(`<span class="info-chip"><i class="fas fa-palette"></i>${p.area}</span>`);
         if (p.segmento)  chips.push(`<span class="info-chip"><i class="fas fa-tag"></i>${p.segmento}</span>`);
@@ -1465,8 +1610,17 @@
       if (!cfg || cfg.status === 'error') return;
       if (cfg.simulation_mode) {
         state.simulationMode = true;
-        const banner = document.getElementById('testModeBanner');
-        if (banner) banner.style.display = 'flex';
+        const banner  = document.getElementById('testModeBanner');
+        const banner0 = document.getElementById('testModeBannerStep0');
+        const simBadge = document.getElementById('step0SimBadge');
+        if (banner)   banner.style.display  = 'flex';
+        if (banner0)  banner0.style.display = 'flex';
+        if (simBadge) simBadge.style.display = '';
+        // Mostrar botão simular no step4 quando em simulation mode
+        const btnSim = document.getElementById('btnSimularPagamento');
+        const btnReal = document.getElementById('btnJaFizTransferencia');
+        if (btnSim)  btnSim.style.display  = '';
+        if (btnReal) btnReal.style.display = 'none';
       }
     }).catch(() => {});
 
