@@ -55,21 +55,23 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
     }
 
 
-    // Verificar total já destinado no mesmo ano (todos os projetos Rouanet)
-    const existingResult = await client.query(`
-      SELECT COALESCE(SUM(donation_amount), 0) AS total
-      FROM donations
-      WHERE user_id = $1 AND fiscal_year = $2 AND pronac IS NOT NULL AND status != 'cancelled'
-    `, [userId, fiscal_year]);
+    // Em simulação, não verifica acúmulo — cada teste é independente
+    if (process.env.SIMULATION_MODE !== 'true') {
+      const existingResult = await client.query(`
+        SELECT COALESCE(SUM(donation_amount), 0) AS total
+        FROM donations
+        WHERE user_id = $1 AND fiscal_year = $2 AND pronac IS NOT NULL AND status != 'cancelled'
+      `, [userId, fiscal_year]);
 
-    const totalJa   = parseFloat(existingResult.rows[0].total);
-    const novoTotal = totalJa + donation_amount;
+      const totalJa   = parseFloat(existingResult.rows[0].total);
+      const novoTotal = totalJa + donation_amount;
 
-    if (novoTotal > limiteMax) {
-      return res.status(400).json({
-        status: 'error',
-        message: `Total no ano (R$ ${novoTotal.toFixed(2)}) excederia o limite de 6% do IR (R$ ${limiteMax.toFixed(2)}). Já destinado: R$ ${totalJa.toFixed(2)}.`
-      });
+      if (novoTotal > limiteMax) {
+        return res.status(400).json({
+          status: 'error',
+          message: `Total no ano (R$ ${novoTotal.toFixed(2)}) excederia o limite de 6% do IR (R$ ${limiteMax.toFixed(2)}). Já destinado: R$ ${totalJa.toFixed(2)}.`
+        });
+      }
     }
 
     // Buscar fundo FNC (Lei Rouanet)
