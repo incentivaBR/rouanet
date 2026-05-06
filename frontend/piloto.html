@@ -245,57 +245,68 @@
         </p>
       </div>
 
-      <!-- Fluxo ilustrativo — "depositou e voltou" -->
-      <div class="max-w-lg mx-auto mb-12 space-y-2">
+      <!-- Comparativo SEM vs COM — a vantagem em 1 olhada -->
+      <div class="max-w-2xl mx-auto mb-12">
 
-        <!-- Passo 1: IR Devido -->
-        <div class="flex items-center gap-4 rounded-xl bg-white/[0.04] border border-white/[0.08] px-5 py-4">
-          <div class="w-11 h-11 rounded-full bg-white/[0.07] flex items-center justify-center flex-shrink-0 text-xl">💰</div>
-          <div class="flex-1">
-            <div class="text-white/45 text-[11px] font-bold uppercase tracking-widest">Seu IR Devido (exemplo)</div>
-            <div class="text-white font-black text-2xl leading-tight">R$&nbsp;10.000</div>
+        <!-- Linha do IR Devido -->
+        <div class="text-center mb-6">
+          <span class="text-white/30 text-xs font-bold uppercase tracking-widest">Exemplo — IR Devido: R$&nbsp;10.000</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-4">
+
+          <!-- SEM destinação -->
+          <div class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 flex flex-col gap-4">
+            <div class="text-center">
+              <span class="text-white/30 text-[11px] font-black uppercase tracking-widest">Sem destinação</span>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-white/40 text-sm">→ Governo</span>
+                <span class="text-white/60 font-bold">R$&nbsp;10.000</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/40 text-sm">→ Orquestra</span>
+                <span class="text-white/30 font-bold">R$&nbsp;0</span>
+              </div>
+              <div class="border-t border-white/[0.06] pt-3 flex justify-between items-center">
+                <span class="text-white/40 text-sm">Seu custo</span>
+                <span class="text-white/60 font-bold">R$&nbsp;10.000</span>
+              </div>
+            </div>
           </div>
-          <div class="text-[#FFD700]/60 text-xs font-bold bg-[#FFD700]/[0.07] px-2 py-1 rounded-md">Art.&nbsp;18 · 6%</div>
-        </div>
 
-        <!-- Conector ↓ -->
-        <div class="flex flex-col items-start pl-[50px] gap-0 py-1">
-          <div class="w-0.5 h-3 bg-[#FFD700]/30"></div>
-          <div class="text-[#FFD700]/50 text-[11px] font-semibold leading-none">você destina 6% direto para a Orquestra</div>
-          <div class="w-0.5 h-3 bg-[#FFD700]/30"></div>
-        </div>
-
-        <!-- Passo 2: Destina -->
-        <div class="flex items-center gap-4 rounded-xl bg-[#FFD700]/[0.07] border border-[#FFD700]/25 px-5 py-4">
-          <div class="w-11 h-11 rounded-full bg-[#FFD700]/[0.12] flex items-center justify-center flex-shrink-0 text-xl">🎵</div>
-          <div class="flex-1">
-            <div class="text-[#FFD700]/65 text-[11px] font-bold uppercase tracking-widest">Orquestra recebe</div>
-            <div class="text-[#FFD700] font-black text-2xl leading-tight">R$&nbsp;600</div>
+          <!-- COM destinação — destaque -->
+          <div class="rounded-2xl border-2 border-[#FFD700]/40 bg-[#FFD700]/[0.06] p-5 flex flex-col gap-4 relative">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+              <span class="bg-[#FFD700] text-[#0D1B3E] text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wide whitespace-nowrap">Com destinação</span>
+            </div>
+            <div class="space-y-3 mt-2">
+              <div class="flex justify-between items-center">
+                <span class="text-white/50 text-sm">→ Governo</span>
+                <span class="text-white/70 font-bold">R$&nbsp;9.400</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-[#FFD700]/80 text-sm font-semibold">→ Orquestra 🎵</span>
+                <span class="text-[#FFD700] font-black">R$&nbsp;600</span>
+              </div>
+              <div class="border-t border-[#FFD700]/15 pt-3 flex justify-between items-center">
+                <span class="text-white/50 text-sm">Seu custo</span>
+                <span class="text-[#FFD700] font-black">R$&nbsp;0,00</span>
+              </div>
+            </div>
           </div>
-          <div class="text-right">
-            <div class="text-white/35 text-[11px] leading-tight">Receita fica<br>com R$&nbsp;9.400</div>
-          </div>
+
         </div>
 
-        <!-- Conector ↙ volta -->
-        <div class="flex flex-col items-start pl-[50px] gap-0 py-1">
-          <div class="w-0.5 h-3 bg-[#059669]/35"></div>
-          <div class="text-[#059669]/70 text-[11px] font-semibold leading-none">↩ Receita deduz R$600 na declaração IRPF</div>
-          <div class="w-0.5 h-3 bg-[#059669]/35"></div>
+        <!-- Conclusão — a vantagem nua e crua -->
+        <div class="rounded-xl bg-[#059669]/[0.10] border border-[#059669]/25 px-5 py-4 text-center">
+          <p class="text-white font-black text-lg leading-snug">
+            Você pagou o mesmo.<br>
+            <span class="text-[#059669]">A Orquestra ganhou R$&nbsp;600 que antes ia pro vazio.</span>
+          </p>
         </div>
 
-        <!-- Passo 3: Restituição volta -->
-        <div class="flex items-center gap-4 rounded-xl bg-[#059669]/[0.09] border border-[#059669]/30 px-5 py-4">
-          <div class="w-11 h-11 rounded-full bg-[#059669]/[0.15] flex items-center justify-center flex-shrink-0 text-xl">↩</div>
-          <div class="flex-1">
-            <div class="text-[#059669]/75 text-[11px] font-bold uppercase tracking-widest">R$600 volta na restituição</div>
-            <div class="text-white font-black text-2xl leading-tight">Custo: <span class="text-[#FFD700]">R$&nbsp;0,00</span></div>
-          </div>
-        </div>
-
-        <p class="text-center text-white/30 text-xs pt-2 pb-1">
-          O dinheiro circulou. A Orquestra ganhou. Você não perdeu nada.
-        </p>
       </div>
 
       <div class="grid sm:grid-cols-3 gap-5">
