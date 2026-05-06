@@ -241,7 +241,7 @@ const Toast = (function() {
       .toast-close {
         background: none;
         border: none;
-        padding: 6px;
+        padding: 10px;
         cursor: pointer;
         color: #777;
         font-size: 18px;
@@ -250,11 +250,38 @@ const Toast = (function() {
         border-radius: 6px;
         transition: all 0.2s;
         margin: -4px -8px -4px 0;
+        min-width: 40px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .toast-close:hover {
         background: rgba(0, 0, 0, 0.05);
         color: #333;
+      }
+
+      .toast-dismiss {
+        display: block;
+        width: 100%;
+        margin-top: 12px;
+        padding: 11px 16px;
+        background: rgba(0, 0, 0, 0.07);
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        color: #222;
+        transition: background 0.2s;
+        font-family: inherit;
+        letter-spacing: 0.01em;
+      }
+
+      .toast-dismiss:hover,
+      .toast-dismiss:active {
+        background: rgba(0, 0, 0, 0.13);
       }
 
       .toast-progress {
@@ -396,16 +423,16 @@ const Toast = (function() {
     const icon = icons[opts.type] || icons.info;
     const title = opts.title ? `<div class="toast-title">${opts.title}</div>` : '';
     const message = opts.message ? `<div class="toast-message">${opts.message}</div>` : '';
+    const hasDismissBtn = opts.duration === 0;
 
     toast.innerHTML = `
       <div class="toast-icon">${icon}</div>
       <div class="toast-content">
         ${title}
         ${message}
+        ${hasDismissBtn ? '<button class="toast-dismiss">Entendi</button>' : ''}
       </div>
-      <button class="toast-close" aria-label="Fechar">
-        <i class="fas fa-times"></i>
-      </button>
+      ${!hasDismissBtn ? `<button class="toast-close" aria-label="Fechar"><i class="fas fa-times"></i></button>` : ''}
       ${opts.showProgress && opts.duration > 0 ? '<div class="toast-progress"></div>' : ''}
     `;
 
@@ -470,12 +497,24 @@ const Toast = (function() {
       });
     }
 
-    // Close button
-    toast.querySelector('.toast-close').addEventListener('click', (e) => {
-      e.stopPropagation();
-      clearTimeout(timeoutId);
-      remove(toast);
-    });
+    // Close button (X) — só existe quando há timer
+    const closeBtn = toast.querySelector('.toast-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        clearTimeout(timeoutId);
+        remove(toast);
+      });
+    }
+
+    // Dismiss button — existe quando duration === 0
+    const dismissBtn = toast.querySelector('.toast-dismiss');
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        remove(toast);
+      });
+    }
 
     // Callback
     if (typeof opts.onShow === 'function') {
