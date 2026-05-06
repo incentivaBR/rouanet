@@ -86,7 +86,8 @@
         </div>
         <div class="mb-4">
           <label class="block text-sm font-semibold text-gray-700 mb-2">CPF *</label>
-          <input type="text" id="regCpf" class="field" placeholder="000.000.000-00" maxlength="14" required>
+          <input type="text" id="regCpf" class="field" placeholder="000.000.000-00"
+                 maxlength="14" inputmode="numeric" autocomplete="off" required>
         </div>
         <div class="mb-4">
           <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
@@ -94,7 +95,8 @@
         </div>
         <div class="mb-4">
           <label class="block text-sm font-semibold text-gray-700 mb-2">Telefone</label>
-          <input type="text" id="regPhone" class="field" placeholder="(00) 00000-0000" maxlength="15">
+          <input type="text" id="regPhone" class="field" placeholder="(00) 00000-0000"
+                 maxlength="15" inputmode="numeric" autocomplete="tel">
         </div>
         <div class="mb-4">
           <label class="block text-sm font-semibold text-gray-700 mb-2">Senha *</label>
@@ -145,7 +147,7 @@
   <script src="js/auth.js"></script>
   <script src="js/api.js"></script>
   <script src="js/utils.js"></script>
-  <script src="js/toast.js?v=4"></script>
+  <script src="js/toast.js?v=6"></script>
   <script>
     // Se já logado, redirecionar
     if (auth.isLoggedIn()) {
@@ -210,11 +212,20 @@
       );
     }
 
-    document.getElementById('regCpf').addEventListener('input', function() {
-      utils.maskCPF(this);
+    const cpfField = document.getElementById('regCpf');
+    ['input', 'keyup'].forEach(evt => {
+      cpfField.addEventListener(evt, function() {
+        const el = this;
+        requestAnimationFrame(() => utils.maskCPF(el));
+      });
     });
-    document.getElementById('regPhone').addEventListener('input', function() {
-      utils.maskPhone(this);
+
+    const phoneField = document.getElementById('regPhone');
+    ['input', 'keyup'].forEach(evt => {
+      phoneField.addEventListener(evt, function() {
+        const el = this;
+        requestAnimationFrame(() => utils.maskPhone(el));
+      });
     });
 
     // Login
@@ -291,27 +302,22 @@
 
       if (nome.length < 3) {
         Toast.warning('Preencha seu nome completo (mínimo 3 caracteres).', 'Nome obrigatório');
-        document.getElementById('regNome').focus();
         return;
       }
       if (!utils.isValidCPF(cpf)) {
         Toast.warning('O CPF informado não é válido. Verifique os 11 dígitos e tente novamente.', 'CPF inválido');
-        document.getElementById('regCpf').focus();
         return;
       }
       if (!utils.isValidEmail(email)) {
         Toast.warning('O e-mail informado não é válido. Exemplo correto: seunome@gmail.com', 'E-mail inválido');
-        document.getElementById('regEmail').focus();
         return;
       }
       if (senha.length < 8) {
         Toast.warning('A senha precisa ter pelo menos 8 caracteres. Tente algo como: Nome@2026', 'Senha muito curta');
-        document.getElementById('regSenha').focus();
         return;
       }
       if (senha !== senhaConfirm) {
         Toast.warning('A confirmação de senha não confere com a senha digitada. Verifique e tente novamente.', 'Senhas não coincidem');
-        document.getElementById('regSenhaConfirm').focus();
         return;
       }
       if (!acceptedTerms) {
