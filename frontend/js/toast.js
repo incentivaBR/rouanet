@@ -511,11 +511,11 @@ const Toast = (function() {
   }
 
   function error(message, title = 'Erro!') {
-    return show({ type: 'error', title, message, duration: 0 });
+    return show({ type: 'error', title, message, duration: 0, closeOnClick: false });
   }
 
   function warning(message, title = 'Atenção!') {
-    return show({ type: 'warning', title, message, duration: 0 });
+    return show({ type: 'warning', title, message, duration: 0, closeOnClick: false });
   }
 
   function info(message, title = '') {
