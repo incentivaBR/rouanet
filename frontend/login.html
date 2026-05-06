@@ -70,6 +70,12 @@
                 class="w-full bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold py-4 rounded-xl text-base transition-colors">
           <span>Entrar</span>
         </button>
+        <div class="text-center mt-4">
+          <button type="button" onclick="showForgotPassword()"
+                  class="text-sm text-gray-400 hover:text-[#0D1B3E] transition-colors underline underline-offset-2">
+            Esqueceu sua senha?
+          </button>
+        </div>
       </form>
 
       <!-- Register Form -->
@@ -124,7 +130,7 @@
         </button>
       </form>
 
-      <a href="index.html" class="flex items-center justify-center gap-2 mt-5 text-gray-400 hover:text-[#0D1B3E] text-sm transition-colors">
+      <a href="piloto.html" class="flex items-center justify-center gap-2 mt-5 text-gray-400 hover:text-[#0D1B3E] text-sm transition-colors">
         <i class="fas fa-arrow-left text-xs"></i> Voltar para o início
       </a>
 
@@ -195,6 +201,13 @@
         btn.classList.remove('opacity-80');
         btn.innerHTML = '<span>' + (btn.id === 'loginBtn' ? 'Entrar' : 'Criar conta') + '</span>';
       }
+    }
+
+    function showForgotPassword() {
+      Toast.info(
+        'Envie um e-mail para <strong>contato@destineai.com.br</strong> com o CPF cadastrado e redefiniremos sua senha em até 24h.',
+        'Recuperação de senha'
+      );
     }
 
     document.getElementById('regCpf').addEventListener('input', function() {
@@ -277,27 +290,32 @@
       const btn = document.getElementById('registerBtn');
 
       if (nome.length < 3) {
-        Toast.warning('Nome deve ter pelo menos 3 caracteres', 'Campo obrigatório');
+        Toast.warning('Preencha seu nome completo (mínimo 3 caracteres).', 'Nome obrigatório');
+        document.getElementById('regNome').focus();
         return;
       }
       if (!utils.isValidCPF(cpf)) {
-        Toast.warning('Digite um CPF válido', 'CPF inválido');
+        Toast.warning('O CPF informado não é válido. Verifique os 11 dígitos e tente novamente.', 'CPF inválido');
+        document.getElementById('regCpf').focus();
         return;
       }
       if (!utils.isValidEmail(email)) {
-        Toast.warning('Digite um email válido', 'Email inválido');
+        Toast.warning('O e-mail informado não é válido. Exemplo correto: seunome@gmail.com', 'E-mail inválido');
+        document.getElementById('regEmail').focus();
         return;
       }
       if (senha.length < 8) {
-        Toast.warning('Senha deve ter pelo menos 8 caracteres', 'Senha fraca');
+        Toast.warning('A senha precisa ter pelo menos 8 caracteres. Tente algo como: Nome@2026', 'Senha muito curta');
+        document.getElementById('regSenha').focus();
         return;
       }
       if (senha !== senhaConfirm) {
-        Toast.warning('As senhas digitadas não conferem', 'Senhas diferentes');
+        Toast.warning('A confirmação de senha não confere com a senha digitada. Verifique e tente novamente.', 'Senhas não coincidem');
+        document.getElementById('regSenhaConfirm').focus();
         return;
       }
       if (!acceptedTerms) {
-        Toast.warning('Você deve aceitar a Política de Privacidade e os Termos de Uso', 'Termos obrigatórios');
+        Toast.warning('É necessário aceitar a Política de Privacidade e os Termos de Uso para continuar.', 'Aceite os termos');
         document.getElementById('termsError').classList.remove('hidden');
         return;
       }
