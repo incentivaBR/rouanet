@@ -507,15 +507,15 @@ const Toast = (function() {
 
   // Atalhos para tipos comuns
   function success(message, title = 'Sucesso!') {
-    return show({ type: 'success', title, message });
+    return show({ type: 'success', title, message, duration: 5000 });
   }
 
   function error(message, title = 'Erro!') {
-    return show({ type: 'error', title, message, duration: 12000 });
+    return show({ type: 'error', title, message, duration: 0 });
   }
 
   function warning(message, title = 'Atenção!') {
-    return show({ type: 'warning', title, message, duration: 10000 });
+    return show({ type: 'warning', title, message, duration: 0 });
   }
 
   function info(message, title = '') {
