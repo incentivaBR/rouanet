@@ -8,12 +8,12 @@ const Toast = (function() {
 
   // Configurações padrão
   const defaults = {
-    duration: 4000,      // Tempo em ms (0 = não fecha automaticamente)
-    position: 'top-right', // top-right, top-left, bottom-right, bottom-left, top-center, bottom-center
-    pauseOnHover: true,  // Pausa o timer ao passar o mouse
-    closeOnClick: true,  // Fecha ao clicar
-    showProgress: true,  // Mostra barra de progresso
-    maxToasts: 5         // Máximo de toasts simultâneos
+    duration: 7000,      // Tempo em ms (0 = não fecha automaticamente)
+    position: 'top-right',
+    pauseOnHover: true,
+    closeOnClick: true,
+    showProgress: true,
+    maxToasts: 5
   };
 
   // Ícones para cada tipo
@@ -506,7 +506,7 @@ const Toast = (function() {
   }
 
   function error(message, title = 'Erro!') {
-    return show({ type: 'error', title, message, duration: 6000 });
+    return show({ type: 'error', title, message, duration: 9000 });
   }
 
   function warning(message, title = 'Atenção!') {
