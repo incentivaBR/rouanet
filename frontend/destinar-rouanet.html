@@ -1346,10 +1346,8 @@
         if (dl) dl.style.display = 'flex';
 
         // WhatsApp share
-        const user = auth.getUser();
-        const nome = user?.nome ? user.nome.split(' ')[0] : 'Acabei de';
         const waText = encodeURIComponent(
-          `${nome === 'Acabei de' ? 'Acabei de' : nome + ' acabou de'} redirecionar ${valorFmt} do meu Imposto de Renda para a Orquestra das Periferias do DF — sem nenhum custo extra. O dinheiro iria para a Receita de qualquer jeito.\n\nVocê também pode fazer isso em menos de 10 minutos:\n👉 destineai.com.br/piloto`
+          `Acabei de redirecionar ${valorFmt} do meu Imposto de Renda para a Orquestra das Periferias do DF — sem nenhum custo extra.\n\nO dinheiro ia para a Receita de qualquer jeito. Agora vai para a cultura.\n\nVocê também pode fazer isso em menos de 10 minutos:\n👉 destineai.com.br/piloto`
         );
         document.getElementById('btnWhatsapp').href = `https://api.whatsapp.com/send?text=${waText}`;
 
