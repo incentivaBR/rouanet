@@ -7,13 +7,15 @@ const Toast = (function() {
   let container = null;
 
   // Configurações padrão
+  const isMobile = () => window.innerWidth <= 480 || ('ontouchstart' in window);
+
   const defaults = {
-    duration: 7000,      // Tempo em ms (0 = não fecha automaticamente)
+    duration: 9000,
     position: 'top-right',
     pauseOnHover: true,
     closeOnClick: true,
     showProgress: true,
-    maxToasts: 5
+    maxToasts: 3
   };
 
   // Ícones para cada tipo
@@ -107,7 +109,7 @@ const Toast = (function() {
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.12);
         max-width: 420px;
         min-width: 320px;
-        animation: toastSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        animation: toastSlideIn 0.3s ease-out;
         position: relative;
         overflow: hidden;
         cursor: pointer;
@@ -115,7 +117,6 @@ const Toast = (function() {
       }
 
       .toast:hover {
-        transform: translateY(-2px);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
@@ -429,9 +430,9 @@ const Toast = (function() {
 
       timeoutId = setTimeout(() => remove(toast), opts.duration);
 
-      // Pause on hover
+      // Pause on hover (desktop) e toque (mobile)
       if (opts.pauseOnHover) {
-        toast.addEventListener('mouseenter', () => {
+        const pause = () => {
           clearTimeout(timeoutId);
           remaining -= Date.now() - startTime;
           toast.classList.add('paused');
@@ -441,9 +442,8 @@ const Toast = (function() {
             progress.style.transitionDuration = '0ms';
             progress.style.width = computedWidth;
           }
-        });
-
-        toast.addEventListener('mouseleave', () => {
+        };
+        const resume = () => {
           startTime = Date.now();
           toast.classList.remove('paused');
           const progress = toast.querySelector('.toast-progress');
@@ -452,7 +452,12 @@ const Toast = (function() {
             progress.style.width = '0%';
           }
           timeoutId = setTimeout(() => remove(toast), remaining);
-        });
+        };
+
+        toast.addEventListener('mouseenter', pause);
+        toast.addEventListener('mouseleave', resume);
+        toast.addEventListener('touchstart', pause, { passive: true });
+        toast.addEventListener('touchend', resume, { passive: true });
       }
     }
 
@@ -506,11 +511,11 @@ const Toast = (function() {
   }
 
   function error(message, title = 'Erro!') {
-    return show({ type: 'error', title, message, duration: 9000 });
+    return show({ type: 'error', title, message, duration: 12000 });
   }
 
   function warning(message, title = 'Atenção!') {
-    return show({ type: 'warning', title, message });
+    return show({ type: 'warning', title, message, duration: 10000 });
   }
 
   function info(message, title = '') {
