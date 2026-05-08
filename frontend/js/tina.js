@@ -43,7 +43,7 @@ const TINA = (function() {
     },
     calculadora: {
       keywords: ['calcular', 'calculadora', 'quanto posso', 'limite', 'valor'],
-      response: '🧮 <strong>USE NOSSA CALCULADORA:</strong><br>• <strong>Rápida:</strong> Se já sabe seu salário (10 segundos)<br>• <strong>Completa:</strong> Para cálculo detalhado com deduções<br><br>O limite é de até 6% do IR devido (até 8% se incluir também oncologia e PCD — PRONON/PRONAS).'
+      response: '🧮 <strong>USE NOSSA CALCULADORA:</strong><br>• <strong>Rápida:</strong> Se já sabe seu salário (10 segundos)<br>• <strong>Completa:</strong> Para cálculo detalhado com deduções<br><br>Para a <strong>Lei Rouanet Art. 18</strong>, o limite é de <strong>6% do IR devido</strong> — e retorna 100% para você na declaração. Custo real: R$ 0.'
     },
     ir: {
       keywords: ['ir devido', 'imposto devido', 'encontrar ir', 'onde acho'],
@@ -52,12 +52,12 @@ const TINA = (function() {
 
     // FUNDOS E PROJETOS
     fundos: {
-      keywords: ['fundo', 'fdi', 'fdca', 'idoso', 'criança', 'diferença'],
-      response: '🏛️ <strong>FUNDOS DISPONÍVEIS:</strong><br>• <strong>FDI:</strong> Fundo do Idoso (pessoas 60+)<br>• <strong>FDCA:</strong> Fundo da Criança e Adolescente<br><br>Escolha pela causa que mais te identifica! Pode dividir entre os dois se quiser.'
+      keywords: ['fundo', 'fnc', 'rouanet', 'cultural', 'cultura', 'diferença'],
+      response: '🏛️ <strong>FUNDO DESTINATÁRIO:</strong><br>• <strong>FNC</strong> — Fundo Nacional de Cultura<br>• Base legal: <strong>Lei Rouanet Art. 18</strong> (Lei 8.313/91)<br>• Limite: <strong>6% do IR devido</strong><br>• Retorno: <strong>100%</strong> na declaração (Art. 18 = dedução integral)<br><br>O dinheiro vai direto para projetos culturais aprovados pelo MinC!'
     },
     projetos: {
-      keywords: ['projeto', 'escolher projeto', 'qual projeto'],
-      response: '🎯 <strong>PROJETOS:</strong> Todos são pré-aprovados pelos conselhos e têm impacto real. Veja os detalhes de cada um (orçamento, beneficiados). A opção "Destinação Geral" deixa o conselho decidir a melhor alocação.'
+      keywords: ['projeto', 'escolher projeto', 'qual projeto', 'pronac'],
+      response: '🎯 <strong>PROJETO NESTE PILOTO:</strong><br><strong>Orquestra das Periferias do DF</strong> (PRONAC 261847)<br><br>Projeto aprovado pelo Ministério da Cultura via Lei Rouanet. O valor destinado vai 100% para viabilizar atividades culturais na periferia do DF.<br><br>⚠️ Este piloto usa modo simulação — nenhum valor real é transferido.'
     },
 
     // PRAZOS E DATAS
@@ -67,7 +67,11 @@ const TINA = (function() {
     },
     declaracao: {
       keywords: ['declaração', 'receita federal', 'declarar', 'próximo ano'],
-      response: '📋 <strong>NA DECLARAÇÃO:</strong> Sua destinação aparecerá automaticamente como dedução na próxima declaração do IR. Guarde apenas o comprovante que enviaremos por email.'
+      response: '📋 <strong>NA DECLARAÇÃO DO IR (passo a passo):</strong><br><br>1️⃣ Abra o programa IRPF da Receita Federal<br>2️⃣ Vá em <strong>"Doações Efetuadas"</strong><br>3️⃣ Clique em <strong>"Novo"</strong><br>4️⃣ Selecione <strong>Código 41 — Promoção Cultural, Artística etc.</strong><br>5️⃣ Informe o CNPJ do FNC e o valor depositado<br>6️⃣ Anexe o <strong>Comunicado de Mecenato</strong> como comprovante<br><br>⚠️ O valor <strong>NÃO</strong> aparece automaticamente — você precisa lançar manualmente. Guarde o comprovante!'
+    },
+    codigo41: {
+      keywords: ['código 41', 'codigo 41', 'ficha doações', 'lançar declaração', 'como declarar', 'donações efetuadas'],
+      response: '🧾 <strong>CÓDIGO 41 — PASSO A PASSO:</strong><br><br>No programa IRPF (Receita Federal):<br>1️⃣ Ficha <strong>"Doações Efetuadas"</strong><br>2️⃣ Tipo: <strong>Código 41</strong> — Promoção Cultural, Artística, Ambiental, Desportiva e Científica<br>3️⃣ CNPJ do beneficiado: CNPJ do <strong>FNC</strong> ou da entidade cultural<br>4️⃣ Valor: exatamente o valor depositado<br>5️⃣ Descrição: nome do projeto (ex: Orquestra das Periferias do DF)<br><br>✅ O programa calcula a dedução automaticamente após o lançamento.'
     },
 
     // DÚVIDAS ESPECÍFICAS
@@ -77,7 +81,7 @@ const TINA = (function() {
     },
     dividir: {
       keywords: ['dividir', 'dois fundos', 'metade'],
-      response: '🔄 <strong>DIVIDIR ENTRE FUNDOS:</strong> Sim! Você pode fazer destinações separadas para diferentes fundos, respeitando o limite total de 6-8% do seu IR.'
+      response: '🔄 <strong>DIVIDIR ENTRE PROJETOS:</strong> Sim! Você pode fazer destinações para diferentes projetos aprovados pela Lei Rouanet, respeitando o limite total de <strong>6% do IR devido</strong>.'
     },
     erro: {
       keywords: ['errar', 'corrigir', 'erro', 'errei'],
@@ -91,7 +95,7 @@ const TINA = (function() {
     // LEGISLAÇÃO
     legal: {
       keywords: ['legal', 'lei', 'legislação', 'permitido'],
-      response: '⚖️ <strong>100% LEGAL!</strong> Base legal: Lei 8.069/90 (ECA), Lei 10.741/03 (Estatuto do Idoso), e legislação de incentivos fiscais. Total conformidade com a Receita Federal.'
+      response: '⚖️ <strong>100% LEGAL!</strong> Base legal: <strong>Lei 8.313/1991 (Lei Rouanet)</strong>, Art. 18 — dedução integral (100%) de até 6% do IR devido. Mecanismo regulamentado pelo Ministério da Cultura e Receita Federal há mais de 30 anos.'
     },
 
     // INICIANTES
@@ -117,19 +121,19 @@ const TINA = (function() {
     // Depois de calcular
     depoisCalcular: {
       keywords: ['depois de calcular', 'calculei e agora', 'próximo passo', 'o que fazer depois'],
-      response: '📝 <strong>DEPOIS DE CALCULAR:</strong><br>1️⃣ Escolha o fundo (FDI ou FDCA)<br>2️⃣ Selecione um projeto<br>3️⃣ Faça depósito/PIX na conta oficial do fundo<br>4️⃣ Envie o comprovante pelo sistema<br>5️⃣ Receba protocolo e aguarde recibo oficial<br><br>Simples assim!'
+      response: '📝 <strong>DEPOIS DE CALCULAR:</strong><br>1️⃣ Confirme o valor (até 6% do IR devido)<br>2️⃣ Faça depósito/PIX na conta oficial do <strong>FNC</strong><br>3️⃣ Obtenha o <strong>Comunicado de Mecenato</strong> com a entidade<br>4️⃣ Na declaração: ficha "Doações Efetuadas", <strong>Código 41</strong><br>5️⃣ O IR deduzido retorna 100% na restituição<br><br>⚠️ No piloto: modo simulação — nenhum depósito real é feito.'
     },
 
     // Onde depositar
     deposito: {
       keywords: ['depositar', 'pagar', 'transferir', 'pix', 'banco', 'conta'],
-      response: '🏦 <strong>ONDE DEPOSITAR:</strong><br>Direto na conta oficial do fundo escolhido (BRB):<br><br>• <strong>FDI:</strong> Ag 0100 | CC 062024-4<br>• <strong>FDCA:</strong> Ag 100 | CC 044149-8<br><br>Pode usar PIX, TED ou transferência. Guarde o comprovante!'
+      response: '🏦 <strong>ONDE DEPOSITAR (produção):</strong><br>Direto na conta oficial do <strong>FNC — Fundo Nacional de Cultura</strong>.<br><br>Os dados bancários são fornecidos pela entidade cultural vinculada ao projeto (Comunicado de Mecenato).<br><br>⚠️ <strong>Piloto:</strong> modo simulação — nenhum depósito real é necessário. Use os dados fictícios exibidos na tela.'
     },
 
     // DARF
     darf: {
       keywords: ['darf', 'documento', 'guia', 'boleto'],
-      response: '📄 <strong>DARF:</strong> A destinação durante o ano é feita por depósito direto na conta do fundo (não precisa de DARF). O DARF só é usado quando você destina na hora de entregar a declaração do IR.'
+      response: '📄 <strong>DARF — importante:</strong> Para a <strong>Lei Rouanet Art. 18</strong>, a destinação <strong>NÃO</strong> é feita via DARF na declaração. O depósito deve ser feito diretamente na conta do FNC <strong>até 31/12</strong> do ano-calendário. Depois, você lança na declaração com o Código 41.'
     },
 
     // Imposto a pagar
@@ -147,7 +151,7 @@ const TINA = (function() {
     // Simplificada x Completa
     simplificada: {
       keywords: ['simplificada', 'mudar para completa', 'tipo de declaração', 'qual declaração'],
-      response: '📊 <strong>DECLARAÇÃO:</strong><br>• <strong>Simplificada:</strong> NÃO permite destinação<br>• <strong>Completa:</strong> Permite destinação de até 8%<br><br>Você pode mudar de simplificada para completa! O programa do IR mostra qual é mais vantajosa.'
+      response: '📊 <strong>DECLARAÇÃO:</strong><br>• <strong>Simplificada:</strong> NÃO permite destinação via Lei Rouanet<br>• <strong>Completa:</strong> Permite destinação de até <strong>6% do IR devido</strong><br><br>Você pode mudar de simplificada para completa! O próprio programa IRPF mostra qual é mais vantajosa para você.'
     },
 
     // Ano base
@@ -159,7 +163,7 @@ const TINA = (function() {
     // Servidor público
     servidorPublico: {
       keywords: ['servidor', 'público', 'federal', 'estadual', 'municipal', 'gdf'],
-      response: '👔 <strong>SERVIDORES PÚBLICOS:</strong> Sim, você pode destinar! A plataforma foi feita especialmente para vocês. Não importa se é federal, estadual ou municipal - se faz declaração completa, pode destinar até 8% do IR.'
+      response: '👔 <strong>SERVIDORES PÚBLICOS:</strong> O DestineAI foi feito especialmente para vocês! Federal, estadual ou municipal — se você faz declaração completa (modelo real), pode destinar até <strong>6% do seu IR devido</strong> para projetos culturais via Lei Rouanet. Custo real: <strong>R$ 0</strong>.'
     },
 
     // Impacto real
@@ -188,7 +192,7 @@ const TINA = (function() {
     }
 
     // Resposta padrão
-    return '🤖 Sou a <strong>TINA</strong>, sua assistente de destinação de IR! Posso ajudar com:<br><br>• Como funciona a destinação<br>• Calculadora de IR<br>• Fundos e projetos disponíveis<br>• Prazos e processos<br>• Segurança e credibilidade<br><br>Faça sua pergunta ou clique nos botões de ação rápida!';
+    return '🤖 Sou a <strong>TINA</strong>, sua assistente de destinação de IR via <strong>Lei Rouanet</strong>! Posso ajudar com:<br><br>• Como funciona a destinação (Art. 18)<br>• Calculadora — quanto você pode destinar<br>• Prazos e processos<br>• Como declarar — Código 41<br>• Segurança e base legal<br><br>Faça sua pergunta ou clique nos botões de ação rápida!';
   }
 
   // Inicializa o widget
