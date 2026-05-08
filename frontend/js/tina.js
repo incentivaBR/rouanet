@@ -231,9 +231,6 @@ const TINA = (function() {
 
       <!-- Botões flutuantes -->
       <div class="tina-buttons">
-        <button class="tina-fab tina-whatsapp" onclick="TINA.openWhatsApp()" title="WhatsApp">
-          <i class="fab fa-whatsapp"></i>
-        </button>
         <button class="tina-fab tina-chat-btn" onclick="TINA.toggle()" title="Falar com TINA" id="tinaChatBtn">
           <img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
         </button>
@@ -258,8 +255,7 @@ const TINA = (function() {
           <div class="tina-message tina-bot">
             <div class="tina-msg-avatar"><img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
             <div class="tina-msg-content">
-              Olá! Sou a <strong>TINA</strong>, sua assistente virtual.
-              Como posso ajudar você hoje?
+              Olá, sou a <strong>TINA</strong>! Como posso ajudar?
             </div>
           </div>
         </div>
