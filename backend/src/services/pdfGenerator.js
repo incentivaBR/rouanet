@@ -1,5 +1,10 @@
 import PDFDocument from 'pdfkit';
 import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const LOGO_PATH = path.join(__dirname, '../../../frontend/assets/logo-incentivabr.png');
 
 /**
  * Gera codigo de verificacao unico para o comprovante
@@ -91,16 +96,19 @@ export function gerarComprovante(donation, user, project, fund) {
   const mutedColor = '#666666';
 
   // ===== CABECALHO =====
-  doc.fontSize(24)
-     .fillColor(primaryColor)
-     .text('IncentivaBR', { align: 'center' });
+  try {
+    doc.image(LOGO_PATH, { width: 180, align: 'center' });
+    doc.moveDown(0.5);
+  } catch (_) {
+    doc.fontSize(24).fillColor(primaryColor).text('IncentivaBR', { align: 'center' });
+    doc.moveDown(0.3);
+  }
 
-  doc.moveDown(0.3);
   doc.fontSize(10)
      .fillColor(mutedColor)
      .text('Transforme seu imposto em impacto social', { align: 'center' });
 
-  doc.moveDown(1);
+  doc.moveDown(0.8);
 
   // Linha separadora
   doc.strokeColor(secondaryColor)
@@ -111,6 +119,34 @@ export function gerarComprovante(donation, user, project, fund) {
 
   doc.moveDown(1);
 
+  // ===== BOX SIMULACAO (PILOTO) =====
+  const boxY = doc.y;
+  doc.rect(50, boxY, 495, 90)
+     .fillAndStroke('#0D1B3E', '#1a2f5e');
+
+  doc.moveDown(0.4);
+  doc.fontSize(11)
+     .fillColor('#FFD700')
+     .text('DOCUMENTO DE SIMULAÇÃO — PILOTO DESTINEAI / INCENTIVABR', { align: 'center' });
+
+  doc.moveDown(0.4);
+  doc.fontSize(9)
+     .fillColor('white')
+     .text(
+       'Este comprovante foi gerado em modo de simulação. Nenhum valor foi ou será transferido.',
+       { align: 'center' }
+     );
+  doc.moveDown(0.3);
+  doc.fontSize(9)
+     .fillColor('rgba(255,255,255,0.75)')
+     .text(
+       'Quando o sistema entrar em produção, este documento conterá seus dados reais e servirá\n' +
+       'como controle pessoal para declaração do Imposto de Renda (Código 41 — Lei Rouanet).',
+       { align: 'center' }
+     );
+
+  doc.moveDown(1.5);
+
   // ===== TITULO =====
   doc.fontSize(16)
      .fillColor(primaryColor)
@@ -118,13 +154,6 @@ export function gerarComprovante(donation, user, project, fund) {
 
   doc.fontSize(14)
      .text('DE INCENTIVO FISCAL', { align: 'center' });
-
-  doc.moveDown(0.5);
-
-  // Aviso sem valor fiscal
-  doc.fontSize(10)
-     .fillColor('#c0392b')
-     .text('(Documento sem valor fiscal - apenas para controle)', { align: 'center' });
 
   doc.moveDown(1.5);
 
