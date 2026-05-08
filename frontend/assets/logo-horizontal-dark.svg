@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 64" width="340" height="64">
+  <!-- Icon: circle com heart -->
+  <g transform="translate(4, 4)">
+    <circle cx="28" cy="28" r="28" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.30)" stroke-width="1.5"/>
+    <path d="M28 46 L16 32 Q9 24 16 17 Q23 10 28 20 Q33 10 40 17 Q47 24 40 32 Z" fill="#FFD700"/>
+    <path d="M20 34 L25 40 L36 26" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Text: IncentivaBR -->
+  <text x="76" y="44" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="800" fill="white" letter-spacing="-0.5">
+    Incentiva<tspan fill="#FFD700">BR</tspan>
+  </text>
+</svg>
