@@ -72,7 +72,7 @@ Semana passada compartilhei uma ferramenta sobre destinação de IR para projeto
 
 Se ainda não testou, vale muito: é ~5 minutos, anônimo, não movimenta nenhum valor real.
 
-A pesquisa encerra em [DATA LIMITE] — e cada resposta faz diferença.
+A pesquisa encerra em *15 de junho* — e cada resposta faz diferença.
 
 [LINK]
 ```
