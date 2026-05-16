@@ -162,7 +162,7 @@
               Responder o pré-teste
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
-            <p class="text-white/25 text-[11px] text-center mt-3">Abre em outra aba — volte aqui depois</p>
+            <p class="text-white/25 text-[11px] text-center mt-3" id="hint1">Abre em outra aba — volte aqui depois</p>
           </div>
         </div>
       </div>
@@ -287,8 +287,10 @@
       document.getElementById('icon1').className = 'w-10 h-10 rounded-full bg-[#FFD700]/20 border-2 border-[#FFD700] text-[#FFD700] font-black text-sm flex items-center justify-center z-10';
       // Linha conectora
       document.getElementById('conn1').classList.add('done');
-      // Card 1 → apaga o pulse
+      // Card 1 → apaga o pulse e avisa para voltar
       document.getElementById('btn1').classList.remove('btn-pulse');
+      document.getElementById('btn1').textContent = '✓ Pré-teste aberto';
+      document.getElementById('hint1').innerHTML = '⬅ Envie o formulário e <strong>volte para esta aba</strong> para continuar';
       // Card 2 → ativa
       document.getElementById('card2').classList.remove('opacity-60');
       document.getElementById('card2').className = 'flex-1 bg-[#FFD700]/[0.06] border border-[#FFD700]/25 rounded-2xl p-5 mb-6';
