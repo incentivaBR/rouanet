@@ -229,15 +229,18 @@ const TINA = (function() {
     return `
       <!-- Bolha de boas-vindas -->
       <div class="tina-welcome-bubble" id="tinaWelcome">
-        <span>Olá! Posso ajudar?</span>
+        <span>Oi! Sou a Tina 👋<br><small style="color:#6B7280">Tem dúvidas sobre a simulação?</small></span>
         <button class="tina-welcome-close" onclick="TINA.hideWelcome()">&times;</button>
       </div>
 
       <!-- Botões flutuantes -->
       <div class="tina-buttons">
-        <button class="tina-fab tina-chat-btn" onclick="TINA.toggle()" title="Falar com TINA" id="tinaChatBtn">
-          <img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
-        </button>
+        <div style="position:relative;display:inline-flex">
+          <button class="tina-fab tina-chat-btn" onclick="TINA.toggle()" title="Falar com TINA" id="tinaChatBtn">
+            <img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+          </button>
+          <span id="tinaBadge" style="position:absolute;top:2px;right:2px;width:14px;height:14px;background:#FF4444;border-radius:50%;border:2px solid white;animation:tinaPulse 1.8s infinite"></span>
+        </div>
       </div>
 
       <!-- Chat da TINA -->
@@ -370,6 +373,11 @@ const TINA = (function() {
       @keyframes tinaBounce {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-5px); }
+      }
+
+      @keyframes tinaPulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.4); opacity: 0.7; }
       }
 
       /* Chat principal */
@@ -702,6 +710,8 @@ const TINA = (function() {
       chat.classList.add('open');
       isOpen = true;
       hideWelcome();
+      const badge = document.getElementById('tinaBadge');
+      if (badge) badge.style.display = 'none';
       document.getElementById('tinaInput')?.focus();
     }
   }
