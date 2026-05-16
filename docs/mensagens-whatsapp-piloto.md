@@ -18,7 +18,7 @@ Projetos culturais aprovados pelo governo. E o que você destinar retorna 100% p
 
 A maioria dos servidores não sabe disso. A lei existe. O direito é seu.
 
-Testa em 5 minutos 👉 [LINK]
+Testa em 5 minutos 👉 https://destineai.com.br/frontend/piloto-start.html
 ```
 
 ---
@@ -38,7 +38,7 @@ Desenvolvemos uma ferramenta que faz isso em ~5 minutos. Estamos testando com se
 
 É anônimo. Não transfere nenhum valor real. Só queremos saber: você consegue fazer sozinho?
 
-Participa aqui 👉 [LINK]
+Participa aqui 👉 https://destineai.com.br/frontend/piloto-start.html
 ```
 
 ---
@@ -56,7 +56,7 @@ A maioria dos servidores não sabe disso.
 
 Estou desenvolvendo uma ferramenta que simplifica o processo. Testa aqui — é anônimo, ~5 min, não movimenta nenhum valor real:
 
-[LINK]
+https://destineai.com.br/frontend/piloto-start.html
 
 Me diz o que acha? Sua opinião é importante pra pesquisa.
 ```
@@ -74,7 +74,7 @@ Se ainda não testou, vale muito: é ~5 minutos, anônimo, não movimenta nenhum
 
 A pesquisa encerra em *15 de junho* — e cada resposta faz diferença.
 
-[LINK]
+https://destineai.com.br/frontend/piloto-start.html
 ```
 
 ---
@@ -88,14 +88,15 @@ A maioria dos servidores não sabe que esse direito existe. O sistema simplifica
 
 Ela precisa de servidores do GDF para testar. É anônimo e não transfere nenhum valor real.
 
-Vale muito dar uma olhada 👉 [LINK]
+Vale muito dar uma olhada 👉 https://destineai.com.br/frontend/piloto-start.html
 ```
 
 ---
 
 ## Nota técnica
 
-- **[LINK]** → `https://destineai.com.br/frontend/piloto-start.html`
-- Pré-teste e pós-teste precisam de links do Google Forms para completar o fluxo
-- Participantes usam **conta individual** (não compartilhada) ao acessar a plataforma
+- **Link:** `https://destineai.com.br/frontend/piloto-start.html` (GitHub Pages — URL limpa)
+- Pré-teste: `https://forms.gle/aUDyt5AbVL7nW8EA9` | Pós-teste: `https://forms.gle/bGTxUvR39MECNBMC9`
+- Participantes usam **modo demo** (`?demo=true`) — conta `demo@destineai.com.br` / `Piloto2026`
 - Anonimato da pesquisa garantido pelo código MAR15 (não conectado ao email da plataforma)
+- Prazo do piloto: **15 de junho de 2026**
