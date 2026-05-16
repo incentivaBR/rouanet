@@ -1,0 +1,12 @@
+frontend/assets/
+brand/
+tests/
+docs/
+*.pptx
+*.docx
+CLAUDE.md
+PLANO-INCENTIVABR.md
+PROMPT_GERACAO_UI.md
+SPEC_FLUXO_DESTINACAO.md
+SPEC_JORNADA_COMPLETA.md
+ROTEIRO_PITCH_ASJDF.md
