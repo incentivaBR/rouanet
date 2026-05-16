@@ -357,6 +357,25 @@
   <script src="js/layout.js"></script>
   <script>Layout.init('', { skipNav: true, skipFooter: true });</script>
   <script src="js/tenant.js"></script>
+  <script>
+    // Modo demo: ?demo=true auto-preenche e faz login automático
+    if (utils.getQueryParam('demo') === 'true') {
+      // Banner de contexto
+      const banner = document.createElement('div');
+      banner.style.cssText = 'background:#FFD700;color:#0D1B3E;text-align:center;font-size:12px;font-weight:700;padding:8px 16px;letter-spacing:0.05em;';
+      banner.textContent = 'PILOTO FGV · Você está entrando com a conta de demonstração';
+      document.body.insertBefore(banner, document.body.firstChild);
+
+      // Pre-preenche campos
+      document.getElementById('loginCpfEmail').value = 'demo@destineai.com.br';
+      document.getElementById('loginSenha').value = 'Piloto2026';
+
+      // Auto-submit após 800ms (dá tempo de renderizar a página)
+      setTimeout(() => {
+        document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+      }, 800);
+    }
+  </script>
 <script src="js/tina.js"></script>
 </body>
 </html>
