@@ -1,5 +1,22 @@
 # CHANGELOG — IncentivaBR Rouanet
 
+## [1.3.1] — 2026-05-16 — Piloto FGV: piloto-start.html + demo account
+
+### Adicionado
+- `frontend/piloto-start.html` — landing page do piloto com fluxo 3 etapas
+- `backend/src/migrations/024_demo_user_piloto.sql` — conta demo@destineai.com.br
+- OG tags no piloto-start.html para preview rico no WhatsApp
+- Trust block (nenhum dado bancário / FGV / anônimo)
+- Demo auto-login via `?demo=true` em login.html (MAR15)
+
+### Alterado
+- `frontend/login.html` — banner piloto + auto-preenchimento demo
+- `frontend/piloto.html` — CTAs direcionam para destinar-rouanet.html diretamente
+- `docs/mensagens-whatsapp-piloto.md` — 5 versões com URL www + data limite 15/jun
+- Copy headline: "Você sabia que parte do seu IR descontado do seu salário..."
+
+---
+
 ## [1.3.0] — 2026-04-30 — Piloto FGV: Campanha Cadeira 47
 ### Contexto
 Substituição do projeto Circuito do Forró (PRONAC 252026) pelo projeto piloto
