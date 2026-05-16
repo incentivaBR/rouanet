@@ -358,27 +358,18 @@
   <script>Layout.init('', { skipNav: true, skipFooter: true });</script>
   <script src="js/tenant.js"></script>
   <script>
-    // Modo demo: ?demo=true bypassa API e cria sessão local imediatamente
+    // Modo demo: ?demo=true auto-preenche credenciais e faz login real
     if (utils.getQueryParam('demo') === 'true') {
-      // Banner de contexto
       const banner = document.createElement('div');
       banner.style.cssText = 'background:#FFD700;color:#0D1B3E;text-align:center;font-size:12px;font-weight:700;padding:8px 16px;letter-spacing:0.05em;';
       banner.textContent = 'PILOTO FGV · Entrando com conta de demonstração...';
       document.body.insertBefore(banner, document.body.firstChild);
 
-      // Cria sessão demo sem chamar a API
+      document.getElementById('loginCpfEmail').value = 'demo@destineai.com.br';
+      document.getElementById('loginSenha').value = 'Piloto2026';
+
       setTimeout(() => {
-        auth.setToken('demo_token_piloto_fgv_' + Date.now());
-        auth.setUser({
-          id: 0,
-          nome: 'Participante Piloto',
-          email: 'demo@destineai.com.br',
-          cpf: '00000000000',
-          is_admin: false,
-          total_donated: 0
-        });
-        const redirect = utils.getQueryParam('redirect') || 'destinar-rouanet.html?pronac=261847';
-        window.location.href = redirect;
+        document.getElementById('loginForm').dispatchEvent(new Event('submit'));
       }, 800);
     }
   </script>
