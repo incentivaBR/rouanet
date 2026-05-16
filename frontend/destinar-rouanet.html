@@ -430,12 +430,6 @@
     <!-- ─── ETAPA 0: Apresentação do projeto ─────────────────── -->
     <div id="step0">
 
-      <!-- Banner simulação -->
-      <div id="testModeBannerStep0" style="display:none;background:#0D1B3E;border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
-        <span style="font-size:18px;flex-shrink:0">🧪</span>
-        <span><strong style="color:#FFD700">Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
-      </div>
-
       <!-- HERO: foto + overlay + gancho emocional -->
       <div style="border-radius:20px;overflow:hidden;margin-bottom:16px;position:relative">
         <img src="assets/orquestra-hero.jpg"
@@ -1567,10 +1561,8 @@
       if (cfg.simulation_mode) {
         state.simulationMode = true;
         const banner  = document.getElementById('testModeBanner');
-        const banner0 = document.getElementById('testModeBannerStep0');
         const simBadge = document.getElementById('step0SimBadge');
         if (banner)   banner.style.display  = 'flex';
-        if (banner0)  banner0.style.display = 'flex';
         if (simBadge) simBadge.style.display = '';
         // Mostrar botão simular no step4 quando em simulation mode
         const btnSim = document.getElementById('btnSimularPagamento');
