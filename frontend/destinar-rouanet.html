@@ -443,114 +443,78 @@
     <!-- ─── ETAPA 0: Apresentação do projeto ─────────────────── -->
     <div id="step0">
 
-      <!-- Banner simulação (aparece aqui antes de entrar no wizard) -->
+      <!-- Banner simulação -->
       <div id="testModeBannerStep0" style="display:none;background:#0D1B3E;border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
         <span style="font-size:18px;flex-shrink:0">🧪</span>
         <span><strong style="color:#FFD700">Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
       </div>
 
-      <!-- Card hero do projeto -->
-      <div style="background:linear-gradient(160deg,#0A1530 0%,#0D1B3E 60%,#0f2456 100%);border-radius:20px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(255,215,0,0.15)">
-
-        <!-- Topo: convite -->
-        <div style="padding:20px 28px 0;display:flex;align-items:center;gap:10px">
-          <span style="background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">Projeto aprovado pelo MinC</span>
-          <span id="step0SimBadge" style="display:none;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-size:11px;padding:4px 10px;border-radius:20px">Simulação</span>
-        </div>
-
-        <!-- Nome e proponente -->
-        <div style="padding:20px 28px 24px">
-          <div style="display:flex;align-items:flex-start;gap:18px">
-            <div style="width:64px;height:64px;border-radius:14px;background:rgba(255,215,0,0.12);border:1.5px solid rgba(255,215,0,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:28px">🎻</div>
-            <div style="flex:1;min-width:0">
-              <h2 id="s0Title" style="margin:0 0 6px;font-size:22px;font-weight:900;color:white;line-height:1.2">Carregando projeto...</h2>
-              <p id="s0Proponente" style="margin:0;font-size:13px;color:rgba(255,255,255,0.55)"></p>
-              <div style="display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap">
-                <span id="s0Pronac" style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.35);color:#FFD700;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:10px"></span>
-                <span id="s0Area"   style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6);font-size:11px;padding:3px 10px;border-radius:10px"></span>
-                <span id="s0Local"  style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6);font-size:11px;padding:3px 10px;border-radius:10px"></span>
-              </div>
-            </div>
+      <!-- HERO: foto + overlay + gancho emocional -->
+      <div style="border-radius:20px;overflow:hidden;margin-bottom:16px;position:relative">
+        <img src="assets/orquestra-hero.jpg"
+             alt="Jovens músicos da Orquestra das Periferias do DF"
+             style="width:100%;display:block;height:280px;object-fit:cover;object-position:center 25%"
+             loading="eager">
+        <!-- overlay gradiente -->
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,21,48,0.35) 0%,rgba(10,21,48,0.85) 100%)"></div>
+        <!-- conteúdo sobre a foto -->
+        <div style="position:absolute;inset:0;padding:20px 24px;display:flex;flex-direction:column;justify-content:space-between">
+          <!-- badges topo -->
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.4);color:#FFD700;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">Projeto aprovado pelo MinC</span>
+            <span id="step0SimBadge" style="display:none;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-size:10px;padding:4px 10px;border-radius:20px">Simulação</span>
           </div>
-
-          <!-- Descrição / missão -->
-          <p id="s0Desc" style="margin:20px 0 0;font-size:14px;color:rgba(255,255,255,0.75);line-height:1.7">
-            Carregando...
-          </p>
-        </div>
-
-        <!-- Foto do projeto -->
-        <div style="margin:0 0 0;overflow:hidden">
-          <img src="assets/orquestra-card.webp"
-               alt="Jovens músicos da Orquestra das Periferias do DF sorrindo com seus instrumentos"
-               style="width:100%;display:block;max-height:280px;object-fit:cover;object-position:center 30%"
-               loading="eager">
-        </div>
-
-        <!-- Barra de captação -->
-        <div style="padding:0 28px 22px" id="s0ValoresWrap" style="display:none">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
-            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center">
-              <div style="font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Valor aprovado</div>
-              <div id="s0ValAprovado" style="font-size:16px;font-weight:800;color:white">—</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center">
-              <div style="font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Captado</div>
-              <div id="s0ValCaptado" style="font-size:16px;font-weight:800;color:#4ade80">—</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center">
-              <div style="font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">A captar</div>
-              <div id="s0ValRestante" style="font-size:16px;font-weight:800;color:#FFD700">—</div>
-            </div>
-          </div>
-          <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden">
-            <div id="s0CapBar" style="height:100%;background:linear-gradient(90deg,#FFD700,#FFC000);border-radius:3px;width:0%;transition:width 1s"></div>
+          <!-- gancho emocional -->
+          <div>
+            <p style="margin:0 0 6px;font-size:12px;color:rgba(255,255,255,0.55);font-family:'Inter',sans-serif" id="s0Local"></p>
+            <h2 id="s0Title" style="margin:0 0 8px;font-size:22px;font-weight:900;color:white;line-height:1.2;font-family:'Inter',sans-serif">Carregando projeto...</h2>
+            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;font-family:'Inter',sans-serif">
+              Com parte do IR que já sai do seu salário todo mês,<br>você pode apoiar este projeto — <strong style="color:#FFD700">sem pagar nada a mais.</strong>
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- Card "custo zero" -->
-      <div style="background:white;border-radius:16px;border:1px solid #E8ECF4;overflow:hidden;margin-bottom:16px">
-        <div style="background:#0D1B3E;padding:14px 24px;display:flex;align-items:center;gap:10px">
-          <i class="fas fa-shield-halved" style="color:#FFD700;font-size:16px"></i>
-          <strong style="color:white;font-size:14px;font-weight:700">O que significa destinar via Lei Rouanet?</strong>
-        </div>
-        <div style="padding:20px 24px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-            <div style="background:#F4F6FB;border-radius:10px;padding:14px;text-align:center">
-              <div style="font-size:22px;margin-bottom:6px">⚖️</div>
-              <div style="font-size:12px;font-weight:700;color:#0D1B3E;margin-bottom:2px">Art. 18 — 100% dedutível</div>
-              <div style="font-size:11px;color:#6B7280">Dedução integral do IR</div>
-            </div>
-            <div style="background:#F4F6FB;border-radius:10px;padding:14px;text-align:center">
-              <div style="font-size:22px;margin-bottom:6px">🔒</div>
-              <div style="font-size:12px;font-weight:700;color:#0D1B3E;margin-bottom:2px">Sem custo para você</div>
-              <div style="font-size:11px;color:#6B7280">Usa imposto que você já paga</div>
-            </div>
-            <div style="background:#F4F6FB;border-radius:10px;padding:14px;text-align:center">
-              <div style="font-size:22px;margin-bottom:6px">📋</div>
-              <div style="font-size:12px;font-weight:700;color:#0D1B3E;margin-bottom:2px">Comprovante para a Receita</div>
-              <div style="font-size:11px;color:#6B7280">Usado na sua declaração IRPF</div>
-            </div>
-            <div style="background:#F4F6FB;border-radius:10px;padding:14px;text-align:center">
-              <div style="font-size:22px;margin-bottom:6px">🏛️</div>
-              <div style="font-size:12px;font-weight:700;color:#0D1B3E;margin-bottom:2px">Lei 8.313/1991</div>
-              <div style="font-size:11px;color:#6B7280">Aprovado pelo MinC</div>
-            </div>
-          </div>
-          <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;font-size:13px;color:#78350F;display:flex;gap:10px;align-items:flex-start">
-            <i class="fas fa-lightbulb" style="margin-top:2px;flex-shrink:0;color:#D97706"></i>
-            <span>Você usará uma parte do imposto que <strong>já vai pagar de qualquer forma</strong>. Nenhum centavo a mais sai do seu bolso.</span>
+      <!-- Chips de informação -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+        <span id="s0Pronac" style="background:rgba(13,27,62,0.07);border:1px solid rgba(13,27,62,0.15);color:#0D1B3E;font-size:11px;font-weight:700;letter-spacing:1px;padding:5px 12px;border-radius:20px"></span>
+        <span id="s0Area"   style="background:rgba(13,27,62,0.07);border:1px solid rgba(13,27,62,0.12);color:#374151;font-size:11px;padding:5px 12px;border-radius:20px"></span>
+        <span id="s0Proponente" style="background:rgba(13,27,62,0.07);border:1px solid rgba(13,27,62,0.12);color:#374151;font-size:11px;padding:5px 12px;border-radius:20px"></span>
+      </div>
+
+      <!-- Dois chips de garantia -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:14px 16px;display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">✅</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#065F46;margin-bottom:2px">100% dedutível</div>
+            <div style="font-size:11px;color:#047857">Retorna integral no seu IR</div>
           </div>
         </div>
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:14px 16px;display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">🔒</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#1E40AF;margin-bottom:2px">Nenhum custo extra</div>
+            <div style="font-size:11px;color:#1D4ED8">Usa imposto que você já paga</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Descrição do projeto -->
+      <div style="background:white;border-radius:14px;border:1px solid #E8ECF4;padding:18px 20px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:16px">🎻</span>
+          <strong style="font-size:13px;color:#0D1B3E">Sobre o projeto</strong>
+        </div>
+        <p id="s0Desc" style="margin:0;font-size:13px;color:#4B5563;line-height:1.7">Carregando...</p>
       </div>
 
       <!-- CTA -->
-      <button onclick="confirmarProjeto()" style="width:100%;background:#FFD700;color:#0D1B3E;border:none;border-radius:14px;padding:16px 24px;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s;margin-bottom:12px">
-        Quero destinar para este projeto <i class="fas fa-arrow-right"></i>
+      <button onclick="confirmarProjeto()" style="width:100%;background:#FFD700;color:#0D1B3E;border:none;border-radius:14px;padding:16px 24px;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s;margin-bottom:10px">
+        Ver quanto posso destinar <i class="fas fa-arrow-right"></i>
       </button>
-      <p style="text-align:center;font-size:12px;color:#8B96A8;margin:0">
-        Ao continuar você usará sua calculadora de IR para definir o valor exato.
+      <p style="text-align:center;font-size:12px;color:#9CA3AF;margin:0 0 4px">
+        Simulação completa · nenhum valor transferido
       </p>
 
     </div><!-- /step0 -->
