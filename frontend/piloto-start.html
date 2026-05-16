@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DestineAI — Piloto FGV · Por onde começar</title>
+  <meta name="description" content="Pesquisa FGV sobre destinação de IR para projetos culturais. 3 etapas, ~10 minutos, completamente anônimo.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            navy:  '#0D1B3E',
+            gold:  '#FFD700',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Linha conectora vertical entre etapas */
+    .step-connector {
+      position: absolute;
+      left: 19px;
+      top: 48px;
+      bottom: -24px;
+      width: 2px;
+      background: rgba(255,255,255,0.08);
+    }
+    .step-connector.done { background: rgba(255,215,0,0.35); }
+
+    /* Transição suave de estado */
+    .step-card { transition: all .3s ease; }
+
+    /* Botão primário pulsante (apenas no step ativo) */
+    @keyframes pulse-gold {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.4); }
+      50%       { box-shadow: 0 0 0 8px rgba(255,215,0,0); }
+    }
+    .btn-pulse { animation: pulse-gold 2s infinite; }
+  </style>
+</head>
+<body class="bg-[#0D1B3E] font-sans min-h-screen">
+
+  <!-- ── NAV MÍNIMA ── -->
+  <nav class="fixed top-0 inset-x-0 z-50 bg-[#0D1B3E]/95 backdrop-blur-md border-b border-white/[0.06]" style="height:52px">
+    <div class="max-w-lg mx-auto flex items-center justify-between px-5 h-full">
+      <span class="flex items-center gap-2.5">
+        <img src="assets/logo-horizontal-dark.svg" alt="IncentivaBR" class="h-7 w-auto">
+        <span class="text-white/20 text-sm">|</span>
+        <span class="text-white font-extrabold text-base tracking-tight">Destine<span class="text-[#FFD700]">AI</span></span>
+      </span>
+      <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest border border-[#FFD700]/30 bg-[#FFD700]/[0.08] rounded-full px-3 py-1">
+        Piloto FGV
+      </span>
+    </div>
+  </nav>
+
+  <!-- ── CONTEÚDO PRINCIPAL ── -->
+  <main class="max-w-lg mx-auto px-5 pt-[72px] pb-16">
+
+    <!-- Cabeçalho — descoberta primeiro -->
+    <div class="text-center pt-8 pb-10">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/10 px-4 py-1.5 mb-6">
+        <svg class="w-3.5 h-3.5 text-[#FFD700]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <span class="text-white/60 text-[11px] font-bold tracking-widest uppercase">Pesquisa FGV · MBA IA & Analytics</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-black text-white leading-tight mb-4">
+        Parte do IR descontado<br>
+        no seu contracheque<br>
+        <span class="text-[#FFD700]">pode ser escolhida por você.</span>
+      </h1>
+
+      <p class="text-white font-bold text-base mb-3">
+        O que você destinar retorna 100% pra você.
+      </p>
+
+      <p class="text-white/50 text-sm leading-relaxed max-w-xs mx-auto mb-4">
+        A maioria dos servidores não sabe disso.<br>
+        Desenvolvemos uma ferramenta pra simplificar — testa em ~5 minutos.
+      </p>
+
+      <p class="text-white/25 text-xs">
+        Anônimo · nenhum valor é transferido da sua conta
+      </p>
+    </div>
+
+    <!-- ── CÓDIGO ANÔNIMO — lembrete fixo ── -->
+    <div class="rounded-2xl bg-[#FFD700]/[0.08] border border-[#FFD700]/25 px-5 py-4 mb-8 flex gap-3 items-start">
+      <svg class="w-5 h-5 text-[#FFD700] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+      <div>
+        <p class="text-[#FFD700] font-black text-sm mb-1">Crie seu código anônimo agora</p>
+        <p class="text-white/60 text-xs leading-relaxed">
+          <strong class="text-white/80">Primeiras 3 letras do nome da sua mãe + dia do seu aniversário.</strong><br>
+          Exemplo: mãe se chama Maria, nasceu dia 15 → <strong class="text-[#FFD700]">MAR15</strong>
+        </p>
+        <p class="text-white/35 text-xs mt-2">Você vai precisar desse código no pré-teste e no pós-teste. Anote em algum lugar.</p>
+      </div>
+    </div>
+
+    <!-- ── ETAPAS ── -->
+    <div class="space-y-0" id="steps">
+
+      <!-- ETAPA 1 — PRÉ-TESTE -->
+      <div class="relative step-card" id="step1">
+        <div class="step-connector" id="conn1"></div>
+        <div class="flex gap-4">
+          <!-- Ícone da etapa -->
+          <div class="flex flex-col items-center shrink-0">
+            <div id="icon1"
+                 class="w-10 h-10 rounded-full bg-[#FFD700] text-[#0D1B3E] font-black text-sm flex items-center justify-center shadow-lg shadow-[#FFD700]/20 z-10">
+              1
+            </div>
+          </div>
+          <!-- Card da etapa -->
+          <div id="card1" class="flex-1 bg-[#FFD700]/[0.08] border border-[#FFD700]/30 rounded-2xl p-5 mb-6">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h2 class="text-white font-black text-base">Pré-teste</h2>
+              <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest shrink-0 mt-0.5">~2 min</span>
+            </div>
+            <p class="text-white/55 text-sm leading-relaxed mb-4">
+              Responda <strong class="text-white/80">antes</strong> de usar a plataforma. Suas respostas agora são a base da pesquisa — sem elas o par fica incompleto.
+            </p>
+            <a id="btn1" href="https://forms.gle/bGTxUvR39MECNBMC9" target="_blank" onclick="stepDone(1)"
+               class="btn-pulse inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black text-sm px-5 py-3 rounded-xl transition-colors w-full justify-center">
+              Responder o pré-teste
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+            <p class="text-white/25 text-[11px] text-center mt-3">Abre em outra aba — volte aqui depois</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 2 — SIMULAÇÃO -->
+      <div class="relative step-card" id="step2">
+        <div class="step-connector" id="conn2"></div>
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center shrink-0">
+            <div id="icon2"
+                 class="w-10 h-10 rounded-full bg-white/[0.07] border border-white/15 text-white/35 font-black text-sm flex items-center justify-center z-10">
+              2
+            </div>
+          </div>
+          <div id="card2" class="flex-1 bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 mb-6 opacity-60">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h2 class="text-white font-black text-base">Simule a destinação</h2>
+              <span class="text-white/30 text-[10px] font-black uppercase tracking-widest shrink-0 mt-0.5">~5 min</span>
+            </div>
+            <p class="text-white/45 text-sm leading-relaxed mb-4">
+              Acesse a plataforma e simule a destinação de parte do seu IR para a <strong class="text-white/60">Orquestra das Periferias do DF</strong>. Nenhum valor é transferido.
+            </p>
+            <a id="btn2"
+               href="login.html?tab=register&redirect=/destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
+               onclick="stepDone(2)"
+               class="inline-flex items-center gap-2 bg-white/10 text-white/40 font-black text-sm px-5 py-3 rounded-xl w-full justify-center cursor-not-allowed pointer-events-none"
+               id="btn2link">
+              Acessar a plataforma
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+            </a>
+            <p class="text-white/20 text-[11px] text-center mt-3" id="hint2">Conclua o pré-teste primeiro</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 3 — PÓS-TESTE -->
+      <div class="relative step-card" id="step3">
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center shrink-0">
+            <div id="icon3"
+                 class="w-10 h-10 rounded-full bg-white/[0.07] border border-white/15 text-white/35 font-black text-sm flex items-center justify-center z-10">
+              3
+            </div>
+          </div>
+          <div id="card3" class="flex-1 bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 opacity-60">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h2 class="text-white font-black text-base">Pós-teste</h2>
+              <span class="text-white/30 text-[10px] font-black uppercase tracking-widest shrink-0 mt-0.5">~3 min</span>
+            </div>
+            <p class="text-white/45 text-sm leading-relaxed mb-4">
+              Após baixar o comprovante na plataforma, volte aqui e responda o pós-teste. Use o <strong class="text-white/60">mesmo código anônimo</strong> do pré-teste.
+            </p>
+            <a id="btn3" href="https://forms.gle/aUDyt5AbVL7nW8EA9" target="_blank"
+               class="inline-flex items-center gap-2 bg-white/10 text-white/40 font-black text-sm px-5 py-3 rounded-xl w-full justify-center cursor-not-allowed pointer-events-none">
+              Responder o pós-teste
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+            <p class="text-white/20 text-[11px] text-center mt-3" id="hint3">Conclua a simulação primeiro</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── MENSAGEM DE CONCLUSÃO (oculta até completar tudo) ── -->
+    <div id="allDone" class="hidden mt-8 rounded-2xl bg-[#059669]/[0.10] border border-[#059669]/30 px-6 py-6 text-center">
+      <div class="text-3xl mb-3">🎉</div>
+      <p class="text-white font-black text-lg mb-2">Participação concluída!</p>
+      <p class="text-white/55 text-sm leading-relaxed">
+        Obrigado por contribuir com a pesquisa FGV.<br>
+        Conhece outro servidor que poderia participar?
+      </p>
+      <button onclick="navigator.share ? navigator.share({title:'Pesquisa FGV · DestineAI', text:'Participa dessa pesquisa rápida sobre destinação de IR?', url: window.location.href}) : null"
+              class="mt-4 inline-flex items-center gap-2 bg-[#059669] text-white font-black text-sm px-5 py-2.5 rounded-xl">
+        Compartilhar com colegas →
+      </button>
+    </div>
+
+    <!-- ── SAIBA MAIS ── -->
+    <div class="mt-10 pt-8 border-t border-white/[0.06] text-center">
+      <p class="text-white/30 text-xs mb-2">Quer entender melhor o projeto cultural?</p>
+      <a href="piloto.html" class="text-white/50 hover:text-white text-sm font-semibold underline underline-offset-4 decoration-white/20 hover:decoration-white transition-colors">
+        Conheça a Orquestra das Periferias do DF →
+      </a>
+    </div>
+
+    <!-- Rodapé mínimo -->
+    <div class="mt-10 text-center">
+      <p class="text-white/15 text-xs">
+        DestineAI · Piloto PA II/FGV · Maio 2026 ·
+        <a href="mailto:contato@destineai.com.br" class="underline hover:text-white/30">contato@destineai.com.br</a>
+      </p>
+      <p class="text-white/10 text-xs mt-1">
+        Um produto IncentivaBR® · INPI nº BR512025000647-0
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ── LÓGICA DE ESTADO ── -->
+  <script>
+    // Restaura estado do localStorage ao carregar
+    const state = {
+      step1: localStorage.getItem('pilot_step1') === 'done',
+      step2: localStorage.getItem('pilot_step2') === 'done',
+    };
+
+    if (state.step1) activateStep2();
+    if (state.step1 && state.step2) activateStep3();
+    if (state.step1 && state.step2 && localStorage.getItem('pilot_step3') === 'done') showDone();
+
+    function stepDone(n) {
+      localStorage.setItem('pilot_step' + n, 'done');
+      if (n === 1) setTimeout(activateStep2, 400);
+      if (n === 2) setTimeout(activateStep3, 400);
+      if (n === 3) setTimeout(showDone, 400);
+    }
+
+    function activateStep2() {
+      // Ícone 1 → check dourado
+      document.getElementById('icon1').innerHTML = '✓';
+      document.getElementById('icon1').className = 'w-10 h-10 rounded-full bg-[#FFD700]/20 border-2 border-[#FFD700] text-[#FFD700] font-black text-sm flex items-center justify-center z-10';
+      // Linha conectora
+      document.getElementById('conn1').classList.add('done');
+      // Card 1 → apaga o pulse
+      document.getElementById('btn1').classList.remove('btn-pulse');
+      // Card 2 → ativa
+      document.getElementById('card2').classList.remove('opacity-60');
+      document.getElementById('card2').className = 'flex-1 bg-[#FFD700]/[0.06] border border-[#FFD700]/25 rounded-2xl p-5 mb-6';
+      document.getElementById('icon2').className = 'w-10 h-10 rounded-full bg-[#FFD700] text-[#0D1B3E] font-black text-sm flex items-center justify-center shadow-lg shadow-[#FFD700]/20 z-10';
+      const btn2 = document.getElementById('btn2link');
+      btn2.className = 'btn-pulse inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black text-sm px-5 py-3 rounded-xl transition-colors w-full justify-center';
+      btn2.style.pointerEvents = 'auto';
+      btn2.style.cursor = 'pointer';
+      document.getElementById('hint2').textContent = 'Abre nesta mesma aba';
+    }
+
+    function activateStep3() {
+      // Ícone 2 → check
+      document.getElementById('icon2').innerHTML = '✓';
+      document.getElementById('icon2').className = 'w-10 h-10 rounded-full bg-[#FFD700]/20 border-2 border-[#FFD700] text-[#FFD700] font-black text-sm flex items-center justify-center z-10';
+      document.getElementById('conn2').classList.add('done');
+      document.getElementById('btn2link').classList.remove('btn-pulse');
+      // Card 3 → ativa
+      document.getElementById('card3').classList.remove('opacity-60');
+      document.getElementById('card3').className = 'flex-1 bg-[#059669]/[0.08] border border-[#059669]/30 rounded-2xl p-5';
+      document.getElementById('icon3').className = 'w-10 h-10 rounded-full bg-[#059669] text-white font-black text-sm flex items-center justify-center shadow-lg shadow-[#059669]/20 z-10';
+      const btn3 = document.getElementById('btn3');
+      btn3.className = 'btn-pulse inline-flex items-center gap-2 bg-[#059669] hover:bg-[#047857] text-white font-black text-sm px-5 py-3 rounded-xl w-full justify-center transition-colors';
+      btn3.onclick = () => stepDone(3);
+      btn3.style.pointerEvents = 'auto';
+      btn3.style.cursor = 'pointer';
+      document.getElementById('hint3').textContent = 'Use o mesmo código anônimo do pré-teste';
+    }
+
+    function showDone() {
+      document.getElementById('icon3').innerHTML = '✓';
+      document.getElementById('icon3').className = 'w-10 h-10 rounded-full bg-[#059669]/20 border-2 border-[#059669] text-[#059669] font-black text-sm flex items-center justify-center z-10';
+      document.getElementById('allDone').classList.remove('hidden');
+      document.getElementById('allDone').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
+
+  <script src="js/tina.js"></script>
+
+</body>
+</html>
