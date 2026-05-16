@@ -95,7 +95,7 @@ Vale muito dar uma olhada 👉 [LINK]
 
 ## Nota técnica
 
-- **[LINK]** → `https://incentivabr.github.io/rouanet/frontend/piloto-start.html`
+- **[LINK]** → `https://www.destineai.com.br/frontend/piloto-start.html`
 - Pré-teste e pós-teste precisam de links do Google Forms para completar o fluxo
 - Participantes usam **conta individual** (não compartilhada) ao acessar a plataforma
 - Anonimato da pesquisa garantido pelo código MAR15 (não conectado ao email da plataforma)
