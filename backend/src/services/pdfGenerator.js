@@ -121,31 +121,28 @@ export function gerarComprovante(donation, user, project, fund) {
 
   // ===== BOX SIMULACAO (PILOTO) =====
   const boxY = doc.y;
-  doc.rect(50, boxY, 495, 90)
-     .fillAndStroke('#0D1B3E', '#1a2f5e');
+  const boxH = 125;
+  doc.rect(50, boxY, 495, boxH).fillAndStroke('#0D1B3E', '#1a2f5e');
 
-  doc.moveDown(0.4);
-  doc.fontSize(11)
-     .fillColor('#FFD700')
-     .text('DOCUMENTO DE SIMULAÇÃO — PILOTO DESTINEAI / INCENTIVABR', { align: 'center' });
+  // texto com y explícito para não depender do cursor após fillAndStroke
+  doc.fontSize(11).fillColor('#FFD700')
+     .text('DOCUMENTO DE SIMULAÇÃO — PILOTO DESTINEAI / INCENTIVABR',
+           70, boxY + 14, { width: 455, align: 'center' });
 
-  doc.moveDown(0.4);
-  doc.fontSize(9)
-     .fillColor('white')
+  doc.fontSize(9).fillColor('#FFFFFF')
+     .text('Este comprovante foi gerado em modo de simulação. Nenhum valor foi ou será transferido.',
+           70, boxY + 38, { width: 455, align: 'center' });
+
+  doc.fontSize(9).fillColor('#AAC4E0')
      .text(
-       'Este comprovante foi gerado em modo de simulação. Nenhum valor foi ou será transferido.',
-       { align: 'center' }
-     );
-  doc.moveDown(0.3);
-  doc.fontSize(9)
-     .fillColor('rgba(255,255,255,0.75)')
-     .text(
-       'Quando o sistema entrar em produção, este documento conterá seus dados reais e servirá\n' +
-       'como controle pessoal para declaração do Imposto de Renda (Código 41 — Lei Rouanet).',
-       { align: 'center' }
+       'Em produção, este documento conterá seus dados reais e servirá como controle pessoal\n' +
+       'para declaração do Imposto de Renda (Código 41 — Lei Rouanet).',
+       70, boxY + 60, { width: 455, align: 'center' }
      );
 
-  doc.moveDown(1.5);
+  // avança cursor para abaixo do box
+  doc.text('', 50, boxY + boxH + 15);
+  doc.moveDown(0.5);
 
   // ===== TITULO =====
   doc.fontSize(16)
