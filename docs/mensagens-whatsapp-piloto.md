@@ -43,17 +43,15 @@ Participa aqui 👉 https://destineai.com.br/frontend/piloto-start.html
 ```
 [Nome], uma coisa rápida:
 
-Você sabia que parte do IR descontado no contracheque todo mês pode ser escolhida por você?
+Você sabia que parte do IR que já é descontado todo mês do seu salário pode apoiar projetos sociais — e retornar 100% pra você?
 
-Projetos culturais aprovados pelo governo — e o que você destinar retorna 100% como abatimento no IR. É a Lei Rouanet, Art. 18.
-
-A maioria dos servidores não sabe disso.
+Não é doação. Não sai nada além do que você já paga. É um direito seu garantido em lei — e a maioria dos servidores públicos simplesmente não sabe que ele existe.
 
 Estou desenvolvendo uma ferramenta que simplifica o processo. Testa aqui — é anônimo, ~5 min, não movimenta nenhum valor real:
 
 https://destineai.com.br/frontend/piloto-start.html
 
-Me diz o que acha? Sua opinião é importante pra pesquisa.
+Sua participação alimenta uma pesquisa científica real. Me diz o que acha?
 ```
 
 ---
@@ -63,9 +61,9 @@ Me diz o que acha? Sua opinião é importante pra pesquisa.
 ```
 Oi, passando pra lembrar 👋
 
-Semana passada compartilhei uma ferramenta sobre destinação de IR para projetos culturais — aquela que devolve 100% pra você.
+Semana passada compartilhei uma ferramenta sobre destinação de IR para projetos sociais — aquela que retorna 100% pra você.
 
-Se ainda não testou, vale muito: é ~5 minutos, anônimo, não movimenta nenhum valor real.
+Se ainda não testou, vale muito: é ~5 minutos, anônimo, não movimenta nenhum valor real. Sua participação alimenta uma pesquisa científica real.
 
 A pesquisa encerra em *15 de junho* — e cada resposta faz diferença.
 
@@ -77,11 +75,11 @@ https://destineai.com.br/frontend/piloto-start.html
 ## 5. Versão para amiga/colega encaminhar no grupo dela
 
 ```
-Gente, uma colega minha tá desenvolvendo uma ferramenta sobre a Lei Rouanet — aquela que permite destinar parte do IR para projetos culturais com retorno de 100%.
+Gente, uma colega minha tá desenvolvendo uma ferramenta sobre destinação de IR para projetos sociais.
 
-A maioria dos servidores não sabe que esse direito existe. O sistema simplifica tudo isso em ~5 minutos.
+Parte do IR que já é descontado do salário pode ser direcionada por você — e retorna 100%. A maioria dos servidores públicos não sabe que esse direito existe.
 
-Ela precisa de servidores do GDF para testar. É anônimo e não transfere nenhum valor real.
+Ela precisa de servidores públicos para testar. É anônimo e não movimenta nenhum valor real. Sua participação alimenta uma pesquisa científica real.
 
 Vale muito dar uma olhada 👉 https://destineai.com.br/frontend/piloto-start.html
 ```
