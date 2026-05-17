@@ -62,14 +62,14 @@
 <body class="bg-[#0D1B3E] font-sans min-h-screen">
 
   <!-- ── NAV MÍNIMA ── -->
-  <nav class="fixed top-0 inset-x-0 z-50 bg-[#0D1B3E]/95 backdrop-blur-md border-b border-white/[0.06]" style="height:52px">
-    <div class="max-w-lg mx-auto flex items-center justify-between px-5 h-full">
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:50;height:52px;background:rgba(13,27,62,0.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div class="max-w-lg mx-auto flex items-center justify-center px-5 h-full" style="position:relative">
       <span class="flex items-center gap-2.5">
         <img src="assets/logo-horizontal-dark.svg" alt="IncentivaBR" class="h-7 w-auto">
         <span class="text-white/20 text-sm">|</span>
         <span class="text-white font-extrabold text-base tracking-tight">Destine<span class="text-[#FFD700]">AI</span></span>
       </span>
-      <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest border border-[#FFD700]/30 bg-[#FFD700]/[0.08] rounded-full px-3 py-1">
+      <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest border border-[#FFD700]/30 bg-[#FFD700]/[0.08] rounded-full px-3 py-1" style="position:absolute;right:20px">
         Piloto FGV
       </span>
     </div>
@@ -92,10 +92,8 @@
         e retornar 100% pra você?
       </h1>
 
-      <p class="text-white/70 text-sm leading-relaxed max-w-xs mx-auto mb-4">
-        A maioria dos servidores não faz isso — não porque não quer,<br>
-        mas porque nunca soube que era possível.<br>
-        Desenvolvemos uma ferramenta que mostra como em ~5 minutos.
+      <p class="text-white/70 text-sm leading-relaxed max-w-sm mx-auto mb-4">
+        A grande maioria dos servidores públicos ainda deixa esse dinheiro para trás — não por falta de vontade, mas porque as regras fiscais parecem complexas demais. Para mudar essa realidade, desenvolvemos uma tecnologia inteligente que calcula e viabiliza o seu direcionamento.
       </p>
 
       <p class="text-white/25 text-xs">
@@ -104,18 +102,18 @@
     </div>
 
     <!-- ── BLOCO DE CONVENCIMENTO ── -->
-    <div class="rounded-2xl bg-white/[0.04] border border-white/10 px-5 py-5 mb-8 space-y-3">
+    <div class="rounded-2xl bg-white/[0.04] border border-white/10 px-5 py-5 mb-8 space-y-4">
       <div class="flex items-start gap-3">
-        <span class="text-base mt-0.5">👁️</span>
-        <p class="text-white/70 text-sm leading-relaxed"><strong class="text-white">Você vai descobrir quanto pode destinar</strong> no seu caso específico — calculado com seus dados reais de IR.</p>
+        <span class="text-base mt-0.5">⚡</span>
+        <p class="text-white/70 text-sm leading-relaxed"><strong class="text-white">Diagnóstico Personalizado:</strong> Você vai descobrir exatamente quanto pode destinar no seu caso específico — calculado na hora com seus dados reais de IR.</p>
       </div>
       <div class="flex items-start gap-3">
         <span class="text-base mt-0.5">🎓</span>
-        <p class="text-white/70 text-sm leading-relaxed"><strong class="text-white">Sua resposta alimenta pesquisa acadêmica real</strong> sobre por que 99% dos servidores nunca usou esse direito.</p>
+        <p class="text-white/70 text-sm leading-relaxed"><strong class="text-white">Contribuição Acadêmica:</strong> Sua participação alimenta uma pesquisa científica real dedicada a entender por que 99% dos servidores públicos nunca utilizaram esse direito legítimo.</p>
       </div>
       <div class="flex items-start gap-3">
-        <span class="text-base mt-0.5">⏱️</span>
-        <p class="text-white/70 text-sm leading-relaxed"><strong class="text-white">~10 minutos. Anônimo.</strong> Nenhum dado bancário. Nenhum compromisso.</p>
+        <span class="text-base mt-0.5">🔒</span>
+        <p class="text-white/70 text-sm leading-relaxed"><strong class="text-white">Segurança Absoluta (LGPD):</strong> O processo leva cerca de 10 minutos. É totalmente anônimo, livre de compromissos e nunca solicitamos dados bancários ou senhas.</p>
       </div>
     </div>
 
@@ -135,6 +133,18 @@
       </span>
     </div>
 
+    <!-- ── JORNADA DO PILOTO ── -->
+    <div class="rounded-2xl bg-white/[0.04] border border-white/10 px-5 py-4 mb-6">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-base">📋</span>
+        <h2 class="text-white font-black text-sm uppercase tracking-wide">Jornada do Piloto: Como participar</h2>
+      </div>
+      <p class="text-white/50 text-sm leading-relaxed">
+        Siga os 3 passos abaixo para realizar sua simulação e validar nossa pesquisa.
+        <strong class="text-[#FFD700]">Não feche esta aba</strong> para garantir que seus dados sejam computados corretamente.
+      </p>
+    </div>
+
     <!-- ── ETAPAS ── -->
     <div class="space-y-0" id="steps">
 
@@ -142,33 +152,35 @@
       <div class="relative step-card" id="step1">
         <div class="step-connector" id="conn1"></div>
         <div class="flex gap-4">
-          <!-- Ícone da etapa -->
           <div class="flex flex-col items-center shrink-0">
             <div id="icon1"
                  class="w-10 h-10 rounded-full bg-[#FFD700] text-[#0D1B3E] font-black text-sm flex items-center justify-center shadow-lg shadow-[#FFD700]/20 z-10">
               1
             </div>
           </div>
-          <!-- Card da etapa -->
           <div id="card1" class="flex-1 bg-[#FFD700]/[0.08] border border-[#FFD700]/30 rounded-2xl p-5 mb-6">
-            <div class="flex items-start justify-between gap-2 mb-1">
-              <h2 class="text-white font-black text-base">Pré-teste</h2>
-              <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest shrink-0 mt-0.5">~2 min</span>
+            <div class="flex items-start justify-between gap-2 mb-0.5">
+              <span class="text-[#FFD700] text-[9px] font-black uppercase tracking-widest">Etapa Obrigatória</span>
+              <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest shrink-0 flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
+                ~2 min
+              </span>
             </div>
+            <h3 class="text-white font-black text-base mb-3">Pré-teste</h3>
             <p class="text-white/55 text-sm leading-relaxed mb-4">
-              Responda <strong class="text-white/80">antes</strong> de usar a plataforma. Suas respostas agora são a base da pesquisa — sem elas o par fica incompleto.
+              Responda <strong class="text-white/80">antes</strong> de acessar a plataforma. Suas respostas iniciais são a base científica que valida o antes e o depois da pesquisa.
             </p>
             <a id="btn1" href="https://forms.gle/aUDyt5AbVL7nW8EA9" target="_blank" onclick="stepDone(1)"
                class="btn-pulse inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black text-sm px-5 py-3 rounded-xl transition-colors w-full justify-center">
-              Responder o pré-teste
+              🔓 Responder o Pré-teste
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
-            <p class="text-white/25 text-[11px] text-center mt-3" id="hint1">Abre em outra aba — volte aqui depois</p>
+            <p class="text-white/25 text-[11px] text-center mt-3" id="hint1">Abre em nova aba — após enviar o formulário, retorne para cá</p>
           </div>
         </div>
       </div>
 
-      <!-- ETAPA 2 — SIMULAÇÃO -->
+      <!-- ETAPA 2 — SIMULAÇÃO REAL -->
       <div class="relative step-card" id="step2">
         <div class="step-connector" id="conn2"></div>
         <div class="flex gap-4">
@@ -179,27 +191,31 @@
             </div>
           </div>
           <div id="card2" class="flex-1 bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 mb-6 opacity-60">
-            <div class="flex items-start justify-between gap-2 mb-1">
-              <h2 class="text-white font-black text-base">Simule a destinação</h2>
-              <span class="text-white/30 text-[10px] font-black uppercase tracking-widest shrink-0 mt-0.5">~5 min</span>
+            <div class="flex items-start justify-between gap-2 mb-0.5">
+              <span class="text-white/30 text-[9px] font-black uppercase tracking-widest">A Hora da Tecnologia</span>
+              <span class="text-white/30 text-[10px] font-black uppercase tracking-widest shrink-0 flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
+                ~5 min
+              </span>
             </div>
-            <p class="text-white/45 text-sm leading-relaxed mb-4">
-              Acesse a plataforma e simule a destinação de parte do seu IR para a <strong class="text-white/60">Orquestra das Periferias do DF</strong>. Nenhum valor é transferido.
+            <h3 class="text-white font-black text-base mb-3">Simulação Real</h3>
+            <p class="text-white/45 text-sm leading-relaxed mb-2">
+              Acesse nossa ferramenta e simule o impacto real da destinação de parte do seu IR para a <strong class="text-white/60">Orquestra das Periferias do DF</strong>.
             </p>
-            <p class="text-[#FFD700]/50 text-xs mb-4">Não é necessário criar conta — o acesso é automático.</p>
+            <p class="text-white/30 text-xs italic mb-4">É apenas uma simulação em ambiente seguro — nenhum valor é transferido ou debitado.</p>
             <a id="btn2link"
                href="https://www.destineai.com.br/login.html?demo=true&redirect=destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
                onclick="stepDone(2)"
                class="inline-flex items-center gap-2 bg-white/10 text-white/40 font-black text-sm px-5 py-3 rounded-xl w-full justify-center cursor-not-allowed pointer-events-none">
-              Acessar a plataforma
+              🚀 Acessar a Plataforma de Simulação
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
             </a>
-            <p class="text-white/20 text-[11px] text-center mt-3" id="hint2">Conclua o pré-teste primeiro</p>
+            <p class="text-white/20 text-[11px] text-center mt-3" id="hint2">Disponível após o Pré-teste</p>
           </div>
         </div>
       </div>
 
-      <!-- ETAPA 3 — PÓS-TESTE -->
+      <!-- ETAPA 3 — PÓS-TESTE & CONCLUSÃO -->
       <div class="relative step-card" id="step3">
         <div class="flex gap-4">
           <div class="flex flex-col items-center shrink-0">
@@ -209,19 +225,23 @@
             </div>
           </div>
           <div id="card3" class="flex-1 bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 opacity-60">
-            <div class="flex items-start justify-between gap-2 mb-1">
-              <h2 class="text-white font-black text-base">Pós-teste</h2>
-              <span class="text-white/30 text-[10px] font-black uppercase tracking-widest shrink-0 mt-0.5">~3 min</span>
+            <div class="flex items-start justify-between gap-2 mb-0.5">
+              <span class="text-white/30 text-[9px] font-black uppercase tracking-widest">Fechamento do Ciclo</span>
+              <span class="text-white/30 text-[10px] font-black uppercase tracking-widest shrink-0 flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
+                ~3 min
+              </span>
             </div>
+            <h3 class="text-white font-black text-base mb-3">Pós-teste &amp; Conclusão</h3>
             <p class="text-white/45 text-sm leading-relaxed mb-4">
-              Após baixar o comprovante na plataforma, volte aqui e responda o pós-teste. Use o <strong class="text-white/60">mesmo código anônimo</strong> do pré-teste.
+              Após gerar e baixar o seu comprovante de simulação na plataforma, retorne a esta aba para responder ao pós-teste. Lembre-se de utilizar o <strong class="text-white/60">mesmo código anônimo</strong> gerado no passo 1.
             </p>
             <a id="btn3" href="https://forms.gle/bGTxUvR39MECNBMC9" target="_blank"
                class="inline-flex items-center gap-2 bg-white/10 text-white/40 font-black text-sm px-5 py-3 rounded-xl w-full justify-center cursor-not-allowed pointer-events-none">
-              Responder o pós-teste
+              🔒 Responder o Pós-teste
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
-            <p class="text-white/20 text-[11px] text-center mt-3" id="hint3">Conclua a simulação primeiro</p>
+            <p class="text-white/20 text-[11px] text-center mt-3" id="hint3">Liberado após a conclusão da simulação</p>
           </div>
         </div>
       </div>
