@@ -20,12 +20,16 @@
       }
     }
   </script>
+  <style>
+    .clause { display: grid; grid-template-columns: 2.5rem 1fr; gap: 0.5rem 0.75rem; align-items: baseline; }
+    .clause-num { color: rgba(255,215,0,0.5); font-size: 0.7rem; font-weight: 700; padding-top: 0.15rem; text-align: right; }
+  </style>
 </head>
 <body class="bg-[#0D1B3E] font-sans min-h-screen">
 
   <!-- NAV -->
   <nav style="position:fixed;top:0;left:0;right:0;z-index:50;height:52px;background:rgba(13,27,62,0.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06)">
-    <div class="max-w-lg mx-auto flex items-center justify-center px-5 h-full" style="position:relative">
+    <div class="max-w-2xl mx-auto flex items-center justify-center px-5 h-full" style="position:relative">
       <a href="piloto-start.html" class="flex items-center gap-2.5">
         <img src="assets/logo-horizontal-dark.svg" alt="IncentivaBR" class="h-7 w-auto">
         <span class="text-white/20 text-sm">|</span>
@@ -37,117 +41,187 @@
     </div>
   </nav>
 
-  <!-- CONTEÚDO -->
   <main class="max-w-2xl mx-auto px-5 pt-[72px] pb-20">
 
     <!-- Cabeçalho -->
-    <div class="pt-10 pb-8 border-b border-white/[0.08] mb-8">
+    <div class="pt-10 pb-8 border-b border-white/[0.08] mb-10">
       <p class="text-[#FFD700] text-[11px] font-black uppercase tracking-widest mb-3">Documento Legal</p>
-      <h1 class="text-2xl font-black text-white mb-2">Termos de Uso</h1>
-      <p class="text-white/40 text-sm">Piloto DestineAI / IncentivaBR — Versão para ambiente de simulação (educacional)</p>
+      <h1 class="text-3xl font-black text-white mb-3">Termos de Uso</h1>
+      <p class="text-white/50 text-sm leading-relaxed">Piloto DestineAI / IncentivaBR — Versão para ambiente de simulação (educacional)</p>
       <p class="text-white/25 text-xs mt-2">Maio de 2026 · Versão 1.0</p>
     </div>
 
     <!-- Seções -->
-    <div class="space-y-8 text-white/70 text-sm leading-relaxed">
+    <div class="space-y-10">
 
       <!-- 1 -->
       <section>
-        <h2 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-          <span class="text-[#FFD700] font-black text-sm">1.</span> Objeto
-        </h2>
-        <div class="space-y-3 pl-5 border-l border-white/[0.07]">
-          <p><span class="text-white/40 text-xs font-semibold">1.1</span> &nbsp;Os presentes Termos de Uso regulam a utilização, pelo usuário, do ambiente de simulação disponibilizado pela <strong class="text-white">IncentivaBR</strong> por meio da plataforma <strong class="text-white">DestineAI</strong>, voltado exclusivamente à demonstração pedagógica do mecanismo de destinação de Imposto de Renda para projetos sociais e culturais.</p>
-          <p><span class="text-white/40 text-xs font-semibold">1.2</span> &nbsp;Nesta fase do projeto, a plataforma opera apenas em <strong class="text-white">modo de simulação</strong>, não realizando qualquer destinação financeira efetiva, transferência de valores ou envio de informações à Receita Federal do Brasil ou a instituições financeiras.</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-7 h-7 rounded-lg bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] font-black text-xs shrink-0">1</span>
+          <h2 class="text-white font-bold text-lg">Objeto</h2>
+        </div>
+        <div class="space-y-4 pl-10">
+          <div class="clause">
+            <span class="clause-num">1.1</span>
+            <p class="text-white/65 text-sm leading-relaxed">Os presentes Termos de Uso regulam a utilização, pelo usuário, do ambiente de simulação disponibilizado pela <strong class="text-white/90">IncentivaBR</strong> por meio da plataforma <strong class="text-white/90">DestineAI</strong>, voltado exclusivamente à demonstração pedagógica do mecanismo de destinação de Imposto de Renda para projetos sociais e culturais.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">1.2</span>
+            <p class="text-white/65 text-sm leading-relaxed">Nesta fase do projeto, a plataforma opera apenas em <strong class="text-white/90">modo de simulação</strong>, não realizando qualquer destinação financeira efetiva, transferência de valores ou envio de informações à Receita Federal do Brasil ou a instituições financeiras.</p>
+          </div>
         </div>
       </section>
 
       <!-- 2 -->
       <section>
-        <h2 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-          <span class="text-[#FFD700] font-black text-sm">2.</span> Natureza educacional da ferramenta
-        </h2>
-        <div class="space-y-3 pl-5 border-l border-white/[0.07]">
-          <p><span class="text-white/40 text-xs font-semibold">2.1</span> &nbsp;O DestineAI tem, neste piloto, finalidade exclusivamente <strong class="text-white">educacional e de pesquisa acadêmica</strong>, no âmbito de projeto aplicado do <strong class="text-white">MBA em Inteligência Artificial e Analytics Aplicadas a Negócios da Fundação Getulio Vargas (FGV)</strong>.</p>
-          <p><span class="text-white/40 text-xs font-semibold">2.2</span> &nbsp;As informações apresentadas pela plataforma (valores simulados de destinação, exemplos de fluxo, recibos fictícios, orientações em linguagem natural, entre outras) têm caráter <strong class="text-white">meramente ilustrativo</strong>, servindo para que o usuário compreenda, em tese, o funcionamento da destinação de parte do Imposto de Renda devido.</p>
-          <p><span class="text-white/40 text-xs font-semibold">2.3</span> &nbsp;Qualquer decisão de realizar destinações reais na declaração de IRPF é de <strong class="text-white">responsabilidade exclusiva do usuário</strong>, devendo ser tomada com base na legislação vigente, nas orientações oficiais da Receita Federal do Brasil e, se for o caso, com apoio de profissional habilitado (contador, advogado, etc.).</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-7 h-7 rounded-lg bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] font-black text-xs shrink-0">2</span>
+          <h2 class="text-white font-bold text-lg">Natureza educacional da ferramenta</h2>
+        </div>
+        <div class="space-y-4 pl-10">
+          <div class="clause">
+            <span class="clause-num">2.1</span>
+            <p class="text-white/65 text-sm leading-relaxed">O DestineAI tem, neste piloto, finalidade exclusivamente <strong class="text-white/90">educacional e de pesquisa acadêmica</strong>, no âmbito de projeto aplicado do <strong class="text-white/90">MBA em Inteligência Artificial e Analytics Aplicadas a Negócios da Fundação Getulio Vargas (FGV)</strong>.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">2.2</span>
+            <p class="text-white/65 text-sm leading-relaxed">As informações apresentadas pela plataforma (valores simulados de destinação, exemplos de fluxo, recibos fictícios, orientações em linguagem natural, entre outras) têm caráter <strong class="text-white/90">meramente ilustrativo</strong>, servindo para que o usuário compreenda, em tese, o funcionamento da destinação de parte do Imposto de Renda devido.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">2.3</span>
+            <p class="text-white/65 text-sm leading-relaxed">Qualquer decisão de realizar destinações reais na declaração de IRPF é de <strong class="text-white/90">responsabilidade exclusiva do usuário</strong>, devendo ser tomada com base na legislação vigente, nas orientações oficiais da Receita Federal do Brasil e, se for o caso, com apoio de profissional habilitado (contador, advogado, etc.).</p>
+          </div>
         </div>
       </section>
 
       <!-- 3 -->
       <section>
-        <h2 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-          <span class="text-[#FFD700] font-black text-sm">3.</span> Ausência de integração com a Receita Federal e de execução fiscal
-        </h2>
-        <div class="space-y-3 pl-5 border-l border-white/[0.07]">
-          <p><span class="text-white/40 text-xs font-semibold">3.1</span> &nbsp;O ambiente de simulação <strong class="text-white">não se integra</strong> aos sistemas da Receita Federal (tais como e‑CAC, PGD ou aplicativos oficiais), nem envia, altera ou substitui dados de declarações de IRPF.</p>
-          <p><span class="text-white/40 text-xs font-semibold">3.2</span> &nbsp;A plataforma não executa qualquer destinação efetiva de valores a fundos, projetos ou programas governamentais. Os dados exibidos ao usuário correspondem a <strong class="text-white">cenários hipotéticos</strong>, construídos com base nas informações por ele fornecidas.</p>
-          <p><span class="text-white/40 text-xs font-semibold">3.3</span> &nbsp;Eventuais "recibos" ou "comprovantes" exibidos ao final do fluxo têm <strong class="text-white">natureza fictícia</strong>, apenas para fins de demonstração da aparência e do conteúdo típico de documentos que seriam gerados em operações reais de destinação.</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-7 h-7 rounded-lg bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] font-black text-xs shrink-0">3</span>
+          <h2 class="text-white font-bold text-lg">Ausência de integração com a Receita Federal</h2>
+        </div>
+        <div class="space-y-4 pl-10">
+          <div class="clause">
+            <span class="clause-num">3.1</span>
+            <p class="text-white/65 text-sm leading-relaxed">O ambiente de simulação <strong class="text-white/90">não se integra</strong> aos sistemas da Receita Federal (tais como e‑CAC, PGD ou aplicativos oficiais), nem envia, altera ou substitui dados de declarações de IRPF.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">3.2</span>
+            <p class="text-white/65 text-sm leading-relaxed">A plataforma não executa qualquer destinação efetiva de valores a fundos, projetos ou programas governamentais. Os dados exibidos ao usuário correspondem a <strong class="text-white/90">cenários hipotéticos</strong>, construídos com base nas informações por ele fornecidas.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">3.3</span>
+            <p class="text-white/65 text-sm leading-relaxed">Eventuais "recibos" ou "comprovantes" exibidos ao final do fluxo têm <strong class="text-white/90">natureza fictícia</strong>, apenas para fins de demonstração da aparência e do conteúdo típico de documentos que seriam gerados em operações reais de destinação.</p>
+          </div>
         </div>
       </section>
 
       <!-- 4 -->
       <section>
-        <h2 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-          <span class="text-[#FFD700] font-black text-sm">4.</span> Dados informados pelo usuário
-        </h2>
-        <div class="space-y-3 pl-5 border-l border-white/[0.07]">
-          <p><span class="text-white/40 text-xs font-semibold">4.1</span> &nbsp;Para fins de simulação, o usuário poderá optar por informar determinados dados (por exemplo, valor de Imposto de Renda devido, faixa de renda, número de dependentes ou outras informações relevantes).</p>
-          <p><span class="text-white/40 text-xs font-semibold">4.2</span> &nbsp;Tais dados serão utilizados apenas para construção de cenários simulados e para a geração de <strong class="text-white">estatísticas agregadas, de caráter acadêmico</strong>, com o objetivo de aprimorar a solução e compreender a experiência dos servidores públicos com o mecanismo de destinação.</p>
-          <p><span class="text-white/40 text-xs font-semibold">4.3</span> &nbsp;A IncentivaBR compromete‑se a tratar os dados pessoais em conformidade com a <strong class="text-white">Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018 – LGPD)</strong>, observando os princípios de finalidade, necessidade e segurança.</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-7 h-7 rounded-lg bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] font-black text-xs shrink-0">4</span>
+          <h2 class="text-white font-bold text-lg">Dados informados pelo usuário</h2>
+        </div>
+        <div class="space-y-4 pl-10">
+          <div class="clause">
+            <span class="clause-num">4.1</span>
+            <p class="text-white/65 text-sm leading-relaxed">Para fins de simulação, o usuário poderá optar por informar determinados dados (por exemplo, valor de Imposto de Renda devido, faixa de renda, número de dependentes ou outras informações relevantes).</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">4.2</span>
+            <p class="text-white/65 text-sm leading-relaxed">Tais dados serão utilizados apenas para construção de cenários simulados e para a geração de <strong class="text-white/90">estatísticas agregadas, de caráter acadêmico</strong>, com o objetivo de aprimorar a solução e compreender a experiência dos servidores públicos com o mecanismo de destinação.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">4.3</span>
+            <p class="text-white/65 text-sm leading-relaxed">A IncentivaBR compromete‑se a tratar os dados pessoais em conformidade com a <strong class="text-white/90">Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018 – LGPD)</strong>, observando os princípios de finalidade, necessidade e segurança.</p>
+          </div>
         </div>
       </section>
 
       <!-- 5 -->
       <section>
-        <h2 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-          <span class="text-[#FFD700] font-black text-sm">5.</span> Limitação de responsabilidade
-        </h2>
-        <div class="space-y-3 pl-5 border-l border-white/[0.07]">
-          <p><span class="text-white/40 text-xs font-semibold">5.1</span> &nbsp;A IncentivaBR não se responsabiliza por decisões de destinação de Imposto de Renda tomadas pelo usuário fora do ambiente de simulação, com base em interpretações pessoais das informações exibidas na plataforma.</p>
-          <p><span class="text-white/40 text-xs font-semibold">5.2</span> &nbsp;A plataforma <strong class="text-white">não substitui</strong> a análise individual de cada caso, nem a consulta a fontes oficiais (Receita Federal, legislação vigente) ou a profissionais habilitados.</p>
-          <p><span class="text-white/40 text-xs font-semibold">5.3</span> &nbsp;A IncentivaBR envida esforços razoáveis para manter as informações atualizadas, mas não garante a ausência de erros, omissões ou desatualizações em relação a mudanças legislativas ou regulatórias posteriores.</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-7 h-7 rounded-lg bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] font-black text-xs shrink-0">5</span>
+          <h2 class="text-white font-bold text-lg">Limitação de responsabilidade</h2>
+        </div>
+        <div class="space-y-4 pl-10">
+          <div class="clause">
+            <span class="clause-num">5.1</span>
+            <p class="text-white/65 text-sm leading-relaxed">A IncentivaBR não se responsabiliza por decisões de destinação de Imposto de Renda tomadas pelo usuário fora do ambiente de simulação, com base em interpretações pessoais das informações exibidas na plataforma.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">5.2</span>
+            <p class="text-white/65 text-sm leading-relaxed">A plataforma <strong class="text-white/90">não substitui</strong> a análise individual de cada caso, nem a consulta a fontes oficiais (Receita Federal, legislação vigente) ou a profissionais habilitados.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">5.3</span>
+            <p class="text-white/65 text-sm leading-relaxed">A IncentivaBR envida esforços razoáveis para manter as informações atualizadas, mas não garante a ausência de erros, omissões ou desatualizações em relação a mudanças legislativas ou regulatórias posteriores.</p>
+          </div>
         </div>
       </section>
 
       <!-- 6 -->
       <section>
-        <h2 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-          <span class="text-[#FFD700] font-black text-sm">6.</span> Propriedade intelectual
-        </h2>
-        <div class="space-y-3 pl-5 border-l border-white/[0.07]">
-          <p><span class="text-white/40 text-xs font-semibold">6.1</span> &nbsp;A plataforma IncentivaBR, o ambiente de simulação DestineAI, seus fluxos operacionais, interfaces, textos, telas, algoritmos e metodologias são protegidos por <strong class="text-white">direitos autorais e propriedade industrial</strong>.</p>
-          <p><span class="text-white/40 text-xs font-semibold">6.2</span> &nbsp;A solução possui proteção registrada no <strong class="text-white">Instituto Nacional da Propriedade Industrial (INPI)</strong> sob o nº <strong class="text-white">BR512025000647‑0</strong>, bem como documentação registrada em cartório.</p>
-          <p><span class="text-white/40 text-xs font-semibold">6.3</span> &nbsp;É vedada a reprodução, modificação, engenharia reversa ou qualquer forma de utilização não autorizada dos elementos da plataforma, total ou parcialmente, sob pena de responsabilização civil e criminal, nos termos da legislação aplicável.</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-7 h-7 rounded-lg bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] font-black text-xs shrink-0">6</span>
+          <h2 class="text-white font-bold text-lg">Propriedade intelectual</h2>
+        </div>
+        <div class="space-y-4 pl-10">
+          <div class="clause">
+            <span class="clause-num">6.1</span>
+            <p class="text-white/65 text-sm leading-relaxed">A plataforma IncentivaBR, o ambiente de simulação DestineAI, seus fluxos operacionais, interfaces, textos, telas, algoritmos e metodologias são protegidos por <strong class="text-white/90">direitos autorais e propriedade industrial</strong>.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">6.2</span>
+            <p class="text-white/65 text-sm leading-relaxed">A solução possui proteção registrada no <strong class="text-white/90">Instituto Nacional da Propriedade Industrial (INPI)</strong> sob o nº <strong class="text-white/90">BR512025000647‑0</strong>, bem como documentação registrada em cartório.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">6.3</span>
+            <p class="text-white/65 text-sm leading-relaxed">É vedada a reprodução, modificação, engenharia reversa ou qualquer forma de utilização não autorizada dos elementos da plataforma, total ou parcialmente, sob pena de responsabilização civil e criminal, nos termos da legislação aplicável.</p>
+          </div>
         </div>
       </section>
 
       <!-- 7 -->
       <section>
-        <h2 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-          <span class="text-[#FFD700] font-black text-sm">7.</span> Participação em pesquisa acadêmica
-        </h2>
-        <div class="space-y-3 pl-5 border-l border-white/[0.07]">
-          <p><span class="text-white/40 text-xs font-semibold">7.1</span> &nbsp;Ao utilizar o ambiente de simulação e preencher os questionários de pré‑teste e pós‑teste, o usuário declara ciência de que seus dados serão utilizados, de forma <strong class="text-white">anônima e agregada</strong>, em pesquisa acadêmica vinculada ao MBA da FGV.</p>
-          <p><span class="text-white/40 text-xs font-semibold">7.2</span> &nbsp;Nenhum participante será identificado individualmente em relatórios, artigos ou apresentações decorrentes da pesquisa.</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-7 h-7 rounded-lg bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] font-black text-xs shrink-0">7</span>
+          <h2 class="text-white font-bold text-lg">Participação em pesquisa acadêmica</h2>
+        </div>
+        <div class="space-y-4 pl-10">
+          <div class="clause">
+            <span class="clause-num">7.1</span>
+            <p class="text-white/65 text-sm leading-relaxed">Ao utilizar o ambiente de simulação e preencher os questionários de pré‑teste e pós‑teste, o usuário declara ciência de que seus dados serão utilizados, de forma <strong class="text-white/90">anônima e agregada</strong>, em pesquisa acadêmica vinculada ao MBA da FGV.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">7.2</span>
+            <p class="text-white/65 text-sm leading-relaxed">Nenhum participante será identificado individualmente em relatórios, artigos ou apresentações decorrentes da pesquisa.</p>
+          </div>
         </div>
       </section>
 
       <!-- 8 -->
       <section>
-        <h2 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-          <span class="text-[#FFD700] font-black text-sm">8.</span> Aceite e alterações
-        </h2>
-        <div class="space-y-3 pl-5 border-l border-white/[0.07]">
-          <p><span class="text-white/40 text-xs font-semibold">8.1</span> &nbsp;O uso da plataforma implica <strong class="text-white">aceite integral</strong> destes Termos de Uso.</p>
-          <p><span class="text-white/40 text-xs font-semibold">8.2</span> &nbsp;A IncentivaBR poderá atualizar estes Termos a qualquer tempo, especialmente em caso de mudanças na legislação ou evolução da plataforma. Nesses casos, será indicada a nova versão e a data de atualização.</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-7 h-7 rounded-lg bg-[#FFD700]/10 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] font-black text-xs shrink-0">8</span>
+          <h2 class="text-white font-bold text-lg">Aceite e alterações</h2>
+        </div>
+        <div class="space-y-4 pl-10">
+          <div class="clause">
+            <span class="clause-num">8.1</span>
+            <p class="text-white/65 text-sm leading-relaxed">O uso da plataforma implica <strong class="text-white/90">aceite integral</strong> destes Termos de Uso.</p>
+          </div>
+          <div class="clause">
+            <span class="clause-num">8.2</span>
+            <p class="text-white/65 text-sm leading-relaxed">A IncentivaBR poderá atualizar estes Termos a qualquer tempo, especialmente em caso de mudanças na legislação ou evolução da plataforma. Nesses casos, será indicada a nova versão e a data de atualização.</p>
+          </div>
         </div>
       </section>
 
     </div>
 
-    <!-- Voltar -->
-    <div class="mt-12 pt-8 border-t border-white/[0.06] flex items-center justify-between">
+    <!-- Navegação inferior -->
+    <div class="mt-14 pt-8 border-t border-white/[0.06] flex items-center justify-between">
       <a href="piloto-start.html" class="text-white/40 hover:text-white text-sm font-semibold transition-colors flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
         Voltar para o piloto
@@ -163,12 +237,9 @@
         DestineAI · Piloto PA II/FGV · Maio 2026 ·
         <a href="mailto:contato@destineai.com.br" class="underline hover:text-white/30">contato@destineai.com.br</a>
       </p>
-      <p class="text-white/10 text-xs mt-1">
-        Um produto IncentivaBR® · INPI nº BR512025000647-0
-      </p>
+      <p class="text-white/10 text-xs mt-1">Um produto IncentivaBR® · INPI nº BR512025000647-0</p>
     </div>
 
   </main>
-
 </body>
 </html>
