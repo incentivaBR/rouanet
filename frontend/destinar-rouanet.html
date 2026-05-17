@@ -137,9 +137,12 @@
 
     /* ── Step 1: Projeto ───────────────────────────────────────── */
     .project-banner {
-      background:
+      background-image:
         linear-gradient(to bottom, rgba(10,21,48,0.55) 0%, rgba(10,21,48,0.88) 100%),
-        url('assets/orquestra-hero.jpg') center 25% / cover no-repeat;
+        url('assets/orquestra-hero.jpg');
+      background-size: 100% 100%, cover;
+      background-position: 0 0, center 25%;
+      background-repeat: no-repeat, no-repeat;
       border-radius: var(--radius-lg); padding: 28px 24px; color: white;
       margin-bottom: 20px; position: relative; overflow: hidden;
       min-height: 130px;
@@ -602,12 +605,17 @@
               <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank" rel="noopener" style="color:var(--rouanet)">e-CAC</a>).
               <br><span style="font-size:12px;color:#888">⚠️ Não confunda com "Imposto a Restituir" — esse é o valor que a Receita já vai te devolver. O que você precisa é o <strong>Total do imposto devido</strong>.</span>
             </p>
-            <div class="form-group">
-              <label>IR Devido (R$)</label>
-              <div class="input-prefix">
-                <span>R$</span>
-                <input type="text" inputmode="decimal" id="rapidaIRDevido" placeholder="0,00" oninput="maskBRL(this)">
+
+            <!-- Campo destacado IR Devido -->
+            <div style="background:linear-gradient(135deg,#0D1B3E 0%,#162444 100%);border:2px solid rgba(255,215,0,0.4);border-radius:16px;padding:20px 20px 16px;margin-bottom:4px">
+              <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,215,0,0.7);margin-bottom:8px">IR Devido — Total do imposto</div>
+              <div style="position:relative">
+                <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;font-weight:700;color:rgba(255,215,0,0.6);pointer-events:none;font-family:'Inter',sans-serif">R$</span>
+                <input type="text" inputmode="decimal" id="rapidaIRDevido" placeholder="0,00" oninput="maskBRL(this)"
+                  style="width:100%;padding:14px 16px 14px 52px;font-size:28px;font-weight:800;color:white;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,215,0,0.25);border-radius:12px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;transition:border-color 0.2s"
+                  onfocus="this.style.borderColor='rgba(255,215,0,0.7)'" onblur="this.style.borderColor='rgba(255,215,0,0.25)'">
               </div>
+              <p style="margin:10px 0 0;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.5">Encontre na sua declaração: Resumo → Imposto Devido → <strong style="color:rgba(255,255,255,0.6)">Total do imposto devido</strong></p>
             </div>
           </div>
 
