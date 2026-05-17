@@ -40,7 +40,7 @@ São 3 passos:
 
 👉 https://destineai.com.br/frontend/piloto-start.html
 
-Sua participação entra diretamente na pesquisa da FGV e me ajuda a melhorar a ferramenta. Qualquer dúvida, é só me chamar aqui.
+Sua participação entra diretamente na minha pesquisa no MBA da FGV e me ajuda a melhorar a ferramenta. Qualquer dúvida, é só me chamar aqui.
 ```
 
 ---
@@ -50,9 +50,9 @@ Sua participação entra diretamente na pesquisa da FGV e me ajuda a melhorar a 
 ```
 Pessoal,
 
-Estou conduzindo, pela FGV (MBA em IA & Analytics), um piloto rápido que mostra quanto cada servidor pode destinar do IR para projetos sociais e culturais — com retorno de 100% e sem custo adicional.
+Estou conduzindo, no âmbito do meu MBA em IA & Analytics da FGV, um piloto rápido que mostra quanto cada servidor pode destinar do IR para projetos sociais e culturais — com retorno de 100% e sem custo adicional.
 
-A ideia é simples: a maioria dos servidores nunca usou esse direito porque ninguém explica o passo a passo. O piloto simula todo o processo em menos de 10 minutos e alimenta uma pesquisa aplicada da FGV sobre servidores e cidadania fiscal.
+A ideia é simples: a maioria dos servidores nunca usou esse direito porque ninguém explica o passo a passo. O piloto simula todo o processo em menos de 10 minutos e alimenta uma pesquisa do meu MBA na FGV sobre servidores e cidadania fiscal.
 
 👉 São 3 etapas:
 1. Pré‑teste (~2 min)
@@ -71,7 +71,7 @@ Quem participar já ajuda o projeto e ainda sai entendendo, na prática, como fu
 ## 3. Lembrete 1 — 24 a 48h depois do disparo
 
 ```
-Pessoal, passando só para agradecer a quem já participou do piloto da FGV 🙏
+Pessoal, passando só para agradecer a quem já participou do piloto do meu MBA da FGV 🙏
 
 Se você ainda não conseguiu entrar, o link continua aberto e leva menos de 10 minutos (pré‑teste + simulação + pós‑teste):
 https://destineai.com.br/frontend/piloto-start.html
@@ -88,7 +88,7 @@ Vale 10 minutos — você ainda sai sabendo exatamente quanto pode destinar no s
 ```
 Pessoal, última chamada 🙂
 
-Estou fechando os dados do piloto da FGV sobre destinação de IR por servidores. Se você ainda não participou e quiser ajudar, ainda dá tempo hoje:
+Estou fechando os dados do piloto do meu MBA da FGV sobre destinação de IR por servidores. Se você ainda não participou e quiser ajudar, ainda dá tempo hoje:
 https://destineai.com.br/frontend/piloto-start.html
 
 É rápido, anônimo e em simulação.
