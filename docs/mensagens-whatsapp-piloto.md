@@ -1,9 +1,6 @@
 # Mensagens WhatsApp — Piloto DestineAI
-**Versão:** V3 refinada (2026-05-14)
-**Base narrativa:** descoberta pessoal → benefício concreto → convite à ação
-
-Substituir `[LINK]` pelo link do `piloto-start.html` (GitHub Pages ou URL final).
-Substituir `[DATA LIMITE]` na mensagem de follow-up.
+**Versão:** V4 (2026-05-17)
+**Base narrativa:** direito ignorado → impacto social → convite à pesquisa
 
 ---
 
@@ -12,11 +9,11 @@ Substituir `[DATA LIMITE]` na mensagem de follow-up.
 ```
 Uma pergunta rápida:
 
-Você sabia que parte do IR descontado todo mês no contracheque pode ser escolhida por você — para onde vai?
+Você sabia que parte do IR descontado todo mês no seu salário pode ser escolhida por você — para onde vai?
 
-Projetos culturais aprovados pelo governo. E o que você destinar retorna 100% pra você.
+Projetos sociais aprovados pelo governo. E o que você destinar retorna 100% pra você.
 
-A maioria dos servidores não sabe disso. A lei existe. O direito é seu.
+A maioria dos servidores públicos não sabe disso. A lei existe. O direito é seu.
 
 Testa em 5 minutos 👉 https://destineai.com.br/frontend/piloto-start.html
 ```
@@ -28,15 +25,13 @@ Testa em 5 minutos 👉 https://destineai.com.br/frontend/piloto-start.html
 ```
 Uma pergunta rápida 👇
 
-Você sabia que parte do IR descontado todo mês no contracheque pode ser *escolhida por você* — para onde vai?
+Você sabia que parte do IR que já é descontado todo mês do seu salário pode apoiar projetos sociais — e retornar 100% pra você?
 
-Projetos culturais aprovados pelo governo. É a Lei Rouanet, Art. 18: até 6% do IR devido. E o que você destinar retorna 100% pra você como abatimento.
+Não é doação. Não sai nada além do que você já paga. É um direito seu garantido em lei — e a maioria dos servidores públicos simplesmente não sabe que ele existe.
 
-A maioria dos servidores nunca fez isso. Não porque não quiseram — porque nunca souberam como era simples.
+Desenvolvemos uma ferramenta que faz isso em ~5 minutos. Estamos testando com servidores públicos e precisamos da sua opinião.
 
-Desenvolvemos uma ferramenta que faz isso em ~5 minutos. Estamos testando com servidores do GDF e precisamos da sua opinião.
-
-É anônimo. Não transfere nenhum valor real. Só queremos saber: você consegue fazer sozinho?
+É anônimo, não movimenta nenhum valor real. Sua participação alimenta uma pesquisa científica real dedicada a entender por que 99% dos servidores públicos nunca utilizaram esse direito legítimo.
 
 Participa aqui 👉 https://destineai.com.br/frontend/piloto-start.html
 ```
