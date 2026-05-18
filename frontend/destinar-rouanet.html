@@ -410,7 +410,7 @@
 
   <!-- Faixa de simulação — visível só a partir do step1 -->
   <div id="simStrip" style="display:none;background:#FFFBEB;border-bottom:1px solid #FDE68A;padding:8px 20px;text-align:center;font-size:12px;color:#92400E;font-family:'Inter',sans-serif;line-height:1.5">
-    🧪 <strong style="color:#78350F">Este é um fluxo de simulação:</strong> nenhum valor será transferido e nada muda na sua declaração real.
+    🧪 <strong style="color:#78350F">Este é um fluxo de simulação desenvolvido para fins de pesquisa.</strong> Nenhum valor será transferido e nada muda na sua declaração de IR real.
   </div>
 
   <!-- ── Progress steps (oculto até confirmar o projeto) ──────── -->
@@ -937,9 +937,9 @@
           <div class="success-wrap">
 
             <div style="font-size:60px;line-height:1;margin-bottom:12px">🎉</div>
-            <h2 style="font-size:22px;margin-bottom:6px">Seu IR agora tem propósito!</h2>
-            <p id="successMsg" style="font-size:16px;font-weight:700;color:var(--rouanet);margin:0 0 4px"></p>
-            <p style="font-size:13px;color:#64748B;margin:0 0 20px">
+            <h2 style="font-size:22px;margin-bottom:8px">Seu IR pode ter propósito!</h2>
+            <p id="successMsg" style="font-size:14px;font-weight:600;color:#374151;margin:0 0 4px;line-height:1.5"></p>
+            <p style="font-size:12px;color:#64748B;margin:0 0 20px">
               Orquestra das Periferias do DF · PRONAC 261847 · Art. 18 (100% dedutível)
             </p>
 
@@ -956,7 +956,7 @@
                   <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px">jovens alcançados</div>
                 </div>
               </div>
-              <p style="font-size:11px;color:rgba(255,255,255,0.4);margin:0;font-style:italic;text-align:center">Estimativa baseada no custo médio do projeto</p>
+              <p style="font-size:11px;color:rgba(255,255,255,0.4);margin:0;font-style:italic;text-align:center">Este é o impacto potencial de uma destinação desse valor em condições reais.</p>
             </div>
 
             <div class="donation-id-box">Protocolo: <span id="successDonationId">—</span></div>
@@ -965,8 +965,8 @@
             <div style="background:#FFD700;border-radius:12px;padding:14px 18px;margin:4px 0 20px;display:flex;align-items:flex-start;gap:12px;text-align:left;width:100%;box-sizing:border-box">
               <span style="font-size:22px;flex-shrink:0;line-height:1.2">↩️</span>
               <div>
-                <p style="margin:0 0 3px;font-size:13px;font-weight:800;color:#0D1B3E">Agora volte para a pesquisa!</p>
-                <p style="margin:0;font-size:12px;color:#0D1B3E;opacity:0.8">Retorne à aba da pesquisa e conclua a <strong>Etapa 3 — pós-teste</strong> para completar sua participação. Use o mesmo código anônimo do passo 1.</p>
+                <p style="margin:0 0 4px;font-size:13px;font-weight:800;color:#0D1B3E">Agora volte para a pesquisa</p>
+                <p style="margin:0;font-size:12px;color:#0D1B3E;line-height:1.6">Retorne à aba da pesquisa e conclua a <strong>Etapa 3 — pós-teste</strong> para completar sua participação. Use o mesmo código anônimo do passo 1. Obrigado por contribuir com esta pesquisa sobre destinação do IR pela Lei Rouanet.</p>
               </div>
             </div>
 
@@ -1363,7 +1363,7 @@
         // Mensagem personalizada com valor
         const valorFmt = BRL(state.valor);
         document.getElementById('successMsg').textContent =
-          `Você redirecionou ${valorFmt} para a Orquestra das Periferias do DF.`;
+          `Nesta simulação, você redirecionou ${valorFmt} para a Orquestra das Periferias do DF.`;
 
         // Impacto estimado (R$ 100 ≈ 1 ensaio para 80 jovens)
         const ensaios = Math.max(1, Math.round((state.valor || 0) / 100));
@@ -1468,7 +1468,7 @@
     function pularComprovante() {
       document.getElementById('successDonationId').textContent = state.donationId || '—';
       document.getElementById('successMsg').textContent =
-        'Destinação registrada! Envie o comprovante pelo Dashboard assim que fizer a transferência.';
+        `Nesta simulação, você redirecionou ${BRL(state.valor)} para a Orquestra das Periferias do DF.`;
       goTo(6);
     }
 
