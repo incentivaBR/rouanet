@@ -1,6 +1,7 @@
 # Mensagens WhatsApp — Piloto DestineAI
-**Versão:** V6 (2026-05-17)
+**Versão:** V7 (2026-05-18)
 **Base narrativa:** contexto MBA/FGV → direito ignorado → simulação segura → impacto da participação
+**Novidade V7:** hook de valores reais (R$ 400–1.500) nas mensagens de abertura — ancora expectativa antes da simulação
 
 ---
 
@@ -8,6 +9,8 @@
 
 ```
 [Nome], tudo bem?
+
+Uma pergunta rápida: o que você faria com R$ 400, R$ 800 ou até R$ 1.500 do seu imposto de renda — se pudesse decidir para onde vai?
 
 Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e queria te pedir uma ajuda rápida.
 
@@ -29,7 +32,7 @@ Pessoal,
 
 Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e preciso da ajuda de vocês.
 
-O tema é direto: como servidor, você tem direito de destinar até 6% do seu IR para projetos sociais e receber esse valor 100% de volta, sem pagar nada a mais. A maioria nunca recebeu essa explicação.
+O tema é direto: como servidor, você tem direito de destinar entre R$ 400 e R$ 1.500 do seu IR para projetos sociais — e receber esse valor 100% de volta, sem pagar nada a mais. A maioria nunca recebeu essa explicação.
 
 Criei uma ferramenta que simula esse processo em cerca de 10 minutos. É anônima, nenhum valor é transferido e nada muda na sua declaração real.
 
@@ -50,7 +53,9 @@ Sua participação entra diretamente na minha pesquisa no MBA da FGV e me ajuda 
 ```
 Pessoal,
 
-Estou conduzindo, no âmbito do meu MBA em IA & Analytics da FGV, um piloto rápido que mostra quanto cada servidor pode destinar do IR para projetos sociais — com retorno de 100% e sem custo adicional.
+O que você faria com R$ 400, R$ 800 ou até R$ 1.500 do seu imposto de renda — se pudesse decidir para onde vai?
+
+Estou conduzindo, no âmbito do meu MBA em IA & Analytics da FGV, um piloto rápido que mostra exatamente quanto cada servidor pode destinar do IR para projetos sociais — com retorno de 100% e sem custo adicional.
 
 A ideia é simples: a maioria dos servidores nunca usou esse direito porque ninguém explica o passo a passo. O piloto simula todo o processo em menos de 10 minutos e alimenta uma pesquisa do meu MBA na FGV sobre servidores e cidadania fiscal.
 
@@ -76,7 +81,7 @@ Pessoal, passando só para agradecer a quem já participou do piloto do meu MBA 
 Se você ainda não conseguiu entrar, o link continua aberto e leva menos de 10 minutos:
 https://destineai.com.br/frontend/piloto-start.html
 
-Vale 10 minutos — você sai sabendo exatamente quanto do seu IR pode virar impacto social, sem pagar nada a mais.
+Vale 10 minutos — você sai sabendo exatamente quanto do seu IR pode virar impacto social (para a maioria dos servidores, entre R$ 400 e R$ 1.500), sem pagar nada a mais.
 ```
 
 ---
