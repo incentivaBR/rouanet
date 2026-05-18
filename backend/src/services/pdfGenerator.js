@@ -292,6 +292,15 @@ export function gerarComprovante(donation, user, project, fund) {
      .text('DestineAI / IncentivaBR — Piloto Acadêmico MBA FGV IA & Analytics', { align: 'center' });
   doc.text('destineai.com.br  ·  incentivabr.com.br', { align: 'center' });
 
+  doc.moveDown(1);
+  doc.fontSize(7)
+     .fillColor('#999999')
+     .text(
+       '© 2026 IncentivaBR. Conteúdo de simulação protegido por direitos autorais e registro no INPI nº BR512025000647‑0.',
+       { align: 'center' }
+     );
+  doc.text('Reprodução não autorizada sujeita às sanções legais.', { align: 'center' });
+
   return doc;
 }
 
