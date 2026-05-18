@@ -34,7 +34,7 @@ const TINA = (function() {
     // SEGURANÇA E CREDIBILIDADE
     seguranca: {
       keywords: ['golpe', 'fake', 'falso', 'confiável', 'seguro', 'verdade'],
-      response: '🛡️ <strong>É 100% SEGURO!</strong><br><br>Este é um ambiente de <strong>simulação</strong> — nenhuma informação financeira real é processada e nenhum valor é transferido.<br><br>A ferramenta foi desenvolvida em parceria com a <strong>FGV</strong> para fins de pesquisa acadêmica. Seus dados são anônimos (identificados apenas por um código de pesquisa) e usados exclusivamente para o MBA em IA & Analytics.'
+      response: '🛡️ <strong>É 100% SEGURO!</strong><br><br>Este é um ambiente de <strong>simulação</strong> — nenhuma informação financeira real é processada e nenhum valor é transferido.<br><br>Esta ferramenta é o <strong>Projeto Aplicado II do MBA em IA &amp; Analytics da FGV</strong> — pesquisa acadêmica sobre comportamento fiscal de servidores. Seus dados são anônimos (identificados apenas por um código de pesquisa) e usados exclusivamente para fins acadêmicos.'
     },
     verificacao: {
       keywords: ['verificar', 'conferir', 'checar', 'dados bancários', 'conta oficial'],
