@@ -677,20 +677,14 @@
           <div class="result-box" id="calcResultBox" style="display:none">
             <div class="title"><i class="fas fa-check-circle" style="color:var(--success)"></i> Resultado do cálculo</div>
             <!-- Frase de impacto dinâmica -->
-            <p style="font-size:14px;font-weight:700;color:#0D1B3E;margin:10px 0 14px;line-height:1.5">
-              Com esse IR, você poderia destinar até <span id="resLimiteImpacto" style="color:#B45309">R$ —</span> sem pagar nada a mais.
+            <p style="font-size:15px;font-weight:700;color:#0D1B3E;margin:10px 0 0;line-height:1.5">
+              Com esse IR, você poderia destinar até <span id="resLimiteImpacto" style="color:#B45309;font-size:18px">R$ —</span> sem pagar nada a mais.
             </p>
-            <div class="result-grid">
-              <div class="result-item">
-                <div class="lbl">Seu Imposto de Renda Devido</div>
-                <div class="val" id="resIRDevido">—</div>
-              </div>
-              <div class="result-item">
-                <div class="lbl">Limite máximo de destinação (6% do IR devido)</div>
-                <div class="val highlight" id="resLimite">—</div>
-              </div>
-              <!-- Alíquota oculta mas mantida para o JS -->
-              <div style="display:none"><div id="resAliquota"></div></div>
+            <!-- Elementos mantidos ocultos para o JS não quebrar -->
+            <div style="display:none">
+              <span id="resIRDevido"></span>
+              <span id="resLimite"></span>
+              <span id="resAliquota"></span>
             </div>
           </div>
 
