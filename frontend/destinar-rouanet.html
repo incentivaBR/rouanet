@@ -730,6 +730,10 @@
             </span>
           </div>
 
+          <p id="step3LimiteHint" style="font-size:14px;font-weight:600;color:#374151;margin:0 0 14px;line-height:1.5">
+            Escolha o valor que você quer destinar dentro do seu limite de <span id="step3LimiteVal" style="color:#B45309;font-weight:800">R$ —</span>.
+          </p>
+
           <div class="valor-input-big">
             <span class="currency">R$</span>
             <input type="text" inputmode="decimal" id="valorDestinar" placeholder="0,00" oninput="onValorChange()">
@@ -1225,9 +1229,11 @@
     function setupStep3() {
       const limite = state.limite || 0;
 
-      document.getElementById('resumoIR').textContent    = BRL(state.ir_devido);
+      document.getElementById('resumoIR').textContent     = BRL(state.ir_devido);
       document.getElementById('resumoLimite').textContent = BRL(limite);
       document.getElementById('sliderMax').textContent    = BRL(limite);
+      const s3lv = document.getElementById('step3LimiteVal');
+      if (s3lv) s3lv.textContent = BRL(limite);
 
       const slider = document.getElementById('valorSlider');
       slider.max   = limite;
