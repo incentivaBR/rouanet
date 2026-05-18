@@ -147,10 +147,10 @@ export function gerarComprovante(donation, user, project, fund) {
   // ===== TITULO =====
   doc.fontSize(16)
      .fillColor(primaryColor)
-     .text('COMPROVANTE DE DESTINACAO', { align: 'center' });
+     .text('COMPROVANTE DE SIMULAÇÃO', { align: 'center' });
 
   doc.fontSize(14)
-     .text('DE INCENTIVO FISCAL', { align: 'center' });
+     .text('Lei Rouanet — Destinação de IR', { align: 'center' });
 
   doc.moveDown(1.5);
 
@@ -271,13 +271,13 @@ export function gerarComprovante(donation, user, project, fund) {
   doc.moveDown(0.3);
   doc.fontSize(10)
      .fillColor('#856404')
-     .text('AVISO IMPORTANTE', { align: 'center' });
+     .text('SIMULAÇÃO — SEM VALIDADE FISCAL', { align: 'center' });
 
   doc.moveDown(0.3);
   doc.fontSize(9)
-     .text('Este comprovante e apenas para seu controle pessoal e NAO possui valor fiscal.', { align: 'center' });
-  doc.text('Para fins de declaracao do Imposto de Renda, utilize o RECIBO OFICIAL', { align: 'center' });
-  doc.text('emitido pelo Fundo, disponivel para download apos confirmacao do deposito.', { align: 'center' });
+     .text('Nenhum valor foi transferido. Este documento é gerado exclusivamente para fins de', { align: 'center' });
+  doc.text('pesquisa acadêmica do MBA em IA & Analytics da FGV.', { align: 'center' });
+  doc.text('Quando você fizer uma destinação real, um comprovante oficial com validade fiscal será emitido.', { align: 'center' });
 
   // ===== RODAPE =====
   doc.moveDown(3);
@@ -289,8 +289,8 @@ export function gerarComprovante(donation, user, project, fund) {
 
   doc.moveDown(1);
   doc.fontSize(8)
-     .text('IncentivaBR - Plataforma de Destinacao de Incentivo Fiscal', { align: 'center' });
-  doc.text('www.incentivabr.com.br', { align: 'center' });
+     .text('DestineAI / IncentivaBR — Piloto Acadêmico MBA FGV IA & Analytics', { align: 'center' });
+  doc.text('destineai.com.br  ·  incentivabr.com.br', { align: 'center' });
 
   return doc;
 }
