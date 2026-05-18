@@ -381,6 +381,14 @@
 
   <!-- ── LÓGICA DE ESTADO ── -->
   <script>
+    // Se veio do Google Form com ?step=2, marca pré-teste como feito
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('step') === '2') {
+      localStorage.setItem('pilot_step1', 'done');
+      // Limpa o param da URL sem recarregar a página
+      history.replaceState(null, '', window.location.pathname);
+    }
+
     // Restaura estado do localStorage ao carregar
     const state = {
       step1: localStorage.getItem('pilot_step1') === 'done',
@@ -407,7 +415,7 @@
       // Card 1 → apaga o pulse e avisa para voltar
       document.getElementById('btn1').classList.remove('btn-pulse');
       document.getElementById('btn1').textContent = '✓ Pré-teste aberto';
-      document.getElementById('hint1').innerHTML = '⬅ Envie o formulário e <strong>volte para esta aba</strong> para continuar';
+      document.getElementById('hint1').innerHTML = '⬅ Após enviar o formulário, clique no link de retorno que aparecerá na confirmação';
       // Card 2 → ativa
       document.getElementById('card2').classList.remove('opacity-60');
       document.getElementById('card2').className = 'flex-1 bg-[#FFD700]/[0.06] border border-[#FFD700]/25 rounded-2xl p-5 mb-6';
