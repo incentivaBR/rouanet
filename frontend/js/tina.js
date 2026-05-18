@@ -18,164 +18,175 @@ const TINA = (function() {
 
   // Respostas da TINA organizadas por categoria
   const respostas = {
+
+    // PILOTO FGV — contexto da pesquisa
+    piloto: {
+      keywords: ['piloto', 'pesquisa', 'fgv', 'mba', 'o que é isso', 'o que é esse', 'simulação', 'simular', 'estudo'],
+      response: '🎓 <strong>SOBRE ESTE PILOTO:</strong><br><br>Você está participando de uma <strong>simulação de destinação de IR</strong> desenvolvida para pesquisa no MBA em IA & Analytics da FGV.<br><br>O objetivo é medir se, depois de entender o processo, servidores públicos aumentam a <em>intenção</em> de destinar o IR.<br><br>Tudo aqui é simulação — <strong>nenhum valor é transferido</strong> e nada muda na sua declaração real.<br><br>A jornada tem 3 etapas:<br>1️⃣ Pré-teste (Google Forms)<br>2️⃣ Simulação guiada do IR (você está aqui)<br>3️⃣ Pós-teste (Google Forms)<br><br>Para a pesquisa ser válida, você precisa completar <strong>as 3 etapas</strong>!'
+    },
+
+    // PÓS-TESTE — como completar
+    posteste: {
+      keywords: ['pós-teste', 'pos-teste', 'formulário', 'finalizar', 'concluir', 'terminar', 'etapa 3', 'pesquisa finalizar'],
+      response: '📋 <strong>COMO CONCLUIR A PESQUISA:</strong><br><br>Após gerar o comprovante de simulação (Etapa 2), você verá um banner amarelo com o botão:<br><br>📋 <strong>"Abrir o pós-teste agora"</strong><br><br>Clique nele — o formulário de pós-teste abre em uma nova aba e leva apenas ~3 minutos.<br><br>⚠️ Sem o pós-teste, sua participação <strong>não entra nos dados da pesquisa</strong>. Não feche a página antes de completá-lo!'
+    },
+
     // SEGURANÇA E CREDIBILIDADE
     seguranca: {
-      keywords: ['golpe', 'fake', 'falso', 'confiável', 'seguro', 'verdade', 'real'],
-      response: '🛡️ <strong>É 100% SEGURO!</strong> O IncentivaBR trabalha com os fundos oficiais. Você pode verificar: 1) Dados bancários idênticos aos sites oficiais dos conselhos, 2) Recibo conforme Art. 6º da lei, 3) Protocolo único rastreável. Clique em "Ver site oficial" para conferir!'
+      keywords: ['golpe', 'fake', 'falso', 'confiável', 'seguro', 'verdade'],
+      response: '🛡️ <strong>É 100% SEGURO!</strong><br><br>Este é um ambiente de <strong>simulação</strong> — nenhuma informação financeira real é processada e nenhum valor é transferido.<br><br>A ferramenta foi desenvolvida em parceria com a <strong>FGV</strong> para fins de pesquisa acadêmica. Seus dados são anônimos (identificados apenas por um código de pesquisa) e usados exclusivamente para o MBA em IA & Analytics.'
     },
     verificacao: {
       keywords: ['verificar', 'conferir', 'checar', 'dados bancários', 'conta oficial'],
-      response: '🔍 <strong>COMO VERIFICAR:</strong> Ao lado dos dados bancários, clique em "Ver no site oficial do conselho". Os dados são IDÊNTICOS! Transparência total para sua segurança.'
+      response: '🔍 <strong>DADOS EXIBIDOS NA SIMULAÇÃO:</strong><br><br>Os dados bancários mostrados na etapa de pagamento são <strong>fictícios para fins de simulação</strong>. Em uma destinação real, você receberia esses dados via <em>Comunicado de Mecenato</em> emitido pela entidade cultural.<br><br>Neste piloto, nenhum depósito é necessário ou esperado.'
     },
     medo: {
-      keywords: ['medo', 'receio', 'insegurança', 'desconfiança', 'dúvida'],
-      response: '🤗 <strong>É normal ter receio!</strong> 95% dos servidores não conhecem essa possibilidade. Comece com um valor pequeno (R$ 50-100) para ganhar confiança. Milhares já fazem isso há anos!'
+      keywords: ['medo', 'receio', 'insegurança', 'desconfiança'],
+      response: '🤗 <strong>Fique tranquilo!</strong><br><br>Você está em modo de simulação — não precisa tomar nenhuma decisão financeira agora. O objetivo é apenas <em>entender o processo</em> de destinação de IR.<br><br>95% dos servidores nunca usou esse direito porque ninguém explica o passo a passo. É exatamente isso que este piloto quer mudar!'
     },
     perder: {
       keywords: ['perder dinheiro', 'prejuízo', 'não receber', 'risco'],
-      response: '💰 <strong>IMPOSSÍVEL PERDER!</strong> O valor destinado volta 100% na sua restituição ou reduz o imposto a pagar. É como direcionar um dinheiro que já é seu para uma causa social!'
+      response: '💰 <strong>NA VIDA REAL: IMPOSSÍVEL PERDER!</strong><br><br>O valor destinado volta 100% na restituição ou reduz o imposto a pagar. É direcionar um dinheiro que <em>já seria pago</em> para uma causa social.<br><br>Neste piloto, você está apenas <strong>simulando</strong> — nenhum valor é movimentado.'
     },
 
     // COMO FUNCIONA
     processo: {
-      keywords: ['como funciona', 'processo', 'passos', 'etapas', 'começar'],
-      response: '📋 <strong>4 PASSOS SIMPLES:</strong><br>1️⃣ Calcule seu IR (temos calculadora)<br>2️⃣ Escolha o fundo/projeto<br>3️⃣ Faça o depósito na conta oficial<br>4️⃣ Envie o comprovante e pronto!<br><br>Veja a página "Como Funciona" para mais detalhes!'
+      keywords: ['como funciona', 'processo', 'passos', 'etapas', 'começar', 'fluxo'],
+      response: '📋 <strong>COMO FUNCIONA ESTE PILOTO:</strong><br><br>1️⃣ <strong>Pré-teste</strong> (~2 min) — mede seu conhecimento inicial<br>2️⃣ <strong>Simulação guiada</strong> (~5 min) — você vê quanto poderia destinar e passa pelo fluxo completo<br>3️⃣ <strong>Pós-teste</strong> (~3 min) — mede o que mudou após a experiência<br><br>⚡ Na vida real, a destinação funciona assim:<br>• Calcula até 6% do IR devido<br>• Deposita na conta oficial do FNC<br>• Declara no IRPF com Código 41<br>• Retorna 100% — custo real: R$ 0'
     },
     calculadora: {
       keywords: ['calcular', 'calculadora', 'quanto posso', 'limite', 'valor'],
-      response: '🧮 <strong>USE NOSSA CALCULADORA:</strong><br>• <strong>Rápida:</strong> Se já sabe seu salário (10 segundos)<br>• <strong>Completa:</strong> Para cálculo detalhado com deduções<br><br>Para a <strong>Lei Rouanet Art. 18</strong>, o limite é de <strong>6% do IR devido</strong> — e retorna 100% para você na declaração. Custo real: R$ 0.'
+      response: '🧮 <strong>CALCULADORA DE IR:</strong><br><br>Informe seu <strong>IR Devido</strong> — o valor total de imposto da sua declaração.<br><br>O sistema calcula automaticamente o limite para destinação:<br>• Lei Rouanet (Art. 18): até <strong>6% do IR devido</strong><br>• Retorna 100% — custo real: <strong>R$ 0</strong><br><br>Se não souber seu IR Devido agora, use um valor estimado para a simulação. Você pode consultar o valor exato no programa IRPF da Receita Federal.'
     },
     ir: {
-      keywords: ['ir devido', 'imposto devido', 'encontrar ir', 'onde acho'],
-      response: '📋 <strong>ONDE ENCONTRAR O IR DEVIDO:</strong><br>1) No programa IRPF da Receita Federal<br>2) No "Resumo da Declaração"<br>3) Campo "Imposto Devido"<br><br>Se não souber, use nossa calculadora que estima para você!'
+      keywords: ['ir devido', 'imposto devido', 'encontrar ir', 'onde acho', 'onde fica'],
+      response: '📋 <strong>ONDE ENCONTRAR O IR DEVIDO:</strong><br><br>1) No programa IRPF da Receita Federal<br>2) Aba "Resumo da Declaração"<br>3) Campo <strong>"Imposto Devido"</strong><br><br>Para esta simulação, você pode usar um valor estimado. Servidores do GDF tipicamente têm IR Devido entre R$ 2.000 e R$ 15.000.'
     },
 
     // FUNDOS E PROJETOS
     fundos: {
       keywords: ['fundo', 'fnc', 'rouanet', 'cultural', 'cultura', 'diferença'],
-      response: '🏛️ <strong>FUNDO DESTINATÁRIO:</strong><br>• <strong>FNC</strong> — Fundo Nacional de Cultura<br>• Base legal: <strong>Lei Rouanet Art. 18</strong> (Lei 8.313/91)<br>• Limite: <strong>6% do IR devido</strong><br>• Retorno: <strong>100%</strong> na declaração (Art. 18 = dedução integral)<br><br>O dinheiro vai direto para projetos culturais aprovados pelo MinC!'
+      response: '🏛️ <strong>FUNDO DESTINATÁRIO:</strong><br>• <strong>FNC</strong> — Fundo Nacional de Cultura<br>• Base legal: <strong>Lei Rouanet Art. 18</strong> (Lei 8.313/91)<br>• Limite: <strong>6% do IR devido</strong><br>• Retorno: <strong>100%</strong> na declaração (Art. 18 = dedução integral)<br><br>Neste piloto, a destinação para o FNC é <strong>simulada</strong> — nenhum valor real é transferido.'
     },
     projetos: {
-      keywords: ['projeto', 'escolher projeto', 'qual projeto', 'pronac'],
-      response: '🎯 <strong>PROJETO NESTE PILOTO:</strong><br><strong>Orquestra das Periferias do DF</strong> (PRONAC 261847)<br><br>Projeto aprovado pelo Ministério da Cultura via Lei Rouanet. O valor destinado vai 100% para viabilizar atividades culturais na periferia do DF.<br><br>⚠️ Este piloto usa modo simulação — nenhum valor real é transferido.'
+      keywords: ['projeto', 'escolher projeto', 'qual projeto', 'pronac', 'orquestra'],
+      response: '🎯 <strong>PROJETO DESTE PILOTO:</strong><br><strong>Orquestra das Periferias do DF</strong> (PRONAC 261847)<br><br>Projeto aprovado pelo Ministério da Cultura via Lei Rouanet. Viabiliza atividades musicais e formação cultural nas periferias do Distrito Federal.<br><br>⚠️ Neste piloto, a destinação é <strong>simulada</strong> — nenhum valor real vai para o projeto agora. Em produção, o processo seria real.'
     },
 
     // PRAZOS E DATAS
     prazos: {
-      keywords: ['prazo', 'quando', 'demora', '60 dias', 'tempo'],
-      response: '⏰ <strong>PRAZOS — Destinação IR 2026:</strong><br><br>• <strong>Transferência para o FNC:</strong> até <strong>31/12/2026</strong> — é o prazo mais importante!<br>• <strong>Comunicado de Mecenato:</strong> até 15 dias após a transferência (recibo fiscal emitido pela Assoc. Cultural Orquestra das Periferias do DF)<br>• <strong>Declaração IRPF 2026:</strong> até <strong>30/04/2027</strong> — informe na ficha "Doações Efetuadas", Código 41<br>• <strong>Guarda de documentos:</strong> 5 anos (até 2031)<br><br>💡 Não deixe para o fim do ano — faça agora e garanta seu prazo!'
+      keywords: ['prazo', 'quando', 'demora', '60 dias', 'tempo', 'vence'],
+      response: '⏰ <strong>PRAZOS — Destinação IR Real:</strong><br><br>• <strong>Transferência para o FNC:</strong> até <strong>31/12/2026</strong><br>• <strong>Comunicado de Mecenato:</strong> até 15 dias após a transferência<br>• <strong>Declaração IRPF 2026:</strong> até <strong>30/04/2027</strong> — Código 41<br>• <strong>Guarda de documentos:</strong> 5 anos<br><br>ℹ️ Neste piloto você está apenas simulando — esses prazos valem para uma destinação real futura.'
     },
     declaracao: {
-      keywords: ['declaração', 'receita federal', 'declarar', 'próximo ano'],
-      response: '📋 <strong>NA DECLARAÇÃO DO IR (passo a passo):</strong><br><br>1️⃣ Abra o programa IRPF da Receita Federal<br>2️⃣ Vá em <strong>"Doações Efetuadas"</strong><br>3️⃣ Clique em <strong>"Novo"</strong><br>4️⃣ Selecione <strong>Código 41 — Promoção Cultural, Artística etc.</strong><br>5️⃣ Informe o CNPJ do FNC e o valor depositado<br>6️⃣ Anexe o <strong>Comunicado de Mecenato</strong> como comprovante<br><br>⚠️ O valor <strong>NÃO</strong> aparece automaticamente — você precisa lançar manualmente. Guarde o comprovante!'
+      keywords: ['declaração', 'receita federal', 'declarar', 'próximo ano', 'como declarar no ir'],
+      response: '📋 <strong>NA DECLARAÇÃO REAL DO IR:</strong><br><br>1️⃣ Programa IRPF da Receita Federal<br>2️⃣ Ficha <strong>"Doações Efetuadas"</strong><br>3️⃣ <strong>Código 41</strong> — Promoção Cultural, Artística etc.<br>4️⃣ CNPJ do FNC + valor depositado<br>5️⃣ Anexar o <strong>Comunicado de Mecenato</strong><br><br>ℹ️ Nesta simulação, o comprovante gerado não tem validade fiscal — é apenas para você entender o processo.'
     },
     codigo41: {
-      keywords: ['código 41', 'codigo 41', 'ficha doações', 'lançar declaração', 'como declarar', 'donações efetuadas'],
-      response: '🧾 <strong>CÓDIGO 41 — PASSO A PASSO:</strong><br><br>No programa IRPF (Receita Federal):<br>1️⃣ Ficha <strong>"Doações Efetuadas"</strong><br>2️⃣ Tipo: <strong>Código 41</strong> — Promoção Cultural, Artística, Ambiental, Desportiva e Científica<br>3️⃣ CNPJ do beneficiado: CNPJ do <strong>FNC</strong> ou da entidade cultural<br>4️⃣ Valor: exatamente o valor depositado<br>5️⃣ Descrição: nome do projeto (ex: Orquestra das Periferias do DF)<br><br>✅ O programa calcula a dedução automaticamente após o lançamento.'
+      keywords: ['código 41', 'codigo 41', 'ficha doações', 'lançar declaração', 'donações efetuadas'],
+      response: '🧾 <strong>CÓDIGO 41 — Lei Rouanet:</strong><br><br>No programa IRPF:<br>1️⃣ Ficha <strong>"Doações Efetuadas"</strong><br>2️⃣ Tipo: <strong>Código 41</strong> — Promoção Cultural, Artística, Ambiental, Desportiva e Científica<br>3️⃣ CNPJ do FNC + valor destinado<br>4️⃣ Descrição: nome do projeto<br><br>✅ O próprio programa IRPF calcula a dedução automaticamente.'
     },
 
     // DÚVIDAS ESPECÍFICAS
     parcelado: {
       keywords: ['parcelado', 'parcela', 'dividido'],
-      response: '💳 <strong>IR PARCELADO:</strong> Use sempre o valor TOTAL do IR devido (todas as parcelas somadas). Ex: 10x de R$ 350 = R$ 3.500 total para calcular os 6%.'
+      response: '💳 <strong>IR PARCELADO:</strong> Use sempre o valor TOTAL do IR devido (soma de todas as parcelas). Ex: 10x de R$ 350 = R$ 3.500 — é esse valor que entra na calculadora para os 6%.'
     },
     dividir: {
-      keywords: ['dividir', 'dois fundos', 'metade'],
-      response: '🔄 <strong>DIVIDIR ENTRE PROJETOS:</strong> Sim! Você pode fazer destinações para diferentes projetos aprovados pela Lei Rouanet, respeitando o limite total de <strong>6% do IR devido</strong>.'
+      keywords: ['dividir', 'dois fundos', 'metade', 'mais de um'],
+      response: '🔄 <strong>DIVIDIR ENTRE PROJETOS:</strong> Na vida real, sim! Você pode destinar para diferentes projetos Lei Rouanet, respeitando o limite total de <strong>6% do IR devido</strong>. Cada destinação gera um comprovante separado.'
     },
     erro: {
-      keywords: ['errar', 'corrigir', 'erro', 'errei'],
-      response: '✏️ <strong>ERROU ALGO?</strong> Entre em contato em até 48h pelo email contato@incentivabr.com.br ou WhatsApp. Ajudamos a resolver!'
+      keywords: ['errar', 'corrigir', 'erro', 'errei', 'voltou', 'desfazer'],
+      response: '✏️ <strong>VOLTOU OU ERROU ALGO?</strong><br><br>No simulador, você pode usar o botão "Voltar" a qualquer momento para corrigir valores.<br><br>Se tiver dúvidas sobre a pesquisa ou a ferramenta, entre em contato: <strong>contato@incentivabr.com.br</strong>'
     },
     comprovante: {
-      keywords: ['comprovante', 'upload', 'enviar', 'anexar'],
-      response: '📎 <strong>COMPROVANTE:</strong> Aceita PDF, JPG ou PNG (até 5MB). Deve mostrar data, valor e destinatário. Print do app do banco funciona perfeitamente!'
+      keywords: ['comprovante', 'recibo', 'baixar', 'pdf', 'download'],
+      response: '📄 <strong>COMPROVANTE DA SIMULAÇÃO:</strong><br><br>Ao final do fluxo, você pode baixar um <strong>comprovante em PDF</strong> com os dados da sua simulação.<br><br>⚠️ Este comprovante <strong>não tem validade fiscal</strong> — é apenas um registro da sua participação na pesquisa. Em uma destinação real, o comprovante oficial seria o <em>Comunicado de Mecenato</em> emitido pela entidade cultural.'
     },
 
     // LEGISLAÇÃO
     legal: {
-      keywords: ['legal', 'lei', 'legislação', 'permitido'],
-      response: '⚖️ <strong>100% LEGAL!</strong> Base legal: <strong>Lei 8.313/1991 (Lei Rouanet)</strong>, Art. 18 — dedução integral (100%) de até 6% do IR devido. Mecanismo regulamentado pelo Ministério da Cultura e Receita Federal há mais de 30 anos.'
+      keywords: ['legal', 'lei', 'legislação', 'permitido', 'base legal'],
+      response: '⚖️ <strong>BASE LEGAL:</strong><br><br><strong>Lei 8.313/1991 — Lei Rouanet, Art. 18</strong><br>Dedução integral (100%) de até 6% do IR devido.<br><br>Mecanismo regulamentado pelo Ministério da Cultura e Receita Federal há mais de 30 anos — completamente legal e documentado.<br><br>Custo real para o contribuinte: <strong>R$ 0</strong>.'
     },
 
     // INICIANTES
     iniciante: {
-      keywords: ['primeiro', 'nunca fiz', 'iniciante', 'primeira vez'],
-      response: '🌟 <strong>PRIMEIRA VEZ?</strong> Tranquilo! Use nossa calculadora, comece com um valor pequeno (R$ 100), escolha um projeto que te emociona. O processo é simples e você sempre pode contar com a TINA!'
+      keywords: ['primeiro', 'nunca fiz', 'iniciante', 'primeira vez', 'não entendo'],
+      response: '🌟 <strong>PRIMEIRA VEZ?</strong><br><br>Perfeito — é exatamente para isso que este piloto foi criado! A maioria dos servidores nunca ouviu falar dessa possibilidade.<br><br>Siga as etapas do simulador no seu ritmo. Se tiver dúvida em algum passo, me pergunte aqui.<br><br>Lembre de completar o pós-teste no final — é fundamental para a pesquisa!'
     },
 
     // CONTADOR
     contador: {
       keywords: ['contador', 'contabilidade', 'declaração completa'],
-      response: '📊 <strong>SOBRE SEU CONTADOR:</strong> Informe-o da destinação. É uma dedução legal que reduz seu IR. Muitos contadores já conhecem o processo. Enviaremos comprovante oficial para você apresentar.'
+      response: '📊 <strong>SOBRE SEU CONTADOR:</strong><br><br>Em uma destinação real, informe seu contador. É uma dedução legal que pode reduzir seu IR — muitos já conhecem o processo.<br><br>O documento que você apresenta ao contador é o <strong>Comunicado de Mecenato</strong>, emitido pela entidade cultural após a transferência.<br><br>ℹ️ Neste piloto, o comprovante gerado é apenas para a simulação.'
     },
 
     // RESTITUIÇÃO
     restituicao: {
-      keywords: ['restituição', 'receber de volta', 'devolver'],
-      response: '💵 <strong>RESTITUIÇÃO:</strong> O valor destinado volta 100%! Se você tem restituição, ela aumenta. Se tem IR a pagar, ele diminui. Você não perde nada - apenas direciona seu imposto para o bem social.'
+      keywords: ['restituição', 'receber de volta', 'devolver', 'retorno'],
+      response: '💵 <strong>COMO FUNCIONA O RETORNO:</strong><br><br>O valor destinado volta 100% — não é doação, é redirecionamento!<br>• Se você tem <strong>restituição</strong>: ela aumenta pelo valor destinado<br>• Se você tem <strong>IR a pagar</strong>: ele diminui pelo valor destinado<br><br>Custo líquido real: <strong>R$ 0</strong>. O dinheiro que antes ia para o governo agora vai para cultura.'
     },
 
-    // NOVAS RESPOSTAS - DÚVIDAS DO SERVIDOR PÚBLICO
-
-    // Depois de calcular
+    // DEPOIS DE CALCULAR
     depoisCalcular: {
       keywords: ['depois de calcular', 'calculei e agora', 'próximo passo', 'o que fazer depois'],
-      response: '📝 <strong>DEPOIS DE CALCULAR:</strong><br>1️⃣ Confirme o valor (até 6% do IR devido)<br>2️⃣ Faça depósito/PIX na conta oficial do <strong>FNC</strong><br>3️⃣ Obtenha o <strong>Comunicado de Mecenato</strong> com a entidade<br>4️⃣ Na declaração: ficha "Doações Efetuadas", <strong>Código 41</strong><br>5️⃣ O IR deduzido retorna 100% na restituição<br><br>⚠️ No piloto: modo simulação — nenhum depósito real é feito.'
+      response: '📝 <strong>PRÓXIMO PASSO NA SIMULAÇÃO:</strong><br><br>Depois de calcular seu limite, você:<br>1️⃣ Escolhe o valor que quer destinar (slider)<br>2️⃣ Confirma seus dados<br>3️⃣ Vê como seriam os dados de pagamento reais<br>4️⃣ Gera o comprovante de simulação<br>5️⃣ <strong>Faz o pós-teste</strong> — não esqueça essa etapa!'
     },
 
-    // Onde depositar
+    // DEPÓSITO / PAGAMENTO
     deposito: {
-      keywords: ['depositar', 'pagar', 'transferir', 'pix', 'banco', 'conta'],
-      response: '🏦 <strong>ONDE DEPOSITAR (produção):</strong><br>Direto na conta oficial do <strong>FNC — Fundo Nacional de Cultura</strong>.<br><br>Os dados bancários são fornecidos pela entidade cultural vinculada ao projeto (Comunicado de Mecenato).<br><br>⚠️ <strong>Piloto:</strong> modo simulação — nenhum depósito real é necessário. Use os dados fictícios exibidos na tela.'
+      keywords: ['depositar', 'pagar', 'transferir', 'pix', 'banco', 'conta', 'pagamento'],
+      response: '🏦 <strong>ETAPA DE PAGAMENTO — SIMULAÇÃO:</strong><br><br>Na tela de pagamento você verá dados bancários reais do FNC — Fundo Nacional de Cultura. São os mesmos usados em destinações reais.<br><br>⚠️ <strong>Neste piloto, você NÃO precisa fazer nenhuma transferência.</strong> Clique em "Simular pagamento" para avançar sem mover nenhum valor.'
     },
 
     // DARF
     darf: {
       keywords: ['darf', 'documento', 'guia', 'boleto'],
-      response: '📄 <strong>DARF — importante:</strong> Para a <strong>Lei Rouanet Art. 18</strong>, a destinação <strong>NÃO</strong> é feita via DARF na declaração. O depósito deve ser feito diretamente na conta do FNC <strong>até 31/12</strong> do ano-calendário. Depois, você lança na declaração com o Código 41.'
+      response: '📄 <strong>DARF — importante:</strong><br><br>Para a <strong>Lei Rouanet Art. 18</strong>, a destinação <strong>NÃO</strong> é feita via DARF. O depósito deve ser feito diretamente na conta do FNC antes do dia 31/12.<br><br>O lançamento na declaração é feito depois, com o Código 41, usando o Comunicado de Mecenato como comprovante.'
     },
 
-    // Imposto a pagar
+    // IMPOSTO A PAGAR
     impostoAPagar: {
       keywords: ['imposto a pagar', 'pagar imposto', 'não tenho restituição', 'devo imposto'],
-      response: '💰 <strong>IMPOSTO A PAGAR:</strong> Se você tem imposto a pagar, a destinação REDUZ esse valor!<br><br>Exemplo: IR a pagar R$ 5.000, destina R$ 300 → paga só R$ 4.700 de IR + R$ 300 para o fundo. Total: igual! Mas R$ 300 foi para causa social.'
+      response: '💰 <strong>SE VOCÊ TEM IR A PAGAR:</strong><br><br>A destinação <strong>reduz</strong> o valor a pagar!<br><br>Exemplo: IR a pagar R$ 5.000, destina R$ 300<br>→ Paga R$ 4.700 de IR + R$ 300 ao FNC<br>→ Total: igual — mas R$ 300 foi para cultura<br><br>Custo real: <strong>R$ 0</strong>.'
     },
 
-    // Recibo para quê
+    // RECIBO
     reciboParaQue: {
       keywords: ['recibo serve', 'para que serve', 'usar recibo', 'preciso do recibo'],
-      response: '📋 <strong>O RECIBO SERVE PARA:</strong><br>1️⃣ Comprovar a destinação na declaração do IR<br>2️⃣ Garantir a dedução do valor<br>3️⃣ Ter respaldo legal (Art. 6º)<br><br>Guarde-o! Seu contador vai precisar para lançar na declaração.'
+      response: '📋 <strong>O COMPROVANTE DA SIMULAÇÃO:</strong><br><br>Neste piloto, o PDF gerado serve como registro da sua participação na pesquisa. É um documento de simulação — sem validade fiscal.<br><br>Em uma destinação real, o comprovante válido é o <strong>Comunicado de Mecenato</strong>, que você usaria para lançar a dedução na sua declaração.'
     },
 
-    // Simplificada x Completa
+    // SIMPLIFICADA
     simplificada: {
       keywords: ['simplificada', 'mudar para completa', 'tipo de declaração', 'qual declaração'],
-      response: '📊 <strong>DECLARAÇÃO:</strong><br>• <strong>Simplificada:</strong> NÃO permite destinação via Lei Rouanet<br>• <strong>Completa:</strong> Permite destinação de até <strong>6% do IR devido</strong><br><br>Você pode mudar de simplificada para completa! O próprio programa IRPF mostra qual é mais vantajosa para você.'
+      response: '📊 <strong>TIPO DE DECLARAÇÃO:</strong><br>• <strong>Simplificada:</strong> NÃO permite destinação via Lei Rouanet<br>• <strong>Completa:</strong> Permite destinar até <strong>6% do IR devido</strong><br><br>Você pode mudar o tipo de declaração — o próprio programa IRPF mostra qual é mais vantajosa para você.'
     },
 
-    // Ano base
+    // ANO BASE
     anoBase: {
       keywords: ['ano base', '2025', '2026', 'qual ano', 'ano calendário'],
-      response: '📅 <strong>ANO-BASE:</strong><br>• Destinações feitas em <strong>2025</strong> → entram na declaração de <strong>2026</strong><br>• Destinações feitas em <strong>2026</strong> → entram na declaração de <strong>2027</strong><br><br>Faça a destinação no ano que você quer que ela seja deduzida!'
+      response: '📅 <strong>ANO-BASE:</strong><br>• Destinações feitas em <strong>2025</strong> → declaração de <strong>2026</strong><br>• Destinações feitas em <strong>2026</strong> → declaração de <strong>2027</strong><br><br>Neste piloto, a simulação usa o ano-calendário 2025.'
     },
 
-    // Servidor público
+    // SERVIDOR PÚBLICO
     servidorPublico: {
       keywords: ['servidor', 'público', 'federal', 'estadual', 'municipal', 'gdf'],
-      response: '👔 <strong>SERVIDORES PÚBLICOS:</strong> O DestineAI foi feito especialmente para vocês! Federal, estadual ou municipal — se você faz declaração completa (modelo real), pode destinar até <strong>6% do seu IR devido</strong> para projetos culturais via Lei Rouanet. Custo real: <strong>R$ 0</strong>.'
+      response: '👔 <strong>SERVIDORES PÚBLICOS:</strong><br><br>O DestineAI foi desenvolvido especialmente para servidores! Federal, estadual ou municipal — se você faz <strong>declaração completa</strong>, pode destinar até <strong>6% do IR devido</strong> para projetos culturais via Lei Rouanet.<br><br>Custo real: <strong>R$ 0</strong>. Neste piloto, tudo é simulação — mas o processo real funciona exatamente assim.'
     },
 
-    // Impacto real
+    // IMPACTO
     impacto: {
-      keywords: ['impacto', 'resultado', 'para onde vai', 'como ajuda', 'benefício'],
-      response: '❤️ <strong>IMPACTO REAL:</strong><br>Seu dinheiro vai direto para:<br>• Abrigos de idosos<br>• Creches e escolas<br>• Projetos de inclusão<br>• Programas sociais aprovados<br><br>Os conselhos fiscalizam e publicam relatórios. Transparência total!'
+      keywords: ['impacto', 'resultado', 'para onde vai', 'como ajuda', 'benefício', 'diferença'],
+      response: '❤️ <strong>O IMPACTO REAL:</strong><br><br>A <strong>Orquestra das Periferias do DF</strong> viabiliza formação musical e apresentações culturais em comunidades sem acesso à cultura.<br><br>Na vida real, sua destinação vai 100% para o projeto — sem intermediários além do FNC. Neste piloto, você está apenas <em>visualizando</em> esse impacto.'
     },
 
     // FAQ
     faq: {
-      keywords: ['dúvidas', 'perguntas frequentes', 'faq', 'outras perguntas'],
-      response: '❓ <strong>MAIS DÚVIDAS?</strong><br>Acesse nossa página de <a href="faq.html" style="color:#0D1B3E;font-weight:bold;">Perguntas Frequentes</a> com respostas detalhadas sobre todo o processo!'
+      keywords: ['dúvidas', 'perguntas frequentes', 'faq', 'outras perguntas', 'mais informações'],
+      response: '❓ <strong>MAIS DÚVIDAS?</strong><br><br>Sobre a simulação e a pesquisa: pode perguntar aqui para a TINA!<br><br>Sobre a Lei Rouanet em geral: acesse <strong>incentivabr.com.br</strong> para o FAQ completo.'
     }
   };
 
@@ -192,7 +203,7 @@ const TINA = (function() {
     }
 
     // Resposta padrão
-    return '🤖 Sou a <strong>TINA</strong>, sua assistente de destinação de IR via <strong>Lei Rouanet</strong>! Posso ajudar com:<br><br>• Como funciona a destinação (Art. 18)<br>• Calculadora — quanto você pode destinar<br>• Prazos e processos<br>• Como declarar — Código 41<br>• Segurança e base legal<br><br>Faça sua pergunta ou clique nos botões de ação rápida!';
+    return '🤖 Sou a <strong>TINA</strong>, assistente da simulação DestineAI!<br><br>Posso ajudar com:<br>• O que é este piloto e como funciona<br>• Como calcular quanto você pode destinar<br>• O que é a Lei Rouanet (Art. 18)<br>• Como completar o pós-teste<br>• Dúvidas sobre a declaração de IR<br><br>Faça sua pergunta ou clique nos botões abaixo!';
   }
 
   // Inicializa o widget
@@ -229,7 +240,7 @@ const TINA = (function() {
     return `
       <!-- Bolha de boas-vindas -->
       <div class="tina-welcome-bubble" id="tinaWelcome">
-        <span>Oi! Sou a Tina 👋<br><small style="color:#6B7280">Tem dúvidas sobre a simulação?</small></span>
+        <span>Oi! Sou a Tina 👋<br><small style="color:#6B7280">Alguma dúvida sobre o piloto?</small></span>
         <button class="tina-welcome-close" onclick="TINA.hideWelcome()">&times;</button>
       </div>
 
@@ -262,16 +273,16 @@ const TINA = (function() {
           <div class="tina-message tina-bot">
             <div class="tina-msg-avatar"><img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
             <div class="tina-msg-content">
-              Olá, sou a <strong>TINA</strong>! Como posso ajudar?
+              Olá! Sou a <strong>TINA</strong>, assistente deste piloto. Estou aqui para tirar dúvidas sobre a simulação, a Lei Rouanet ou como concluir a pesquisa. 😊
             </div>
           </div>
         </div>
 
         <div class="tina-quick-actions">
-          <button onclick="TINA.ask('Como funciona a destinação?')">Como funciona?</button>
+          <button onclick="TINA.ask('O que é esse piloto?')">O que é isso?</button>
           <button onclick="TINA.ask('Quanto posso destinar?')">Quanto posso?</button>
+          <button onclick="TINA.ask('Como concluo o pós-teste?')">Pós-teste</button>
           <button onclick="TINA.ask('É seguro?')">É seguro?</button>
-          <button onclick="TINA.ask('Quais os prazos?')">Prazos</button>
         </div>
 
         <div class="tina-input-area">
