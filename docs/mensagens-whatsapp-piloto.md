@@ -1,5 +1,5 @@
 # Mensagens WhatsApp — Piloto DestineAI
-**Versão:** V5 (2026-05-17)
+**Versão:** V6 (2026-05-17)
 **Base narrativa:** contexto MBA/FGV → direito ignorado → simulação segura → impacto da participação
 
 ---
@@ -50,7 +50,7 @@ Sua participação entra diretamente na minha pesquisa no MBA da FGV e me ajuda 
 ```
 Pessoal,
 
-Estou conduzindo, no âmbito do meu MBA em IA & Analytics da FGV, um piloto rápido que mostra quanto cada servidor pode destinar do IR para projetos sociais e culturais — com retorno de 100% e sem custo adicional.
+Estou conduzindo, no âmbito do meu MBA em IA & Analytics da FGV, um piloto rápido que mostra quanto cada servidor pode destinar do IR para projetos sociais — com retorno de 100% e sem custo adicional.
 
 A ideia é simples: a maioria dos servidores nunca usou esse direito porque ninguém explica o passo a passo. O piloto simula todo o processo em menos de 10 minutos e alimenta uma pesquisa do meu MBA na FGV sobre servidores e cidadania fiscal.
 
@@ -73,12 +73,10 @@ Quem participar já ajuda o projeto e ainda sai entendendo, na prática, como fu
 ```
 Pessoal, passando só para agradecer a quem já participou do piloto do meu MBA da FGV 🙏
 
-Se você ainda não conseguiu entrar, o link continua aberto e leva menos de 10 minutos (pré‑teste + simulação + pós‑teste):
+Se você ainda não conseguiu entrar, o link continua aberto e leva menos de 10 minutos:
 https://destineai.com.br/frontend/piloto-start.html
 
-Esse piloto está mostrando, com dados, que quando o servidor entende o processo e vê que é sem custo, a intenção de destinar o IR aumenta muito.
-
-Vale 10 minutos — você ainda sai sabendo exatamente quanto pode destinar no seu caso.
+Vale 10 minutos — você sai sabendo exatamente quanto do seu IR pode virar impacto social, sem pagar nada a mais.
 ```
 
 ---
