@@ -853,6 +853,14 @@
             </div>
           </div>
 
+          <!-- Selo de credibilidade -->
+          <div style="display:flex;align-items:center;gap:10px;background:#F8FAFF;border:1px solid #E0E7FF;border-radius:12px;padding:12px 16px;margin-bottom:16px">
+            <span style="font-size:20px;flex-shrink:0">🎓</span>
+            <p style="margin:0;font-size:12px;color:#4338CA;line-height:1.5">
+              Ferramenta desenvolvida em parceria com a <strong>FGV</strong> para apoiar contribuintes na compreensão da Lei Rouanet.
+            </p>
+          </div>
+
           <div class="referencia-box">
             <div>
               <div class="lbl">Referência / Identificação</div>
@@ -862,12 +870,16 @@
           </div>
 
           <button id="btnSimularPagamento" class="btn-primary-rouanet" onclick="simularPagamento()" style="display:none">
-            🧪 Simular pagamento e gerar comprovante
+            Simular pagamento e ver o comprovante <i class="fas fa-arrow-right"></i>
           </button>
 
           <button id="btnJaFizTransferencia" class="btn-primary-rouanet" onclick="goTo(5)">
             <i class="fas fa-upload"></i> Já fiz a transferência — enviar comprovante
           </button>
+
+          <p id="step4SimNote" style="display:none;text-align:center;font-size:11px;color:#9CA3AF;margin:6px 0 0;line-height:1.5">
+            Nenhum valor será transferido nesta simulação. Você verá apenas como seria o comprovante de uma destinação real.
+          </p>
 
           <button class="btn-secondary" onclick="goTo(3)">
             <i class="fas fa-arrow-left"></i> Voltar
@@ -1643,6 +1655,8 @@
         const btnReal = document.getElementById('btnJaFizTransferencia');
         if (btnSim)  btnSim.style.display  = '';
         if (btnReal) btnReal.style.display = 'none';
+        const s4note = document.getElementById('step4SimNote');
+        if (s4note) s4note.style.display = '';
       }
     }).catch(() => {});
 
