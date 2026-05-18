@@ -589,7 +589,8 @@
         <div class="card-body">
 
           <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#92400e;line-height:1.6">
-            <strong>⚠️ Atenção:</strong> a destinação de IR só é possível com a <strong>declaração no modelo completo</strong> (não funciona no modelo simplificado). Se tiver dúvida sobre qual modelo você usa, consulte seu contador.
+            <strong>⚠️ Atenção:</strong> a destinação de IR para projetos sociais só é possível para quem faz a declaração no <strong>modelo completo</strong> (com deduções).<br>
+            Se você usa o modelo simplificado, não tem problema: continue a simulação normalmente — ela vai te ajudar a entender como funciona e avaliar se, no futuro, vale a pena migrar para o modelo completo.
           </div>
 
           <div class="calc-tabs">
@@ -599,23 +600,34 @@
 
           <!-- Modo rápido -->
           <div id="calcRapida">
-            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6">
-              Informe o <strong>IR Devido</strong> — seção <strong>"Imposto Devido"</strong> da sua declaração IRPF,
-              campo <strong>"Total do imposto devido"</strong> (programa da Receita Federal ou
-              <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank" rel="noopener" style="color:var(--rouanet)">e-CAC</a>).
-              <br><span style="font-size:12px;color:#888">⚠️ Não confunda com "Imposto a Restituir" — esse é o valor que a Receita já vai te devolver. O que você precisa é o <strong>Total do imposto devido</strong>.</span>
+
+            <!-- Linha de benefício -->
+            <p style="font-size:14px;font-weight:700;color:#0D1B3E;margin-bottom:10px;line-height:1.5">
+              Com o valor do seu Imposto de Renda Devido, vamos calcular quanto você poderia destinar para este projeto sem pagar nada a mais.
             </p>
 
-            <!-- Campo destacado IR Devido -->
+            <!-- Instrução principal -->
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5">
+              Informe o valor do <strong>Imposto de Renda Devido</strong> da sua declaração de IRPF.
+            </p>
+
+            <!-- Subtexto explicativo -->
+            <p style="font-size:12px;color:#888;margin-bottom:16px;line-height:1.6">
+              Você encontra esse valor na declaração, na seção <strong>"Imposto Devido"</strong>, campo <strong>"Total do imposto devido"</strong>
+              (programa da Receita Federal ou <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank" rel="noopener" style="color:var(--rouanet)">e-CAC</a>).<br>
+              Não confunda com <em>"Imposto a Restituir"</em> ou <em>"Imposto a Pagar"</em> — aqui é o total calculado pela Receita antes da restituição ou do pagamento.
+            </p>
+
+            <!-- Card azul do campo IR Devido -->
             <div style="background:linear-gradient(135deg,#0D1B3E 0%,#162444 100%);border:2px solid rgba(255,215,0,0.4);border-radius:16px;padding:20px 20px 16px;margin-bottom:4px">
-              <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,215,0,0.7);margin-bottom:8px">IR Devido — Total do imposto</div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,215,0,0.7);margin-bottom:6px">IR Devido — Total do imposto na sua declaração</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:12px">IR Devido (R$)</div>
               <div style="position:relative">
                 <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;font-weight:700;color:rgba(255,215,0,0.6);pointer-events:none;font-family:'Inter',sans-serif">R$</span>
                 <input type="text" inputmode="decimal" id="rapidaIRDevido" placeholder="0,00" oninput="maskBRL(this)"
                   style="width:100%;padding:14px 16px 14px 52px;font-size:28px;font-weight:800;color:white;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,215,0,0.25);border-radius:12px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;transition:border-color 0.2s"
                   onfocus="this.style.borderColor='rgba(255,215,0,0.7)'" onblur="this.style.borderColor='rgba(255,215,0,0.25)'">
               </div>
-              <p style="margin:10px 0 0;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.5">Encontre na sua declaração: Resumo → Imposto Devido → <strong style="color:rgba(255,255,255,0.6)">Total do imposto devido</strong></p>
             </div>
           </div>
 
@@ -663,33 +675,43 @@
           </div>
 
           <div class="result-box" id="calcResultBox" style="display:none">
-            <div class="title"><i class="fas fa-check-circle" style="color:var(--success)"></i> Resultado do Cálculo</div>
+            <div class="title"><i class="fas fa-check-circle" style="color:var(--success)"></i> Resultado do cálculo</div>
+            <!-- Frase de impacto dinâmica -->
+            <p style="font-size:14px;font-weight:700;color:#0D1B3E;margin:10px 0 14px;line-height:1.5">
+              Com esse IR, você poderia destinar até <span id="resLimiteImpacto" style="color:#B45309">R$ —</span> sem pagar nada a mais.
+            </p>
             <div class="result-grid">
               <div class="result-item">
-                <div class="lbl">IR Devido</div>
+                <div class="lbl">Seu Imposto de Renda Devido</div>
                 <div class="val" id="resIRDevido">—</div>
               </div>
               <div class="result-item">
-                <div class="lbl">Alíquota Efetiva</div>
-                <div class="val" id="resAliquota">—</div>
-              </div>
-              <div class="result-item">
-                <div class="lbl">Limite Rouanet (6%)</div>
+                <div class="lbl">Limite máximo de destinação (6% do IR devido)</div>
                 <div class="val highlight" id="resLimite">—</div>
               </div>
+              <!-- Alíquota oculta mas mantida para o JS -->
+              <div style="display:none"><div id="resAliquota"></div></div>
             </div>
           </div>
 
-          <div style="margin-top:20px;display:flex;gap:10px">
-            <button class="btn-secondary" style="margin-top:0" onclick="goTo(1)">
-              <i class="fas fa-arrow-left"></i> Voltar
-            </button>
-            <button class="btn-primary-rouanet" id="btnCalcular" onclick="calcular()">
-              <i class="fas fa-calculator"></i> Calcular
-            </button>
-            <button class="btn-primary-rouanet" id="btnProStep3" onclick="goTo(3)" style="display:none">
-              Definir valor a destinar <i class="fas fa-arrow-right"></i>
-            </button>
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
+            <p style="font-size:13px;color:var(--text-secondary);margin:0;line-height:1.5" id="transitionNote" style="display:none">
+              No próximo passo, você vai escolher quanto desse limite quer destinar na simulação.
+            </p>
+            <div style="display:flex;gap:10px">
+              <button class="btn-secondary" style="margin-top:0" onclick="goTo(1)">
+                <i class="fas fa-arrow-left"></i> Voltar
+              </button>
+              <button class="btn-primary-rouanet" id="btnCalcular" onclick="calcular()">
+                <i class="fas fa-calculator"></i> Calcular
+              </button>
+              <button class="btn-primary-rouanet" id="btnProStep3" onclick="goTo(3)" style="display:none">
+                Escolher quanto quero destinar <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+            <p id="simNoteCalc" style="display:none;text-align:center;font-size:11px;color:#9CA3AF;margin:0;line-height:1.5">
+              Esta é uma simulação. Nenhum valor será transferido agora e nada muda na sua declaração real.
+            </p>
           </div>
 
         </div>
@@ -1154,12 +1176,15 @@
         state.ir_devido = data.ir_devido;
         state.limite    = limite;
 
-        document.getElementById('resIRDevido').textContent = BRL(data.ir_devido);
-        document.getElementById('resAliquota').textContent = `${data.aliquota_efetiva}%`;
-        document.getElementById('resLimite').textContent   = BRL(limite);
-        document.getElementById('calcResultBox').style.display = '';
-        document.getElementById('btnCalcular').style.display   = 'none';
-        document.getElementById('btnProStep3').style.display   = '';
+        document.getElementById('resIRDevido').textContent      = BRL(data.ir_devido);
+        document.getElementById('resAliquota').textContent      = `${data.aliquota_efetiva}%`;
+        document.getElementById('resLimite').textContent        = BRL(limite);
+        document.getElementById('resLimiteImpacto').textContent = BRL(limite);
+        document.getElementById('calcResultBox').style.display  = '';
+        document.getElementById('btnCalcular').style.display    = 'none';
+        document.getElementById('btnProStep3').style.display    = '';
+        document.getElementById('transitionNote').style.display = '';
+        document.getElementById('simNoteCalc').style.display    = '';
 
       } catch (err) {
         toast('Erro no cálculo: ' + err.message, 'error');
@@ -1185,12 +1210,15 @@
         state.ir_devido = data.ir_devido;
         state.limite    = limite;
 
-        document.getElementById('resIRDevido').textContent = BRL(data.ir_devido);
-        document.getElementById('resAliquota').textContent = '—';
-        document.getElementById('resLimite').textContent   = BRL(limite);
-        document.getElementById('calcResultBox').style.display = '';
-        document.getElementById('btnCalcular').style.display   = 'none';
-        document.getElementById('btnProStep3').style.display   = '';
+        document.getElementById('resIRDevido').textContent      = BRL(data.ir_devido);
+        document.getElementById('resAliquota').textContent      = '—';
+        document.getElementById('resLimite').textContent        = BRL(limite);
+        document.getElementById('resLimiteImpacto').textContent = BRL(limite);
+        document.getElementById('calcResultBox').style.display  = '';
+        document.getElementById('btnCalcular').style.display    = 'none';
+        document.getElementById('btnProStep3').style.display    = '';
+        document.getElementById('transitionNote').style.display = '';
+        document.getElementById('simNoteCalc').style.display    = '';
 
       } catch (err) {
         toast('Erro: ' + err.message, 'error');
