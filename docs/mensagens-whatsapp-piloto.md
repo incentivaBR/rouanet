@@ -12,7 +12,7 @@
 
 Uma pergunta rápida: o que você faria com R$ 400, R$ 800 ou até R$ 1.500 do seu imposto de renda — se pudesse decidir para onde vai?
 
-Funciona assim, direto ao ponto: se você tem restituição a receber, esse valor *soma* no que você recebe. Se tem imposto a pagar, *abate* do que você deve. Em nenhum dos casos você paga nada a mais — o dinheiro já ia para a Receita de qualquer forma.
+E o melhor: você não paga nada a mais por isso. Se você tem restituição, o valor *soma* no que você vai receber de volta. Se tem imposto a pagar, *abate* do que você deve. O dinheiro já ia para o governo de qualquer jeito — a diferença é que agora você pode escolher para onde vai uma parte dele.
 
 Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e queria te pedir uma ajuda rápida sobre isso.
 
