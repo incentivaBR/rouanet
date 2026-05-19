@@ -383,9 +383,9 @@
   <script>
     // Se veio do Google Form com ?step=2, marca pré-teste como feito
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('step') === '2') {
+    const cameFromForm = urlParams.get('step') === '2';
+    if (cameFromForm) {
       localStorage.setItem('pilot_step1', 'done');
-      // Limpa o param da URL sem recarregar a página
       history.replaceState(null, '', window.location.pathname);
     }
 
@@ -398,6 +398,20 @@
     if (state.step1) activateStep2();
     if (state.step1 && state.step2) activateStep3();
     if (state.step1 && state.step2 && localStorage.getItem('pilot_step3') === 'done') showDone();
+
+    // Se veio do formulário, rola até o step 2 e chama atenção
+    if (cameFromForm) {
+      setTimeout(function() {
+        const card2 = document.getElementById('step2');
+        if (card2) {
+          card2.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card2.style.transition = 'outline 0.1s';
+          card2.style.outline = '2px solid rgba(255,215,0,0.6)';
+          card2.style.borderRadius = '16px';
+          setTimeout(function() { card2.style.outline = 'none'; }, 1800);
+        }
+      }, 500);
+    }
 
     function stepDone(n) {
       localStorage.setItem('pilot_step' + n, 'done');
