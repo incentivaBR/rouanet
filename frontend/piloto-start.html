@@ -103,6 +103,62 @@
       </p>
     </div>
 
+    <!-- ── TINA — VEREDITO RÁPIDO ── -->
+    <div class="rounded-2xl border border-[#FFD700]/25 bg-[#FFD700]/[0.05] px-5 py-5 mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <img src="assets/tina-avatar.svg" alt="Tina" class="w-10 h-10 rounded-full border-2 border-[#FFD700]/40">
+        <div>
+          <p class="text-white font-black text-sm leading-none">Tina</p>
+          <p class="text-white/40 text-xs mt-0.5">Assistente IncentivaBR</p>
+        </div>
+        <span class="ml-auto text-[#FFD700] text-[10px] font-black uppercase tracking-widest bg-[#FFD700]/10 border border-[#FFD700]/30 px-2 py-1 rounded-full">⚖️ Veredito</span>
+      </div>
+      <p class="text-white/80 text-sm leading-relaxed mb-4">
+        Me diz seu salário bruto e eu te falo <strong class="text-white">exatamente quanto você pode destinar este ano</strong> — sem pesquisar nada. Reto ao ponto.
+      </p>
+      <div class="flex gap-2">
+        <div class="flex-1 relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm font-bold">R$</span>
+          <input id="salarioInput" type="number" min="1320" placeholder="8.000"
+                 class="w-full bg-white/[0.08] border border-white/15 rounded-xl pl-9 pr-3 py-3 text-white font-bold text-sm placeholder:text-white/25 focus:outline-none focus:border-[#FFD700]/50 [appearance:textfield]">
+        </div>
+        <button onclick="calcularVeredito()"
+                class="bg-[#FFD700] text-[#0D1B3E] font-black text-sm px-5 py-3 rounded-xl hover:bg-[#FFC000] transition-colors whitespace-nowrap">
+          Ver veredito
+        </button>
+      </div>
+
+      <!-- Resultado -->
+      <div id="vereditoResult" class="hidden mt-4">
+        <div class="bg-[#0D1B3E] border border-[#FFD700]/30 rounded-xl p-4 mb-3">
+          <p class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest mb-1">⚖️ Veredito da Tina</p>
+          <p class="text-white font-black text-xl leading-snug mb-1" id="vereditoValor">—</p>
+          <p class="text-white/50 text-xs">podem ir para um projeto social — dinheiro que já seria do governo de qualquer forma.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mb-3">
+          <div class="bg-[#059669]/10 border border-[#059669]/30 rounded-xl p-3 text-center">
+            <p class="text-[#059669] text-[10px] font-black uppercase tracking-wide mb-2">Tem restituição?</p>
+            <p class="text-white/60 text-xs mb-0.5">Sem destinar</p>
+            <p class="text-white text-sm font-bold" id="restSem">R$ —</p>
+            <div class="border-t border-white/10 my-2"></div>
+            <p class="text-white/60 text-xs mb-0.5">Destinando</p>
+            <p class="text-[#059669] text-sm font-black" id="restCom">R$ — ↑</p>
+          </div>
+          <div class="bg-[#FFD700]/[0.07] border border-[#FFD700]/25 rounded-xl p-3 text-center">
+            <p class="text-[#FFD700] text-[10px] font-black uppercase tracking-wide mb-2">Tem a pagar?</p>
+            <p class="text-white/60 text-xs mb-0.5">Sem destinar</p>
+            <p class="text-white text-sm font-bold" id="pagSem">R$ —</p>
+            <div class="border-t border-white/10 my-2"></div>
+            <p class="text-white/60 text-xs mb-0.5">Destinando</p>
+            <p class="text-[#FFD700] text-sm font-black" id="pagCom">R$ — ↓</p>
+          </div>
+        </div>
+        <p class="text-white/30 text-[11px] text-center">Estimativa. A simulação completa usa seus dados reais.</p>
+      </div>
+
+      <p id="vereditoErro" class="hidden text-red-400 text-xs mt-3 text-center">Informe um salário válido acima de R$ 1.320</p>
+    </div>
+
     <!-- ── BLOCO DE CONVENCIMENTO ── -->
     <div class="rounded-2xl bg-white/[0.04] border border-white/10 px-5 py-5 mb-8 space-y-4">
       <div class="flex items-start gap-3">
@@ -291,9 +347,22 @@
             A destinação aumenta o valor que sai do meu bolso?
             <span class="text-white/30 group-open:rotate-180 transition-transform shrink-0 mt-0.5">↓</span>
           </summary>
-          <p class="text-white/60 text-sm leading-relaxed mt-3">
-            <strong class="text-white">Não.</strong> Dentro dos limites legais, a destinação não aumenta o que você paga de imposto. Ela apenas redireciona uma parte do IR devido para um projeto social específico. Na prática, o valor destinado <strong class="text-white">reduz o imposto a pagar</strong> ou <strong class="text-white">aumenta a sua restituição</strong> em igual montante.
-          </p>
+          <div class="mt-3 space-y-3">
+            <p class="text-white/60 text-sm leading-relaxed"><strong class="text-white">Não — nenhum centavo a mais.</strong> O dinheiro que você destina já ia para a Receita de qualquer forma. Você só está decidindo para onde vai uma parte dele.</p>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-[#059669]/10 border border-[#059669]/30 rounded-xl p-3 text-center">
+                <p class="text-[#059669] text-[10px] font-black uppercase mb-2">Tem restituição</p>
+                <p class="text-white/50 text-xs mb-1">sem destinar → recebe R$ 1.200</p>
+                <p class="text-[#059669] text-sm font-black">destinando R$ 600 → recebe R$ 1.800 ↑</p>
+              </div>
+              <div class="bg-[#FFD700]/[0.07] border border-[#FFD700]/25 rounded-xl p-3 text-center">
+                <p class="text-[#FFD700] text-[10px] font-black uppercase mb-2">Tem a pagar</p>
+                <p class="text-white/50 text-xs mb-1">sem destinar → paga R$ 1.200</p>
+                <p class="text-[#FFD700] text-sm font-black">destinando R$ 600 → paga R$ 600 ↓</p>
+              </div>
+            </div>
+            <p class="text-white/40 text-xs text-center">Na restituição, soma. No pagamento, abate. Sempre sem custo extra.</p>
+          </div>
         </details>
 
         <!-- P2 -->
@@ -475,6 +544,42 @@
       btn3.style.pointerEvents = 'auto';
       btn3.style.cursor = 'pointer';
       document.getElementById('hint3').textContent = 'Use o mesmo código anônimo do pré-teste';
+    }
+
+    function calcularVeredito() {
+      const raw = document.getElementById('salarioInput').value.replace(',', '.');
+      const salario = parseFloat(raw);
+      const erro = document.getElementById('vereditoErro');
+      const result = document.getElementById('vereditoResult');
+      if (!salario || salario < 1320) {
+        erro.classList.remove('hidden');
+        result.classList.add('hidden');
+        return;
+      }
+      erro.classList.add('hidden');
+
+      // Cálculo simplificado IRRF mensal
+      const inss = Math.min(salario * 0.14, 908.86);
+      const base = salario - inss;
+      let ir = 0;
+      if      (base > 5531.76) ir = base * 0.275 - 1166.36;
+      else if (base > 4664.68) ir = base * 0.225 -  895.59;
+      else if (base > 3751.05) ir = base * 0.15  -  545.51;
+      else if (base > 2824)    ir = base * 0.075 -  211.80;
+      ir = Math.max(0, ir);
+
+      const irAnual  = ir * 12;
+      const maxDest  = Math.floor(irAnual * 0.06);
+      const refBase  = Math.round(irAnual * 0.10); // base de exemplo ~10% do IR anual
+      const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+
+      document.getElementById('vereditoValor').textContent = `Até ${fmt(maxDest)} este ano`;
+      document.getElementById('restSem').textContent = fmt(refBase);
+      document.getElementById('restCom').textContent = fmt(refBase + maxDest) + ' ↑';
+      document.getElementById('pagSem').textContent  = fmt(refBase);
+      document.getElementById('pagCom').textContent  = fmt(Math.max(0, refBase - maxDest)) + ' ↓';
+      result.classList.remove('hidden');
+      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function showLockToast(stepNum) {
