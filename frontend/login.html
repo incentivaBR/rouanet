@@ -151,7 +151,11 @@
   <script>
     // Se já logado, redirecionar
     if (auth.isLoggedIn()) {
-      const redirect = utils.getQueryParam('redirect') || 'dashboard.html';
+      const isDemo = utils.getQueryParam('demo') === 'true';
+      const defaultRedirect = isDemo
+        ? 'destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF'
+        : 'dashboard.html';
+      const redirect = utils.getQueryParam('redirect') || defaultRedirect;
       window.location.href = redirect;
     }
 
@@ -276,7 +280,11 @@
         auth.setUser(response.user);
         Toast.success('Redirecionando...', 'Login realizado!');
 
-        const redirect = utils.getQueryParam('redirect') || 'dashboard.html';
+        const isDemo = utils.getQueryParam('demo') === 'true';
+        const defaultRedirect = isDemo
+          ? 'destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF'
+          : 'dashboard.html';
+        const redirect = utils.getQueryParam('redirect') || defaultRedirect;
         setTimeout(() => window.location.href = redirect, 1000);
 
       } catch (error) {
