@@ -174,19 +174,38 @@
 
       <!-- Cenário: a pagar -->
       <div id="tinaPagar" class="hidden">
-        <p class="text-[#FFD700] font-black text-sm mb-3">💛 Você tem imposto a pagar — também funciona!</p>
-        <div class="bg-[#0D1B3E] border border-[#FFD700]/30 rounded-xl p-4 mb-3">
-          <p class="text-white/50 text-xs mb-3">Com uma destinação de <strong class="text-white">R$ 600</strong>, veja o que muda:</p>
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-white/50 text-sm">Sem destinar</span>
-            <span class="text-white font-bold">Paga R$ 1.200</span>
+        <p class="text-[#FFD700] font-black text-sm mb-4">💛 Você escolhe onde vai esse dinheiro.</p>
+
+        <!-- Fluxo visual -->
+        <div class="bg-[#0D1B3E] border border-[#FFD700]/30 rounded-xl p-4 mb-4 space-y-2">
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-[#FFD700] font-black shrink-0">→</span>
+            <span class="text-white/70">Você destina <strong class="text-white">R$ 600</strong> para um projeto social</span>
           </div>
-          <div class="flex items-center justify-between">
-            <span class="text-[#FFD700] text-sm font-bold">Destinando</span>
-            <span class="text-[#FFD700] font-black text-lg">Paga R$ 600 ↓</span>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-[#FFD700] font-black shrink-0">→</span>
+            <span class="text-white/70">A Receita desconta <strong class="text-white">R$ 600</strong> do seu imposto a pagar</span>
+          </div>
+          <div class="border-t border-white/[0.08] pt-2 mt-2 flex items-center gap-2 text-sm">
+            <span class="text-[#FFD700] font-black shrink-0">✓</span>
+            <span class="text-[#FFD700] font-black">Projeto ganhou. Você pagou menos. Seu bolso: zero.</span>
           </div>
         </div>
-        <p class="text-white/70 text-sm leading-relaxed mb-4">Você paga <strong class="text-white">R$ 600 a menos para a Receita</strong> — e esse valor vai para o projeto social. O total que sai do seu bolso é exatamente o mesmo.</p>
+
+        <!-- Antes / depois -->
+        <div class="flex items-center justify-between bg-[#0D1B3E] rounded-xl px-4 py-3 mb-4 text-sm">
+          <div class="text-center">
+            <p class="text-white/35 text-xs mb-1">Sem destinar</p>
+            <p class="text-white font-bold">Paga R$ 1.200</p>
+          </div>
+          <div class="text-[#FFD700] text-xl font-black">→</div>
+          <div class="text-center">
+            <p class="text-[#FFD700] text-xs font-black mb-1">Destinando R$ 600</p>
+            <p class="text-[#FFD700] font-black text-lg">Paga R$ 600 ↓</p>
+          </div>
+        </div>
+
+        <p class="text-white/40 text-xs text-center mb-4">Em vez de ir para o orçamento geral, esse dinheiro foi para onde você escolheu.</p>
         <button onclick="resetTina()" class="text-white/30 text-xs underline">← Ver o outro cenário</button>
       </div>
 
