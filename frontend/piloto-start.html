@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DestineAI — Piloto FGV · Por onde começar</title>
+  <title>IncentivaBR | DestineAI — Piloto FGV · Por onde começar</title>
   <meta name="description" content="Pesquisa de conclusão do MBA em IA & Analytics da FGV sobre destinação de IR. 3 etapas, ~10 minutos, completamente anônimo.">
   <!-- OG / WhatsApp -->
   <meta property="og:type" content="website">
@@ -192,7 +192,7 @@
       </div>
 
       <!-- ETAPA 2 — SIMULAÇÃO REAL -->
-      <div class="relative step-card" id="step2">
+      <div class="relative step-card" id="step2" onclick="showLockToast(2)">
         <div class="step-connector" id="conn2"></div>
         <div class="flex gap-4">
           <div class="flex flex-col items-center shrink-0">
@@ -218,7 +218,6 @@
             </p>
             <a id="btn2link"
                href="https://www.destineai.com.br/login.html?demo=true&redirect=destinar-rouanet.html?pronac=261847%26titulo=Orquestra%20das%20Periferias%20do%20DF"
-               onclick="stepDone(2)"
                class="inline-flex items-center gap-2 bg-white/10 text-white/40 font-black text-sm px-5 py-3 rounded-xl w-full justify-center cursor-not-allowed pointer-events-none">
               🚀 Acessar a Simulação
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
@@ -229,7 +228,7 @@
       </div>
 
       <!-- ETAPA 3 — PÓS-TESTE & CONCLUSÃO -->
-      <div class="relative step-card" id="step3">
+      <div class="relative step-card" id="step3" onclick="showLockToast(3)">
         <div class="flex gap-4">
           <div class="flex flex-col items-center shrink-0">
             <div id="icon3"
@@ -381,11 +380,19 @@
 
   <!-- ── LÓGICA DE ESTADO ── -->
   <script>
-    // Se veio do Google Form com ?step=2, marca pré-teste como feito
     const urlParams = new URLSearchParams(window.location.search);
-    const cameFromForm = urlParams.get('step') === '2';
+    const cameFromForm   = urlParams.get('step') === '2';
+    const cameFromWizard = urlParams.get('step') === '3';
+
+    // Retorno do pré-teste → libera step 2
     if (cameFromForm) {
       localStorage.setItem('pilot_step1', 'done');
+      history.replaceState(null, '', window.location.pathname);
+    }
+    // Retorno do wizard (simulação concluída) → libera step 3
+    if (cameFromWizard) {
+      localStorage.setItem('pilot_step1', 'done');
+      localStorage.setItem('pilot_step2', 'done');
       history.replaceState(null, '', window.location.pathname);
     }
 
@@ -399,16 +406,26 @@
     if (state.step1 && state.step2) activateStep3();
     if (state.step1 && state.step2 && localStorage.getItem('pilot_step3') === 'done') showDone();
 
-    // Se veio do formulário, rola até o step 2 e chama atenção
+    // Rola e destaca o step recém-desbloqueado
     if (cameFromForm) {
       setTimeout(function() {
-        const card2 = document.getElementById('step2');
-        if (card2) {
-          card2.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          card2.style.transition = 'outline 0.1s';
-          card2.style.outline = '2px solid rgba(255,215,0,0.6)';
-          card2.style.borderRadius = '16px';
-          setTimeout(function() { card2.style.outline = 'none'; }, 1800);
+        const el = document.getElementById('step2');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.outline = '2px solid rgba(255,215,0,0.6)';
+          el.style.borderRadius = '16px';
+          setTimeout(function() { el.style.outline = 'none'; }, 1800);
+        }
+      }, 500);
+    }
+    if (cameFromWizard) {
+      setTimeout(function() {
+        const el = document.getElementById('step3');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.outline = '2px solid rgba(5,150,105,0.6)';
+          el.style.borderRadius = '16px';
+          setTimeout(function() { el.style.outline = 'none'; }, 1800);
         }
       }, 500);
     }
@@ -438,7 +455,7 @@
       btn2.className = 'btn-pulse inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black text-sm px-5 py-3 rounded-xl transition-colors w-full justify-center';
       btn2.style.pointerEvents = 'auto';
       btn2.style.cursor = 'pointer';
-      document.getElementById('hint2').textContent = 'Abre nesta mesma aba';
+      document.getElementById('hint2').textContent = 'Ao concluir, clique em "Voltar ao piloto" para liberar o Pós-teste';
     }
 
     function activateStep3() {
@@ -460,6 +477,23 @@
       document.getElementById('hint3').textContent = 'Use o mesmo código anônimo do pré-teste';
     }
 
+    function showLockToast(stepNum) {
+      if (stepNum === 2 && localStorage.getItem('pilot_step1') === 'done') return;
+      if (stepNum === 3 && localStorage.getItem('pilot_step2') === 'done') return;
+      const msg = stepNum === 2
+        ? '⚠️ Complete o Pré-teste (Etapa 1) primeiro'
+        : '⚠️ Conclua a simulação (Etapa 2) primeiro';
+      const toast = document.getElementById('lockToast');
+      toast.textContent = msg;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(function() {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(8px)';
+      }, 2500);
+    }
+
     function showDone() {
       document.getElementById('icon3').innerHTML = '✓';
       document.getElementById('icon3').className = 'w-10 h-10 rounded-full bg-[#059669]/20 border-2 border-[#059669] text-[#059669] font-black text-sm flex items-center justify-center z-10';
@@ -467,6 +501,9 @@
       document.getElementById('allDone').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   </script>
+
+  <!-- Toast de sequência bloqueada -->
+  <div id="lockToast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(13,27,62,0.96);color:white;padding:13px 22px;border-radius:14px;font-size:13px;font-weight:700;border:1px solid rgba(255,215,0,0.35);opacity:0;transition:opacity 0.25s,transform 0.25s;pointer-events:none;z-index:200;text-align:center;white-space:nowrap"></div>
 
   <script src="js/tina.js"></script>
 
