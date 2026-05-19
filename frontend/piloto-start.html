@@ -137,19 +137,38 @@
 
       <!-- Cenário: restituição -->
       <div id="tinaRest" class="hidden">
-        <p class="text-[#059669] font-black text-sm mb-3">💚 Você tem restituição — ótimo!</p>
-        <div class="bg-[#0D1B3E] border border-[#059669]/30 rounded-xl p-4 mb-3">
-          <p class="text-white/50 text-xs mb-3">Com uma destinação de <strong class="text-white">R$ 600</strong>, veja o que muda:</p>
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-white/50 text-sm">Sem destinar</span>
-            <span class="text-white font-bold">Recebe R$ 1.200</span>
+        <p class="text-[#059669] font-black text-sm mb-4">💚 Boa notícia: os R$ 600 voltam pra você.</p>
+
+        <!-- Fluxo visual -->
+        <div class="bg-[#0D1B3E] border border-[#059669]/30 rounded-xl p-4 mb-4 space-y-2">
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-[#059669] font-black shrink-0">→</span>
+            <span class="text-white/70">Você destina <strong class="text-white">R$ 600</strong> para um projeto social</span>
           </div>
-          <div class="flex items-center justify-between">
-            <span class="text-[#059669] text-sm font-bold">Destinando</span>
-            <span class="text-[#059669] font-black text-lg">Recebe R$ 1.800 ↑</span>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-[#059669] font-black shrink-0">→</span>
+            <span class="text-white/70">A Receita devolve <strong class="text-white">R$ 600 a mais</strong> na sua restituição</span>
+          </div>
+          <div class="border-t border-white/[0.08] pt-2 mt-2 flex items-center gap-2 text-sm">
+            <span class="text-[#059669] font-black shrink-0">✓</span>
+            <span class="text-[#059669] font-black">Projeto ganhou. Você ganhou. Seu bolso: zero.</span>
           </div>
         </div>
-        <p class="text-white/70 text-sm leading-relaxed mb-4">Você recebe <strong class="text-white">R$ 600 a mais de restituição</strong> — e esse valor vai inteiro para o projeto social. Seu bolso não sente diferença nenhuma.</p>
+
+        <!-- Antes / depois -->
+        <div class="flex items-center justify-between bg-[#0D1B3E] rounded-xl px-4 py-3 mb-4 text-sm">
+          <div class="text-center">
+            <p class="text-white/35 text-xs mb-1">Sem destinar</p>
+            <p class="text-white font-bold">R$ 1.200</p>
+          </div>
+          <div class="text-[#059669] text-xl font-black">→</div>
+          <div class="text-center">
+            <p class="text-[#059669] text-xs font-black mb-1">Destinando R$ 600</p>
+            <p class="text-[#059669] font-black text-lg">R$ 1.800 ↑</p>
+          </div>
+        </div>
+
+        <p class="text-white/40 text-xs text-center mb-4">É como se o governo pagasse a sua destinação.</p>
         <button onclick="resetTina()" class="text-white/30 text-xs underline">← Ver o outro cenário</button>
       </div>
 
