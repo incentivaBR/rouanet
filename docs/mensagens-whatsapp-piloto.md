@@ -1,7 +1,7 @@
 # Mensagens WhatsApp — Piloto DestineAI
-**Versão:** V7 (2026-05-18)
-**Base narrativa:** contexto MBA/FGV → direito ignorado → simulação segura → impacto da participação
-**Novidade V7:** hook de valores reais (R$ 400–1.500) nas mensagens de abertura — ancora expectativa antes da simulação
+**Versão:** V8 (2026-05-18)
+**Base narrativa:** contexto MBA/FGV → direito ignorado → mecanismo concreto → simulação segura
+**Novidade V8:** mecanismo dos dois cenários em linguagem direta ("pão reto") — restituição soma, pagamento abate
 
 ---
 
@@ -12,9 +12,9 @@
 
 Uma pergunta rápida: o que você faria com R$ 400, R$ 800 ou até R$ 1.500 do seu imposto de renda — se pudesse decidir para onde vai?
 
-Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e queria te pedir uma ajuda rápida.
+Funciona assim, direto ao ponto: se você tem restituição a receber, esse valor *soma* no que você recebe. Se tem imposto a pagar, *abate* do que você deve. Em nenhum dos casos você paga nada a mais — o dinheiro já ia para a Receita de qualquer forma.
 
-O tema bate direto em nós como servidores: o direito de destinar até 6% do IR para projetos sociais e receber 100% de volta, sem pagar nada a mais. A maioria nunca usou isso porque ninguém explica o passo a passo.
+Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e queria te pedir uma ajuda rápida sobre isso.
 
 Criei uma ferramenta que simula esse processo. Leva cerca de 10 minutos, é anônima, nenhum valor é transferido e nada muda na sua declaração real.
 
