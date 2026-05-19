@@ -111,10 +111,9 @@
           <p class="text-white font-black text-sm leading-none">Tina</p>
           <p class="text-white/40 text-xs mt-0.5">Assistente IncentivaBR</p>
         </div>
-        <span class="ml-auto text-[#FFD700] text-[10px] font-black uppercase tracking-widest bg-[#FFD700]/10 border border-[#FFD700]/30 px-2 py-1 rounded-full">⚖️ Veredito</span>
       </div>
       <p class="text-white/80 text-sm leading-relaxed mb-4">
-        Me diz seu salário bruto e eu te falo <strong class="text-white">exatamente quanto você pode destinar este ano</strong> — sem pesquisar nada. Reto ao ponto.
+        Oi! Me conta seu salário bruto e eu te mostro, na hora, <strong class="text-white">quanto do seu IR pode ir para um projeto que você escolhe</strong> — sem você pagar nada a mais por isso. 👇
       </p>
       <div class="flex gap-2">
         <div class="flex-1 relative">
@@ -124,36 +123,36 @@
         </div>
         <button onclick="calcularVeredito()"
                 class="bg-[#FFD700] text-[#0D1B3E] font-black text-sm px-5 py-3 rounded-xl hover:bg-[#FFC000] transition-colors whitespace-nowrap">
-          Ver veredito
+          Descobrir meu valor
         </button>
       </div>
 
       <!-- Resultado -->
       <div id="vereditoResult" class="hidden mt-4">
         <div class="bg-[#0D1B3E] border border-[#FFD700]/30 rounded-xl p-4 mb-3">
-          <p class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest mb-1">⚖️ Veredito da Tina</p>
+          <p class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest mb-1">✨ Aqui está o que é seu</p>
           <p class="text-white font-black text-xl leading-snug mb-1" id="vereditoValor">—</p>
-          <p class="text-white/50 text-xs">podem ir para um projeto social — dinheiro que já seria do governo de qualquer forma.</p>
+          <p class="text-white/50 text-xs">Esse dinheiro já vai para o governo. Você só passa a escolher para onde vai uma parte dele.</p>
         </div>
         <div class="grid grid-cols-2 gap-2 mb-3">
           <div class="bg-[#059669]/10 border border-[#059669]/30 rounded-xl p-3 text-center">
             <p class="text-[#059669] text-[10px] font-black uppercase tracking-wide mb-2">Tem restituição?</p>
-            <p class="text-white/60 text-xs mb-0.5">Sem destinar</p>
+            <p class="text-white/60 text-xs mb-0.5">Hoje você recebe</p>
             <p class="text-white text-sm font-bold" id="restSem">R$ —</p>
             <div class="border-t border-white/10 my-2"></div>
-            <p class="text-white/60 text-xs mb-0.5">Destinando</p>
+            <p class="text-white/60 text-xs mb-0.5">Destinando, você recebe</p>
             <p class="text-[#059669] text-sm font-black" id="restCom">R$ — ↑</p>
           </div>
           <div class="bg-[#FFD700]/[0.07] border border-[#FFD700]/25 rounded-xl p-3 text-center">
             <p class="text-[#FFD700] text-[10px] font-black uppercase tracking-wide mb-2">Tem a pagar?</p>
-            <p class="text-white/60 text-xs mb-0.5">Sem destinar</p>
+            <p class="text-white/60 text-xs mb-0.5">Hoje você paga</p>
             <p class="text-white text-sm font-bold" id="pagSem">R$ —</p>
             <div class="border-t border-white/10 my-2"></div>
-            <p class="text-white/60 text-xs mb-0.5">Destinando</p>
+            <p class="text-white/60 text-xs mb-0.5">Destinando, você paga</p>
             <p class="text-[#FFD700] text-sm font-black" id="pagCom">R$ — ↓</p>
           </div>
         </div>
-        <p class="text-white/30 text-[11px] text-center">Estimativa. A simulação completa usa seus dados reais.</p>
+        <p class="text-white/30 text-[11px] text-center">Estimativa — a simulação completa usa seus dados reais de IR.</p>
       </div>
 
       <p id="vereditoErro" class="hidden text-red-400 text-xs mt-3 text-center">Informe um salário válido acima de R$ 1.320</p>
@@ -348,7 +347,7 @@
             <span class="text-white/30 group-open:rotate-180 transition-transform shrink-0 mt-0.5">↓</span>
           </summary>
           <div class="mt-3 space-y-3">
-            <p class="text-white/60 text-sm leading-relaxed"><strong class="text-white">Não — nenhum centavo a mais.</strong> O dinheiro que você destina já ia para a Receita de qualquer forma. Você só está decidindo para onde vai uma parte dele.</p>
+            <p class="text-white/60 text-sm leading-relaxed"><strong class="text-white">Não — você não gasta nada a mais.</strong> O dinheiro que você destina já ia para a Receita de qualquer jeito. A diferença é que agora você escolhe para onde vai uma parte dele, em vez de deixar o governo decidir sozinho.</p>
             <div class="grid grid-cols-2 gap-2">
               <div class="bg-[#059669]/10 border border-[#059669]/30 rounded-xl p-3 text-center">
                 <p class="text-[#059669] text-[10px] font-black uppercase mb-2">Tem restituição</p>
