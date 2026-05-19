@@ -112,50 +112,62 @@
           <p class="text-white/40 text-xs mt-0.5">Assistente IncentivaBR</p>
         </div>
       </div>
-      <p class="text-white/80 text-sm leading-relaxed mb-4">
-        Oi! Me conta seu salário bruto e eu te mostro, na hora, <strong class="text-white">quanto do seu IR pode ir para um projeto que você escolhe</strong> — sem você pagar nada a mais por isso. 👇
-      </p>
-      <div class="flex gap-2">
-        <div class="flex-1 relative">
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm font-bold">R$</span>
-          <input id="salarioInput" type="number" min="1320" placeholder="8.000"
-                 class="w-full bg-white/[0.08] border border-white/15 rounded-xl pl-9 pr-3 py-3 text-white font-bold text-sm placeholder:text-white/25 focus:outline-none focus:border-[#FFD700]/50 [appearance:textfield]">
+
+      <!-- Pergunta -->
+      <div id="tinaPergunta">
+        <p class="text-white/80 text-sm leading-relaxed mb-3">Oi! Uma pergunta rápida para eu te mostrar como isso funciona <strong class="text-white">no seu caso</strong>:</p>
+        <p class="text-white font-black text-base mb-4">Na sua declaração de IR, você costuma ter restituição ou tem imposto a pagar?</p>
+        <div class="grid grid-cols-2 gap-3">
+          <button onclick="showCenario('rest')"
+                  class="bg-[#059669] hover:bg-[#047857] text-white font-black text-sm px-4 py-4 rounded-xl transition-colors text-center leading-snug">
+            💚 Tenho<br>restituição
+          </button>
+          <button onclick="showCenario('pagar')"
+                  class="bg-white/10 hover:bg-white/15 border border-white/20 text-white font-black text-sm px-4 py-4 rounded-xl transition-colors text-center leading-snug">
+            💛 Tenho a<br>pagar
+          </button>
         </div>
-        <button onclick="calcularVeredito()"
-                class="bg-[#FFD700] text-[#0D1B3E] font-black text-sm px-5 py-3 rounded-xl hover:bg-[#FFC000] transition-colors whitespace-nowrap">
-          Descobrir meu valor
-        </button>
+        <p class="text-white/25 text-xs text-center mt-3">Sem precisar informar nenhum dado pessoal</p>
       </div>
 
-      <!-- Resultado -->
-      <div id="vereditoResult" class="hidden mt-4">
+      <!-- Cenário: restituição -->
+      <div id="tinaRest" class="hidden">
+        <p class="text-[#059669] font-black text-sm mb-3">💚 Você tem restituição — ótimo!</p>
+        <div class="bg-[#0D1B3E] border border-[#059669]/30 rounded-xl p-4 mb-3">
+          <p class="text-white/50 text-xs mb-3">Com uma destinação de <strong class="text-white">R$ 600</strong>, veja o que muda:</p>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-white/50 text-sm">Sem destinar</span>
+            <span class="text-white font-bold">Recebe R$ 1.200</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-[#059669] text-sm font-bold">Destinando</span>
+            <span class="text-[#059669] font-black text-lg">Recebe R$ 1.800 ↑</span>
+          </div>
+        </div>
+        <p class="text-white/70 text-sm leading-relaxed mb-4">Você recebe <strong class="text-white">R$ 600 a mais de restituição</strong> — e esse valor vai inteiro para o projeto social. Seu bolso não sente diferença nenhuma.</p>
+        <button onclick="resetTina()" class="text-white/30 text-xs underline">← Ver o outro cenário</button>
+      </div>
+
+      <!-- Cenário: a pagar -->
+      <div id="tinaPagar" class="hidden">
+        <p class="text-[#FFD700] font-black text-sm mb-3">💛 Você tem imposto a pagar — também funciona!</p>
         <div class="bg-[#0D1B3E] border border-[#FFD700]/30 rounded-xl p-4 mb-3">
-          <p class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest mb-1">✨ Aqui está o que é seu</p>
-          <p class="text-white font-black text-xl leading-snug mb-1" id="vereditoValor">—</p>
-          <p class="text-white/50 text-xs">Esse dinheiro já vai para o governo. Você só passa a escolher para onde vai uma parte dele.</p>
-        </div>
-        <div class="grid grid-cols-2 gap-2 mb-3">
-          <div class="bg-[#059669]/10 border border-[#059669]/30 rounded-xl p-3 text-center">
-            <p class="text-[#059669] text-[10px] font-black uppercase tracking-wide mb-2">Tem restituição?</p>
-            <p class="text-white/60 text-xs mb-0.5">Hoje você recebe</p>
-            <p class="text-white text-sm font-bold" id="restSem">R$ —</p>
-            <div class="border-t border-white/10 my-2"></div>
-            <p class="text-white/60 text-xs mb-0.5">Destinando, você recebe</p>
-            <p class="text-[#059669] text-sm font-black" id="restCom">R$ — ↑</p>
+          <p class="text-white/50 text-xs mb-3">Com uma destinação de <strong class="text-white">R$ 600</strong>, veja o que muda:</p>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-white/50 text-sm">Sem destinar</span>
+            <span class="text-white font-bold">Paga R$ 1.200</span>
           </div>
-          <div class="bg-[#FFD700]/[0.07] border border-[#FFD700]/25 rounded-xl p-3 text-center">
-            <p class="text-[#FFD700] text-[10px] font-black uppercase tracking-wide mb-2">Tem a pagar?</p>
-            <p class="text-white/60 text-xs mb-0.5">Hoje você paga</p>
-            <p class="text-white text-sm font-bold" id="pagSem">R$ —</p>
-            <div class="border-t border-white/10 my-2"></div>
-            <p class="text-white/60 text-xs mb-0.5">Destinando, você paga</p>
-            <p class="text-[#FFD700] text-sm font-black" id="pagCom">R$ — ↓</p>
+          <div class="flex items-center justify-between">
+            <span class="text-[#FFD700] text-sm font-bold">Destinando</span>
+            <span class="text-[#FFD700] font-black text-lg">Paga R$ 600 ↓</span>
           </div>
         </div>
-        <p class="text-white/30 text-[11px] text-center">Estimativa — a simulação completa usa seus dados reais de IR.</p>
+        <p class="text-white/70 text-sm leading-relaxed mb-4">Você paga <strong class="text-white">R$ 600 a menos para a Receita</strong> — e esse valor vai para o projeto social. O total que sai do seu bolso é exatamente o mesmo.</p>
+        <button onclick="resetTina()" class="text-white/30 text-xs underline">← Ver o outro cenário</button>
       </div>
 
-      <p id="vereditoErro" class="hidden text-red-400 text-xs mt-3 text-center">Informe um salário válido acima de R$ 1.320</p>
+      <!-- CTA pós-escolha -->
+      <p id="tinaCta" class="hidden text-white/50 text-xs text-center mt-4 pt-4 border-t border-white/[0.08]">Quer saber <strong class="text-white">qual é o valor exato no seu caso</strong>?<br>A simulação calcula na hora. 👆 Etapa 2 aqui em cima.</p>
     </div>
 
     <!-- ── BLOCO DE CONVENCIMENTO ── -->
@@ -545,40 +557,20 @@
       document.getElementById('hint3').textContent = 'Use o mesmo código anônimo do pré-teste';
     }
 
-    function calcularVeredito() {
-      const raw = document.getElementById('salarioInput').value.replace(',', '.');
-      const salario = parseFloat(raw);
-      const erro = document.getElementById('vereditoErro');
-      const result = document.getElementById('vereditoResult');
-      if (!salario || salario < 1320) {
-        erro.classList.remove('hidden');
-        result.classList.add('hidden');
-        return;
-      }
-      erro.classList.add('hidden');
+    function showCenario(tipo) {
+      document.getElementById('tinaPergunta').classList.add('hidden');
+      document.getElementById('tinaRest').classList.add('hidden');
+      document.getElementById('tinaPagar').classList.add('hidden');
+      if (tipo === 'rest') document.getElementById('tinaRest').classList.remove('hidden');
+      else document.getElementById('tinaPagar').classList.remove('hidden');
+      document.getElementById('tinaCta').classList.remove('hidden');
+    }
 
-      // Cálculo simplificado IRRF mensal
-      const inss = Math.min(salario * 0.14, 908.86);
-      const base = salario - inss;
-      let ir = 0;
-      if      (base > 5531.76) ir = base * 0.275 - 1166.36;
-      else if (base > 4664.68) ir = base * 0.225 -  895.59;
-      else if (base > 3751.05) ir = base * 0.15  -  545.51;
-      else if (base > 2824)    ir = base * 0.075 -  211.80;
-      ir = Math.max(0, ir);
-
-      const irAnual  = ir * 12;
-      const maxDest  = Math.floor(irAnual * 0.06);
-      const refBase  = Math.round(irAnual * 0.10); // base de exemplo ~10% do IR anual
-      const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
-
-      document.getElementById('vereditoValor').textContent = `Até ${fmt(maxDest)} este ano`;
-      document.getElementById('restSem').textContent = fmt(refBase);
-      document.getElementById('restCom').textContent = fmt(refBase + maxDest) + ' ↑';
-      document.getElementById('pagSem').textContent  = fmt(refBase);
-      document.getElementById('pagCom').textContent  = fmt(Math.max(0, refBase - maxDest)) + ' ↓';
-      result.classList.remove('hidden');
-      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    function resetTina() {
+      document.getElementById('tinaPergunta').classList.remove('hidden');
+      document.getElementById('tinaRest').classList.add('hidden');
+      document.getElementById('tinaPagar').classList.add('hidden');
+      document.getElementById('tinaCta').classList.add('hidden');
     }
 
     function showLockToast(stepNum) {
