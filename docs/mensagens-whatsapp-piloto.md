@@ -1,7 +1,7 @@
 # Mensagens WhatsApp — Piloto DestineAI
-**Versão:** V8 (2026-05-18)
-**Base narrativa:** contexto MBA/FGV → direito ignorado → mecanismo concreto → simulação segura
-**Novidade V8:** mecanismo dos dois cenários em linguagem direta ("pão reto") — restituição soma, pagamento abate
+**Versão:** V9 (2026-05-19)
+**Base narrativa:** direito poderoso ignorado → mecanismo concreto → simulação segura → FGV
+**Novidade V9:** linguagem alinhada ao novo copy da landing — pergunta como gancho, "voltar inteiro pra você", "projetos em que você acredita", "Não é favor. É lei."
 
 ---
 
@@ -10,17 +10,17 @@
 ```
 [Nome], tudo bem?
 
-Uma pergunta rápida: o que você faria com R$ 400, R$ 800 ou até R$ 1.500 do seu imposto de renda — se pudesse decidir para onde vai?
+E se parte do IR que sai do seu salário pudesse ir para projetos em que você acredita — e esse dinheiro voltar inteiro pra você, sem pagar nada a mais?
 
-E o melhor: você não paga nada a mais por isso. Se você tem restituição, o valor *soma* no que você vai receber de volta. Se tem imposto a pagar, *abate* do que você deve. O dinheiro já ia para o governo de qualquer jeito — a diferença é que agora você pode escolher para onde vai uma parte dele.
+Não é favor. É lei. A maioria dos servidores tem esse direito e nunca usou — não porque não quer, porque ninguém mostrou como.
 
-Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e queria te pedir uma ajuda rápida sobre isso.
+Se você tem restituição, o valor *soma* no que você recebe de volta. Se tem imposto a pagar, *abate* do que você deve. O dinheiro já ia para o governo de qualquer jeito — você só decide para onde vai uma parte dele.
 
-Criei uma ferramenta que simula esse processo. Leva cerca de 10 minutos, é anônima, nenhum valor é transferido e nada muda na sua declaração real.
+Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e queria te pedir uma ajuda rápida. Criei uma simulação que mostra exatamente quanto é o seu valor e como usar esse direito. Leva cerca de 10 minutos, é anônima e nenhum valor é transferido.
 
 👉 https://destineai.com.br/frontend/piloto-start.html
 
-Se você puder fazer, depois me conta o que achou — sua opinião é importante pra eu ajustar a ferramenta e fechar bem o trabalho da FGV.
+Se puder fazer, depois me conta o que achou — sua opinião é importante pra fechar bem o trabalho.
 ```
 
 ---
@@ -30,20 +30,22 @@ Se você puder fazer, depois me conta o que achou — sua opinião é importante
 ```
 Pessoal,
 
-Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e preciso da ajuda de vocês.
+Como servidor, você tem um direito poderoso que quase ninguém explicou: parte do IR que sai do seu salário pode ir para projetos em que você acredita — e voltar inteiro pra você, sem pagar nada a mais.
 
-O tema é direto: como servidor, você tem direito de destinar entre R$ 400 e R$ 1.500 do seu IR para projetos sociais — e receber esse valor 100% de volta, sem pagar nada a mais. A maioria nunca recebeu essa explicação.
+Não é favor. É lei.
 
-Criei uma ferramenta que simula esse processo em cerca de 10 minutos. É anônima, nenhum valor é transferido e nada muda na sua declaração real.
+Estou finalizando meu Projeto Aplicado do MBA em IA & Analytics da FGV e preciso da ajuda de vocês. Criei uma simulação que mostra, em menos de 10 minutos, exatamente quanto é o seu valor e como usar esse direito.
 
-São 3 passos:
+São 3 etapas:
 1. Pré‑teste (~2 min)
-2. Simulação guiada do seu IR
+2. Simulação guiada (~5 min)
 3. Pós‑teste (~3 min)
+
+Tudo anônimo — nenhum valor é transferido.
 
 👉 https://destineai.com.br/frontend/piloto-start.html
 
-Sua participação entra diretamente na minha pesquisa no MBA da FGV e me ajuda a melhorar a ferramenta. Qualquer dúvida, é só me chamar aqui.
+Qualquer dúvida, é só me chamar aqui.
 ```
 
 ---
@@ -53,22 +55,22 @@ Sua participação entra diretamente na minha pesquisa no MBA da FGV e me ajuda 
 ```
 Pessoal,
 
-O que você faria com R$ 400, R$ 800 ou até R$ 1.500 do seu imposto de renda — se pudesse decidir para onde vai?
+E se parte do IR que sai do seu salário todo mês pudesse ir para projetos em que você acredita — e esse dinheiro voltar inteiro pra você?
 
-Estou conduzindo, no âmbito do meu MBA em IA & Analytics da FGV, um piloto rápido que mostra exatamente quanto cada servidor pode destinar do IR para projetos sociais — com retorno de 100% e sem custo adicional.
+A maioria dos servidores tem esse direito. Quase ninguém sabe, porque ninguém mostrou como. Não é favor. É lei.
 
-A ideia é simples: a maioria dos servidores nunca usou esse direito porque ninguém explica o passo a passo. O piloto simula todo o processo em menos de 10 minutos e alimenta uma pesquisa do meu MBA na FGV sobre servidores e cidadania fiscal.
+Estou conduzindo um piloto no âmbito do meu MBA em IA & Analytics da FGV: uma simulação que mostra, em menos de 10 minutos, exatamente quanto você pode destinar e como fazer isso.
 
-👉 São 3 etapas:
+São 3 etapas:
 1. Pré‑teste (~2 min)
-2. Simulação guiada de destinação (~5 min)
+2. Simulação guiada (~5 min)
 3. Pós‑teste (~3 min)
 
-Tudo anônimo e em ambiente de simulação — nenhum valor é transferido agora.
+Tudo anônimo — nenhum valor é transferido.
 
 https://destineai.com.br/frontend/piloto-start.html
 
-Quem participar já ajuda o projeto e ainda sai entendendo, na prática, como funciona a destinação dos 6% do IR.
+Quem participar sai entendendo, na prática, como usar esse direito — e ajuda diretamente a pesquisa do MBA.
 ```
 
 ---
@@ -76,12 +78,12 @@ Quem participar já ajuda o projeto e ainda sai entendendo, na prática, como fu
 ## 3. Lembrete 1 — 24 a 48h depois do disparo
 
 ```
-Pessoal, passando só para agradecer a quem já participou do piloto do meu MBA da FGV 🙏
+Pessoal, obrigado a quem já participou do piloto 🙏
 
-Se você ainda não conseguiu entrar, o link continua aberto e leva menos de 10 minutos:
+Se você ainda não entrou, o link continua aberto:
 https://destineai.com.br/frontend/piloto-start.html
 
-Vale 10 minutos — você sai sabendo exatamente quanto do seu IR pode virar impacto social (para a maioria dos servidores, entre R$ 400 e R$ 1.500), sem pagar nada a mais.
+Leva menos de 10 minutos. Você sai sabendo exatamente quanto do seu IR pode ir para projetos em que você acredita — e voltar inteiro pra você. Sem pagar nada a mais.
 ```
 
 ---
@@ -91,12 +93,13 @@ Vale 10 minutos — você sai sabendo exatamente quanto do seu IR pode virar imp
 ```
 Pessoal, última chamada 🙂
 
-Estou fechando os dados do piloto do meu MBA da FGV sobre destinação de IR por servidores. Se você ainda não participou e quiser ajudar, ainda dá tempo hoje:
+Estou fechando os dados do piloto do meu MBA da FGV. Se você ainda não participou, ainda dá tempo hoje:
 https://destineai.com.br/frontend/piloto-start.html
 
 É rápido, anônimo e em simulação.
 
-Pra mim, é fundamental para fechar minha pesquisa de conclusão do MBA. Para você, é a chance de entender, de uma vez, quanto do seu IR pode virar impacto social — sem sair nada a mais do seu bolso.
+Para mim: fundamental para fechar a pesquisa.
+Para você: a chance de entender, de uma vez, quanto do seu IR pode ir para projetos em que você acredita — e voltar inteiro pra você, sem pagar nada a mais.
 ```
 
 ---
