@@ -187,7 +187,21 @@
 
 ---
 
-**Q10 — Comentário livre** *(parágrafo, opcional)*
+**Q10 — Se esta ferramenta fosse oferecida pelo seu órgão/instituição, o quanto você consideraria isso útil para os servidores?** *(escala 0-10, obrigatório)*
+> 0 = Nada útil ... 10 = Extremamente útil
+
+---
+
+**Q11 — Você gostaria que uma ferramenta como esta estivesse disponível oficialmente para os servidores do seu órgão?** *(múltipla escolha, obrigatório)*
+- Sim, com certeza
+- Sim, provavelmente
+- Talvez
+- Provavelmente não
+- Não
+
+---
+
+**Q12 — Comentário livre** *(parágrafo, opcional)*
 > ______________________
 
 ---
@@ -199,7 +213,7 @@
 
 ---
 
-## Mapa hipóteses × perguntas (atualizado v2)
+## Mapa hipóteses × perguntas (atualizado v3)
 
 | Hipótese / KPI | Perguntas |
 |---|---|
@@ -214,3 +228,5 @@
 | Contador como canal | Pré Q2-C |
 | Canal de descoberta | Pré Q4 |
 | Expansão IncentivaBR | Pós Q9 |
+| Utilidade institucional percebida | Pós Q10 |
+| Interesse em adoção institucional | Pós Q11 |
