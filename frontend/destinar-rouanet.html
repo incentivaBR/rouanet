@@ -1369,154 +1369,191 @@
 
     // ── Gerar comprovante PDF (client-side, jsPDF) ──────────────
     function gerarComprovantePDF() {
-      if (!window.jspdf) { toast('Biblioteca PDF ainda carregando. Tente em instantes.', 'error'); return; }
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+      try {
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+          toast('Biblioteca PDF nao carregada. Recarregue a pagina.', 'error'); return;
+        }
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
-      const valorFmt   = BRL(state.valor || 0);
-      const protocolo  = state.donationId ? state.donationId.substring(0, 8).toUpperCase() : 'SIMULACAO';
-      const hoje       = new Date().toLocaleDateString('pt-BR');
-      const pronac     = urlParams.get('pronac') || state.projeto?.pronac || '261847';
-      const nomeProjeto = state.projeto?.nome || urlParams.get('titulo') || 'Orquestra das Periferias do DF';
+        // ── Dados ──────────────────────────────────────────────
+        const user          = auth.getUser();
+        const doadorNome    = user?.nome || 'Participante';
+        const doadorCPF     = user?.cpf  ? formatCPF(user.cpf) : '—';
+        const valorFmt      = BRL(state.valor || 0);
+        const protocolo     = state.donationId ? state.donationId.substring(0, 8).toUpperCase() : 'SIM-PILOTO';
+        const hoje          = new Date().toLocaleDateString('pt-BR');
+        const pronac        = urlParams.get('pronac') || state.projeto?.pronac || '261847';
+        const nomeProjeto   = state.projeto?.nome || urlParams.get('titulo') || 'Orquestra das Periferias do DF';
+        const proponenteNome = (document.getElementById('pgBeneficiario')?.textContent || 'Associacao Cultural').trim();
+        const proponenteCNPJ = (document.getElementById('pgCNPJ')?.textContent || '—').trim();
 
-      const W = 210, M = 18, CW = W - 2 * M;
-      const navy = [13, 27, 62], gold = [255, 215, 0], green = [5, 150, 105];
-      const slate = [71, 85, 105], light = [241, 245, 249], border = [203, 213, 225];
+        const W = 210, M = 18, CW = W - 2 * M;
+        const navy   = [13, 27, 62];
+        const gold   = [255, 215, 0];
+        const green  = [5, 150, 105];
+        const slate  = [71, 85, 105];
+        const border = [203, 213, 225];
 
-      // ── Cabeçalho navy ─────────────────────────────────────────
-      doc.setFillColor(...navy);
-      doc.rect(0, 0, W, 44, 'F');
-      doc.setFillColor(...gold);
-      doc.rect(0, 44, W, 1.5, 'F');
+        // ── Cabeçalho navy ────────────────────────────────────
+        doc.setFillColor(...navy);
+        doc.rect(0, 0, W, 44, 'F');
+        doc.setFillColor(...gold);
+        doc.rect(0, 44, W, 1.5, 'F');
 
-      // Badge SIMULACAO
-      doc.setFillColor(253, 224, 71);
-      doc.roundedRect(W - M - 36, 9, 36, 9, 1.5, 1.5, 'F');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7.5);
-      doc.setTextColor(13, 27, 62);
-      doc.text('SIMULACAO FGV', W - M - 18, 14.5, { align: 'center' });
+        doc.setFillColor(253, 224, 71);
+        doc.roundedRect(W - M - 36, 9, 36, 9, 1.5, 1.5, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7.5);
+        doc.setTextColor(13, 27, 62);
+        doc.text('SIMULACAO FGV', W - M - 18, 14.5, { align: 'center' });
 
-      // Título
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(15);
-      doc.setTextColor(255, 215, 0);
-      doc.text('COMPROVANTE DE MECENATO', M, 18);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(15);
+        doc.setTextColor(255, 215, 0);
+        doc.text('COMPROVANTE DE MECENATO', M, 18);
 
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9.5);
-      doc.setTextColor(148, 163, 184);
-      doc.text('DestineAI  |  Plataforma IncentivaBR', M, 27);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setTextColor(148, 163, 184);
+        doc.text('DestineAI  |  Plataforma IncentivaBR', M, 27);
 
-      doc.setFontSize(7.5);
-      doc.setTextColor(100, 116, 139);
-      doc.text('INPI no BR512025000647-0  |  www.destineai.com.br', M, 37);
+        doc.setFontSize(7.5);
+        doc.setTextColor(100, 116, 139);
+        doc.text('INPI no BR512025000647-0  |  www.destineai.com.br', M, 37);
 
-      // ── Projeto ────────────────────────────────────────────────
-      let y = 56;
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7);
-      doc.setTextColor(...slate);
-      doc.text('PROJETO CULTURAL', M, y);
-      y += 6;
+        // ── Projeto ───────────────────────────────────────────
+        let y = 56;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.setTextColor(...slate);
+        doc.text('PROJETO CULTURAL', M, y);
+        y += 6;
 
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(13);
-      doc.setTextColor(...navy);
-      doc.text(nomeProjeto, M, y);
-      y += 5.5;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(13);
+        doc.setTextColor(...navy);
+        doc.text(nomeProjeto, M, y);
+        y += 5.5;
 
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
-      doc.setTextColor(...slate);
-      doc.text('PRONAC ' + pronac + '   |   Art. 18 — Lei 8.313/1991   |   100% dedutivel do IR', M, y);
-      y += 9;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(...slate);
+        doc.text('PRONAC ' + pronac + '   |   Art. 18 - Lei 8.313/1991   |   100% dedutivel do IR', M, y);
+        y += 9;
 
-      doc.setDrawColor(...border);
-      doc.setLineWidth(0.25);
-      doc.line(M, y, W - M, y);
-      y += 8;
+        doc.setDrawColor(...border);
+        doc.setLineWidth(0.25);
+        doc.line(M, y, W - M, y);
+        y += 8;
 
-      // ── Valor em destaque ──────────────────────────────────────
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7);
-      doc.setTextColor(...slate);
-      doc.text('VALOR DESTINADO', M, y);
-      y += 5;
+        // ── Doador / Proponente lado a lado ───────────────────
+        const col2 = M + CW / 2 + 4;
 
-      doc.setFillColor(240, 253, 244);
-      doc.setDrawColor(134, 239, 172);
-      doc.roundedRect(M, y - 3, CW, 20, 2.5, 2.5, 'FD');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(22);
-      doc.setTextColor(...green);
-      doc.text(valorFmt, M + CW / 2, y + 12, { align: 'center' });
-      y += 26;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.setTextColor(...slate);
+        doc.text('DOADOR', M, y);
+        doc.text('PROPONENTE', col2, y);
+        y += 5;
 
-      // ── Data / Protocolo ───────────────────────────────────────
-      const col2 = M + CW / 2;
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7);
-      doc.setTextColor(...slate);
-      doc.text('DATA DA SIMULACAO', M, y);
-      doc.text('PROTOCOLO', col2, y);
-      y += 5;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(...navy);
+        doc.text(doadorNome, M, y);
+        doc.text(proponenteNome, col2, y);
+        y += 5;
 
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(11);
-      doc.setTextColor(...navy);
-      doc.text(hoje, M, y);
-      doc.text(protocolo, col2, y);
-      y += 10;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(...slate);
+        doc.text('CPF: ' + doadorCPF, M, y);
+        doc.text('CNPJ: ' + proponenteCNPJ, col2, y);
+        y += 10;
 
-      doc.setDrawColor(...border);
-      doc.line(M, y, W - M, y);
-      y += 8;
+        doc.setDrawColor(...border);
+        doc.line(M, y, W - M, y);
+        y += 8;
 
-      // ── Como usar na declaracao ────────────────────────────────
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7);
-      doc.setTextColor(...slate);
-      doc.text('COMO USAR NA DECLARACAO DO IR', M, y);
-      y += 6;
+        // ── Valor em destaque ─────────────────────────────────
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.setTextColor(...slate);
+        doc.text('VALOR DESTINADO', M, y);
+        y += 5;
 
-      const passos = [
-        '1.  Abra sua declaracao no modelo completo (IRPF)',
-        '2.  Acesse a ficha "Doacoes Efetuadas" > Codigo 41 (Incentivo a Cultura)',
-        '3.  Informe o valor destinado e o CNPJ do proponente',
-        '4.  Guarde este comprovante por 6 anos (exigencia da Receita Federal)',
-      ];
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9.5);
-      doc.setTextColor(...navy);
-      passos.forEach(p => { doc.text(p, M, y); y += 6; });
-      y += 4;
+        doc.setFillColor(240, 253, 244);
+        doc.setDrawColor(134, 239, 172);
+        doc.roundedRect(M, y - 3, CW, 20, 2.5, 2.5, 'FD');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(22);
+        doc.setTextColor(...green);
+        doc.text(valorFmt, M + CW / 2, y + 12, { align: 'center' });
+        y += 26;
 
-      doc.setDrawColor(...border);
-      doc.line(M, y, W - M, y);
+        // ── Data / Protocolo ──────────────────────────────────
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.setTextColor(...slate);
+        doc.text('DATA DA SIMULACAO', M, y);
+        doc.text('PROTOCOLO', col2, y);
+        y += 5;
 
-      // ── Marca d'agua ───────────────────────────────────────────
-      doc.saveGraphicsState();
-      doc.setGState(new doc.GState({ opacity: 0.06 }));
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(36);
-      doc.setTextColor(...navy);
-      doc.text('SIMULACAO — PILOTO FGV', W / 2, 175, { align: 'center', angle: 32 });
-      doc.restoreGraphicsState();
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(...navy);
+        doc.text(hoje, M, y);
+        doc.text(protocolo, col2, y);
+        y += 10;
 
-      // ── Rodapé ────────────────────────────────────────────────
-      doc.setFillColor(...navy);
-      doc.rect(0, 275, W, 22, 'F');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(9);
-      doc.setTextColor(255, 215, 0);
-      doc.text('IncentivaBR', M, 284);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7.5);
-      doc.setTextColor(148, 163, 184);
-      doc.text('Este documento e uma simulacao para fins academicos. Nao possui valor fiscal.', M, 291);
+        doc.setDrawColor(...border);
+        doc.line(M, y, W - M, y);
+        y += 8;
 
-      doc.save('comprovante-simulacao-destineai.pdf');
+        // ── Como usar na declaracao ───────────────────────────
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.setTextColor(...slate);
+        doc.text('COMO USAR NA DECLARACAO DO IR', M, y);
+        y += 6;
+
+        const passos = [
+          '1.  Abra sua declaracao no modelo completo (IRPF)',
+          '2.  Acesse "Doacoes Efetuadas" > Codigo 41 (Incentivo a Cultura)',
+          '3.  Informe o valor e o CNPJ do proponente acima',
+          '4.  Guarde este comprovante por 6 anos (exigencia da Receita Federal)',
+        ];
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setTextColor(...navy);
+        passos.forEach(p => { doc.text(p, M, y); y += 6; });
+        y += 4;
+
+        doc.setDrawColor(...border);
+        doc.line(M, y, W - M, y);
+
+        // ── Marca d'agua (sem GState — texto cinza claro) ─────
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(34);
+        doc.setTextColor(228, 232, 240);
+        doc.text('SIMULACAO PILOTO FGV', W / 2, 210, { align: 'center', angle: 32 });
+
+        // ── Rodapé navy ───────────────────────────────────────
+        doc.setFillColor(...navy);
+        doc.rect(0, 275, W, 22, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.setTextColor(255, 215, 0);
+        doc.text('IncentivaBR', M, 284);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor(148, 163, 184);
+        doc.text('Este documento e uma simulacao para fins academicos (Piloto FGV). Nao possui valor fiscal.', M, 291);
+
+        doc.save('comprovante-simulacao-destineai.pdf');
+      } catch (e) {
+        toast('Erro ao gerar PDF: ' + e.message, 'error');
+      }
     }
 
     // ── Simular pagamento (modo teste) ──────────────────────────
