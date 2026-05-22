@@ -75,7 +75,45 @@ Quem participar sai entendendo, na prática, como usar esse direito — e ajuda 
 
 ---
 
-## 3. Lembrete 1 — 24 a 48h depois do disparo
+## 3A. Grupo grande — membro ativo (te conhecem)
+
+```
+Pessoal,
+
+Sou servidor também e estou finalizando meu MBA em IA & Analytics pela FGV.
+
+Parte do IR que sai do seu salário pode ir para projetos em que você acredita — e voltar inteiro pra você, sem pagar nada a mais. É lei. A maioria dos servidores tem esse direito e nunca usou porque ninguém mostrou como.
+
+Criei uma simulação para testar isso. Leva 10 minutos, é anônimo e nenhum valor é transferido.
+
+👉 destineai.com.br/frontend/piloto-start.html
+
+Só para servidores públicos — é uma pesquisa acadêmica real.
+```
+
+---
+
+## 3B. Grupo grande — pouco conhecido (apresentação necessária)
+
+```
+Olá! Me chamo [Nome], sou servidor [órgão/área] e estou conduzindo uma pesquisa do MBA em IA & Analytics da FGV.
+
+Descobri que parte do IR descontado do nosso salário pode ir para projetos sociais — e esse valor volta inteiro para você. É um direito legal que quase nenhum servidor usa.
+
+Criei uma simulação para provar isso na prática:
+✅ 10 minutos
+✅ Anônimo
+✅ Nenhum valor transferido
+✅ Pesquisa acadêmica FGV
+
+👉 destineai.com.br/frontend/piloto-start.html
+
+Dúvidas? Me chame aqui no privado.
+```
+
+---
+
+## 4. Lembrete 1 — 24 a 48h depois do disparo
 
 ```
 Pessoal, obrigado a quem já participou do piloto 🙏
@@ -88,7 +126,7 @@ Leva menos de 10 minutos. Você sai sabendo exatamente quanto do seu IR pode ir 
 
 ---
 
-## 4. Lembrete 2 — perto do fim do período
+## 5. Lembrete 2 — perto do fim do período
 
 ```
 Pessoal, última chamada 🙂
@@ -104,7 +142,7 @@ Para você: a chance de entender, de uma vez, quanto do seu IR pode ir para proj
 
 ---
 
-## 5. Agradecimento individual — para quem você sabe que completou
+## 6. Agradecimento individual — para quem você sabe que completou
 
 ```
 Valeu demais por ter participado do piloto! 🙌
