@@ -82,13 +82,13 @@ Pessoal,
 
 Sou servidor também e estou finalizando meu MBA em IA & Analytics pela FGV.
 
-Parte do IR que sai do seu salário pode ir para projetos em que você acredita — e voltar inteiro pra você, sem pagar nada a mais. É lei. A maioria dos servidores tem esse direito e nunca usou porque ninguém mostrou como.
+Descobri que parte do IR descontado do salário pode ir para projetos em que você acredita — e voltar inteiro pra você, sem custo adicional. É lei. Muita gente no serviço público nunca usou esse direito porque ninguém explicou de forma simples.
 
-Criei uma simulação para testar isso. Leva 10 minutos, é anônimo e nenhum valor é transferido.
+Por isso, desenvolvi uma simulação guiada para mostrar, na prática, como isso funciona. A experiência leva cerca de 10 minutos, é anônima e nenhum valor é transferido.
 
 👉 destineai.com.br/frontend/piloto-start.html
 
-Só para servidores públicos — é uma pesquisa acadêmica real.
+É uma pesquisa acadêmica real da FGV, voltada exclusivamente a servidores públicos.
 ```
 
 ---
