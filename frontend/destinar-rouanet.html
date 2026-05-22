@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -976,15 +977,20 @@
 
             <div class="donation-id-box">Protocolo: <span id="successDonationId">—</span></div>
 
-            <!-- Comprovante sendo gerado -->
+            <!-- Comprovante PDF -->
             <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:14px 16px;margin:12px 0 20px;text-align:left;width:100%;box-sizing:border-box">
-              <div style="display:flex;align-items:center;gap:10px">
-                <span style="font-size:18px">⏳</span>
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">
+                <span style="font-size:20px;line-height:1.3">📄</span>
                 <div>
-                  <p style="margin:0 0 2px;font-size:13px;font-weight:700;color:#166534">Seu comprovante está sendo gerado</p>
-                  <p style="margin:0;font-size:12px;color:#15803D;line-height:1.5">Em uma destinação real, ele seria enviado automaticamente para o seu e-mail e WhatsApp.</p>
+                  <p style="margin:0 0 3px;font-size:13px;font-weight:700;color:#166534">Comprovante de mecenato disponível</p>
+                  <p style="margin:0;font-size:12px;color:#15803D;line-height:1.5">Em uma destinação real, este recibo seria enviado para o seu e-mail e usado na sua próxima declaração de IR.</p>
                 </div>
               </div>
+              <button onclick="gerarComprovantePDF()"
+                style="display:flex;align-items:center;justify-content:center;gap:8px;background:#166534;color:white;font-weight:700;font-size:14px;padding:12px 20px;border-radius:10px;border:none;cursor:pointer;width:100%;box-sizing:border-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,19L12,15H9V10H15V15L13,19H10Z"/></svg>
+                Baixar Comprovante (PDF)
+              </button>
             </div>
 
             <!-- Sobre o IncentivaBR -->
@@ -1359,6 +1365,158 @@
         btn.disabled = false;
         btn.innerHTML = orig;
       }
+    }
+
+    // ── Gerar comprovante PDF (client-side, jsPDF) ──────────────
+    function gerarComprovantePDF() {
+      if (!window.jspdf) { toast('Biblioteca PDF ainda carregando. Tente em instantes.', 'error'); return; }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+      const valorFmt   = BRL(state.valor || 0);
+      const protocolo  = state.donationId ? state.donationId.substring(0, 8).toUpperCase() : 'SIMULACAO';
+      const hoje       = new Date().toLocaleDateString('pt-BR');
+      const pronac     = urlParams.get('pronac') || state.projeto?.pronac || '261847';
+      const nomeProjeto = state.projeto?.nome || urlParams.get('titulo') || 'Orquestra das Periferias do DF';
+
+      const W = 210, M = 18, CW = W - 2 * M;
+      const navy = [13, 27, 62], gold = [255, 215, 0], green = [5, 150, 105];
+      const slate = [71, 85, 105], light = [241, 245, 249], border = [203, 213, 225];
+
+      // ── Cabeçalho navy ─────────────────────────────────────────
+      doc.setFillColor(...navy);
+      doc.rect(0, 0, W, 44, 'F');
+      doc.setFillColor(...gold);
+      doc.rect(0, 44, W, 1.5, 'F');
+
+      // Badge SIMULACAO
+      doc.setFillColor(253, 224, 71);
+      doc.roundedRect(W - M - 36, 9, 36, 9, 1.5, 1.5, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.setTextColor(13, 27, 62);
+      doc.text('SIMULACAO FGV', W - M - 18, 14.5, { align: 'center' });
+
+      // Título
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(15);
+      doc.setTextColor(255, 215, 0);
+      doc.text('COMPROVANTE DE MECENATO', M, 18);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      doc.setTextColor(148, 163, 184);
+      doc.text('DestineAI  |  Plataforma IncentivaBR', M, 27);
+
+      doc.setFontSize(7.5);
+      doc.setTextColor(100, 116, 139);
+      doc.text('INPI no BR512025000647-0  |  www.destineai.com.br', M, 37);
+
+      // ── Projeto ────────────────────────────────────────────────
+      let y = 56;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.setTextColor(...slate);
+      doc.text('PROJETO CULTURAL', M, y);
+      y += 6;
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.setTextColor(...navy);
+      doc.text(nomeProjeto, M, y);
+      y += 5.5;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(...slate);
+      doc.text('PRONAC ' + pronac + '   |   Art. 18 — Lei 8.313/1991   |   100% dedutivel do IR', M, y);
+      y += 9;
+
+      doc.setDrawColor(...border);
+      doc.setLineWidth(0.25);
+      doc.line(M, y, W - M, y);
+      y += 8;
+
+      // ── Valor em destaque ──────────────────────────────────────
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.setTextColor(...slate);
+      doc.text('VALOR DESTINADO', M, y);
+      y += 5;
+
+      doc.setFillColor(240, 253, 244);
+      doc.setDrawColor(134, 239, 172);
+      doc.roundedRect(M, y - 3, CW, 20, 2.5, 2.5, 'FD');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(22);
+      doc.setTextColor(...green);
+      doc.text(valorFmt, M + CW / 2, y + 12, { align: 'center' });
+      y += 26;
+
+      // ── Data / Protocolo ───────────────────────────────────────
+      const col2 = M + CW / 2;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.setTextColor(...slate);
+      doc.text('DATA DA SIMULACAO', M, y);
+      doc.text('PROTOCOLO', col2, y);
+      y += 5;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.setTextColor(...navy);
+      doc.text(hoje, M, y);
+      doc.text(protocolo, col2, y);
+      y += 10;
+
+      doc.setDrawColor(...border);
+      doc.line(M, y, W - M, y);
+      y += 8;
+
+      // ── Como usar na declaracao ────────────────────────────────
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.setTextColor(...slate);
+      doc.text('COMO USAR NA DECLARACAO DO IR', M, y);
+      y += 6;
+
+      const passos = [
+        '1.  Abra sua declaracao no modelo completo (IRPF)',
+        '2.  Acesse a ficha "Doacoes Efetuadas" > Codigo 41 (Incentivo a Cultura)',
+        '3.  Informe o valor destinado e o CNPJ do proponente',
+        '4.  Guarde este comprovante por 6 anos (exigencia da Receita Federal)',
+      ];
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      doc.setTextColor(...navy);
+      passos.forEach(p => { doc.text(p, M, y); y += 6; });
+      y += 4;
+
+      doc.setDrawColor(...border);
+      doc.line(M, y, W - M, y);
+
+      // ── Marca d'agua ───────────────────────────────────────────
+      doc.saveGraphicsState();
+      doc.setGState(new doc.GState({ opacity: 0.06 }));
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(36);
+      doc.setTextColor(...navy);
+      doc.text('SIMULACAO — PILOTO FGV', W / 2, 175, { align: 'center', angle: 32 });
+      doc.restoreGraphicsState();
+
+      // ── Rodapé ────────────────────────────────────────────────
+      doc.setFillColor(...navy);
+      doc.rect(0, 275, W, 22, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(255, 215, 0);
+      doc.text('IncentivaBR', M, 284);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.setTextColor(148, 163, 184);
+      doc.text('Este documento e uma simulacao para fins academicos. Nao possui valor fiscal.', M, 291);
+
+      doc.save('comprovante-simulacao-destineai.pdf');
     }
 
     // ── Simular pagamento (modo teste) ──────────────────────────
