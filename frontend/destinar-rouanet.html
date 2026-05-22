@@ -1387,6 +1387,10 @@
         const nomeProjeto   = state.projeto?.nome || urlParams.get('titulo') || 'Orquestra das Periferias do DF';
         const proponenteNome = (document.getElementById('pgBeneficiario')?.textContent || 'Associacao Cultural').trim();
         const proponenteCNPJ = (document.getElementById('pgCNPJ')?.textContent || '—').trim();
+        const proponenteBanco  = (document.getElementById('pgBanco')?.textContent   || '').trim();
+        const proponenteAg     = (document.getElementById('pgAgencia')?.textContent || '').trim();
+        const proponenteConta  = (document.getElementById('pgConta')?.textContent   || '').trim();
+        const proponentePix    = (document.getElementById('pgPix')?.textContent     || '').trim();
 
         const W = 210, M = 18, CW = W - 2 * M;
         const navy   = [13, 27, 62];
@@ -1469,7 +1473,28 @@
         doc.setTextColor(...slate);
         doc.text('CPF: ' + doadorCPF, M, y);
         doc.text('CNPJ: ' + proponenteCNPJ, col2, y);
-        y += 10;
+        y += 6;
+
+        // Dados bancários do proponente
+        if (proponenteBanco || proponenteAg || proponenteConta) {
+          const bancoParts = [];
+          if (proponenteBanco)  bancoParts.push(proponenteBanco);
+          if (proponenteAg)     bancoParts.push('Ag: ' + proponenteAg);
+          if (proponenteConta)  bancoParts.push('Conta: ' + proponenteConta);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(8.5);
+          doc.setTextColor(...slate);
+          doc.text(bancoParts.join('  |  '), col2, y);
+          y += 5;
+        }
+        if (proponentePix && proponentePix !== '—') {
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(8.5);
+          doc.setTextColor(...slate);
+          doc.text('PIX: ' + proponentePix, col2, y);
+          y += 5;
+        }
+        y += 4;
 
         doc.setDrawColor(...border);
         doc.line(M, y, W - M, y);
