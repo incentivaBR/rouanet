@@ -110,6 +110,13 @@
 ---
 
 **Q0 — Seu código anônimo** *(campo texto curto, obrigatório)*
+
+> **Descrição da pergunta (adicionar no campo "Descrição opcional" do Forms):**
+> "Use o mesmo código que você criou no pré-teste.
+> Lembrete: eram as 3 primeiras letras do nome da sua mãe + o dia do seu aniversário.
+> Exemplo: mãe se chama Maria, você nasceu dia 15 → MAR15
+> Se não lembrar exatamente, tente recriar seguindo a mesma regra."
+
 > ______________________
 
 ---
