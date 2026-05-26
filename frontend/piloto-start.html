@@ -473,6 +473,13 @@
   <!-- ── LÓGICA DE ESTADO ── -->
   <script>
     const urlParams = new URLSearchParams(window.location.search);
+
+    // Reset de testes: ?reset=1
+    if (urlParams.get('reset') === '1') {
+      localStorage.clear();
+      history.replaceState(null, '', window.location.pathname);
+    }
+
     const cameFromForm   = urlParams.get('step') === '2';
     const cameFromWizard = urlParams.get('step') === '3';
 
