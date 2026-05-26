@@ -62,9 +62,12 @@
         <span class="text-white/20 text-sm">|</span>
         <span class="text-white font-extrabold text-base tracking-tight">Destine<span class="text-[#FFD700]">AI</span></span>
       </span>
-      <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest border border-[#FFD700]/30 bg-[#FFD700]/[0.08] rounded-full px-3 py-1">
-        Piloto FGV
-      </span>
+      <div class="flex items-center gap-2.5">
+        <span id="navStep" class="text-white/35 text-[11px] font-semibold hidden">Etapa 1 de 3</span>
+        <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest border border-[#FFD700]/30 bg-[#FFD700]/[0.08] rounded-full px-3 py-1">
+          Piloto FGV
+        </span>
+      </div>
     </div>
   </nav>
 
@@ -491,6 +494,25 @@
     if (state.step1) activateStep2();
     if (state.step1 && state.step2) activateStep3();
     if (state.step1 && state.step2 && localStorage.getItem('pilot_step3') === 'done') showDone();
+
+    // Indicador de etapa na nav
+    const navStep = document.getElementById('navStep');
+    const step3done = localStorage.getItem('pilot_step3') === 'done';
+    if (navStep) {
+      if (step3done) {
+        navStep.textContent = 'Concluído ✓';
+        navStep.classList.remove('hidden');
+      } else if (state.step1 && state.step2) {
+        navStep.textContent = 'Etapa 3 de 3';
+        navStep.classList.remove('hidden');
+      } else if (state.step1) {
+        navStep.textContent = 'Etapa 2 de 3';
+        navStep.classList.remove('hidden');
+      } else {
+        navStep.textContent = 'Etapa 1 de 3';
+        navStep.classList.remove('hidden');
+      }
+    }
 
     if (cameFromForm) {
       setTimeout(function() {
