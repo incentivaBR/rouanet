@@ -44,10 +44,10 @@
     .step-connector.done { background: rgba(255,215,0,0.35); }
     .step-card { transition: all .3s ease; }
     @keyframes pulse-gold {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.4); }
-      50%       { box-shadow: 0 0 0 8px rgba(255,215,0,0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.55), 0 8px 32px rgba(255,215,0,0.25); }
+      50%       { box-shadow: 0 0 0 14px rgba(255,215,0,0), 0 8px 32px rgba(255,215,0,0.15); }
     }
-    .btn-pulse { animation: pulse-gold 2s infinite; }
+    .btn-pulse { animation: pulse-gold 1.8s infinite; }
   </style>
 </head>
 <body class="bg-[#0D1B3E] font-sans min-h-screen">
@@ -138,7 +138,16 @@
         <strong class="text-white">Sem custo. Sem transferir nenhum valor.</strong>
       </p>
 
-      <p class="text-[#FFD700] font-black text-xl">Não é favor. É lei.</p>
+      <p class="text-[#FFD700] font-black text-xl mb-10">Não é favor. É lei.</p>
+
+      <div id="heroCta">
+        <button onclick="document.getElementById('step1').scrollIntoView({behavior:'smooth',block:'center'})"
+                class="btn-pulse inline-flex items-center gap-3 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black text-lg px-8 py-5 rounded-2xl transition-colors">
+          Quero ver quanto posso destinar
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <p class="text-white/30 text-xs mt-4">~10 min · anônimo · sem dados bancários</p>
+      </div>
     </div>
 
     <!-- ── Trust strip ── -->
@@ -346,8 +355,8 @@
                   Isso garante que sua participação <strong class="text-white/80">conta de verdade</strong> para a pesquisa da FGV.
                 </p>
                 <a id="btn1" href="https://forms.gle/aUDyt5AbVL7nW8EA9" target="_blank" onclick="stepDone(1)"
-                   class="btn-pulse inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black text-sm px-5 py-3 rounded-xl transition-colors w-full justify-center">
-                  Começar por aqui
+                   class="btn-pulse inline-flex items-center gap-3 bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-black text-base px-6 py-4 rounded-xl transition-colors w-full justify-center">
+                  Começar agora — Etapa 1
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                 </a>
                 <p class="text-white/50 text-[11px] text-center mt-3" id="hint1">Após enviar o formulário, você volta para a próxima etapa</p>
@@ -562,6 +571,12 @@
     if (state.step1) activateStep2();
     if (state.step1 && state.step2) activateStep3();
     if (state.step1 && state.step2 && localStorage.getItem('pilot_step3') === 'done') showDone();
+
+    // Esconde CTA do hero quando participante já começou
+    if (state.step1) {
+      var hcta = document.getElementById('heroCta');
+      if (hcta) hcta.style.display = 'none';
+    }
 
     // Indicador de etapa na nav
     const navStep = document.getElementById('navStep');
