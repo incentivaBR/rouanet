@@ -59,11 +59,11 @@
         <span class="bg-white rounded-md px-2 py-1 flex items-center">
           <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="h-5 w-auto">
         </span>
-        <span class="text-white/20 text-sm">|</span>
-        <span class="text-white font-extrabold text-base tracking-tight">Destine<span class="text-[#FFD700]">AI</span></span>
+        <span class="hidden sm:inline text-white/20 text-sm">|</span>
+        <span class="hidden sm:inline text-white font-extrabold text-base tracking-tight">Destine<span class="text-[#FFD700]">AI</span></span>
       </span>
       <div class="flex items-center gap-2.5">
-        <span id="navStep" class="text-white/35 text-[11px] font-semibold hidden">Etapa 1 de 3</span>
+        <span id="navStep" class="hidden sm:inline text-white/35 text-[11px] font-semibold"></span>
         <span class="text-[#FFD700] text-[10px] font-black uppercase tracking-widest border border-[#FFD700]/30 bg-[#FFD700]/[0.08] rounded-full px-3 py-1">
           Piloto FGV
         </span>
@@ -501,16 +501,12 @@
     if (navStep) {
       if (step3done) {
         navStep.textContent = 'Concluído ✓';
-        navStep.classList.remove('hidden');
       } else if (state.step1 && state.step2) {
         navStep.textContent = 'Etapa 3 de 3';
-        navStep.classList.remove('hidden');
       } else if (state.step1) {
         navStep.textContent = 'Etapa 2 de 3';
-        navStep.classList.remove('hidden');
       } else {
         navStep.textContent = 'Etapa 1 de 3';
-        navStep.classList.remove('hidden');
       }
     }
 
