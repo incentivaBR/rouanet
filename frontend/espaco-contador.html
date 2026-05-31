@@ -135,7 +135,7 @@
                 <div class="text-white/70 leading-snug">Paga menos IR ou recebe mais restituição. Custo = zero</div>
               </div>
             </div>
-            <p class="text-white/40 text-xs mt-3">Fonte: Receita Federal — Programa "Eu Sou Cidadão Solidário". Aplica-se a: Rouanet Art. 18, Esporte, FIA/FDCA, FDI, PRONON, PRONAS.</p>
+            <p class="text-white/40 text-xs mt-3">Fonte: Receita Federal — Programa "Eu Sou Cidadão Solidário". Aplica-se a: Rouanet Art. 18, Esporte, FDCA, FDI, PRONON, PRONAS.</p>
           </div>
         </div>
       </div>
@@ -199,7 +199,7 @@
             <div class="flex items-center gap-3">
               <span class="text-gold text-lg">👧</span>
               <div>
-                <div class="font-bold text-sm">FIA/FDCA — Fundo para Criança e Adolescente</div>
+                <div class="font-bold text-sm">FDCA — Fundo da Criança e do Adolescente</div>
                 <div class="text-white/50 text-xs">Lei nº 8.069/1990 (ECA) Art. 260 II · Limite: 6% do IR Devido · Código 40</div>
               </div>
             </div>
@@ -234,7 +234,7 @@
           <div id="content-fdi" class="accordion-content px-5 pb-5">
             <div class="border-t border-white/10 pt-4 space-y-3 text-sm text-white/75">
               <p><strong class="text-white">Na prática:</strong> O cliente destina ao fundo durante o ano-calendário → recebe recibo do fundo → lança na DIRPF com o Código 41. <strong class="text-gold">Custo líquido: zero.</strong></p>
-              <p><strong class="text-white">Limite:</strong> 3% do IR Devido — independente do FIA/FDCA (que tem limite próprio de 6%). Os dois podem ser usados no mesmo ano.</p>
+              <p><strong class="text-white">Limite:</strong> 6% do IR Devido — independente do FDCA. Os dois podem ser usados no mesmo ano dentro do limite próprio de cada um.</p>
               <p><strong class="text-white">Onde lançar na DIRPF:</strong> Doações Efetuadas → Código <strong class="text-gold">41</strong> (Estatuto do Idoso/Fundo do Idoso).</p>
               <a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12213.htm" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-gold text-xs hover:underline mt-1">
                 📄 Ver texto completo no Planalto.gov.br ↗
@@ -385,7 +385,7 @@
               <td class="py-3.5 text-gold font-mono text-xs">—</td>
             </tr>
             <tr class="hover:bg-white/3 transition">
-              <td class="py-3.5 pr-4">👧 FIA/FDCA — Criança e Adolescente</td>
+              <td class="py-3.5 pr-4">👧 FDCA — Criança e Adolescente</td>
               <td class="py-3.5 pr-4 text-white/60">Doações Efetuadas</td>
               <td class="py-3.5 text-gold font-mono text-xs font-bold">40</td>
             </tr>
@@ -419,7 +419,7 @@
           </ul>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <div class="font-bold text-sm mb-2">📄 Comprovante FIA / FDI</div>
+          <div class="font-bold text-sm mb-2">📄 Comprovante FDCA / FDI</div>
           <ul class="space-y-1 text-xs text-white/60">
             <li>✓ CNPJ do fundo (estadual ou municipal)</li>
             <li>✓ Número do recibo emitido pelo fundo</li>
@@ -517,7 +517,7 @@
             <div class="border-t border-white/10 pt-4 text-sm text-white/70 space-y-2">
               <p>Sim — com atenção aos limites individuais de cada modalidade.</p>
               <p>Exemplo: um cliente pode destinar 6% para Rouanet (cultura) <strong class="text-white">e</strong> 7% para Esporte. Os limites são independentes.</p>
-              <p>FIA/FDCA: limite próprio de <strong class="text-white">6%</strong> (ECA Art. 260 II). FDI: limite próprio de <strong class="text-white">3%</strong>. Os dois são independentes entre si e das demais modalidades.</p>
+              <p>FDCA: limite próprio de <strong class="text-white">6%</strong> (ECA Art. 260 II). FDI: limite próprio de <strong class="text-white">6%</strong> (Lei 12.213/2010). Os dois são independentes entre si e das demais modalidades.</p>
               <p>O limite absoluto final: a soma de todas as destinações não pode exceder o IR Devido total do cliente.</p>
             </div>
           </div>
@@ -669,8 +669,8 @@ Qualquer dúvida, é só me chamar!
     const modalidades = [
       { emoji: '🎭', nome: 'Cultura — Lei Rouanet (Art. 18)', pct: 0.06, label: '6%', lei: 'Lei 8.313/1991' },
       { emoji: '⚽', nome: 'Esporte', pct: 0.07, label: '7%', lei: 'Lei 11.438/2006' },
-      { emoji: '👧', nome: 'FIA/FDCA — Criança e Adolescente', pct: 0.06, label: '6%', lei: 'Lei 8.069/1990 Art. 260 II' },
-      { emoji: '👴', nome: 'FDI — Fundo do Idoso', pct: 0.03, label: '3%', lei: 'Lei 12.213/2010' },
+      { emoji: '👧', nome: 'FDCA — Criança e Adolescente', pct: 0.06, label: '6%', lei: 'Lei 8.069/1990 Art. 260 II' },
+      { emoji: '👴', nome: 'FDI — Fundo do Idoso', pct: 0.06, label: '6%', lei: 'Lei 12.213/2010' },
       { emoji: '🏥', nome: 'Saúde — PRONON + PRONAS', pct: 0.01, label: '1%', lei: 'Lei 12.715/2012' },
     ];
 
