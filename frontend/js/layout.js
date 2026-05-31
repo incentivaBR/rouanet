@@ -40,7 +40,9 @@ const Layout = {
     nav.className = 'dai-nav' + (opts.transparentNav ? ' dai-nav--transparent' : '');
     nav.innerHTML = `
       <div class="dai-nav__inner">
-        <a href="index.html" class="dai-nav__logo">Destine<span>AI</span></a>
+        <a href="index.html" style="display:inline-flex;align-items:center;background:#fff;border-radius:10px;padding:4px 8px;text-decoration:none">
+            <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:24px;width:auto">
+          </a>
         <div class="dai-nav__links">
           ${linksHtml}
           <a href="login.html" id="daiNavAuth" class="dai-nav__enter">Entrar</a>
