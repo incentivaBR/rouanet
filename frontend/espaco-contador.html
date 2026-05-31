@@ -167,8 +167,8 @@
             <div class="flex items-center gap-3">
               <span class="text-gold text-lg">👧</span>
               <div>
-                <div class="font-bold text-sm">FIA — Fundo para Criança e Adolescente</div>
-                <div class="text-white/50 text-xs">Lei nº 8.069/1990 (ECA) · Limite: 3% do IR Devido · Código 40</div>
+                <div class="font-bold text-sm">FIA/FDCA — Fundo para Criança e Adolescente</div>
+                <div class="text-white/50 text-xs">Lei nº 8.069/1990 (ECA) Art. 260 II · Limite: 6% do IR Devido · Código 40</div>
               </div>
             </div>
             <svg id="icon-fia" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -176,7 +176,7 @@
           <div id="content-fia" class="accordion-content px-5 pb-5">
             <div class="border-t border-white/10 pt-4 space-y-3 text-sm text-white/75">
               <p><strong class="text-white">Mecanismo:</strong> Doação ao Fundo Estadual ou Municipal para a Criança e o Adolescente, vinculado ao Conselho (CDCA/CONANDA). O fundo repassa para projetos aprovados pelo conselho gestor.</p>
-              <p><strong class="text-white">Limite:</strong> 3% do IR Devido. Combinado com FDI (idoso), o limite conjunto é de 6%.</p>
+              <p><strong class="text-white">Limite:</strong> 6% do IR Devido (ECA Art. 260, II — limite para Pessoa Física). Independente do FDI.</p>
               <p><strong class="text-white">Atenção:</strong> No DF, o fundo é o FDCA-DF. Verificar CNPJ e conta bancária junto ao CDCA-DF antes de orientar o cliente.</p>
               <p><strong class="text-white">Onde lançar na DIRPF:</strong> Doações Efetuadas → Código <strong class="text-gold">40</strong> (ECA/Fundo da Criança e Adolescente).</p>
               <a href="https://www.planalto.gov.br/ccivil_03/leis/l8069.htm" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-gold text-xs hover:underline mt-1">
@@ -201,7 +201,7 @@
           <div id="content-fdi" class="accordion-content px-5 pb-5">
             <div class="border-t border-white/10 pt-4 space-y-3 text-sm text-white/75">
               <p><strong class="text-white">Mecanismo:</strong> Doação ao Fundo Nacional, Estadual ou Municipal do Idoso, gerido pelo Conselho do Idoso (CNDI/estadual/municipal).</p>
-              <p><strong class="text-white">Limite:</strong> 3% do IR Devido. Combinado com FIA, o limite conjunto é de 6%.</p>
+              <p><strong class="text-white">Limite:</strong> 3% do IR Devido (independente do FIA). FIA/FDCA tem limite próprio de 6%.</p>
               <p><strong class="text-white">Onde lançar na DIRPF:</strong> Doações Efetuadas → Código <strong class="text-gold">41</strong> (Estatuto do Idoso/Fundo do Idoso).</p>
               <a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12213.htm" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-gold text-xs hover:underline mt-1">
                 📄 Ver texto completo no Planalto.gov.br ↗
@@ -351,7 +351,7 @@
               <td class="py-3.5 text-gold font-mono text-xs">—</td>
             </tr>
             <tr class="hover:bg-white/3 transition">
-              <td class="py-3.5 pr-4">👧 FIA / ECA</td>
+              <td class="py-3.5 pr-4">👧 FIA/FDCA — Criança e Adolescente</td>
               <td class="py-3.5 pr-4 text-white/60">Doações Efetuadas</td>
               <td class="py-3.5 text-gold font-mono text-xs font-bold">40</td>
             </tr>
@@ -484,7 +484,7 @@
             <div class="border-t border-white/10 pt-4 text-sm text-white/70 space-y-2">
               <p>Sim — com atenção aos limites individuais de cada modalidade.</p>
               <p>Exemplo: um cliente pode destinar 6% para Rouanet (cultura) <strong class="text-white">e</strong> 7% para Esporte. Os limites são independentes.</p>
-              <p>Exceção: FIA + FDI juntos têm limite <strong class="text-white">conjunto de 6%</strong> — não pode usar 3% de FIA + 3% de FDI se isso exceder 6% do IR Devido.</p>
+              <p>FIA/FDCA: limite próprio de <strong class="text-white">6%</strong> (ECA Art. 260 II). FDI: limite próprio de <strong class="text-white">3%</strong>. Os dois são independentes entre si e das demais modalidades.</p>
               <p>O limite absoluto final: a soma de todas as destinações não pode exceder o IR Devido total do cliente.</p>
             </div>
           </div>
@@ -636,9 +636,8 @@ Qualquer dúvida, é só me chamar!
     const modalidades = [
       { emoji: '🎭', nome: 'Cultura — Lei Rouanet (Art. 18)', pct: 0.06, label: '6%', lei: 'Lei 8.313/1991' },
       { emoji: '⚽', nome: 'Esporte', pct: 0.07, label: '7%', lei: 'Lei 11.438/2006' },
-      { emoji: '👧', nome: 'FIA — Fundo da Criança e Adolescente', pct: 0.03, label: '3%', lei: 'Lei 8.069/1990' },
+      { emoji: '👧', nome: 'FIA/FDCA — Criança e Adolescente', pct: 0.06, label: '6%', lei: 'Lei 8.069/1990 Art. 260 II' },
       { emoji: '👴', nome: 'FDI — Fundo do Idoso', pct: 0.03, label: '3%', lei: 'Lei 12.213/2010' },
-      { emoji: '👧👴', nome: 'FIA + FDI (limite conjunto)', pct: 0.06, label: '6%', lei: 'Limite global', joint: true },
       { emoji: '🏥', nome: 'Saúde — PRONON + PRONAS', pct: 0.01, label: '1%', lei: 'Lei 12.715/2012' },
     ];
 

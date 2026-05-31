@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda Fiscal Inteligente — IncentivaBR</title>
+  <meta name="description" content="Saiba exatamente quando agir em cada modalidade de destinação do IR. Prazos, janelas e alertas por modalidade.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { navy: '#0D1B3E', gold: '#FFD700' }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .timeline-line { position: absolute; left: 19px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.08); }
+    .timeline-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; position: relative; z-index: 1; }
+    .pulse { animation: pulse-green 2s infinite; }
+    @keyframes pulse-green {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+      50%      { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+    }
+    .month-bar { height: 6px; border-radius: 3px; }
+    .tag-open    { background: rgba(34,197,94,0.2);  color: #86efac; border: 1px solid rgba(34,197,94,0.3); }
+    .tag-plan    { background: rgba(255,215,0,0.15); color: #fde68a; border: 1px solid rgba(255,215,0,0.3); }
+    .tag-closed  { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+    .tag-future  { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
+  </style>
+</head>
+<body class="bg-navy font-sans text-white min-h-screen">
+
+  <!-- NAV -->
+  <nav style="background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,215,0,0.12)" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="text-gold font-black text-base tracking-tight">IncentivaBR</a>
+      <div class="flex items-center gap-4 text-sm text-white/60">
+        <a href="validador.html" class="hover:text-white transition hidden sm:inline">Validador</a>
+        <a href="espaco-contador.html" class="hover:text-white transition hidden sm:inline">Espaço do Contador</a>
+        <a href="destinar-rouanet.html" class="bg-gold text-navy font-bold px-4 py-1.5 rounded-full text-xs hover:brightness-110 transition">Destinar IR →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="pt-28 pb-10 px-4">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 bg-yellow-500/15 border border-yellow-500/25 rounded-full px-4 py-1.5 mb-5">
+        <span class="text-yellow-400 text-xs">📅</span>
+        <span class="text-yellow-300 text-xs font-semibold">Funcionalidade F02 — Onda 2</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-black leading-tight mb-3">
+        Agenda Fiscal Inteligente
+      </h1>
+      <p class="text-white/60 leading-relaxed">
+        Saiba exatamente <strong class="text-white">quando agir</strong> em cada modalidade. Prazos, janelas abertas e o que fazer agora para não perder a destinação de 2027.
+      </p>
+      <!-- Status atual dinâmico -->
+      <div id="status-agora" class="mt-6 inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-3 text-sm">
+        <span class="text-2xl">📍</span>
+        <div class="text-left">
+          <div class="font-bold text-white" id="data-hoje"></div>
+          <div class="text-white/50 text-xs" id="contexto-agora"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BARRA ANUAL DO ANO ATUAL -->
+  <section class="pb-8 px-4">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white/4 border border-white/10 rounded-2xl p-5">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-sm font-bold">Calendário <span id="ano-ref"></span></div>
+          <div class="text-xs text-white/40">Janela de destinação para DIRPF <span id="ano-dirpf"></span></div>
+        </div>
+        <!-- Meses -->
+        <div class="grid grid-cols-12 gap-1 mb-2" id="grade-meses"></div>
+        <div class="grid grid-cols-12 gap-1 text-center">
+          <div class="text-xs text-white/30 col-span-1">Jan</div>
+          <div class="text-xs text-white/30 col-span-1">Fev</div>
+          <div class="text-xs text-white/30 col-span-1">Mar</div>
+          <div class="text-xs text-white/30 col-span-1">Abr</div>
+          <div class="text-xs text-white/30 col-span-1">Mai</div>
+          <div class="text-xs text-white/30 col-span-1">Jun</div>
+          <div class="text-xs text-white/30 col-span-1">Jul</div>
+          <div class="text-xs text-white/30 col-span-1">Ago</div>
+          <div class="text-xs text-white/30 col-span-1">Set</div>
+          <div class="text-xs text-white/30 col-span-1">Out</div>
+          <div class="text-xs text-white/30 col-span-1">Nov</div>
+          <div class="text-xs text-white/30 col-span-1">Dez</div>
+        </div>
+        <div class="flex flex-wrap gap-3 mt-4 text-xs">
+          <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-green-500/60 inline-block"></span> Janela de destinação aberta</div>
+          <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-yellow-500/60 inline-block"></span> Planejamento ativo</div>
+          <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-white/15 inline-block"></span> Mês atual</div>
+          <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-white/5 inline-block"></span> Mês futuro</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE DE EVENTOS -->
+  <section class="pb-6 px-4">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="font-black text-lg mb-5">Próximos marcos — <span id="ano-marcos"></span></h2>
+      <div class="relative pl-8" id="timeline-container">
+        <div class="timeline-line"></div>
+        <!-- Itens inseridos pelo JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- MODALIDADES — STATUS DETALHADO -->
+  <section class="pb-10 px-4">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="font-black text-lg mb-5">Status por modalidade</h2>
+      <div class="space-y-4" id="cards-modalidades"></div>
+    </div>
+  </section>
+
+  <!-- O QUE FAZER AGORA -->
+  <section class="pb-16 px-4 border-t border-white/8">
+    <div class="max-w-2xl mx-auto pt-10">
+      <h2 class="font-black text-lg mb-5">O que fazer <span class="text-gold">agora</span></h2>
+      <div class="space-y-3" id="acoes-agora"></div>
+      <div class="mt-6 flex gap-3 flex-wrap">
+        <a href="calculadora-rapida.html" class="bg-gold text-navy font-bold px-5 py-3 rounded-xl text-sm hover:brightness-110 transition">Calcular meu limite →</a>
+        <a href="validador.html" class="border border-white/15 text-white/80 font-semibold px-5 py-3 rounded-xl text-sm hover:border-white/30 transition">Validar minha destinação</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTAGEM REGRESSIVA -->
+  <section class="pb-16 px-4">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-gradient-to-br from-gold/10 to-transparent border border-gold/20 rounded-2xl p-6 text-center">
+        <div class="text-xs font-bold text-gold/70 uppercase tracking-wider mb-2">Próxima declaração IRPF</div>
+        <div class="text-5xl font-black text-gold mb-1" id="dias-restantes">—</div>
+        <div class="text-white/60 text-sm mb-1">dias até o encerramento da DIRPF <span id="ano-prox-dirpf"></span></div>
+        <div class="text-white/40 text-xs" id="data-limite-dirpf"></div>
+        <div class="mt-4 text-sm text-white/70">
+          Você tem tempo. Planeje agora para destinar com calma ao longo do ano.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/8 py-6 px-4 text-center text-white/25 text-xs">
+    <a href="espaco-contador.html" class="text-gold/50 hover:text-gold transition">Espaço do Contador</a>
+    <span class="mx-2">·</span>
+    <a href="validador.html" class="hover:text-white/50 transition">Validador</a>
+    <span class="mx-2">·</span>
+    <a href="index.html" class="hover:text-white/50 transition">IncentivaBR</a>
+  </footer>
+
+<script>
+  const HOJE = new Date();
+  const ANO  = HOJE.getFullYear();
+  const MES  = HOJE.getMonth(); // 0-based
+
+  // DIRPF do ano atual fecha ~31 mai do ano seguinte
+  // Destinação para DIRPF de ANO+1 começa agora até ~31/mai/(ANO+1)
+  const anoDeclaracao = ANO + 1; // qual DIRPF estamos planejando
+  const dataFechaDIRPF = new Date(anoDeclaracao, 4, 31); // 31 mai do ano seguinte
+  const diasRestantes = Math.ceil((dataFechaDIRPF - HOJE) / 86400000);
+
+  // Preencher dados de data
+  document.getElementById('data-hoje').textContent =
+    HOJE.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('contexto-agora').textContent =
+    `Planejando a destinação de ${anoDeclaracao} — DIRPF ${anoDeclaracao} encerra em mai/${anoDeclaracao}`;
+  document.getElementById('ano-ref').textContent = ANO;
+  document.getElementById('ano-dirpf').textContent = anoDeclaracao;
+  document.getElementById('ano-marcos').textContent = ANO + '–' + anoDeclaracao;
+  document.getElementById('dias-restantes').textContent = diasRestantes.toLocaleString('pt-BR');
+  document.getElementById('ano-prox-dirpf').textContent = anoDeclaracao;
+  document.getElementById('data-limite-dirpf').textContent = `Prazo estimado: 31 de maio de ${anoDeclaracao}`;
+
+  // ── Grade de meses ──
+  const gradeMeses = document.getElementById('grade-meses');
+  for (let m = 0; m < 12; m++) {
+    const div = document.createElement('div');
+    div.className = 'month-bar col-span-1';
+    const passado = m < MES;
+    const atual   = m === MES;
+    const futuro  = m > MES;
+    // Meses 0-4 (jan-mai): janela de destinação aberta; 5-11: planejamento
+    if (passado && m <= 4)    div.style.background = 'rgba(34,197,94,0.4)';
+    else if (passado)          div.style.background = 'rgba(255,255,255,0.08)';
+    else if (atual && m <= 4) div.style.background = 'rgba(34,197,94,0.8)';
+    else if (atual)            div.style.background = 'rgba(255,215,0,0.7)';
+    else if (futuro && m <= 4) div.style.background = 'rgba(34,197,94,0.2)';
+    else                       div.style.background = 'rgba(255,215,0,0.2)';
+    if (atual) {
+      div.style.height = '10px';
+      div.style.borderRadius = '5px';
+      div.style.boxShadow = m <= 4 ? '0 0 8px rgba(34,197,94,0.6)' : '0 0 8px rgba(255,215,0,0.6)';
+    }
+    gradeMeses.appendChild(div);
+  }
+
+  // ── Timeline de marcos ──
+  const marcos = [
+    {
+      data: new Date(ANO, 5, 1), // jun atual
+      titulo: `Início da janela de planejamento — destinação ${anoDeclaracao}`,
+      detalhe: 'Calcule seu IR estimado e escolha os projetos com antecedência.',
+      tipo: 'plan',
+      passado: MES > 5,
+      atual: MES === 5,
+    },
+    {
+      data: new Date(anoDeclaracao, 0, 2), // jan próximo ano
+      titulo: `Janeiro ${anoDeclaracao} — Janela principal abre`,
+      detalhe: 'FIA/FDI: faça as doações aos fundos. Rouanet: projetos em captação ativa.',
+      tipo: 'open',
+      passado: false,
+      atual: false,
+    },
+    {
+      data: new Date(anoDeclaracao, 2, 1), // mar próximo ano
+      titulo: `Março ${anoDeclaracao} — Atenção máxima`,
+      detalhe: 'Rouanet: verificar se o projeto ainda tem prazo de captação aberto. FIA/FDI: confirmar conta do fundo.',
+      tipo: 'open',
+      passado: false,
+      atual: false,
+    },
+    {
+      data: new Date(anoDeclaracao, 3, 30), // abr próximo ano
+      titulo: `Abril ${anoDeclaracao} — Prazo recomendado para destinação`,
+      detalhe: 'Faça a transferência e guarde o comprovante até aqui para ter tempo de resolver qualquer pendência.',
+      tipo: 'open',
+      passado: false,
+      atual: false,
+    },
+    {
+      data: new Date(anoDeclaracao, 4, 31), // mai próximo ano
+      titulo: `31 de maio ${anoDeclaracao} — DIRPF encerra`,
+      detalhe: 'Prazo final para entrega da declaração. Destinações feitas após esta data entram no ano seguinte.',
+      tipo: 'closed',
+      passado: false,
+      atual: false,
+    },
+  ];
+
+  const container = document.getElementById('timeline-container');
+  marcos.forEach((m, i) => {
+    const div = document.createElement('div');
+    div.className = 'flex gap-4 mb-6 relative';
+
+    const tagClass = { open: 'tag-open', plan: 'tag-plan', closed: 'tag-closed', future: 'tag-future' }[m.tipo];
+    const dotColor = m.atual ? 'bg-green-400 pulse' : m.passado ? 'bg-white/20' : m.tipo === 'open' ? 'bg-green-500' : m.tipo === 'plan' ? 'bg-yellow-400' : 'bg-red-400';
+
+    div.innerHTML = `
+      <div class="timeline-dot ${dotColor} mt-1"></div>
+      <div class="flex-1 pb-2">
+        <div class="flex flex-wrap items-center gap-2 mb-1">
+          <span class="font-bold text-sm ${m.passado ? 'text-white/40' : ''}">${m.titulo}</span>
+          ${m.atual ? '<span class="text-xs font-bold text-green-400 bg-green-400/15 px-2 py-0.5 rounded-full">AGORA</span>' : ''}
+        </div>
+        <div class="text-xs text-white/50 mb-1">${m.data.toLocaleDateString('pt-BR', { day:'numeric', month:'long', year:'numeric' })}</div>
+        <div class="text-sm text-white/70">${m.detalhe}</div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  // ── Cards de modalidades ──
+  const modalidades = [
+    {
+      emoji: '🎭',
+      nome: 'Lei Rouanet — Art. 18',
+      lei: 'Lei 8.313/1991',
+      limite: '6% do IR Devido',
+      janela: `Janeiro a abril de ${anoDeclaracao}`,
+      prazoCaptacao: 'Verificar projeto a projeto (PRONAC ativo no SALIC)',
+      comoFazer: 'Transferência bancária (PIX/TED) direta para a conta do projeto aprovado',
+      comprovante: 'Recibo emitido pelo proponente com PRONAC + CNPJ + valor + data',
+      onde: `Deduções → Incentivos Fiscais → PRONAC/Cultura`,
+      status: MES >= 5 ? 'plan' : 'open',
+      statusLabel: MES >= 5 ? 'Planejamento — destinação para 2027' : 'Janela aberta',
+      alerta: 'Verifique se o projeto escolhido ainda tem prazo de captação ativo antes de transferir.',
+    },
+    {
+      emoji: '⚽',
+      nome: 'Lei do Esporte',
+      lei: 'Lei 11.438/2006',
+      limite: '7% do IR Devido',
+      janela: `Janeiro a abril de ${anoDeclaracao}`,
+      prazoCaptacao: 'Verificar projeto a projeto (aprovação Ministério do Esporte)',
+      comoFazer: 'Transferência bancária para a conta do projeto esportivo aprovado',
+      comprovante: 'Recibo com CNPJ do projeto, número de aprovação, valor e data',
+      onde: `Deduções → Incentivos Fiscais → Desporto`,
+      status: MES >= 5 ? 'plan' : 'open',
+      statusLabel: MES >= 5 ? 'Planejamento — destinação para 2027' : 'Janela aberta',
+      alerta: null,
+    },
+    {
+      emoji: '👧',
+      nome: 'FIA — Fundo da Criança e Adolescente',
+      lei: 'Lei 8.069/1990 (ECA)',
+      limite: '3% do IR Devido (6% conjunto com FDI)',
+      janela: `Ano-calendário de ${anoDeclaracao} (jan a mai)`,
+      prazoCaptacao: 'Doação ao fundo antes do encerramento da DIRPF (31/mai)',
+      comoFazer: `Transferência ao FDCA-DF ou fundo municipal/estadual. Confirmar CNPJ e conta corrente junto ao CDCA-DF`,
+      comprovante: 'Recibo do fundo com CNPJ, número, valor e data. Código 40 na DIRPF',
+      onde: `Doações Efetuadas → Código 40`,
+      status: MES >= 5 ? 'plan' : 'open',
+      statusLabel: MES >= 5 ? 'Planejamento — doação em 2027' : 'Janela aberta',
+      alerta: 'Confirme a conta bancária do FDCA-DF diretamente com o CDCA antes de transferir.',
+    },
+    {
+      emoji: '👴',
+      nome: 'FDI — Fundo do Idoso',
+      lei: 'Lei 12.213/2010',
+      limite: '3% do IR Devido (6% conjunto com FIA)',
+      janela: `Ano-calendário de ${anoDeclaracao} (jan a mai)`,
+      prazoCaptacao: 'Doação ao fundo antes do encerramento da DIRPF',
+      comoFazer: 'Transferência ao Fundo Nacional, Estadual ou Municipal do Idoso',
+      comprovante: 'Recibo do fundo com CNPJ, número, valor e data. Código 41 na DIRPF',
+      onde: `Doações Efetuadas → Código 41`,
+      status: MES >= 5 ? 'plan' : 'open',
+      statusLabel: MES >= 5 ? 'Planejamento — doação em 2027' : 'Janela aberta',
+      alerta: null,
+    },
+    {
+      emoji: '🏥',
+      nome: 'PRONON + PRONAS — Saúde',
+      lei: 'Lei 12.715/2012',
+      limite: '1% do IR Devido (conjunto)',
+      janela: `Ano-calendário de ${anoDeclaracao}`,
+      prazoCaptacao: 'Verificar entidade habilitada',
+      comoFazer: 'Doação a entidade habilitada pelo Ministério da Saúde',
+      comprovante: 'Recibo da entidade + comprovação de habilitação',
+      onde: `Deduções → Incentivos Fiscais → PRONON / PRONAS`,
+      status: MES >= 5 ? 'plan' : 'open',
+      statusLabel: MES >= 5 ? 'Planejamento' : 'Janela aberta',
+      alerta: null,
+    },
+  ];
+
+  const cardsContainer = document.getElementById('cards-modalidades');
+  modalidades.forEach(m => {
+    const tagClass = { open: 'tag-open', plan: 'tag-plan', closed: 'tag-closed' }[m.status];
+    const card = document.createElement('div');
+    card.className = 'bg-white/4 border border-white/10 rounded-2xl p-5';
+    card.innerHTML = `
+      <div class="flex items-start justify-between gap-3 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">${m.emoji}</span>
+          <div>
+            <div class="font-bold text-sm">${m.nome}</div>
+            <div class="text-white/40 text-xs">${m.lei} · ${m.limite}</div>
+          </div>
+        </div>
+        <span class="text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 ${tagClass}">${m.statusLabel}</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-white/60">
+        <div>
+          <div class="font-semibold text-white/80 mb-0.5">📅 Quando destinar</div>
+          <div>${m.janela}</div>
+        </div>
+        <div>
+          <div class="font-semibold text-white/80 mb-0.5">💳 Como fazer</div>
+          <div>${m.comoFazer}</div>
+        </div>
+        <div>
+          <div class="font-semibold text-white/80 mb-0.5">📄 Comprovante</div>
+          <div>${m.comprovante}</div>
+        </div>
+        <div>
+          <div class="font-semibold text-white/80 mb-0.5">🖥️ Onde lançar na DIRPF</div>
+          <div>${m.onde}</div>
+        </div>
+      </div>
+      ${m.alerta ? `
+      <div class="mt-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg px-3 py-2 text-xs text-yellow-300">
+        ⚠️ ${m.alerta}
+      </div>` : ''}
+    `;
+    cardsContainer.appendChild(card);
+  });
+
+  // ── O que fazer agora ──
+  const acoes = MES >= 5 ? [
+    {
+      icon: '🧮',
+      titulo: 'Calcule o IR estimado para ' + anoDeclaracao,
+      detalhe: 'Use a calculadora IncentivaBR para estimar quanto poderá destinar com base na sua renda atual.',
+      link: 'calculadora-rapida.html',
+      cta: 'Calcular agora',
+    },
+    {
+      icon: '🎭',
+      titulo: 'Escolha os projetos que vai apoiar',
+      detalhe: 'Navegue pelos projetos ativos com PRONAC aprovado. Projetos escolhidos agora estarão disponíveis na abertura da captação.',
+      link: 'projetos.html',
+      cta: 'Ver projetos',
+    },
+    {
+      icon: '📋',
+      titulo: 'Verifique o FDCA-DF para FIA/FDI',
+      detalhe: 'Confirme a conta bancária do fundo junto ao CDCA-DF para a destinação de ' + anoDeclaracao + '. Contas podem mudar a cada exercício.',
+      link: 'espaco-contador.html#documentacao',
+      cta: 'Ver documentação',
+    },
+    {
+      icon: '🛡️',
+      titulo: 'Valide sua destinação planejada',
+      detalhe: 'Use o Validador Anti-Malha Fina para confirmar que os valores estão dentro dos limites antes de transferir.',
+      link: 'validador.html',
+      cta: 'Acessar validador',
+    },
+  ] : [
+    {
+      icon: '⚡',
+      titulo: 'Janela aberta — destine agora',
+      detalhe: 'Você ainda está dentro do prazo para a DIRPF ' + ANO + '. Use a plataforma para finalizar a destinação.',
+      link: 'destinar-rouanet.html',
+      cta: 'Destinar agora',
+    },
+    {
+      icon: '🛡️',
+      titulo: 'Valide antes de transferir',
+      detalhe: 'Confirme que os valores estão dentro dos limites legais para cada modalidade.',
+      link: 'validador.html',
+      cta: 'Acessar validador',
+    },
+  ];
+
+  const acoesContainer = document.getElementById('acoes-agora');
+  acoes.forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = 'flex gap-4 bg-white/4 border border-white/10 rounded-xl p-4';
+    div.innerHTML = `
+      <span class="text-2xl flex-shrink-0">${a.icon}</span>
+      <div class="flex-1">
+        <div class="font-bold text-sm mb-1">${a.titulo}</div>
+        <div class="text-white/60 text-xs mb-2">${a.detalhe}</div>
+        <a href="${a.link}" class="text-xs font-bold text-gold hover:underline">${a.cta} →</a>
+      </div>
+    `;
+    acoesContainer.appendChild(div);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validador Anti-Malha Fina — IncentivaBR</title>
+  <meta name="description" content="Valide sua destinação de IR antes de declarar. Confirme que cada modalidade está dentro do limite legal e gere seu laudo de conformidade.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { navy: '#0D1B3E', gold: '#FFD700' }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .bar-track { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease, background 0.4s ease; }
+    .status-ok   { background: #22c55e; }
+    .status-warn { background: #f59e0b; }
+    .status-over { background: #ef4444; }
+    .input-field {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: white;
+      font-size: 14px;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .input-field:focus { outline: none; border-color: rgba(255,215,0,0.5); }
+    .input-field::placeholder { color: rgba(255,255,255,0.25); }
+    .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; }
+    .card.valid   { border-color: rgba(34,197,94,0.3);  background: rgba(34,197,94,0.05); }
+    .card.warning { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.05); }
+    .card.over    { border-color: rgba(239,68,68,0.4);  background: rgba(239,68,68,0.07); }
+    @media print {
+      nav, .no-print { display: none !important; }
+      body { background: white; color: black; }
+      .card { border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body class="bg-navy font-sans text-white min-h-screen">
+
+  <!-- NAV -->
+  <nav style="background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,215,0,0.12)" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="text-gold font-black text-base tracking-tight">IncentivaBR</a>
+      <div class="flex items-center gap-4 text-sm text-white/60">
+        <a href="calculadora-rapida.html" class="hover:text-white transition hidden sm:inline">Calculadora</a>
+        <a href="agenda-fiscal.html" class="hover:text-white transition hidden sm:inline">Agenda Fiscal</a>
+        <a href="espaco-contador.html" class="hover:text-white transition hidden sm:inline">Espaço do Contador</a>
+        <a href="destinar-rouanet.html" class="bg-gold text-navy font-bold px-4 py-1.5 rounded-full text-xs hover:brightness-110 transition">Destinar IR →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="pt-28 pb-10 px-4">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 bg-green-500/15 border border-green-500/25 rounded-full px-4 py-1.5 mb-5">
+        <span class="text-green-400 text-xs">🛡️</span>
+        <span class="text-green-300 text-xs font-semibold">Funcionalidade F01 — Onda 1</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-black leading-tight mb-3">
+        Validador Anti-Malha Fina
+      </h1>
+      <p class="text-white/60 leading-relaxed">
+        Informe o valor que você planeja destinar em cada modalidade. O sistema verifica em tempo real se está dentro dos limites legais — antes de você declarar.
+      </p>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIO -->
+  <section class="pb-6 px-4">
+    <div class="max-w-2xl mx-auto">
+
+      <!-- IR Devido -->
+      <div class="card mb-4">
+        <label class="block text-xs font-bold text-white/50 uppercase tracking-wider mb-2">IR Devido (base de cálculo)</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-sm font-semibold">R$</span>
+          <input type="text" id="ir-devido" placeholder="0,00" oninput="formatar(this); validar()"
+            class="input-field pl-9 text-lg font-bold" autocomplete="off"/>
+        </div>
+        <p class="text-white/30 text-xs mt-2">Declaração → Cálculo do Imposto → <strong class="text-white/50">Imposto Devido</strong></p>
+      </div>
+
+      <!-- Modalidades -->
+      <div class="space-y-3">
+
+        <!-- Rouanet -->
+        <div class="card" id="card-rouanet">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span>🎭</span>
+              <div>
+                <div class="font-semibold text-sm">Lei Rouanet — Art. 18 (doação)</div>
+                <div class="text-white/40 text-xs">Limite: <strong class="text-gold/80" id="lim-rouanet">—</strong> · 6% do IR Devido · Lei 8.313/1991</div>
+              </div>
+            </div>
+            <span id="icon-rouanet" class="text-lg">—</span>
+          </div>
+          <div class="bar-track mb-2"><div id="bar-rouanet" class="bar-fill status-ok" style="width:0%"></div></div>
+          <input type="text" id="v-rouanet" placeholder="R$ 0,00" oninput="formatar(this); validar()"
+            class="input-field text-sm" autocomplete="off"/>
+          <p id="msg-rouanet" class="text-xs mt-1.5 hidden"></p>
+        </div>
+
+        <!-- Esporte -->
+        <div class="card" id="card-esporte">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span>⚽</span>
+              <div>
+                <div class="font-semibold text-sm">Lei do Esporte</div>
+                <div class="text-white/40 text-xs">Limite: <strong class="text-gold/80" id="lim-esporte">—</strong> · 7% do IR Devido · Lei 11.438/2006</div>
+              </div>
+            </div>
+            <span id="icon-esporte" class="text-lg">—</span>
+          </div>
+          <div class="bar-track mb-2"><div id="bar-esporte" class="bar-fill status-ok" style="width:0%"></div></div>
+          <input type="text" id="v-esporte" placeholder="R$ 0,00" oninput="formatar(this); validar()"
+            class="input-field text-sm" autocomplete="off"/>
+          <p id="msg-esporte" class="text-xs mt-1.5 hidden"></p>
+        </div>
+
+        <!-- FIA + FDI lado a lado -->
+        <div class="card" id="card-fidfia">
+          <div class="flex items-center justify-between mb-1">
+            <div>
+              <div class="font-semibold text-sm">FIA/FDCA + FDI — Criança, Adolescente e Idoso</div>
+              <div class="text-white/40 text-xs">FIA/FDCA: até 6% (Lei 8.069/1990 Art. 260 II) · FDI: até 3% (Lei 12.213/2010)</div>
+            </div>
+            <span id="icon-fidfia" class="text-lg">—</span>
+          </div>
+          <div class="bar-track mb-3"><div id="bar-fidfia" class="bar-fill status-ok" style="width:0%"></div></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs text-white/40 mb-1 block">👧 FIA/FDCA — Criança e Adolescente <span class="text-gold/70">(max <span id="lim-fia">—</span>)</span></label>
+              <input type="text" id="v-fia" placeholder="R$ 0,00" oninput="formatar(this); validar()"
+                class="input-field text-sm" autocomplete="off"/>
+              <p id="msg-fia" class="text-xs mt-1 hidden"></p>
+            </div>
+            <div>
+              <label class="text-xs text-white/40 mb-1 block">👴 FDI — Idoso <span class="text-gold/70">(max <span id="lim-fdi">—</span>)</span></label>
+              <input type="text" id="v-fdi" placeholder="R$ 0,00" oninput="formatar(this); validar()"
+                class="input-field text-sm" autocomplete="off"/>
+              <p id="msg-fdi" class="text-xs mt-1 hidden"></p>
+            </div>
+          </div>
+          <p id="msg-fidfia" class="text-xs mt-2 hidden"></p>
+        </div>
+
+        <!-- PRONON + PRONAS -->
+        <div class="card" id="card-pronon">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span>🏥</span>
+              <div>
+                <div class="font-semibold text-sm">PRONON + PRONAS — Saúde</div>
+                <div class="text-white/40 text-xs">Limite conjunto: <strong class="text-gold/80" id="lim-pronon">—</strong> · 1% do IR Devido · Lei 12.715/2012</div>
+              </div>
+            </div>
+            <span id="icon-pronon" class="text-lg">—</span>
+          </div>
+          <div class="bar-track mb-2"><div id="bar-pronon" class="bar-fill status-ok" style="width:0%"></div></div>
+          <input type="text" id="v-pronon" placeholder="R$ 0,00" oninput="formatar(this); validar()"
+            class="input-field text-sm" autocomplete="off"/>
+          <p id="msg-pronon" class="text-xs mt-1.5 hidden"></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADO / LAUDO -->
+  <section class="pb-16 px-4">
+    <div class="max-w-2xl mx-auto">
+      <div id="resultado" class="hidden">
+
+        <!-- Status geral -->
+        <div id="status-geral" class="rounded-2xl p-5 mb-4 text-center">
+          <div id="status-icon" class="text-4xl mb-2"></div>
+          <div id="status-titulo" class="font-black text-lg mb-1"></div>
+          <div id="status-sub" class="text-sm opacity-80"></div>
+        </div>
+
+        <!-- Laudo -->
+        <div class="card mb-4" id="laudo-section">
+          <div class="flex items-center justify-between mb-4">
+            <div class="font-bold text-sm">Laudo de Conformidade</div>
+            <button onclick="window.print()" class="no-print text-xs text-gold/70 hover:text-gold flex items-center gap-1 transition">
+              🖨️ Imprimir / Salvar PDF
+            </button>
+          </div>
+          <div class="text-xs text-white/40 mb-3" id="laudo-data"></div>
+          <div id="laudo-itens" class="space-y-2 text-sm"></div>
+          <div class="mt-4 pt-4 border-t border-white/10 text-xs text-white/40 leading-relaxed">
+            Este laudo tem caráter informativo e educativo. Os limites são calculados com base no IR Devido informado e nas alíquotas legais vigentes. O contribuinte é responsável pela declaração final. Consulte sempre o texto oficial das leis e a Instrução Normativa RFB do exercício corrente.
+          </div>
+          <div class="mt-3 text-xs text-white/30">
+            IncentivaBR · INPI BR512025000647-0 · incentivabr.com.br
+          </div>
+        </div>
+
+        <div class="flex gap-3 no-print">
+          <a href="destinar-rouanet.html" class="flex-1 bg-gold text-navy font-bold py-3 rounded-xl text-center text-sm hover:brightness-110 transition">
+            Fazer a destinação →
+          </a>
+          <a href="agenda-fiscal.html" class="flex-1 border border-white/15 text-white/80 font-semibold py-3 rounded-xl text-center text-sm hover:border-white/30 transition">
+            Ver agenda fiscal
+          </a>
+        </div>
+      </div>
+
+      <!-- Estado inicial -->
+      <div id="estado-inicial" class="text-center py-10 text-white/25 text-sm">
+        Preencha o IR Devido e os valores planejados para validar.
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLICAÇÃO -->
+  <section class="pb-16 px-4 border-t border-white/8">
+    <div class="max-w-2xl mx-auto pt-10">
+      <h2 class="font-black text-lg mb-4">Como funciona a validação</h2>
+      <div class="space-y-3 text-sm text-white/70">
+        <div class="flex gap-3">
+          <span class="text-green-400 flex-shrink-0">🟢</span>
+          <span><strong class="text-white">Verde:</strong> dentro do limite legal. Destinação segura para esta modalidade.</span>
+        </div>
+        <div class="flex gap-3">
+          <span class="text-yellow-400 flex-shrink-0">🟡</span>
+          <span><strong class="text-white">Amarelo:</strong> acima de 85% do limite. Muito próximo — qualquer variação no IR Devido real pode exceder.</span>
+        </div>
+        <div class="flex gap-3">
+          <span class="text-red-400 flex-shrink-0">🔴</span>
+          <span><strong class="text-white">Vermelho:</strong> excede o limite legal. A parcela excedente não será abatida do IR e pode gerar inconsistência na declaração.</span>
+        </div>
+        <div class="flex gap-3 mt-4">
+          <span class="flex-shrink-0">⚠️</span>
+          <span><strong class="text-white">Regra combinada FIA + FDI:</strong> mesmo que cada um respeite seu limite individual de 3%, a soma não pode ultrapassar 6% do IR Devido.</span>
+        </div>
+        <div class="flex gap-3">
+          <span class="flex-shrink-0">ℹ️</span>
+          <span>Os limites são independentes entre modalidades (Rouanet, Esporte, FIA/FDI e Saúde). Você pode usar mais de uma modalidade no mesmo ano.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/8 py-6 px-4 text-center text-white/25 text-xs">
+    <a href="espaco-contador.html" class="text-gold/50 hover:text-gold transition">Espaço do Contador</a>
+    <span class="mx-2">·</span>
+    <a href="index.html" class="hover:text-white/50 transition">IncentivaBR</a>
+  </footer>
+
+<script>
+  // ── Formatar input como moeda BRL ──
+  function formatar(el) {
+    const nums = el.value.replace(/\D/g, '');
+    if (!nums) { el.value = ''; return; }
+    const val = parseInt(nums) / 100;
+    el.value = 'R$ ' + val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function parseVal(id) {
+    const raw = document.getElementById(id)?.value || '';
+    return parseFloat(raw.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+  }
+
+  function fmtBRL(v) {
+    return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function pct(v, lim) { return lim > 0 ? Math.min((v / lim) * 100, 150) : 0; }
+
+  function statusClass(v, lim) {
+    if (lim <= 0 || v <= 0) return 'ok';
+    const r = v / lim;
+    if (r > 1) return 'over';
+    if (r >= 0.85) return 'warn';
+    return 'ok';
+  }
+
+  function statusIcon(cls) {
+    return { ok: '✅', warn: '⚠️', over: '❌' }[cls] || '—';
+  }
+
+  function setBar(id, v, lim) {
+    const bar = document.getElementById('bar-' + id);
+    const p = pct(v, lim);
+    const cls = statusClass(v, lim);
+    bar.style.width = Math.min(p, 100) + '%';
+    bar.className = 'bar-fill status-' + (cls === 'ok' ? 'ok' : cls === 'warn' ? 'warn' : 'over');
+  }
+
+  function setCard(id, cls) {
+    const card = document.getElementById('card-' + id);
+    card.className = 'card ' + (cls !== 'ok' ? cls === 'warn' ? 'warning' : 'over' : '');
+  }
+
+  function setMsg(id, text, cls) {
+    const el = document.getElementById('msg-' + id);
+    if (!el) return;
+    if (!text) { el.classList.add('hidden'); return; }
+    el.textContent = text;
+    el.className = 'text-xs mt-1.5 ' + (cls === 'over' ? 'text-red-400' : cls === 'warn' ? 'text-yellow-400' : 'text-green-400');
+  }
+
+  function validar() {
+    const ir = parseVal('ir-devido');
+
+    // Limites
+    const L = {
+      rouanet: ir * 0.06,
+      esporte:  ir * 0.07,
+      fia:      ir * 0.06,
+      fdi:      ir * 0.03,
+      pronon:   ir * 0.01,
+    };
+
+    // Valores
+    const V = {
+      rouanet: parseVal('v-rouanet'),
+      esporte:  parseVal('v-esporte'),
+      fia:      parseVal('v-fia'),
+      fdi:      parseVal('v-fdi'),
+      pronon:   parseVal('v-pronon'),
+    };
+    V.fidfia = V.fia + V.fdi;
+
+    // Atualizar limites no UI
+    if (ir > 0) {
+      document.getElementById('lim-rouanet').textContent = fmtBRL(L.rouanet);
+      document.getElementById('lim-esporte').textContent  = fmtBRL(L.esporte);
+      document.getElementById('lim-fia').textContent     = fmtBRL(L.fia);
+      document.getElementById('lim-fdi').textContent     = fmtBRL(L.fdi);
+      document.getElementById('lim-pronon').textContent  = fmtBRL(L.pronon);
+    }
+
+    if (ir <= 0) {
+      document.getElementById('resultado').classList.add('hidden');
+      document.getElementById('estado-inicial').classList.remove('hidden');
+      return;
+    }
+
+    // Verificações individuais
+    const checks = ['rouanet','esporte','pronon'];
+    checks.forEach(key => {
+      const cls = statusClass(V[key], L[key]);
+      setBar(key, V[key], L[key]);
+      document.getElementById('icon-' + key).textContent = V[key] > 0 ? statusIcon(cls) : '—';
+      setCard(key, V[key] > 0 ? cls : 'ok');
+      let msg = '';
+      if (V[key] > 0 && cls === 'over') msg = `Excede em ${fmtBRL(V[key] - L[key])}. Reduza para até ${fmtBRL(L[key])}.`;
+      else if (V[key] > 0 && cls === 'warn') msg = `Próximo do limite (${Math.round(V[key]/L[key]*100)}% usado). Atenção a variações no IR real.`;
+      else if (V[key] > 0) msg = `✓ Dentro do limite (${Math.round(V[key]/L[key]*100)}% de ${fmtBRL(L[key])}).`;
+      setMsg(key, msg, cls);
+    });
+
+    // FIA individual
+    const clsFia = statusClass(V.fia, L.fia);
+    if (V.fia > 0 && clsFia === 'over') setMsg('fia', `Excede o limite individual de ${fmtBRL(L.fia)}`, 'over');
+    else if (V.fia > 0) setMsg('fia', `✓ FIA: ${fmtBRL(V.fia)} de ${fmtBRL(L.fia)} disponível`, 'ok');
+    else setMsg('fia', '', 'ok');
+
+    const clsFdi = statusClass(V.fdi, L.fdi);
+    if (V.fdi > 0 && clsFdi === 'over') setMsg('fdi', `Excede o limite individual de ${fmtBRL(L.fdi)}`, 'over');
+    else if (V.fdi > 0) setMsg('fdi', `✓ FDI: ${fmtBRL(V.fdi)} de ${fmtBRL(L.fdi)} disponível`, 'ok');
+    else setMsg('fdi', '', 'ok');
+
+    // FIA + FDI — limites independentes, barra mostra FDI (menor limite)
+    const clsFidFia = (V.fia > L.fia || V.fdi > L.fdi) ? 'over' : 'ok';
+    const barRef = V.fdi > 0 ? V.fdi : V.fia;
+    const limRef = V.fdi > 0 ? L.fdi : L.fia;
+    setBar('fidfia', barRef, limRef);
+    document.getElementById('icon-fidfia').textContent = (V.fia > 0 || V.fdi > 0) ? statusIcon(clsFidFia) : '—';
+    setCard('fidfia', (V.fia > 0 || V.fdi > 0) ? clsFidFia : 'ok');
+    setMsg('fidfia', '', 'ok');
+
+    // Status geral
+    const total = V.rouanet + V.esporte + V.fidfia + V.pronon;
+    const temValor = total > 0;
+
+    const problemas = [];
+    if (V.rouanet > L.rouanet) problemas.push('Rouanet excede o limite');
+    if (V.esporte > L.esporte)   problemas.push('Esporte excede o limite');
+    if (V.fia > L.fia)           problemas.push('FIA excede o limite individual');
+    if (V.fdi > L.fdi)           problemas.push('FDI excede o limite individual');
+    if (V.fidfia > L.fidfia)     problemas.push('FIA+FDI excedem o limite conjunto de 6%');
+    if (V.pronon > L.pronon)     problemas.push('PRONON/PRONAS excede o limite');
+    if (total > ir)              problemas.push('Total destinado excede o IR Devido');
+
+    const warns = [];
+    if (!problemas.length) {
+      if (V.rouanet/L.rouanet >= 0.85 && V.rouanet > 0) warns.push('Rouanet próximo do limite');
+      if (V.esporte/L.esporte >= 0.85 && V.esporte > 0)   warns.push('Esporte próximo do limite');
+      if (V.fidfia/L.fidfia >= 0.85 && V.fidfia > 0)      warns.push('FIA+FDI próximo do limite conjunto');
+      if (V.pronon/L.pronon >= 0.85 && V.pronon > 0)      warns.push('Saúde próximo do limite');
+    }
+
+    const geral = document.getElementById('status-geral');
+    const icon = document.getElementById('status-icon');
+    const titulo = document.getElementById('status-titulo');
+    const sub = document.getElementById('status-sub');
+
+    if (!temValor) {
+      geral.className = 'rounded-2xl p-5 mb-4 text-center bg-white/5 border border-white/10';
+      icon.textContent = '📋';
+      titulo.textContent = 'Preencha os valores planejados';
+      sub.textContent = 'Informe quanto pretende destinar em cada modalidade.';
+    } else if (problemas.length) {
+      geral.className = 'rounded-2xl p-5 mb-4 text-center bg-red-500/10 border border-red-500/30';
+      icon.textContent = '❌';
+      titulo.textContent = 'Atenção — ajuste necessário';
+      sub.textContent = problemas.join(' · ');
+    } else if (warns.length) {
+      geral.className = 'rounded-2xl p-5 mb-4 text-center bg-yellow-500/10 border border-yellow-500/25';
+      icon.textContent = '⚠️';
+      titulo.textContent = 'Verificação recomendada';
+      sub.textContent = warns.join(' · ') + ' — confirme o IR Devido real antes de declarar.';
+    } else {
+      geral.className = 'rounded-2xl p-5 mb-4 text-center bg-green-500/10 border border-green-500/25';
+      icon.textContent = '✅';
+      titulo.textContent = 'Destinação dentro dos limites legais';
+      sub.textContent = `Total planejado: ${fmtBRL(total)} — todas as modalidades conformes.`;
+    }
+
+    // Laudo
+    const now = new Date();
+    document.getElementById('laudo-data').textContent =
+      `Gerado em ${now.toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' })} às ${now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' })}`;
+
+    const itens = [];
+    itens.push(`IR Devido informado: ${fmtBRL(ir)}`);
+    if (V.rouanet > 0) itens.push(`Rouanet Art. 18: ${fmtBRL(V.rouanet)} de ${fmtBRL(L.rouanet)} disponível (${Math.round(V.rouanet/L.rouanet*100)}%) ${V.rouanet <= L.rouanet ? '✅' : '❌'}`);
+    if (V.esporte > 0)  itens.push(`Esporte: ${fmtBRL(V.esporte)} de ${fmtBRL(L.esporte)} disponível (${Math.round(V.esporte/L.esporte*100)}%) ${V.esporte <= L.esporte ? '✅' : '❌'}`);
+    if (V.fia > 0)      itens.push(`FIA — Criança e Adolescente: ${fmtBRL(V.fia)} de ${fmtBRL(L.fia)} disponível ${V.fia <= L.fia ? '✅' : '❌'}`);
+    if (V.fdi > 0)      itens.push(`FDI — Idoso: ${fmtBRL(V.fdi)} de ${fmtBRL(L.fdi)} disponível ${V.fdi <= L.fdi ? '✅' : '❌'}`);
+    if (V.fidfia > 0)   itens.push(`FIA+FDI (limite conjunto): ${fmtBRL(V.fidfia)} de ${fmtBRL(L.fidfia)} ${V.fidfia <= L.fidfia ? '✅' : '❌'}`);
+    if (V.pronon > 0)   itens.push(`PRONON/PRONAS: ${fmtBRL(V.pronon)} de ${fmtBRL(L.pronon)} disponível ${V.pronon <= L.pronon ? '✅' : '❌'}`);
+    if (total > 0)      itens.push(`Total destinado: ${fmtBRL(total)} | IR Devido: ${fmtBRL(ir)} ${total <= ir ? '✅' : '❌'}`);
+    itens.push(`Conclusão: ${problemas.length ? 'NÃO CONFORME — ' + problemas.join('; ') : 'CONFORME — dentro dos limites legais vigentes'}`);
+
+    document.getElementById('laudo-itens').innerHTML = itens.map(i =>
+      `<div class="py-1.5 border-b border-white/8 text-white/75">${i}</div>`
+    ).join('');
+
+    document.getElementById('resultado').classList.remove('hidden');
+    document.getElementById('estado-inicial').classList.add('hidden');
+  }
+</script>
+</body>
+</html>
