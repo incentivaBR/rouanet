@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espaço do Contador — IncentivaBR</title>
+  <meta name="description" content="Base legal, calculadora de limites, modelos de comprovante e FAQ para contadores que orientam clientes sobre destinação do IR.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { navy: '#0D1B3E', gold: '#FFD700' }
+        }
+      }
+    }
+  </script>
+  <style>
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .accordion-content.open { max-height: 800px; }
+    .accordion-icon { transition: transform 0.3s ease; }
+    .accordion-icon.open { transform: rotate(180deg); }
+    .nav-link { transition: color 0.2s; }
+    .nav-link:hover { color: #FFD700; }
+    .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,215,0,0.12); }
+    .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+    .badge-embaixador { background: linear-gradient(135deg, #FFD700, #FFA500); color: #0D1B3E; }
+    html { scroll-behavior: smooth; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0D1B3E; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-navy font-sans text-white min-h-screen">
+
+  <!-- ── NAVBAR ── -->
+  <nav style="background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,215,0,0.12)" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="text-gold font-black text-lg tracking-tight">IncentivaBR</span>
+        <span class="text-white/40 text-sm hidden sm:inline">· Espaço do Contador</span>
+      </a>
+      <div class="flex items-center gap-5 text-sm text-white/70">
+        <a href="#base-legal" class="nav-link hidden md:inline">Base Legal</a>
+        <a href="#calculadora" class="nav-link hidden md:inline">Calculadora</a>
+        <a href="#documentacao" class="nav-link hidden md:inline">Documentação</a>
+        <a href="#faq" class="nav-link hidden md:inline">FAQ</a>
+        <a href="#material" class="nav-link hidden md:inline">Material</a>
+        <a href="#selo" class="bg-gold text-navy font-bold px-4 py-1.5 rounded-full text-xs hover:brightness-110 transition">Ser Embaixador</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="pt-32 pb-16 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="tag bg-gold/20 text-gold mb-4 block">Para Contadores e Profissionais de Contabilidade</span>
+      <h1 class="text-4xl md:text-5xl font-black leading-tight mb-4">
+        Oriente com segurança.<br>
+        <span class="text-gold">A base legal está aqui.</span>
+      </h1>
+      <p class="text-white/70 text-lg max-w-xl mx-auto leading-relaxed">
+        Tudo que você precisa para orientar seus clientes sobre destinação do IR com respaldo jurídico completo — base legal, calculadora, modelos de comprovante e respostas para as dúvidas mais frequentes.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 mt-8">
+        <a href="#calculadora" class="bg-gold text-navy font-bold px-6 py-3 rounded-xl hover:brightness-110 transition">Calcular limites do cliente →</a>
+        <a href="#faq" class="border border-white/20 text-white font-semibold px-6 py-3 rounded-xl hover:border-gold/50 transition">Ver dúvidas frequentes</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NÚMEROS CHAVE ── -->
+  <section class="pb-16 px-4">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center card-hover">
+        <div class="text-3xl font-black text-gold">84%</div>
+        <div class="text-xs text-white/60 mt-1">dos contribuintes do DF não sabem como funciona a destinação</div>
+        <div class="text-xs text-white/30 mt-2">CRC-DF / IESB, 2021</div>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center card-hover">
+        <div class="text-3xl font-black text-gold">73%</div>
+        <div class="text-xs text-white/60 mt-1">nunca receberam orientação do seu contador sobre essa possibilidade</div>
+        <div class="text-xs text-white/30 mt-2">Piloto IncentivaBR, 2026</div>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center card-hover">
+        <div class="text-3xl font-black text-gold">76%</div>
+        <div class="text-xs text-white/60 mt-1">fariam a destinação se o contador os orientasse</div>
+        <div class="text-xs text-white/30 mt-2">CRC-DF / IESB, 2021</div>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center card-hover">
+        <div class="text-3xl font-black text-gold">&lt; 4%</div>
+        <div class="text-xs text-white/60 mt-1">dos elegíveis no DF utilizam atualmente alguma modalidade</div>
+        <div class="text-xs text-white/30 mt-2">CRC-DF / IESB, 2021</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BASE LEGAL ── -->
+  <section id="base-legal" class="py-16 px-4 border-t border-white/8">
+    <div class="max-w-3xl mx-auto">
+      <span class="tag bg-blue-500/20 text-blue-300 mb-3 block">Legislação</span>
+      <h2 class="text-2xl font-black mb-2">Base Legal Completa</h2>
+      <p class="text-white/60 mb-8 text-sm">Clique em cada modalidade para ver o artigo, o limite e o link para o texto oficial.</p>
+
+      <div class="space-y-3" id="accordion-legal">
+
+        <!-- Rouanet Art. 18 -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('r18')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <span class="text-gold text-lg">🎭</span>
+              <div>
+                <div class="font-bold text-sm">Lei Rouanet — Doação Direta (Art. 18)</div>
+                <div class="text-white/50 text-xs">Lei nº 8.313/1991 · Limite: 6% do IR Devido · 100% abatível</div>
+              </div>
+            </div>
+            <svg id="icon-r18" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-r18" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 space-y-3 text-sm text-white/75">
+              <p><strong class="text-white">Mecanismo:</strong> O contribuinte faz uma doação direta a um projeto cultural aprovado pelo MinC/Ancine com PRONAC ativo. O valor é deduzido integralmente do IR Devido na DIRPF.</p>
+              <p><strong class="text-white">Limite:</strong> 6% do Imposto de Renda Devido (não da renda bruta).</p>
+              <p><strong class="text-white">Diferença do Art. 26:</strong> No Art. 18, não há contrapartida — é doação pura. No Art. 26 (patrocínio), o contribuinte recebe exposição de marca, o abatimento é de 80% e é mais utilizado por PJ.</p>
+              <p><strong class="text-white">O que o proponente entrega:</strong> Recibo com CNPJ, número do PRONAC, valor e data da transferência.</p>
+              <p><strong class="text-white">Onde lançar na DIRPF:</strong> Deduções → Incentivos Fiscais → PRONAC/Cultura.</p>
+              <a href="https://www.planalto.gov.br/ccivil_03/leis/l8313cons.htm" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-gold text-xs hover:underline mt-1">
+                📄 Ver texto completo no Planalto.gov.br ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lei do Esporte -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('esporte')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <span class="text-gold text-lg">⚽</span>
+              <div>
+                <div class="font-bold text-sm">Lei do Esporte</div>
+                <div class="text-white/50 text-xs">Lei nº 11.438/2006 · Limite: 7% do IR Devido</div>
+              </div>
+            </div>
+            <svg id="icon-esporte" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-esporte" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 space-y-3 text-sm text-white/75">
+              <p><strong class="text-white">Mecanismo:</strong> Destinação para projetos esportivos e paraesportivos aprovados pelo Ministério do Esporte.</p>
+              <p><strong class="text-white">Limite:</strong> 7% do IR Devido — o maior entre todas as modalidades para PF.</p>
+              <p><strong class="text-white">Regulamentação:</strong> Decreto nº 6.180/2007. Projetos precisam ter aprovação e código no sistema do Ministério do Esporte.</p>
+              <p><strong class="text-white">Onde lançar na DIRPF:</strong> Deduções → Incentivos Fiscais → Desporto.</p>
+              <a href="https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11438.htm" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-gold text-xs hover:underline mt-1">
+                📄 Ver texto completo no Planalto.gov.br ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIA / ECA -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('fia')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <span class="text-gold text-lg">👧</span>
+              <div>
+                <div class="font-bold text-sm">FIA — Fundo para Criança e Adolescente</div>
+                <div class="text-white/50 text-xs">Lei nº 8.069/1990 (ECA) · Limite: 3% do IR Devido · Código 40</div>
+              </div>
+            </div>
+            <svg id="icon-fia" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-fia" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 space-y-3 text-sm text-white/75">
+              <p><strong class="text-white">Mecanismo:</strong> Doação ao Fundo Estadual ou Municipal para a Criança e o Adolescente, vinculado ao Conselho (CDCA/CONANDA). O fundo repassa para projetos aprovados pelo conselho gestor.</p>
+              <p><strong class="text-white">Limite:</strong> 3% do IR Devido. Combinado com FDI (idoso), o limite conjunto é de 6%.</p>
+              <p><strong class="text-white">Atenção:</strong> No DF, o fundo é o FDCA-DF. Verificar CNPJ e conta bancária junto ao CDCA-DF antes de orientar o cliente.</p>
+              <p><strong class="text-white">Onde lançar na DIRPF:</strong> Doações Efetuadas → Código <strong class="text-gold">40</strong> (ECA/Fundo da Criança e Adolescente).</p>
+              <a href="https://www.planalto.gov.br/ccivil_03/leis/l8069.htm" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-gold text-xs hover:underline mt-1">
+                📄 Ver texto completo no Planalto.gov.br ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FDI -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('fdi')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <span class="text-gold text-lg">👴</span>
+              <div>
+                <div class="font-bold text-sm">FDI — Fundo do Idoso</div>
+                <div class="text-white/50 text-xs">Lei nº 12.213/2010 · Limite: 3% do IR Devido · Código 41</div>
+              </div>
+            </div>
+            <svg id="icon-fdi" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-fdi" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 space-y-3 text-sm text-white/75">
+              <p><strong class="text-white">Mecanismo:</strong> Doação ao Fundo Nacional, Estadual ou Municipal do Idoso, gerido pelo Conselho do Idoso (CNDI/estadual/municipal).</p>
+              <p><strong class="text-white">Limite:</strong> 3% do IR Devido. Combinado com FIA, o limite conjunto é de 6%.</p>
+              <p><strong class="text-white">Onde lançar na DIRPF:</strong> Doações Efetuadas → Código <strong class="text-gold">41</strong> (Estatuto do Idoso/Fundo do Idoso).</p>
+              <a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12213.htm" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-gold text-xs hover:underline mt-1">
+                📄 Ver texto completo no Planalto.gov.br ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRONON / PRONAS -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('pronon')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <span class="text-gold text-lg">🏥</span>
+              <div>
+                <div class="font-bold text-sm">PRONON + PRONAS — Saúde</div>
+                <div class="text-white/50 text-xs">Lei nº 12.715/2012 · Limite: 1% do IR Devido (conjunto)</div>
+              </div>
+            </div>
+            <svg id="icon-pronon" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-pronon" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 space-y-3 text-sm text-white/75">
+              <p><strong class="text-white">PRONON:</strong> Programa Nacional de Apoio à Atenção Oncológica — destinação para entidades de prevenção e tratamento de câncer.</p>
+              <p><strong class="text-white">PRONAS/PCD:</strong> Programa Nacional de Apoio à Atenção da Saúde da Pessoa com Deficiência.</p>
+              <p><strong class="text-white">Limite conjunto:</strong> 1% do IR Devido para PRONON + PRONAS somados.</p>
+              <p><strong class="text-white">Onde lançar na DIRPF:</strong> Deduções → Incentivos Fiscais → PRONON / PRONAS (campos separados).</p>
+              <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12715.htm" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-gold text-xs hover:underline mt-1">
+                📄 Ver texto completo no Planalto.gov.br ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Alerta -->
+      <div class="mt-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 flex gap-3 text-sm">
+        <span class="text-yellow-400 flex-shrink-0 text-base">⚠️</span>
+        <div class="text-yellow-200/80">
+          <strong class="text-yellow-300">Regra crítica:</strong> cada modalidade tem limite <strong>próprio e independente</strong>.
+          Os percentuais não se somam livremente para afirmar um "total disponível".
+          Apresente sempre separado por modalidade ao cliente.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CALCULADORA ── -->
+  <section id="calculadora" class="py-16 px-4 border-t border-white/8">
+    <div class="max-w-3xl mx-auto">
+      <span class="tag bg-green-500/20 text-green-300 mb-3 block">Ferramenta</span>
+      <h2 class="text-2xl font-black mb-2">Calculadora de Limites</h2>
+      <p class="text-white/60 mb-8 text-sm">Informe o IR Devido do cliente para calcular o máximo disponível por modalidade.</p>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-white/80 mb-2">IR Devido do cliente (R$)</label>
+          <div class="relative">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-semibold">R$</span>
+            <input
+              type="text"
+              id="ir-devido"
+              placeholder="0,00"
+              oninput="calcular()"
+              class="w-full bg-white/10 border border-white/20 rounded-xl pl-10 pr-4 py-3.5 text-white font-bold text-lg focus:outline-none focus:border-gold/60 focus:ring-1 focus:ring-gold/30 placeholder-white/30"
+            />
+          </div>
+          <p class="text-white/40 text-xs mt-2">Encontre este valor na declaração: Resumo → Cálculo do Imposto → Imposto Devido</p>
+        </div>
+
+        <div id="resultado" class="hidden">
+          <div class="border-t border-white/10 pt-5 mb-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-sm text-white/60">IR Devido informado:</span>
+              <span id="ir-valor" class="font-bold text-gold"></span>
+            </div>
+          </div>
+          <div class="space-y-2" id="tabela-limites"></div>
+          <div class="mt-5 bg-white/5 rounded-xl p-4 text-xs text-white/50 leading-relaxed">
+            <strong class="text-white/70">⚠️ Atenção:</strong> Valores estimados com base no IR Devido informado. O IR Devido real depende de todas as deduções individuais do cliente (dependentes, saúde, educação, RPPS). Use como orientação — confirme com os dados reais da declaração.
+          </div>
+        </div>
+
+        <div id="sem-ir" class="text-center py-6 text-white/30 text-sm">
+          Informe o IR Devido para ver os limites disponíveis por modalidade.
+        </div>
+      </div>
+
+      <!-- Explicação do mecanismo -->
+      <div class="mt-6 bg-green-900/20 border border-green-500/20 rounded-xl p-5 text-sm">
+        <div class="font-bold text-green-300 mb-2">Como explicar ao cliente</div>
+        <p class="text-white/70 leading-relaxed">
+          <strong class="text-white">"O valor destinado abate diretamente do seu IR Devido — você paga menos imposto ou recebe mais de restituição. O resultado financeiro final para você é zero."</strong>
+        </p>
+        <div class="mt-3 pt-3 border-t border-green-500/15">
+          <span class="text-white/50">⚠️ Nota de fluxo de caixa:</span>
+          <span class="text-white/60"> Existe um desembolso prévio (PIX/TED ao projeto ou fundo) antes da declaração. O abatimento ocorre na DIRPF. O custo <em>final</em> é zero, mas o cliente precisa saber dessa saída temporária.</span>
+        </div>
+      </div>
+
+      <!-- Perfil elegível -->
+      <div class="mt-4 bg-white/3 border border-white/10 rounded-xl p-5 text-sm">
+        <div class="font-bold text-white/80 mb-3">Perfil elegível — quem se qualifica na sua carteira</div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="flex items-start gap-2">
+            <span class="text-gold mt-0.5">✓</span>
+            <span class="text-white/60">Renda bruta acima de <strong class="text-white">R$ 5.000–6.000/mês</strong></span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-gold mt-0.5">✓</span>
+            <span class="text-white/60">Declaração no <strong class="text-white">modelo completo</strong></span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-gold mt-0.5">✓</span>
+            <span class="text-white/60">IR Devido <strong class="text-white">positivo</strong> após todas as deduções</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DOCUMENTAÇÃO ── -->
+  <section id="documentacao" class="py-16 px-4 border-t border-white/8">
+    <div class="max-w-3xl mx-auto">
+      <span class="tag bg-purple-500/20 text-purple-300 mb-3 block">Comprovantes</span>
+      <h2 class="text-2xl font-black mb-2">Documentação e Lançamento na DIRPF</h2>
+      <p class="text-white/60 mb-8 text-sm">O que o comprovante deve conter e onde lançar em cada modalidade.</p>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left py-3 pr-4 text-white/50 font-semibold">Modalidade</th>
+              <th class="text-left py-3 pr-4 text-white/50 font-semibold">Ficha / Campo</th>
+              <th class="text-left py-3 text-white/50 font-semibold">Código</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/8">
+            <tr class="hover:bg-white/3 transition">
+              <td class="py-3.5 pr-4">🎭 Rouanet Art. 18 (doação)</td>
+              <td class="py-3.5 pr-4 text-white/60">Deduções → Incentivos Fiscais → PRONAC/Cultura</td>
+              <td class="py-3.5 text-gold font-mono text-xs">PRONAC</td>
+            </tr>
+            <tr class="hover:bg-white/3 transition">
+              <td class="py-3.5 pr-4">⚽ Lei do Esporte</td>
+              <td class="py-3.5 pr-4 text-white/60">Deduções → Incentivos Fiscais → Desporto</td>
+              <td class="py-3.5 text-gold font-mono text-xs">—</td>
+            </tr>
+            <tr class="hover:bg-white/3 transition">
+              <td class="py-3.5 pr-4">👧 FIA / ECA</td>
+              <td class="py-3.5 pr-4 text-white/60">Doações Efetuadas</td>
+              <td class="py-3.5 text-gold font-mono text-xs font-bold">40</td>
+            </tr>
+            <tr class="hover:bg-white/3 transition">
+              <td class="py-3.5 pr-4">👴 FDI — Idoso</td>
+              <td class="py-3.5 pr-4 text-white/60">Doações Efetuadas</td>
+              <td class="py-3.5 text-gold font-mono text-xs font-bold">41</td>
+            </tr>
+            <tr class="hover:bg-white/3 transition">
+              <td class="py-3.5 pr-4">🏥 PRONON</td>
+              <td class="py-3.5 pr-4 text-white/60">Deduções → Incentivos Fiscais → PRONON</td>
+              <td class="py-3.5 text-gold font-mono text-xs">—</td>
+            </tr>
+            <tr class="hover:bg-white/3 transition">
+              <td class="py-3.5 pr-4">🏥 PRONAS/PCD</td>
+              <td class="py-3.5 pr-4 text-white/60">Deduções → Incentivos Fiscais → PRONAS</td>
+              <td class="py-3.5 text-gold font-mono text-xs">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="font-bold text-sm mb-2">📄 Comprovante Rouanet Art. 18</div>
+          <ul class="space-y-1 text-xs text-white/60">
+            <li>✓ Nome e CNPJ do proponente (projeto)</li>
+            <li>✓ Número do PRONAC</li>
+            <li>✓ Valor e data da transferência</li>
+            <li>✓ Declaração de aprovação pelo MinC/Ancine</li>
+          </ul>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="font-bold text-sm mb-2">📄 Comprovante FIA / FDI</div>
+          <ul class="space-y-1 text-xs text-white/60">
+            <li>✓ CNPJ do fundo (estadual ou municipal)</li>
+            <li>✓ Número do recibo emitido pelo fundo</li>
+            <li>✓ Valor e data do depósito</li>
+            <li>✓ Nome do doador</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-4 bg-yellow-500/8 border border-yellow-500/20 rounded-xl p-4 text-xs text-yellow-200/70">
+        <strong class="text-yellow-300">Lembrete:</strong> Verifique os campos no PGD do ano vigente. A navegação pode ter pequenas variações entre versões do programa. Em caso de dúvida, consulte a Instrução Normativa RFB do exercício corrente.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section id="faq" class="py-16 px-4 border-t border-white/8">
+    <div class="max-w-3xl mx-auto">
+      <span class="tag bg-orange-500/20 text-orange-300 mb-3 block">Dúvidas Frequentes</span>
+      <h2 class="text-2xl font-black mb-2">FAQ do Contador</h2>
+      <p class="text-white/60 mb-8 text-sm">Perguntas que seus clientes vão fazer — e as respostas tecnicamente corretas.</p>
+
+      <div class="space-y-3" id="accordion-faq">
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('faq1')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <span class="font-semibold text-sm pr-4">O limite é sobre o IR Devido ou sobre a renda bruta?</span>
+            <svg id="icon-faq1" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-faq1" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 text-sm text-white/70">
+              Sobre o <strong class="text-gold">IR Devido</strong> — nunca sobre a renda bruta ou tributável. O IR Devido é o imposto calculado após todas as deduções legais (dependentes, saúde, educação, RPPS). É sempre um valor menor que o imposto calculado sobre a renda bruta.
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('faq2')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <span class="font-semibold text-sm pr-4">O cliente precisa declarar no modelo completo obrigatoriamente?</span>
+            <svg id="icon-faq2" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-faq2" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 text-sm text-white/70">
+              Sim. A destinação de IR por incentivos fiscais é exclusiva para quem declara no <strong class="text-white">modelo completo</strong> (deduções legais). O modelo simplificado usa o desconto padrão de 20% e não permite esse tipo de dedução adicional. Clientes que já declaram no modelo completo para usar deduções de dependentes e saúde já estão automaticamente elegíveis.
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('faq3')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <span class="font-semibold text-sm pr-4">Qual a diferença entre Art. 18 e Art. 26 da Lei Rouanet?</span>
+            <svg id="icon-faq3" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-faq3" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 text-sm text-white/70 space-y-2">
+              <p><strong class="text-white">Art. 18 — Doação direta:</strong> 100% do valor abate do IR Devido. Sem contrapartida. Mais comum para Pessoa Física. Limite: 6%.</p>
+              <p><strong class="text-white">Art. 26 — Patrocínio:</strong> o patrocinador recebe exposição de marca (contrapartida comercial). Apenas 80% do valor abate. Limite: 6%. Mais adequado para PJ (empresas).</p>
+              <p class="text-white/50">Para clientes PF, oriente sempre o Art. 18 — mais simples e com abatimento integral.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('faq4')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <span class="font-semibold text-sm pr-4">Preciso assinar ou me responsabilizar pela destinação do cliente?</span>
+            <svg id="icon-faq4" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-faq4" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 text-sm text-white/70">
+              Não. O contador <strong class="text-white">orienta e lança na declaração</strong>. A relação jurídica da destinação é entre o cliente (doador) e o projeto ou fundo. Sua responsabilidade profissional é garantir que o lançamento esteja correto na DIRPF e que o comprovante recebido pelo cliente seja válido (PRONAC ativo, CNPJ correto, dados completos).
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('faq5')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <span class="font-semibold text-sm pr-4">E se o cliente já tiver pago o IR e quiser fazer a destinação depois?</span>
+            <svg id="icon-faq5" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-faq5" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 text-sm text-white/70 space-y-2">
+              <p>A destinação precisa ocorrer <strong class="text-white">antes do encerramento do prazo da DIRPF</strong> (geralmente 31 de maio). Após o prazo, não é possível incluir na declaração já entregue sem retificação.</p>
+              <p>Para FIA e FDI: a doação ao fundo pode ser feita ao longo do ano-calendário (antes do prazo).</p>
+              <p>Para Rouanet: a transferência ao projeto pode ser feita a qualquer momento durante o ano, desde que o projeto tenha PRONAC ativo.</p>
+              <p class="text-white/50">Posicionamento correto agora (pós-maio/2026): <em>"A destinação de 2027 começa agora. Você tem o ano inteiro para planejar."</em></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('faq6')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <span class="font-semibold text-sm pr-4">Posso destinar para mais de uma modalidade no mesmo ano?</span>
+            <svg id="icon-faq6" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-faq6" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 text-sm text-white/70 space-y-2">
+              <p>Sim — com atenção aos limites individuais de cada modalidade.</p>
+              <p>Exemplo: um cliente pode destinar 6% para Rouanet (cultura) <strong class="text-white">e</strong> 7% para Esporte. Os limites são independentes.</p>
+              <p>Exceção: FIA + FDI juntos têm limite <strong class="text-white">conjunto de 6%</strong> — não pode usar 3% de FIA + 3% de FDI se isso exceder 6% do IR Devido.</p>
+              <p>O limite absoluto final: a soma de todas as destinações não pode exceder o IR Devido total do cliente.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('faq7')" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition">
+            <span class="font-semibold text-sm pr-4">Como verificar se um projeto Rouanet tem PRONAC ativo?</span>
+            <svg id="icon-faq7" class="accordion-icon w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-faq7" class="accordion-content px-5 pb-5">
+            <div class="border-t border-white/10 pt-4 text-sm text-white/70 space-y-2">
+              <p>Consulte o SALIC (Sistema de Apoio às Leis de Incentivo à Cultura) do Ministério da Cultura. Projetos aprovados aparecem com status "Em execução" e dentro do prazo de captação.</p>
+              <p>A IncentivaBR lista apenas projetos com PRONAC ativo e verificado — isso elimina o risco de o cliente fazer uma destinação para um projeto vencido ou irregular.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MATERIAL PARA COMPARTILHAR ── -->
+  <section id="material" class="py-16 px-4 border-t border-white/8">
+    <div class="max-w-3xl mx-auto">
+      <span class="tag bg-teal-500/20 text-teal-300 mb-3 block">Recursos</span>
+      <h2 class="text-2xl font-black mb-2">Material para Compartilhar com Clientes</h2>
+      <p class="text-white/60 mb-8 text-sm">Envie para o cliente antes ou depois da reunião de declaração.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 card-hover">
+          <div class="text-2xl mb-3">📄</div>
+          <div class="font-bold mb-1">Guia Passo a Passo</div>
+          <div class="text-white/50 text-xs mb-4">Como o servidor localiza o IR Devido, calcula o disponível, usa a plataforma e lança na declaração. 4 passos. Uma página.</div>
+          <a href="passo-a-passo.html" class="inline-flex items-center gap-1.5 bg-gold/15 text-gold text-xs font-bold px-4 py-2 rounded-lg hover:bg-gold/25 transition">
+            Ver guia →
+          </a>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 card-hover">
+          <div class="text-2xl mb-3">🧮</div>
+          <div class="font-bold mb-1">Calculadora para o Cliente</div>
+          <div class="text-white/50 text-xs mb-4">Calculadora simplificada para o servidor estimar quanto pode destinar. Pode enviar o link direto.</div>
+          <a href="calculadora-rapida.html" class="inline-flex items-center gap-1.5 bg-gold/15 text-gold text-xs font-bold px-4 py-2 rounded-lg hover:bg-gold/25 transition">
+            Abrir calculadora →
+          </a>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 card-hover">
+          <div class="text-2xl mb-3">💬</div>
+          <div class="font-bold mb-1">Texto para WhatsApp/Email</div>
+          <div class="text-white/50 text-xs mb-4">Mensagem pronta para o contador enviar ao cliente servidor orientando sobre a destinação.</div>
+          <button onclick="copiarMensagem()" class="inline-flex items-center gap-1.5 bg-gold/15 text-gold text-xs font-bold px-4 py-2 rounded-lg hover:bg-gold/25 transition">
+            Copiar mensagem →
+          </button>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 card-hover">
+          <div class="text-2xl mb-3">🚀</div>
+          <div class="font-bold mb-1">Plataforma IncentivaBR</div>
+          <div class="text-white/50 text-xs mb-4">Envie o link da plataforma para o cliente fazer a destinação de forma guiada e segura.</div>
+          <a href="piloto.html" class="inline-flex items-center gap-1.5 bg-gold/15 text-gold text-xs font-bold px-4 py-2 rounded-lg hover:bg-gold/25 transition">
+            Ver plataforma →
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Mensagem copiável (oculta) -->
+      <div id="msg-wa" class="hidden mt-4 bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-white/80 leading-relaxed font-mono text-xs">
+Olá! Na revisão da sua declaração, identifiquei que você pode destinar parte do seu IR para projetos sociais — sem custo adicional para você no resultado final do ano.
+
+O valor destinado abate diretamente do seu Imposto de Renda. Você paga menos ou recebe mais de restituição. É um direito legal previsto em lei.
+
+Para calcular exatamente quanto você pode destinar e escolher um projeto, acesse:
+👉 destineai.com.br
+
+Qualquer dúvida, é só me chamar!
+      </div>
+      <div id="copia-ok" class="hidden mt-2 text-green-400 text-xs text-center">✓ Mensagem copiada!</div>
+    </div>
+  </section>
+
+  <!-- ── SELO EMBAIXADOR ── -->
+  <section id="selo" class="py-16 px-4 border-t border-white/8">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-gradient-to-br from-gold/10 to-orange-500/5 border border-gold/20 rounded-3xl p-8 text-center">
+        <div class="text-5xl mb-4">🏆</div>
+        <h2 class="text-2xl font-black mb-2">Torne-se Contador Embaixador IncentivaBR</h2>
+        <p class="text-white/60 text-sm max-w-md mx-auto mb-6 leading-relaxed">
+          Contadores que indicam a IncentivaBR recebem o selo "Especialista em Destinação do IR" — para exibir no site, LinkedIn e material do escritório.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 mb-8 text-sm">
+          <div class="flex items-center gap-2 bg-white/5 rounded-xl px-4 py-2.5">
+            <span class="text-gold">✓</span>
+            <span class="text-white/70">Selo para site e redes sociais</span>
+          </div>
+          <div class="flex items-center gap-2 bg-white/5 rounded-xl px-4 py-2.5">
+            <span class="text-gold">✓</span>
+            <span class="text-white/70">Acesso antecipado a novos recursos</span>
+          </div>
+          <div class="flex items-center gap-2 bg-white/5 rounded-xl px-4 py-2.5">
+            <span class="text-gold">✓</span>
+            <span class="text-white/70">Material exclusivo para orientação</span>
+          </div>
+          <div class="flex items-center gap-2 bg-white/5 rounded-xl px-4 py-2.5">
+            <span class="text-gold">✓</span>
+            <span class="text-white/70">Suporte direto da equipe IncentivaBR</span>
+          </div>
+        </div>
+        <!-- Preview do selo -->
+        <div class="inline-flex items-center gap-3 bg-gradient-to-r from-gold/20 to-orange-400/10 border border-gold/30 rounded-2xl px-6 py-3 mb-8">
+          <span class="text-gold font-black text-sm">IncentivaBR</span>
+          <span class="w-px h-5 bg-gold/30"></span>
+          <span class="text-xs text-white/80">Contador Embaixador<br><span class="text-gold/80">Especialista em Destinação do IR</span></span>
+        </div>
+        <div>
+          <a href="mailto:adactoarturdornas@gmail.com?subject=Quero ser Contador Embaixador IncentivaBR" class="bg-gold text-navy font-bold px-8 py-3.5 rounded-xl hover:brightness-110 transition inline-block text-sm">
+            Quero ser Embaixador →
+          </a>
+          <p class="text-white/30 text-xs mt-3">Resposta em até 48 horas · Sem compromisso</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="border-t border-white/8 py-8 px-4 text-center text-white/30 text-xs">
+    <div class="max-w-3xl mx-auto">
+      <div class="font-bold text-white/50 mb-1">IncentivaBR</div>
+      <div class="mb-1">Registro INPI nº BR512025000647-0</div>
+      <div class="mb-4">As informações desta página têm caráter educativo e de referência. Consulte sempre a legislação vigente e a Instrução Normativa da Receita Federal do exercício corrente.</div>
+      <a href="index.html" class="text-gold/60 hover:text-gold transition">← Voltar ao início</a>
+    </div>
+  </footer>
+
+  <script>
+    // ── Accordion ──
+    function toggleAccordion(id) {
+      const content = document.getElementById('content-' + id);
+      const icon = document.getElementById('icon-' + id);
+      const isOpen = content.classList.contains('open');
+      content.classList.toggle('open', !isOpen);
+      icon.classList.toggle('open', !isOpen);
+    }
+
+    // ── Calculadora ──
+    const modalidades = [
+      { emoji: '🎭', nome: 'Cultura — Lei Rouanet (Art. 18)', pct: 0.06, label: '6%', lei: 'Lei 8.313/1991' },
+      { emoji: '⚽', nome: 'Esporte', pct: 0.07, label: '7%', lei: 'Lei 11.438/2006' },
+      { emoji: '👧', nome: 'FIA — Fundo da Criança e Adolescente', pct: 0.03, label: '3%', lei: 'Lei 8.069/1990' },
+      { emoji: '👴', nome: 'FDI — Fundo do Idoso', pct: 0.03, label: '3%', lei: 'Lei 12.213/2010' },
+      { emoji: '👧👴', nome: 'FIA + FDI (limite conjunto)', pct: 0.06, label: '6%', lei: 'Limite global', joint: true },
+      { emoji: '🏥', nome: 'Saúde — PRONON + PRONAS', pct: 0.01, label: '1%', lei: 'Lei 12.715/2012' },
+    ];
+
+    function parseBRL(val) {
+      return parseFloat(val.replace(/\./g, '').replace(',', '.')) || 0;
+    }
+
+    function formatBRL(val) {
+      return val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function calcular() {
+      const raw = document.getElementById('ir-devido').value;
+      const irDevido = parseBRL(raw);
+
+      // Formatar input enquanto digita
+      const numStr = raw.replace(/\D/g, '');
+      if (numStr) {
+        const num = parseInt(numStr) / 100;
+        document.getElementById('ir-devido').value = formatBRL(num);
+      }
+
+      const resultado = document.getElementById('resultado');
+      const semIr = document.getElementById('sem-ir');
+
+      if (!irDevido || irDevido <= 0) {
+        resultado.classList.add('hidden');
+        semIr.classList.remove('hidden');
+        return;
+      }
+
+      resultado.classList.remove('hidden');
+      semIr.classList.add('hidden');
+      document.getElementById('ir-valor').textContent = 'R$ ' + formatBRL(irDevido);
+
+      const tabela = document.getElementById('tabela-limites');
+      tabela.innerHTML = modalidades.map(m => {
+        const valor = irDevido * m.pct;
+        const isJoint = m.joint;
+        return `
+          <div class="flex items-center justify-between py-3 px-4 rounded-xl ${isJoint ? 'bg-yellow-500/8 border border-yellow-500/15' : 'bg-white/5'} gap-2">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="flex-shrink-0 text-base">${m.emoji}</span>
+              <div class="min-w-0">
+                <div class="font-semibold text-sm truncate">${m.nome}</div>
+                <div class="text-white/40 text-xs">${m.lei} · ${m.label} do IR Devido${isJoint ? ' · limite conjunto' : ''}</div>
+              </div>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <div class="font-black text-gold text-base">R$ ${formatBRL(valor)}</div>
+              <div class="text-white/30 text-xs">máximo</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ── Copiar mensagem WhatsApp ──
+    function copiarMensagem() {
+      const msg = document.getElementById('msg-wa').innerText.trim();
+      navigator.clipboard.writeText(msg).then(() => {
+        document.getElementById('msg-wa').classList.remove('hidden');
+        document.getElementById('copia-ok').classList.remove('hidden');
+        setTimeout(() => document.getElementById('copia-ok').classList.add('hidden'), 3000);
+      }).catch(() => {
+        document.getElementById('msg-wa').classList.toggle('hidden');
+      });
+    }
+  </script>
+</body>
+</html>
