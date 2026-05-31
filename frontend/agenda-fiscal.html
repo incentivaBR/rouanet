@@ -61,7 +61,7 @@
         Agenda Fiscal Inteligente
       </h1>
       <p class="text-white/60 leading-relaxed">
-        Saiba exatamente <strong class="text-white">quando agir</strong> em cada modalidade. Prazos, janelas abertas e o que fazer agora para não perder a destinação de 2027.
+        Saiba exatamente <strong class="text-white">quando agir</strong> em cada modalidade. Prazos, janelas abertas e o que fazer agora para não perder a destinação de <span id="ano-cal-hero"></span>.
       </p>
       <!-- Status atual dinâmico -->
       <div id="status-agora" class="mt-6 inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-3 text-sm">
@@ -167,23 +167,27 @@
   const ANO  = HOJE.getFullYear();
   const MES  = HOJE.getMonth(); // 0-based
 
-  // DIRPF do ano atual fecha ~31 mai do ano seguinte
-  // Destinação para DIRPF de ANO+1 começa agora até ~31/mai/(ANO+1)
-  const anoDeclaracao = ANO + 1; // qual DIRPF estamos planejando
-  const dataFechaDIRPF = new Date(anoDeclaracao, 4, 31); // 31 mai do ano seguinte
+  // Destinação ocorre no ANO-CALENDÁRIO atual (ANO).
+  // A declaração (DIRPF) que usa essas destinações é entregue no ano seguinte.
+  const anoCalendario = ANO;        // ano em que a destinação é feita → 2026
+  const anoDIRPF = ANO + 1;         // ano em que a DIRPF é entregue → 2027
+  const anoDeclaracao = anoDIRPF;   // alias para compatibilidade com código abaixo
+
+  const dataFechaDIRPF = new Date(anoDIRPF, 4, 31); // 31 mai do ano da declaração
   const diasRestantes = Math.ceil((dataFechaDIRPF - HOJE) / 86400000);
 
   // Preencher dados de data
   document.getElementById('data-hoje').textContent =
     HOJE.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
   document.getElementById('contexto-agora').textContent =
-    `Planejando a destinação de ${anoDeclaracao} — DIRPF ${anoDeclaracao} encerra em mai/${anoDeclaracao}`;
-  document.getElementById('ano-ref').textContent = ANO;
-  document.getElementById('ano-dirpf').textContent = anoDeclaracao;
-  document.getElementById('ano-marcos').textContent = ANO + '–' + anoDeclaracao;
+    `Destinação ${anoCalendario} em andamento — declare na DIRPF ${anoDIRPF}`;
+  document.getElementById('ano-ref').textContent = anoCalendario;
+  document.getElementById('ano-dirpf').textContent = anoDIRPF;
+  document.getElementById('ano-marcos').textContent = anoCalendario + '–' + anoDIRPF;
   document.getElementById('dias-restantes').textContent = diasRestantes.toLocaleString('pt-BR');
-  document.getElementById('ano-prox-dirpf').textContent = anoDeclaracao;
-  document.getElementById('data-limite-dirpf').textContent = `Prazo estimado: 31 de maio de ${anoDeclaracao}`;
+  document.getElementById('ano-prox-dirpf').textContent = anoDIRPF;
+  document.getElementById('data-limite-dirpf').textContent = `Prazo estimado: 31 de maio de ${anoDIRPF}`;
+  document.getElementById('ano-cal-hero').textContent = anoCalendario;
 
   // ── Grade de meses ──
   const gradeMeses = document.getElementById('grade-meses');
@@ -211,41 +215,41 @@
   // ── Timeline de marcos ──
   const marcos = [
     {
-      data: new Date(ANO, 5, 1), // jun atual
-      titulo: `Início da janela de planejamento — destinação ${anoDeclaracao}`,
-      detalhe: 'Calcule seu IR estimado e escolha os projetos com antecedência.',
-      tipo: 'plan',
-      passado: MES > 5,
-      atual: MES === 5,
+      data: new Date(ANO, MES, HOJE.getDate()),
+      titulo: `Agora — Janela de destinação ${anoCalendario} aberta`,
+      detalhe: `Você pode destinar para FDCA, FDI, Rouanet, Esporte e Saúde. O valor abate do IR Devido na DIRPF ${anoDIRPF}.`,
+      tipo: 'open',
+      passado: false,
+      atual: true,
     },
     {
-      data: new Date(anoDeclaracao, 0, 2), // jan próximo ano
-      titulo: `Janeiro ${anoDeclaracao} — Janela principal abre`,
-      detalhe: 'FIA/FDI: faça as doações aos fundos. Rouanet: projetos em captação ativa.',
+      data: new Date(ANO, 8, 30), // set do ano atual
+      titulo: `Setembro ${anoCalendario} — Prazo ideal para FDCA e FDI`,
+      detalhe: 'Confirme CNPJ e conta bancária do fundo. Faça a transferência e guarde o recibo.',
+      tipo: 'open',
+      passado: MES > 8,
+      atual: false,
+    },
+    {
+      data: new Date(ANO, 10, 30), // nov do ano atual
+      titulo: `Novembro ${anoCalendario} — Prazo ideal para Rouanet e Esporte`,
+      detalhe: 'Verifique se o projeto tem PRONAC ativo e prazo de captação aberto. Faça a transferência.',
+      tipo: 'open',
+      passado: MES > 10,
+      atual: false,
+    },
+    {
+      data: new Date(anoDIRPF, 2, 31), // mar do ano da DIRPF
+      titulo: `Março ${anoDIRPF} — Último prazo recomendado`,
+      detalhe: 'Destinações feitas até aqui dão tempo de resolver pendências antes do encerramento da DIRPF.',
       tipo: 'open',
       passado: false,
       atual: false,
     },
     {
-      data: new Date(anoDeclaracao, 2, 1), // mar próximo ano
-      titulo: `Março ${anoDeclaracao} — Atenção máxima`,
-      detalhe: 'Rouanet: verificar se o projeto ainda tem prazo de captação aberto. FIA/FDI: confirmar conta do fundo.',
-      tipo: 'open',
-      passado: false,
-      atual: false,
-    },
-    {
-      data: new Date(anoDeclaracao, 3, 30), // abr próximo ano
-      titulo: `Abril ${anoDeclaracao} — Prazo recomendado para destinação`,
-      detalhe: 'Faça a transferência e guarde o comprovante até aqui para ter tempo de resolver qualquer pendência.',
-      tipo: 'open',
-      passado: false,
-      atual: false,
-    },
-    {
-      data: new Date(anoDeclaracao, 4, 31), // mai próximo ano
-      titulo: `31 de maio ${anoDeclaracao} — DIRPF encerra`,
-      detalhe: 'Prazo final para entrega da declaração. Destinações feitas após esta data entram no ano seguinte.',
+      data: new Date(anoDIRPF, 4, 31), // 31 mai do ano da DIRPF
+      titulo: `31 de maio ${anoDIRPF} — DIRPF ${anoDIRPF} encerra`,
+      detalhe: `Prazo final para entrega da declaração com as destinações de ${anoCalendario}. Após esta data, destinações entram no ano ${anoDIRPF}.`,
       tipo: 'closed',
       passado: false,
       atual: false,
@@ -281,13 +285,13 @@
       nome: 'Lei Rouanet — Art. 18',
       lei: 'Lei 8.313/1991',
       limite: '6% do IR Devido',
-      janela: `Janeiro a abril de ${anoDeclaracao}`,
+      janela: `Ano-calendário ${anoCalendario} — até 31/mai/${anoDIRPF}`,
       prazoCaptacao: 'Verificar projeto a projeto (PRONAC ativo no SALIC)',
       comoFazer: 'Transferência bancária (PIX/TED) direta para a conta do projeto aprovado',
       comprovante: 'Recibo emitido pelo proponente com PRONAC + CNPJ + valor + data',
       onde: `Deduções → Incentivos Fiscais → PRONAC/Cultura`,
-      status: MES >= 5 ? 'plan' : 'open',
-      statusLabel: MES >= 5 ? 'Planejamento — destinação para 2027' : 'Janela aberta',
+      status: 'open',
+      statusLabel: `Aberto — destinação ${anoCalendario}`,
       alerta: 'Verifique se o projeto escolhido ainda tem prazo de captação ativo antes de transferir.',
     },
     {
@@ -295,13 +299,13 @@
       nome: 'Lei do Esporte',
       lei: 'Lei 11.438/2006',
       limite: '7% do IR Devido',
-      janela: `Janeiro a abril de ${anoDeclaracao}`,
+      janela: `Ano-calendário ${anoCalendario} — até 31/mai/${anoDIRPF}`,
       prazoCaptacao: 'Verificar projeto a projeto (aprovação Ministério do Esporte)',
       comoFazer: 'Transferência bancária para a conta do projeto esportivo aprovado',
       comprovante: 'Recibo com CNPJ do projeto, número de aprovação, valor e data',
       onde: `Deduções → Incentivos Fiscais → Desporto`,
-      status: MES >= 5 ? 'plan' : 'open',
-      statusLabel: MES >= 5 ? 'Planejamento — destinação para 2027' : 'Janela aberta',
+      status: 'open',
+      statusLabel: `Aberto — destinação ${anoCalendario}`,
       alerta: null,
     },
     {
@@ -309,13 +313,13 @@
       nome: 'FDCA — Fundo da Criança e do Adolescente',
       lei: 'Lei 8.069/1990 (ECA) Art. 260 II',
       limite: '6% do IR Devido (independente do FDI)',
-      janela: `Ano-calendário de ${anoDeclaracao} (jan a mai)`,
-      prazoCaptacao: 'Destinação ao fundo antes do encerramento da DIRPF (31/mai)',
+      janela: `Ano-calendário ${anoCalendario} — até 31/mai/${anoDIRPF}`,
+      prazoCaptacao: `Destinação ao fundo até 31/mai/${anoDIRPF}`,
       comoFazer: `Transferência ao FDCA-DF ou fundo municipal/estadual. Confirmar CNPJ e conta corrente junto ao CDCA-DF`,
       comprovante: 'Recibo do fundo com CNPJ, número, valor e data. Código 40 na DIRPF',
       onde: `Doações Efetuadas → Código 40`,
-      status: MES >= 5 ? 'plan' : 'open',
-      statusLabel: MES >= 5 ? 'Planejamento — destinação para 2027' : 'Janela aberta',
+      status: 'open',
+      statusLabel: `Aberto — destinação ${anoCalendario}`,
       alerta: 'Confirme a conta bancária do FDCA-DF diretamente com o CDCA antes de transferir.',
     },
     {
@@ -323,13 +327,13 @@
       nome: 'FDI — Fundo do Idoso',
       lei: 'Lei 12.213/2010',
       limite: '6% do IR Devido (independente do FDCA)',
-      janela: `Ano-calendário de ${anoDeclaracao} (jan a mai)`,
-      prazoCaptacao: 'Destinação ao fundo antes do encerramento da DIRPF',
+      janela: `Ano-calendário ${anoCalendario} — até 31/mai/${anoDIRPF}`,
+      prazoCaptacao: `Destinação ao fundo até 31/mai/${anoDIRPF}`,
       comoFazer: 'Transferência ao Fundo Nacional, Estadual ou Municipal do Idoso',
       comprovante: 'Recibo do fundo com CNPJ, número, valor e data. Código 41 na DIRPF',
       onde: `Doações Efetuadas → Código 41`,
-      status: MES >= 5 ? 'plan' : 'open',
-      statusLabel: MES >= 5 ? 'Planejamento — destinação para 2027' : 'Janela aberta',
+      status: 'open',
+      statusLabel: `Aberto — destinação ${anoCalendario}`,
       alerta: null,
     },
     {
@@ -337,13 +341,13 @@
       nome: 'PRONON + PRONAS — Saúde',
       lei: 'Lei 12.715/2012',
       limite: '1% do IR Devido (conjunto)',
-      janela: `Ano-calendário de ${anoDeclaracao}`,
+      janela: `Ano-calendário ${anoCalendario} — até 31/mai/${anoDIRPF}`,
       prazoCaptacao: 'Verificar entidade habilitada',
       comoFazer: 'Destinação a entidade habilitada pelo Ministério da Saúde',
       comprovante: 'Recibo da entidade + comprovação de habilitação',
       onde: `Deduções → Incentivos Fiscais → PRONON / PRONAS`,
-      status: MES >= 5 ? 'plan' : 'open',
-      statusLabel: MES >= 5 ? 'Planejamento' : 'Janela aberta',
+      status: 'open',
+      statusLabel: `Aberto — destinação ${anoCalendario}`,
       alerta: null,
     },
   ];
