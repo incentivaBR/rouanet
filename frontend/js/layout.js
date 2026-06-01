@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   layout.js — Nav + Footer compartilhados (DestineAI)
+   layout.js — Nav + Footer compartilhados (IncentivaBR / DestineAI)
    Uso: Layout.init('calculadora') | Layout.init('home', { transparentNav: true })
    ═══════════════════════════════════════════════════════════ */
 
@@ -59,7 +59,7 @@ const Layout = {
     footer.className = 'dai-footer';
     footer.innerHTML = `
       <div class="dai-footer__inner">
-        <span class="dai-footer__logo">Destine<span>AI</span></span>
+        <span style="display:inline-flex;align-items:center;background:#fff;border-radius:8px;padding:3px 10px"><img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:20px;width:auto"></span>
         <div class="dai-footer__links">
           <a href="politica-privacidade.html" class="dai-footer__link">Política de Privacidade</a>
           <span class="dai-footer__sep">|</span>
