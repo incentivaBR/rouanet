@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entrar — DestineAI</title>
+  <title>Entrar — IncentivaBR</title>
   <meta name="description" content="Entre na sua conta e destine seu IR para a cultura brasileira.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/destineai.css">
+  <link rel="stylesheet" href="css/IncentivaBR.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: 'Inter', sans-serif; }
@@ -211,7 +211,7 @@
 
     function showForgotPassword() {
       Toast.info(
-        'Envie um e-mail para <strong>contato@destineai.com.br</strong> com o CPF cadastrado e redefiniremos sua senha em até 24h.',
+        'Envie um e-mail para <strong>contato@IncentivaBR.com.br</strong> com o CPF cadastrado e redefiniremos sua senha em até 24h.',
         'Recuperação de senha'
       );
     }
@@ -265,7 +265,7 @@
               user: {
                 id: 1,
                 nome: cpfEmail.includes('@') ? cpfEmail.split('@')[0] : 'Usuário Demo',
-                email: cpfEmail.includes('@') ? cpfEmail : 'demo@destineai.com.br',
+                email: cpfEmail.includes('@') ? cpfEmail : 'demo@IncentivaBR.com.br',
                 cpf: cpfEmail.includes('@') ? '00000000000' : utils.cleanCPF(cpfEmail),
                 total_donated: 0,
                 is_admin: isAdminDemo
@@ -382,7 +382,7 @@
         '<span style="color:#FFD700;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;border:1px solid rgba(255,215,0,0.3);background:rgba(255,215,0,0.07);padding:4px 12px;border-radius:999px;font-family:Inter,sans-serif">Piloto FGV</span>';
       document.body.appendChild(loader);
 
-      document.getElementById('loginCpfEmail').value = 'demo@destineai.com.br';
+      document.getElementById('loginCpfEmail').value = 'demo@IncentivaBR.com.br';
       document.getElementById('loginSenha').value = 'Piloto2026';
       setTimeout(() => {
         document.getElementById('loginForm').dispatchEvent(new Event('submit'));

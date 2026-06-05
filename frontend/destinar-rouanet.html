@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="pageTitle">Destinar via Lei Rouanet — DestineAI</title>
+  <title id="pageTitle">Destinar via Lei Rouanet — IncentivaBR</title>
   <meta name="description" content="Destine até 6% do seu IR para projetos culturais aprovados pelo Ministério da Cultura via Lei Rouanet.">
   <link rel="icon" type="image/png" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -959,7 +959,7 @@
                   <p style="margin:0;font-size:12px;color:#0D1B3E;line-height:1.6">Conclua a <strong>Etapa 3 — pós-teste</strong> para completar sua participação. Use o mesmo código anônimo do passo 1. Obrigado por contribuir com esta pesquisa sobre destinação do IR pela Lei Rouanet.</p>
                 </div>
               </div>
-              <a href="https://destineai.com.br/frontend/piloto-start.html?step=3"
+              <a href="https://IncentivaBR.com.br/frontend/piloto-start.html?step=3"
                 style="display:flex;align-items:center;justify-content:center;gap:8px;background:#0D1B3E;color:#FFD700;font-weight:800;font-size:14px;padding:12px 20px;border-radius:10px;text-decoration:none;width:100%;box-sizing:border-box">
                 ↩️ Voltar ao piloto — Iniciar o Pós-teste
               </a>
@@ -1426,11 +1426,11 @@
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(9.5);
         doc.setTextColor(148, 163, 184);
-        doc.text('DestineAI  |  Plataforma IncentivaBR', M, 27);
+        doc.text('IncentivaBR  |  Plataforma IncentivaBR', M, 27);
 
         doc.setFontSize(7.5);
         doc.setTextColor(100, 116, 139);
-        doc.text('INPI no BR512025000647-0  |  www.destineai.com.br', M, 37);
+        doc.text('INPI no BR512025000647-0  |  www.IncentivaBR.com.br', M, 37);
 
         // ── Projeto ───────────────────────────────────────────
         let y = 56;
@@ -1581,7 +1581,7 @@
         doc.setTextColor(148, 163, 184);
         doc.text('Este documento e uma simulacao para fins academicos (Piloto FGV). Nao possui valor fiscal.', M, 291);
 
-        doc.save('comprovante-simulacao-destineai.pdf');
+        doc.save('comprovante-simulacao-IncentivaBR.pdf');
       } catch (e) {
         toast('Erro ao gerar PDF: ' + e.message, 'error');
       }
@@ -1616,7 +1616,7 @@
 
         // WhatsApp share
         const waText = encodeURIComponent(
-          `Participei de uma simulação de destinação do meu Imposto de Renda para a Orquestra das Periferias do DF — sem nenhum custo extra.\n\nÉ um piloto que mostra como parte do IR pode ser redirecionada para a cultura, em vez de ir inteira para a Receita.\n\nVocê também pode testar em menos de 10 minutos:\n👉 destineai.com.br/piloto`
+          `Participei de uma simulação de destinação do meu Imposto de Renda para a Orquestra das Periferias do DF — sem nenhum custo extra.\n\nÉ um piloto que mostra como parte do IR pode ser redirecionada para a cultura, em vez de ir inteira para a Receita.\n\nVocê também pode testar em menos de 10 minutos:\n👉 IncentivaBR.com.br/piloto`
         );
         document.getElementById('btnWhatsapp').href = `https://api.whatsapp.com/send?text=${waText}`;
 
