@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   layout.js — Nav + Footer compartilhados (IncentivaBR / DestineAI)
+   layout.js — Nav + Footer compartilhados (IncentivaBR / IncentivaBR)
    Uso: Layout.init('calculadora') | Layout.init('home', { transparentNav: true })
    ═══════════════════════════════════════════════════════════ */
 
@@ -7,9 +7,10 @@ const Layout = {
 
   /* Links de navegação — ordem e IDs fixos */
   _links: [
-    { id: 'calculadora', href: 'calculadora.html',      label: 'MeuLimite' },
-    { id: 'projeto',     href: 'projeto-detalhes.html?pronac=261847', label: 'A Orquestra' },
+    { id: 'calculadora', href: 'calculadora.html',      label: 'Calculadora' },
+    { id: 'projetos',    href: 'projetos-rouanet.html', label: 'Projetos' },
     { id: 'como',        href: 'como-funciona.html',    label: 'Como funciona' },
+    { id: 'contador',    href: 'espaco-contador.html',  label: 'Contadores' },
   ],
 
   /* ─── Ponto de entrada ──────────────────────────────────── */
@@ -66,7 +67,7 @@ const Layout = {
           <a href="termos-uso.html" class="dai-footer__link">Termos de Uso</a>
         </div>
         <p class="dai-footer__legal">Plataforma de destinação de IR · Lei 8.313/1991</p>
-        <p class="dai-footer__legal" style="margin-top:4px;opacity:0.65">DestineAI é um produto <strong>IncentivaBR®</strong> · INPI nº BR512025000647-0 · © 2025–2026 IncentivaBR · Todos os direitos reservados · Reprodução proibida</p>
+        <p class="dai-footer__legal" style="margin-top:4px;opacity:0.65">IncentivaBR é um produto <strong>IncentivaBR®</strong> · INPI nº BR512025000647-0 · © 2025–2026 IncentivaBR · Todos os direitos reservados · Reprodução proibida</p>
       </div>`;
 
     document.body.appendChild(footer);
