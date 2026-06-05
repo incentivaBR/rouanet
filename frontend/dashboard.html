@@ -6,12 +6,12 @@
   <title>Minhas Destinações — IncentivaBR</title>
   <link rel="icon" type="image/png" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: #F4F6FB;
       color: #1a1a2e;
       visibility: visible;
@@ -32,14 +32,14 @@
       padding: 0 24px;
     }
     .nav-logo { color: white; font-weight: 900; font-size: 20px; text-decoration: none; }
-    .nav-logo span { color: #FFD700; }
+    .nav-logo span { color: #EE985C; }
     .nav-right { display: flex; align-items: center; gap: 14px; }
     .nav-user { color: rgba(255,255,255,0.7); font-size: 14px; }
     .btn-logout {
       background: none; border: 1px solid rgba(255,255,255,0.25);
       color: rgba(255,255,255,0.6); padding: 6px 14px;
       border-radius: 8px; font-size: 13px; cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
     .btn-logout:hover { border-color: rgba(255,255,255,0.5); color: white; }
 
@@ -48,7 +48,7 @@
 
     /* ── Banner de confirmação (topo) ── */
     .confirm-banner {
-      background: linear-gradient(135deg, #0D1B3E 0%, #132247 100%);
+      background: linear-gradient(135deg, #0F1E3D 0%, #132247 100%);
       border-radius: 16px;
       padding: 28px 32px;
       color: white;
@@ -60,7 +60,7 @@
       background: rgba(255,215,0,0.15);
       border: 2px solid rgba(255,215,0,0.4);
       display: flex; align-items: center; justify-content: center;
-      font-size: 24px; color: #FFD700; flex-shrink: 0;
+      font-size: 24px; color: #EE985C; flex-shrink: 0;
     }
     .confirm-text h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
     .confirm-text p { font-size: 13px; opacity: 0.75; line-height: 1.5; }
@@ -76,7 +76,7 @@
       margin-bottom: 16px;
     }
     .donation-header {
-      background: #0D1B3E;
+      background: #0F1E3D;
       padding: 16px 24px;
       display: flex; align-items: center; gap: 14px;
     }
@@ -84,13 +84,13 @@
       width: 40px; height: 40px; border-radius: 10px;
       background: rgba(255,215,0,0.15);
       display: flex; align-items: center; justify-content: center;
-      color: #FFD700; font-size: 16px; flex-shrink: 0;
+      color: #EE985C; font-size: 16px; flex-shrink: 0;
     }
     .donation-header-info { flex: 1; min-width: 0; }
     .donation-title { color: white; font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .donation-sub { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 2px; }
     .donation-amount { text-align: right; flex-shrink: 0; }
-    .donation-amount-val { color: #FFD700; font-size: 20px; font-weight: 800; }
+    .donation-amount-val { color: #EE985C; font-size: 20px; font-weight: 800; }
     .donation-amount-lbl { color: rgba(255,255,255,0.5); font-size: 11px; }
 
     /* Status badge */
@@ -116,7 +116,7 @@
     }
     .fiscal-item:nth-child(even) { border-right: none; }
     .fiscal-lbl { font-size: 11px; color: #8B96A8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .fiscal-val { font-size: 15px; font-weight: 700; color: #0D1B3E; }
+    .fiscal-val { font-size: 15px; font-weight: 700; color: #0F1E3D; }
     .fiscal-val.green { color: #15803D; }
 
     /* Ações */
@@ -126,27 +126,27 @@
     }
     .btn-comprovante {
       display: inline-flex; align-items: center; gap: 8px;
-      background: #FFD700; color: #0D1B3E;
+      background: #EE985C; color: #0F1E3D;
       border: none; border-radius: 10px;
       padding: 11px 22px; font-size: 14px; font-weight: 700;
-      font-family: 'Inter', sans-serif; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; cursor: pointer;
       transition: background 0.15s;
     }
-    .btn-comprovante:hover { background: #FFC000; }
+    .btn-comprovante:hover { background: #d4874e; }
     .btn-comprovante:disabled { opacity: 0.5; cursor: default; }
     .btn-nova {
       display: inline-flex; align-items: center; gap: 7px;
       background: none; border: 1.5px solid #D1D9EC; color: #5566A0;
       border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 600;
-      font-family: 'Inter', sans-serif; cursor: pointer; text-decoration: none;
+      font-family: 'Montserrat', sans-serif; cursor: pointer; text-decoration: none;
       transition: border-color 0.15s;
     }
-    .btn-nova:hover { border-color: #0D1B3E; color: #0D1B3E; }
+    .btn-nova:hover { border-color: #0F1E3D; color: #0F1E3D; }
     .btn-cancel {
       display: inline-flex; align-items: center; gap: 6px;
       background: none; border: 1.5px solid #FCA5A5; color: #B91C1C;
       border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 600;
-      font-family: 'Inter', sans-serif; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; cursor: pointer;
       transition: all 0.15s;
     }
     .btn-cancel:hover { background: #FEE2E2; border-color: #B91C1C; }
@@ -173,13 +173,13 @@
     .irpf-step:last-child { margin-bottom: 0; }
     .irpf-num {
       width: 26px; height: 26px; border-radius: 50%;
-      background: #0D1B3E; color: white;
+      background: #0F1E3D; color: white;
       font-size: 12px; font-weight: 700;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
       margin-top: 1px;
     }
     .irpf-step-text { font-size: 14px; color: #374151; line-height: 1.6; }
-    .irpf-step-text strong { color: #0D1B3E; }
+    .irpf-step-text strong { color: #0F1E3D; }
     .irpf-destaque {
       background: #F0F4FF;
       border: 1px solid #C7D7F8;
@@ -198,14 +198,14 @@
       box-shadow: 0 2px 12px rgba(13,27,62,0.07);
     }
     .empty-state i { font-size: 48px; color: #CBD5E1; margin-bottom: 16px; display: block; }
-    .empty-state h3 { font-size: 18px; font-weight: 700; color: #0D1B3E; margin-bottom: 8px; }
+    .empty-state h3 { font-size: 18px; font-weight: 700; color: #0F1E3D; margin-bottom: 8px; }
     .empty-state p { font-size: 14px; color: #6B7280; margin-bottom: 24px; line-height: 1.6; }
     .btn-start {
       display: inline-flex; align-items: center; gap: 8px;
-      background: #FFD700; color: #0D1B3E;
+      background: #EE985C; color: #0F1E3D;
       border: none; border-radius: 10px;
       padding: 13px 28px; font-size: 15px; font-weight: 700;
-      font-family: 'Inter', sans-serif; cursor: pointer; text-decoration: none;
+      font-family: 'Montserrat', sans-serif; cursor: pointer; text-decoration: none;
     }
 
     /* ── Loading ── */

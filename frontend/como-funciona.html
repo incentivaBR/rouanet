@@ -8,20 +8,20 @@
   <link rel="icon" type="image/png" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/IncentivaBR.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          fontFamily: { sans: ['Montserrat', 'sans-serif'] },
           colors: {
-            navy:     '#0D1B3E',
+            navy:     '#0F1E3D',
             navydark: '#0A1530',
             navymid:  '#132247',
-            gold:     '#FFD700',
-            golddk:   '#FFC000',
+            gold:     '#EE985C',
+            golddk:   '#d4874e',
           }
         }
       }
@@ -35,13 +35,31 @@
   </style>
 </head>
 <body class="bg-gray-50">
+  <!-- ── NAVBAR ── -->
+  <nav style="background:rgba(15,30,61,0.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(238,152,92,0.12)" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="bg-white rounded-lg px-2 py-1 inline-flex items-center">
+          <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-6 w-auto">
+        </span>
+      </a>
+      <div class="flex items-center gap-4 text-sm text-white/65">
+        <a href="como-funciona.html" class="hover:text-white transition hidden md:inline">Como funciona</a>
+        <a href="espaco-contador.html" class="hover:text-white transition hidden md:inline">Contadores</a>
+        <a href="faq.html" class="hover:text-white transition hidden md:inline">FAQ</a>
+        <a href="login.html" class="border border-white/20 hover:border-white/40 text-white/75 hover:text-white px-4 py-1.5 rounded-full text-xs transition">Entrar</a>
+        <a href="calculadora-rapida.html" style="background:linear-gradient(135deg,#EE985C,#e07a35)" class="text-white font-bold px-4 py-1.5 rounded-full text-xs transition hidden sm:inline">Calcular meu IR</a>
+      </div>
+    </div>
+  </nav>
+
 
   <!-- ── HERO ─────────────────────────────────────────────── -->
-  <section class="relative bg-[#0D1B3E] pt-28 pb-16 overflow-hidden">
+  <section class="relative bg-[#0F1E3D] pt-28 pb-16 overflow-hidden">
     <div class="pointer-events-none absolute inset-0 opacity-[0.03]"
       style="background-image: linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px); background-size: 48px 48px;">
     </div>
-    <div class="pointer-events-none absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-[#FFD700]/[0.05] blur-[80px]"></div>
+    <div class="pointer-events-none absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-[#EE985C]/[0.05] blur-[80px]"></div>
 
     <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
 
@@ -49,30 +67,30 @@
       <div class="flex items-center justify-center gap-2 mb-8 text-xs font-semibold flex-wrap">
         <a href="index.html"           class="text-white/35 hover:text-white/60 transition-colors">Início</a>
         <span class="text-white/20">›</span>
-        <span class="text-[#FFD700]">Como funciona</span>
+        <span class="text-[#EE985C]">Como funciona</span>
         <span class="text-white/20">›</span>
         <a href="projetos-rouanet.html" class="text-white/35 hover:text-white/60 transition-colors">Projeto</a>
         <span class="text-white/20">›</span>
         <a href="destinar-rouanet.html" class="text-white/35 hover:text-white/60 transition-colors">Destinação</a>
       </div>
 
-      <div class="inline-flex items-center gap-2 rounded-full bg-[#FFD700]/10 border border-[#FFD700]/30 px-5 py-2 mb-6">
-        <svg class="w-4 h-4 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        <span class="text-[#FFD700] font-semibold text-sm">Guia completo · Lei 8.313/1991</span>
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#EE985C]/10 border border-[#EE985C]/30 px-5 py-2 mb-6">
+        <svg class="w-4 h-4 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span class="text-[#EE985C] font-semibold text-sm">Guia completo · Lei 8.313/1991</span>
       </div>
 
       <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4 leading-tight">
-        Como funciona a <span class="text-[#FFD700]">Lei Rouanet?</span>
+        Como funciona a <span class="text-[#EE985C]">Lei Rouanet?</span>
       </h1>
       <p class="text-white/60 text-lg max-w-xl mx-auto leading-relaxed">
         Destine até 6% do seu IR para projetos culturais — sem custo adicional. Em 4 passos simples.
       </p>
 
       <!-- aviso requisito -->
-      <div class="mt-8 inline-flex items-start gap-3 text-left bg-[#FFD700]/10 border border-[#FFD700]/25 rounded-xl px-5 py-4 max-w-md mx-auto">
-        <svg class="w-5 h-5 text-[#FFD700] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-        <p class="text-[#FFD700]/90 text-sm font-medium">
-          <strong class="text-[#FFD700]">Requisito:</strong> declaração completa (modelo completo) do Imposto de Renda
+      <div class="mt-8 inline-flex items-start gap-3 text-left bg-[#EE985C]/10 border border-[#EE985C]/25 rounded-xl px-5 py-4 max-w-md mx-auto">
+        <svg class="w-5 h-5 text-[#EE985C] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        <p class="text-[#EE985C]/90 text-sm font-medium">
+          <strong class="text-[#EE985C]">Requisito:</strong> declaração completa (modelo completo) do Imposto de Renda
         </p>
       </div>
     </div>
@@ -81,23 +99,23 @@
   <!-- ── O QUE É ────────────────────────────────────────── -->
   <section class="bg-white py-16 sm:py-20 border-b border-gray-100">
     <div class="fade-up max-w-3xl mx-auto px-6">
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0D1B3E] mb-4 tracking-tight">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0F1E3D] mb-4 tracking-tight">
         O que é a Lei Rouanet?
       </h2>
       <p class="text-gray-600 leading-relaxed mb-6">
-        A <strong class="text-[#0D1B3E]">Lei 8.313/1991</strong>, conhecida como Lei Rouanet, permite que pessoas físicas
-        <strong class="text-[#0D1B3E]">destinem até 6% do seu Imposto de Renda devido</strong> para projetos culturais
-        aprovados pelo Ministério da Cultura (MinC) e cadastrados no sistema <strong class="text-[#0D1B3E]">SALIC</strong>.
+        A <strong class="text-[#0F1E3D]">Lei 8.313/1991</strong>, conhecida como Lei Rouanet, permite que pessoas físicas
+        <strong class="text-[#0F1E3D]">destinem até 6% do seu Imposto de Renda devido</strong> para projetos culturais
+        aprovados pelo Ministério da Cultura (MinC) e cadastrados no sistema <strong class="text-[#0F1E3D]">SALIC</strong>.
       </p>
-      <div class="rounded-2xl bg-[#0D1B3E] px-6 py-5 flex items-start gap-4">
-        <div class="w-10 h-10 rounded-full bg-[#FFD700]/15 flex items-center justify-center shrink-0">
-          <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div class="rounded-2xl bg-[#0F1E3D] px-6 py-5 flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-[#EE985C]/15 flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <div>
           <p class="text-white font-semibold mb-1">A sacada principal</p>
           <p class="text-white/70 text-sm leading-relaxed">
             O valor destinado é <strong class="text-white">deduzido integralmente do imposto</strong> — você redireciona dinheiro que já iria para o governo para projetos culturais que você acredita.
-            <strong class="text-[#FFD700]"> Custo adicional: zero.</strong>
+            <strong class="text-[#EE985C]"> Custo adicional: zero.</strong>
           </p>
         </div>
       </div>
@@ -108,7 +126,7 @@
   <section class="bg-gray-50 py-16 sm:py-24">
     <div class="fade-up max-w-3xl mx-auto px-6">
       <div class="text-center mb-12">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0D1B3E] tracking-tight mb-3">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0F1E3D] tracking-tight mb-3">
           4 passos para destinar
         </h2>
         <p class="text-gray-500">Do cálculo ao comprovante — menos de 30 minutos.</p>
@@ -118,18 +136,18 @@
 
         <!-- Passo 1 -->
         <div class="relative rounded-2xl bg-white border border-gray-100 shadow-sm overflow-hidden">
-          <div class="absolute top-0 left-0 bottom-0 w-1 bg-[#FFD700]"></div>
+          <div class="absolute top-0 left-0 bottom-0 w-1 bg-[#EE985C]"></div>
           <div class="pl-6 pr-6 py-6 flex items-start gap-5">
-            <div class="w-12 h-12 rounded-xl bg-[#0D1B3E] flex items-center justify-center shrink-0">
-              <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            <div class="w-12 h-12 rounded-xl bg-[#0F1E3D] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-bold text-[#FFD700] bg-[#FFD700]/10 px-2 py-0.5 rounded-full">PASSO 1</span>
+                <span class="text-xs font-bold text-[#EE985C] bg-[#EE985C]/10 px-2 py-0.5 rounded-full">PASSO 1</span>
               </div>
-              <h3 class="text-lg font-bold text-[#0D1B3E] mb-2">Calcule seu limite</h3>
+              <h3 class="text-lg font-bold text-[#0F1E3D] mb-2">Calcule seu limite</h3>
               <p class="text-gray-500 text-sm leading-relaxed mb-3">
-                Use o <strong class="text-[#0D1B3E]">MeuLimite</strong> para descobrir quanto pode destinar com base no seu rendimento anual e IR devido. <strong class="text-[#0D1B3E]">Limite máximo: 6% do IR devido.</strong>
+                Use o <strong class="text-[#0F1E3D]">MeuLimite</strong> para descobrir quanto pode destinar com base no seu rendimento anual e IR devido. <strong class="text-[#0F1E3D]">Limite máximo: 6% do IR devido.</strong>
               </p>
               <div class="rounded-xl bg-amber-50 border border-amber-100 px-4 py-3 text-sm text-amber-800">
                 <strong>Exemplo:</strong> IR devido de R$ 10.000 → você pode destinar até <strong>R$ 600</strong> para projetos culturais.
@@ -140,18 +158,18 @@
 
         <!-- Passo 2 -->
         <div class="relative rounded-2xl bg-white border border-gray-100 shadow-sm overflow-hidden">
-          <div class="absolute top-0 left-0 bottom-0 w-1 bg-[#0D1B3E]"></div>
+          <div class="absolute top-0 left-0 bottom-0 w-1 bg-[#0F1E3D]"></div>
           <div class="pl-6 pr-6 py-6 flex items-start gap-5">
-            <div class="w-12 h-12 rounded-xl bg-[#0D1B3E] flex items-center justify-center shrink-0">
-              <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="w-12 h-12 rounded-xl bg-[#0F1E3D] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-bold text-white bg-[#0D1B3E] px-2 py-0.5 rounded-full">PASSO 2</span>
+                <span class="text-xs font-bold text-white bg-[#0F1E3D] px-2 py-0.5 rounded-full">PASSO 2</span>
               </div>
-              <h3 class="text-lg font-bold text-[#0D1B3E] mb-2">Escolha o projeto</h3>
+              <h3 class="text-lg font-bold text-[#0F1E3D] mb-2">Escolha o projeto</h3>
               <p class="text-gray-500 text-sm leading-relaxed">
-                Acesse <a href="projetos-rouanet.html" class="text-[#0D1B3E] font-semibold underline underline-offset-2">nosso projeto</a> aprovado pelo MinC/SALIC. Você verá o PRONAC, o proponente e quanto ainda pode ser captado.
+                Acesse <a href="projetos-rouanet.html" class="text-[#0F1E3D] font-semibold underline underline-offset-2">nosso projeto</a> aprovado pelo MinC/SALIC. Você verá o PRONAC, o proponente e quanto ainda pode ser captado.
               </p>
             </div>
           </div>
@@ -161,16 +179,16 @@
         <div class="relative rounded-2xl bg-white border border-gray-100 shadow-sm overflow-hidden">
           <div class="absolute top-0 left-0 bottom-0 w-1 bg-green-500"></div>
           <div class="pl-6 pr-6 py-6 flex items-start gap-5">
-            <div class="w-12 h-12 rounded-xl bg-[#0D1B3E] flex items-center justify-center shrink-0">
-              <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+            <div class="w-12 h-12 rounded-xl bg-[#0F1E3D] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-1">
                 <span class="text-xs font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">PASSO 3</span>
               </div>
-              <h3 class="text-lg font-bold text-[#0D1B3E] mb-2">Transfira para o FNC</h3>
+              <h3 class="text-lg font-bold text-[#0F1E3D] mb-2">Transfira para o FNC</h3>
               <p class="text-gray-500 text-sm leading-relaxed mb-3">
-                A destinação é feita via <strong class="text-[#0D1B3E]">transferência bancária para o Fundo Nacional de Cultura (FNC)</strong>, administrado pelo Banco do Brasil.
+                A destinação é feita via <strong class="text-[#0F1E3D]">transferência bancária para o Fundo Nacional de Cultura (FNC)</strong>, administrado pelo Banco do Brasil.
               </p>
               <div class="rounded-xl bg-gray-50 border border-gray-200 px-4 py-3 font-mono text-sm text-gray-700 space-y-1.5">
                 <div><span class="text-gray-400">Banco:</span> <strong>Banco do Brasil (001)</strong></div>
@@ -189,14 +207,14 @@
         <div class="relative rounded-2xl bg-white border border-gray-100 shadow-sm overflow-hidden">
           <div class="absolute top-0 left-0 bottom-0 w-1 bg-blue-500"></div>
           <div class="pl-6 pr-6 py-6 flex items-start gap-5">
-            <div class="w-12 h-12 rounded-xl bg-[#0D1B3E] flex items-center justify-center shrink-0">
-              <svg class="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <div class="w-12 h-12 rounded-xl bg-[#0F1E3D] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-1">
                 <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">PASSO 4</span>
               </div>
-              <h3 class="text-lg font-bold text-[#0D1B3E] mb-2">Declare no IR</h3>
+              <h3 class="text-lg font-bold text-[#0F1E3D] mb-2">Declare no IR</h3>
               <p class="text-gray-500 text-sm leading-relaxed mb-3">
                 Na declaração anual (DIRPF), informe o valor destinado em:
               </p>
@@ -219,10 +237,10 @@
   <section class="bg-white py-16 sm:py-24 border-y border-gray-100">
     <div class="fade-up max-w-3xl mx-auto px-6">
       <div class="text-center mb-10">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0D1B3E] tracking-tight mb-3">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0F1E3D] tracking-tight mb-3">
           Por que 99% não destinam
         </h2>
-        <p class="text-gray-500">De cada 100 contribuintes elegíveis, <strong class="text-[#0D1B3E]">99 nunca destinaram um centavo</strong>. Não é falta de vontade — é barreira com solução.</p>
+        <p class="text-gray-500">De cada 100 contribuintes elegíveis, <strong class="text-[#0F1E3D]">99 nunca destinaram um centavo</strong>. Não é falta de vontade — é barreira com solução.</p>
       </div>
 
       <div class="space-y-3">
@@ -231,7 +249,7 @@
           <summary class="flex items-center justify-between px-5 py-4 cursor-pointer select-none">
             <div class="flex items-center gap-3">
               <span class="text-base">😰</span>
-              <span class="font-semibold text-[#0D1B3E] text-sm">"Parece muito complicado"</span>
+              <span class="font-semibold text-[#0F1E3D] text-sm">"Parece muito complicado"</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <span class="text-xs font-bold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full hidden sm:block">Tem solução</span>
@@ -247,7 +265,7 @@
           <summary class="flex items-center justify-between px-5 py-4 cursor-pointer select-none">
             <div class="flex items-center gap-3">
               <span class="text-base">🤔</span>
-              <span class="font-semibold text-[#0D1B3E] text-sm">"Desconfio que o dinheiro não chega"</span>
+              <span class="font-semibold text-[#0F1E3D] text-sm">"Desconfio que o dinheiro não chega"</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <span class="text-xs font-bold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full hidden sm:block">Tem solução</span>
@@ -255,7 +273,7 @@
             </div>
           </summary>
           <div class="px-5 pb-5 text-sm text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
-            Os projetos são aprovados pelo Ministério da Cultura e listados no SALIC (sistema oficial do governo federal). O FNC é gerido pelo <strong class="text-[#0D1B3E]">Banco do Brasil</strong>. Você pode verificar qualquer dado no site oficial antes de transferir.
+            Os projetos são aprovados pelo Ministério da Cultura e listados no SALIC (sistema oficial do governo federal). O FNC é gerido pelo <strong class="text-[#0F1E3D]">Banco do Brasil</strong>. Você pode verificar qualquer dado no site oficial antes de transferir.
           </div>
         </details>
 
@@ -263,7 +281,7 @@
           <summary class="flex items-center justify-between px-5 py-4 cursor-pointer select-none">
             <div class="flex items-center gap-3">
               <span class="text-base">💸</span>
-              <span class="font-semibold text-[#0D1B3E] text-sm">"O valor é pequeno, não compensa"</span>
+              <span class="font-semibold text-[#0F1E3D] text-sm">"O valor é pequeno, não compensa"</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <span class="text-xs font-bold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full hidden sm:block">Tem solução</span>
@@ -271,7 +289,7 @@
             </div>
           </summary>
           <div class="px-5 pb-5 text-sm text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
-            Não é dinheiro novo — é o <strong class="text-[#0D1B3E]">imposto que você já pagaria ao governo</strong>, só redirecionado. Seu bolso fica exatamente igual. E mesmo R$ 300 pagam 10 aulas de música para jovens em situação de vulnerabilidade.
+            Não é dinheiro novo — é o <strong class="text-[#0F1E3D]">imposto que você já pagaria ao governo</strong>, só redirecionado. Seu bolso fica exatamente igual. E mesmo R$ 300 pagam 10 aulas de música para jovens em situação de vulnerabilidade.
           </div>
         </details>
 
@@ -279,7 +297,7 @@
           <summary class="flex items-center justify-between px-5 py-4 cursor-pointer select-none">
             <div class="flex items-center gap-3">
               <span class="text-base">😨</span>
-              <span class="font-semibold text-[#0D1B3E] text-sm">"Tenho medo de cair na malha fina"</span>
+              <span class="font-semibold text-[#0F1E3D] text-sm">"Tenho medo de cair na malha fina"</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <span class="text-xs font-bold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full hidden sm:block">Tem solução</span>
@@ -295,7 +313,7 @@
           <summary class="flex items-center justify-between px-5 py-4 cursor-pointer select-none">
             <div class="flex items-center gap-3">
               <span class="text-base">⏰</span>
-              <span class="font-semibold text-[#0D1B3E] text-sm">"Deixo para o ano que vem"</span>
+              <span class="font-semibold text-[#0F1E3D] text-sm">"Deixo para o ano que vem"</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <span class="text-xs font-bold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full hidden sm:block">Tem solução</span>
@@ -303,7 +321,7 @@
             </div>
           </summary>
           <div class="px-5 pb-5 text-sm text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
-            O prazo é <strong class="text-[#0D1B3E]">31 de dezembro do ano-base</strong>. Quem deixa para depois perde o benefício daquele ano. 5 anos de procrastinação = mais de R$ 5.000 que poderiam ter ido para a cultura.
+            O prazo é <strong class="text-[#0F1E3D]">31 de dezembro do ano-base</strong>. Quem deixa para depois perde o benefício daquele ano. 5 anos de procrastinação = mais de R$ 5.000 que poderiam ter ido para a cultura.
           </div>
         </details>
 
@@ -312,15 +330,15 @@
   </section>
 
   <!-- ── SERVIDOR PÚBLICO ───────────────────────────────── -->
-  <section class="bg-[#0D1B3E] py-16 sm:py-24 overflow-hidden relative">
-    <div class="pointer-events-none absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-[#FFD700]/[0.05] blur-[80px]"></div>
+  <section class="bg-[#0F1E3D] py-16 sm:py-24 overflow-hidden relative">
+    <div class="pointer-events-none absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-[#EE985C]/[0.05] blur-[80px]"></div>
     <div class="fade-up relative z-10 max-w-3xl mx-auto px-6">
 
       <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 rounded-xl bg-[#FFD700]/15 flex items-center justify-center shrink-0">
-          <svg class="w-5 h-5 text-[#FFD700]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <div class="w-10 h-10 rounded-xl bg-[#EE985C]/15 flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
         </div>
-        <span class="text-[#FFD700] text-sm font-bold tracking-widest uppercase">Para servidores públicos</span>
+        <span class="text-[#EE985C] text-sm font-bold tracking-widest uppercase">Para servidores públicos</span>
       </div>
 
       <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
@@ -330,11 +348,11 @@
         Servidores têm <strong class="text-white">salário fixo e IR previsível</strong> — condição ideal para planejar a destinação com antecedência. O imposto retido em folha não impede a destinação. O que importa é o <strong class="text-white">IR devido</strong> calculado na declaração anual completa.
       </p>
 
-      <div class="rounded-2xl bg-[#FFD700]/10 border border-[#FFD700]/25 px-6 py-5 mb-4">
+      <div class="rounded-2xl bg-[#EE985C]/10 border border-[#EE985C]/25 px-6 py-5 mb-4">
         <p class="text-white font-semibold mb-1">Estimativa rápida</p>
         <p class="text-white/70 text-sm leading-relaxed">
           IR retido no ano passado × 6% = valor máximo que você pode destinar este ano.<br>
-          <span class="text-[#FFD700]">Exemplo: reteve R$ 18.000 → pode destinar até <strong>R$ 1.080</strong> para projetos culturais.</span>
+          <span class="text-[#EE985C]">Exemplo: reteve R$ 18.000 → pode destinar até <strong>R$ 1.080</strong> para projetos culturais.</span>
         </p>
       </div>
 
@@ -348,7 +366,7 @@
   <section class="bg-gray-50 py-16 sm:py-24">
     <div class="fade-up max-w-3xl mx-auto px-6">
       <div class="text-center mb-10">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0D1B3E] tracking-tight mb-3">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0F1E3D] tracking-tight mb-3">
           Dúvidas frequentes
         </h2>
       </div>
@@ -356,27 +374,27 @@
       <div class="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-100 overflow-hidden">
 
         <div class="px-6 py-5">
-          <p class="font-semibold text-[#0D1B3E] mb-1">Quem pode destinar?</p>
-          <p class="text-gray-500 text-sm leading-relaxed">Qualquer contribuinte pessoa física que faça a <strong class="text-[#0D1B3E]">declaração completa</strong> do IR e tenha IR devido (não isento).</p>
+          <p class="font-semibold text-[#0F1E3D] mb-1">Quem pode destinar?</p>
+          <p class="text-gray-500 text-sm leading-relaxed">Qualquer contribuinte pessoa física que faça a <strong class="text-[#0F1E3D]">declaração completa</strong> do IR e tenha IR devido (não isento).</p>
         </div>
 
         <div class="px-6 py-5">
-          <p class="font-semibold text-[#0D1B3E] mb-1">Preciso ter IR a pagar?</p>
-          <p class="text-gray-500 text-sm leading-relaxed">Não necessariamente — quem tem restituição a receber também pode destinar, desde que tenha IR devido calculado. A destinação reduz o IR devido, o que pode <strong class="text-[#0D1B3E]">aumentar a restituição</strong>.</p>
+          <p class="font-semibold text-[#0F1E3D] mb-1">Preciso ter IR a pagar?</p>
+          <p class="text-gray-500 text-sm leading-relaxed">Não necessariamente — quem tem restituição a receber também pode destinar, desde que tenha IR devido calculado. A destinação reduz o IR devido, o que pode <strong class="text-[#0F1E3D]">aumentar a restituição</strong>.</p>
         </div>
 
         <div class="px-6 py-5">
-          <p class="font-semibold text-[#0D1B3E] mb-1">Qual o prazo?</p>
-          <p class="text-gray-500 text-sm leading-relaxed">A transferência deve ser feita <strong class="text-[#0D1B3E]">dentro do exercício fiscal</strong> (1º de janeiro a 31 de dezembro do ano-base). Pode ser feita a qualquer momento durante o ano.</p>
+          <p class="font-semibold text-[#0F1E3D] mb-1">Qual o prazo?</p>
+          <p class="text-gray-500 text-sm leading-relaxed">A transferência deve ser feita <strong class="text-[#0F1E3D]">dentro do exercício fiscal</strong> (1º de janeiro a 31 de dezembro do ano-base). Pode ser feita a qualquer momento durante o ano.</p>
         </div>
 
         <div class="px-6 py-5">
-          <p class="font-semibold text-[#0D1B3E] mb-1">O que acontece se destinar mais que 6%?</p>
-          <p class="text-gray-500 text-sm leading-relaxed">O excedente não é deduzível — você perderá o benefício fiscal sobre o valor acima do limite. Use o <a href="calculadora.html" class="text-[#0D1B3E] font-semibold underline underline-offset-2">MeuLimite</a> para saber seu limite exato.</p>
+          <p class="font-semibold text-[#0F1E3D] mb-1">O que acontece se destinar mais que 6%?</p>
+          <p class="text-gray-500 text-sm leading-relaxed">O excedente não é deduzível — você perderá o benefício fiscal sobre o valor acima do limite. Use o <a href="calculadora.html" class="text-[#0F1E3D] font-semibold underline underline-offset-2">MeuLimite</a> para saber seu limite exato.</p>
         </div>
 
         <div class="px-6 py-5">
-          <p class="font-semibold text-[#0D1B3E] mb-1">É seguro?</p>
+          <p class="font-semibold text-[#0F1E3D] mb-1">É seguro?</p>
           <p class="text-gray-500 text-sm leading-relaxed">Sim. Os projetos são aprovados pelo MinC e listados no SALIC (sistema oficial do governo federal). O FNC é gerido pelo Banco do Brasil.</p>
         </div>
 
@@ -388,47 +406,47 @@
   <section class="bg-white py-16 sm:py-24 border-y border-gray-100">
     <div class="fade-up max-w-4xl mx-auto px-6">
       <div class="text-center mb-10">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0D1B3E] tracking-tight mb-3">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0F1E3D] tracking-tight mb-3">
           O projeto fala com você
         </h2>
-        <p class="text-gray-500 max-w-xl mx-auto">O <strong class="text-[#0D1B3E]">Orquestra das Periferias do DF</strong> é cultura popular que ressoa em cada área do serviço público.</p>
+        <p class="text-gray-500 max-w-xl mx-auto">O <strong class="text-[#0F1E3D]">Orquestra das Periferias do DF</strong> é cultura popular que ressoa em cada área do serviço público.</p>
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
         <div class="rounded-2xl bg-[#EFF4FF] border border-blue-100 p-5">
           <div class="text-2xl mb-3">⚖️</div>
-          <h3 class="font-bold text-[#0D1B3E] mb-2">Justiça e Judiciário</h3>
+          <h3 class="font-bold text-[#0F1E3D] mb-2">Justiça e Judiciário</h3>
           <p class="text-gray-500 text-sm leading-relaxed">O Orquestra das Periferias do DF leva cultura popular brasileira a praças, teatros e centros culturais. Você pode fazer isso acontecer.</p>
         </div>
 
         <div class="rounded-2xl bg-[#ECFDF5] border border-green-100 p-5">
           <div class="text-2xl mb-3">📚</div>
-          <h3 class="font-bold text-[#0D1B3E] mb-2">Educação</h3>
+          <h3 class="font-bold text-[#0F1E3D] mb-2">Educação</h3>
           <p class="text-gray-500 text-sm leading-relaxed">O Orquestra das Periferias do DF preserva e difunde a cultura popular brasileira — amplia o que você faz na sala de aula.</p>
         </div>
 
         <div class="rounded-2xl bg-[#FFF7ED] border border-amber-100 p-5">
           <div class="text-2xl mb-3">🛡️</div>
-          <h3 class="font-bold text-[#0D1B3E] mb-2">Segurança Pública</h3>
+          <h3 class="font-bold text-[#0F1E3D] mb-2">Segurança Pública</h3>
           <p class="text-gray-500 text-sm leading-relaxed">Cultura fortalece comunidades. O Orquestra das Periferias do DF leva arte e identidade cultural a quem mais precisa.</p>
         </div>
 
         <div class="rounded-2xl bg-[#FDF4FF] border border-purple-100 p-5">
           <div class="text-2xl mb-3">🏥</div>
-          <h3 class="font-bold text-[#0D1B3E] mb-2">Saúde</h3>
+          <h3 class="font-bold text-[#0F1E3D] mb-2">Saúde</h3>
           <p class="text-gray-500 text-sm leading-relaxed">Arte e música têm impacto comprovado na saúde mental. O Orquestra das Periferias do DF é saúde pública pela via cultural.</p>
         </div>
 
         <div class="rounded-2xl bg-[#FFF1F2] border border-rose-100 p-5">
           <div class="text-2xl mb-3">💰</div>
-          <h3 class="font-bold text-[#0D1B3E] mb-2">Fazenda e Finanças</h3>
+          <h3 class="font-bold text-[#0F1E3D] mb-2">Fazenda e Finanças</h3>
           <p class="text-gray-500 text-sm leading-relaxed">É o mesmo imposto que você já pagaria ao governo — só redirecionado. Você sabe disso melhor do que ninguém.</p>
         </div>
 
         <div class="rounded-2xl bg-[#F0FBFF] border border-sky-100 p-5">
           <div class="text-2xl mb-3">🎭</div>
-          <h3 class="font-bold text-[#0D1B3E] mb-2">Cultura e Artes</h3>
+          <h3 class="font-bold text-[#0F1E3D] mb-2">Cultura e Artes</h3>
           <p class="text-gray-500 text-sm leading-relaxed">Apoiar o Orquestra das Periferias do DF fortalece o ecossistema cultural brasileiro e abre portas para o próximo grande nome da música popular.</p>
         </div>
 
@@ -437,29 +455,29 @@
   </section>
 
   <!-- ── CTA FINAL ──────────────────────────────────────── -->
-  <section class="bg-[#FFD700] py-20 sm:py-28 overflow-hidden relative">
+  <section class="bg-[#EE985C] py-20 sm:py-28 overflow-hidden relative">
     <div class="pointer-events-none absolute inset-0 opacity-[0.06]"
-      style="background-image: radial-gradient(circle at 1px 1px, #0D1B3E 1px, transparent 0); background-size: 24px 24px;">
+      style="background-image: radial-gradient(circle at 1px 1px, #0F1E3D 1px, transparent 0); background-size: 24px 24px;">
     </div>
     <div class="fade-up relative z-10 max-w-2xl mx-auto px-6 text-center">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0D1B3E] tracking-tight mb-4">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0F1E3D] tracking-tight mb-4">
         Pronto para destinar?
       </h2>
-      <p class="text-[#0D1B3E]/70 font-semibold mb-10">
+      <p class="text-[#0F1E3D]/70 font-semibold mb-10">
         Comece pelo MeuLimite — descubra exatamente quanto pode direcionar.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
         <a href="calculadora.html"
-          class="inline-flex items-center gap-2 bg-[#0D1B3E] hover:bg-[#152a52] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
+          class="inline-flex items-center gap-2 bg-[#0F1E3D] hover:bg-[#152a52] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           Calcular meu limite
         </a>
         <a href="projetos-rouanet.html"
-          class="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-[#0D1B3E] font-bold px-7 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.03]">
+          class="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-[#0F1E3D] font-bold px-7 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.03]">
           Ver o Orquestra das Periferias do DF
         </a>
         <a href="guia-ir-servidor.html"
-          class="text-[#0D1B3E]/60 hover:text-[#0D1B3E] text-sm font-semibold underline underline-offset-4 transition-colors">
+          class="text-[#0F1E3D]/60 hover:text-[#0F1E3D] text-sm font-semibold underline underline-offset-4 transition-colors">
           Guia do Servidor →
         </a>
       </div>
