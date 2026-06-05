@@ -7,33 +7,33 @@
   <meta name="description" content="Entre na sua conta e destine seu IR para a cultura brasileira.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/IncentivaBR.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body { font-family: 'Montserrat', sans-serif; }
     .form { display: none; }
     .form.active { display: block; }
     .tab { border-bottom: 3px solid transparent; transition: all 0.25s; }
-    .tab.active { border-bottom-color: #0D1B3E; color: #0D1B3E; }
-    .field { width: 100%; padding: 14px 16px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 15px; font-family: 'Inter', sans-serif; transition: border-color 0.2s; }
-    .field:focus { outline: none; border-color: #0D1B3E; }
+    .tab.active { border-bottom-color: #0F1E3D; color: #0F1E3D; }
+    .field { width: 100%; padding: 14px 16px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 15px; font-family: 'Montserrat', sans-serif; transition: border-color 0.2s; }
+    .field:focus { outline: none; border-color: #0F1E3D; }
     .field.error { border-color: #DC2626; }
-    .spinner { width: 18px; height: 18px; border: 2px solid rgba(13,27,62,0.3); border-top-color: #0D1B3E; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; }
+    .spinner { width: 18px; height: 18px; border: 2px solid rgba(13,27,62,0.3); border-top-color: #0F1E3D; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
     #alert.alert-error { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; border-radius: 10px; }
     #alert.alert-success { background: #F0FDF4; color: #166534; border: 1px solid #BBF7D0; border-radius: 10px; }
   </style>
 </head>
-<body class="min-h-screen bg-[#0D1B3E] flex items-center justify-center p-5">
+<body class="min-h-screen bg-[#0F1E3D] flex items-center justify-center p-5">
 
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
 
     <!-- Header -->
-    <div class="bg-[#0D1B3E] px-8 py-8 text-center">
+    <div class="bg-[#0F1E3D] px-8 py-8 text-center">
       <a href="index.html" class="inline-block mb-3">
-        <span class="text-2xl font-bold text-white tracking-tight">Destine<span class="text-[#FFD700]">AI</span></span>
+        <span class="text-2xl font-bold text-white tracking-tight">Destine<span class="text-[#EE985C]">AI</span></span>
       </a>
       <p class="text-white/70 text-sm">Destine seu IR para a cultura brasileira</p>
     </div>
@@ -67,12 +67,12 @@
           </div>
         </div>
         <button type="submit" id="loginBtn"
-                class="w-full bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold py-4 rounded-xl text-base transition-colors">
+                class="w-full bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold py-4 rounded-xl text-base transition-colors">
           <span>Entrar</span>
         </button>
         <div class="text-center mt-4">
           <button type="button" onclick="showForgotPassword()"
-                  class="text-sm text-gray-400 hover:text-[#0D1B3E] transition-colors underline underline-offset-2">
+                  class="text-sm text-gray-400 hover:text-[#0F1E3D] transition-colors underline underline-offset-2">
             Esqueceu sua senha?
           </button>
         </div>
@@ -116,23 +116,23 @@
         </div>
         <div class="mb-6">
           <label class="flex items-start gap-3 cursor-pointer">
-            <input type="checkbox" id="regTerms" class="mt-1 w-4 h-4 rounded cursor-pointer" style="accent-color:#0D1B3E">
+            <input type="checkbox" id="regTerms" class="mt-1 w-4 h-4 rounded cursor-pointer" style="accent-color:#0F1E3D">
             <span class="text-sm text-gray-600 leading-relaxed">
               Li e aceito a
-              <a href="politica-privacidade.html" target="_blank" class="text-[#0D1B3E] font-semibold hover:underline">Política de Privacidade</a>
+              <a href="politica-privacidade.html" target="_blank" class="text-[#0F1E3D] font-semibold hover:underline">Política de Privacidade</a>
               e os
-              <a href="termos-uso.html" target="_blank" class="text-[#0D1B3E] font-semibold hover:underline">Termos de Uso</a> *
+              <a href="termos-uso.html" target="_blank" class="text-[#0F1E3D] font-semibold hover:underline">Termos de Uso</a> *
             </span>
           </label>
           <p id="termsError" class="text-red-600 text-xs mt-1.5 hidden">Você deve aceitar os termos para continuar</p>
         </div>
         <button type="submit" id="registerBtn"
-                class="w-full bg-[#FFD700] hover:bg-[#FFC000] text-[#0D1B3E] font-bold py-4 rounded-xl text-base transition-colors">
+                class="w-full bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold py-4 rounded-xl text-base transition-colors">
           <span>Criar conta</span>
         </button>
       </form>
 
-      <a href="piloto.html" class="flex items-center justify-center gap-2 mt-5 text-gray-400 hover:text-[#0D1B3E] text-sm transition-colors">
+      <a href="piloto.html" class="flex items-center justify-center gap-2 mt-5 text-gray-400 hover:text-[#0F1E3D] text-sm transition-colors">
         <i class="fas fa-arrow-left text-xs"></i> Voltar para o início
       </a>
 
@@ -375,11 +375,11 @@
       loader.style.cssText = 'text-align:center;padding:48px 24px;';
       loader.innerHTML =
         '<div style="margin-bottom:28px">' +
-          '<span style="font-size:30px;font-weight:900;color:white;letter-spacing:-0.5px;font-family:Inter,sans-serif">Destine<span style="color:#FFD700">AI</span></span>' +
+          '<span style="font-size:30px;font-weight:900;color:white;letter-spacing:-0.5px;font-family:Inter,sans-serif">Destine<span style="color:#EE985C">AI</span></span>' +
         '</div>' +
-        '<div style="width:42px;height:42px;border:3px solid rgba(255,215,0,0.25);border-top-color:#FFD700;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 22px"></div>' +
+        '<div style="width:42px;height:42px;border:3px solid rgba(255,215,0,0.25);border-top-color:#EE985C;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 22px"></div>' +
         '<p style="color:rgba(255,255,255,0.75);font-size:14px;font-weight:600;margin:0 0 14px;font-family:Inter,sans-serif">Entrando na simulação...</p>' +
-        '<span style="color:#FFD700;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;border:1px solid rgba(255,215,0,0.3);background:rgba(255,215,0,0.07);padding:4px 12px;border-radius:999px;font-family:Inter,sans-serif">Piloto FGV</span>';
+        '<span style="color:#EE985C;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;border:1px solid rgba(255,215,0,0.3);background:rgba(255,215,0,0.07);padding:4px 12px;border-radius:999px;font-family:Inter,sans-serif">Piloto FGV</span>';
       document.body.appendChild(loader);
 
       document.getElementById('loginCpfEmail').value = 'demo@IncentivaBR.com.br';

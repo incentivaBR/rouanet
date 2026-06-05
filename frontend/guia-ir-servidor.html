@@ -7,7 +7,7 @@
   <meta name="description" content="Guia passo a passo: onde encontrar o IR Devido (Resumo da declaração IRPF, e-CAC, SIGEPE) e como lançar corretamente a destinação Lei Rouanet na declaração anual de IR.">
   <link rel="icon" type="image/png" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/IncentivaBR.css">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -16,11 +16,11 @@
       theme: {
         extend: {
           colors: {
-            navy:     '#0D1B3E',
+            navy:     '#0F1E3D',
             navydark: '#080F24',
             navymid:  '#132247',
-            gold:     '#FFD700',
-            golddk:   '#FFC000',
+            gold:     '#EE985C',
+            golddk:   '#d4874e',
           }
         }
       }
@@ -30,7 +30,7 @@
     /* Cores do mockup de terminal */
     .sm-label     { color: #6B7280; }
     .sm-value     { color: #7EE8A2; font-weight: 700; }
-    .sm-highlight { color: #FFD700; font-weight: 700; font-size: 15px; }
+    .sm-highlight { color: #EE985C; font-weight: 700; font-size: 15px; }
     .sm-field     { color: #79AAFF; }
 
     /* Accordions <details> */
@@ -45,9 +45,27 @@
   </style>
 </head>
 <body>
+  <!-- ── NAVBAR ── -->
+  <nav style="background:rgba(15,30,61,0.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(238,152,92,0.12)" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="bg-white rounded-lg px-2 py-1 inline-flex items-center">
+          <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-6 w-auto">
+        </span>
+      </a>
+      <div class="flex items-center gap-4 text-sm text-white/65">
+        <a href="como-funciona.html" class="hover:text-white transition hidden md:inline">Como funciona</a>
+        <a href="espaco-contador.html" class="hover:text-white transition hidden md:inline">Contadores</a>
+        <a href="faq.html" class="hover:text-white transition hidden md:inline">FAQ</a>
+        <a href="login.html" class="border border-white/20 hover:border-white/40 text-white/75 hover:text-white px-4 py-1.5 rounded-full text-xs transition">Entrar</a>
+        <a href="calculadora-rapida.html" style="background:linear-gradient(135deg,#EE985C,#e07a35)" class="text-white font-bold px-4 py-1.5 rounded-full text-xs transition hidden sm:inline">Calcular meu IR</a>
+      </div>
+    </div>
+  </nav>
+
 
   <!-- ── Hero ── -->
-  <section class="bg-[#0D1B3E] pt-24 pb-16 text-center text-white">
+  <section class="bg-[#0F1E3D] pt-24 pb-16 text-center text-white">
     <!-- Breadcrumb -->
     <div class="flex items-center justify-center gap-2 text-sm text-white/50 mb-6">
       <a href="index.html" class="hover:text-white/80 transition-colors">Início</a>
@@ -58,14 +76,14 @@
     </div>
 
     <!-- Badge -->
-    <div class="inline-flex items-center gap-2 bg-[#FFD700]/10 border border-[#FFD700]/30 text-[#FFD700] text-sm font-semibold px-4 py-1.5 rounded-full mb-5">
+    <div class="inline-flex items-center gap-2 bg-[#EE985C]/10 border border-[#EE985C]/30 text-[#EE985C] text-sm font-semibold px-4 py-1.5 rounded-full mb-5">
       <i class="fas fa-file-invoice-dollar"></i>
       Guia exclusivo para servidores públicos
     </div>
 
     <h1 class="text-3xl md:text-[40px] font-extrabold leading-tight mb-4 px-4">
       Como declarar a destinação<br>
-      <span class="text-[#FFD700]">Lei Rouanet</span> no seu IR
+      <span class="text-[#EE985C]">Lei Rouanet</span> no seu IR
     </h1>
     <p class="text-white/70 text-[17px] max-w-xl mx-auto px-5 leading-relaxed">
       Onde encontrar o IR Devido e como lançar corretamente na declaração anual — sem complicação, sem surpresas.
@@ -76,28 +94,28 @@
   <main class="max-w-3xl mx-auto px-5 py-12">
 
     <!-- Índice -->
-    <div class="fade-up bg-white rounded-2xl shadow-sm border-l-4 border-[#FFD700] px-7 py-6 mb-10">
+    <div class="fade-up bg-white rounded-2xl shadow-sm border-l-4 border-[#EE985C] px-7 py-6 mb-10">
       <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4">
         <i class="fas fa-list mr-2"></i>Nesta página
       </h3>
       <ol class="pl-5 list-decimal space-y-2">
         <li>
-          <a href="#parte1" class="text-[#0D1B3E] font-semibold text-[15px] hover:underline">
+          <a href="#parte1" class="text-[#0F1E3D] font-semibold text-[15px] hover:underline">
             Parte 1 — Como encontrar o valor do IR Devido
           </a>
         </li>
         <li>
-          <a href="#parte2" class="text-[#0D1B3E] font-semibold text-[15px] hover:underline">
+          <a href="#parte2" class="text-[#0F1E3D] font-semibold text-[15px] hover:underline">
             Parte 2 — Como lançar a destinação na declaração de IR
           </a>
         </li>
         <li>
-          <a href="#parte3" class="text-[#0D1B3E] font-semibold text-[15px] hover:underline">
+          <a href="#parte3" class="text-[#0F1E3D] font-semibold text-[15px] hover:underline">
             Parte 3 — Documentos que você precisa guardar
           </a>
         </li>
         <li>
-          <a href="#parte4" class="text-[#0D1B3E] font-semibold text-[15px] hover:underline">
+          <a href="#parte4" class="text-[#0F1E3D] font-semibold text-[15px] hover:underline">
             Parte 4 — Exemplo numérico completo
           </a>
         </li>
@@ -123,18 +141,18 @@
         <div class="w-11 h-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 text-[18px]">
           <i class="fas fa-search-dollar"></i>
         </div>
-        <h2 class="text-xl md:text-2xl font-extrabold text-[#0D1B3E] leading-tight">
+        <h2 class="text-xl md:text-2xl font-extrabold text-[#0F1E3D] leading-tight">
           Parte 1 — Como encontrar o valor do IR Devido
         </h2>
       </div>
 
       <!-- Frame custo zero -->
-      <div class="bg-[#0D1B3E] rounded-2xl p-5 mb-6 text-white">
-        <p class="text-sm font-bold text-[#FFD700] mb-3">O que você destina pode voltar pra você</p>
+      <div class="bg-[#0F1E3D] rounded-2xl p-5 mb-6 text-white">
+        <p class="text-sm font-bold text-[#EE985C] mb-3">O que você destina pode voltar pra você</p>
         <div class="font-mono text-sm space-y-1 text-white/90 mb-3">
           <div class="flex justify-between"><span>Imposto retido na fonte (ano)</span><span>R$ 10.000</span></div>
           <div class="flex justify-between"><span>Destinação Rouanet (6%)</span><span class="text-red-300">− R$ 600</span></div>
-          <div class="border-t border-white/20 mt-2 pt-2 flex justify-between font-bold"><span>Restituição extra</span><span class="text-[#FFD700]">+ R$ 600</span></div>
+          <div class="border-t border-white/20 mt-2 pt-2 flex justify-between font-bold"><span>Restituição extra</span><span class="text-[#EE985C]">+ R$ 600</span></div>
           <div class="flex justify-between"><span>Custo líquido pro seu bolso</span><span class="text-green-300 font-bold">R$ 0</span></div>
         </div>
         <p class="text-white/60 text-xs">O projeto ganha. Você não perde nada. Quem "paga" é o governo — não você.</p>
@@ -148,8 +166,8 @@
       <!-- Método 1: e-CAC -->
       <details class="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden" open>
         <summary class="flex items-center gap-3 px-6 py-5 cursor-pointer border-b border-slate-100 hover:bg-slate-50 transition-colors">
-          <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">1</div>
-          <h3 class="font-bold text-[#0D1B3E] flex-1 text-[15px]">Via declaração anterior / e-CAC (mais fácil)</h3>
+          <div class="w-8 h-8 rounded-full bg-[#0F1E3D] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">1</div>
+          <h3 class="font-bold text-[#0F1E3D] flex-1 text-[15px]">Via declaração anterior / e-CAC (mais fácil)</h3>
           <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 uppercase tracking-wide flex-shrink-0 hidden sm:inline">Recomendado</span>
           <i class="fas fa-chevron-down text-slate-400 chevron transition-transform duration-200 flex-shrink-0 ml-1"></i>
         </summary>
@@ -160,9 +178,9 @@
           </p>
           <ol class="space-y-5">
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Acesse o e-CAC</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Acesse o e-CAC</h4>
                 <p class="text-sm text-slate-600 leading-relaxed">
                   Entre em <strong>cav.receita.fazenda.gov.br</strong> com sua conta <strong>gov.br</strong>
                   (CPF + senha ou certificado digital). Servidores federais já têm conta gov.br.
@@ -170,9 +188,9 @@
               </div>
             </li>
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Vá em "Declarações e Demonstrativos"</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Vá em "Declarações e Demonstrativos"</h4>
                 <p class="text-sm text-slate-600 leading-relaxed">
                   No menu lateral, clique em
                   <code class="bg-blue-50 border border-blue-200 text-blue-800 text-[12px] font-bold px-2 py-0.5 rounded">Declarações e Demonstrativos</code>
@@ -182,22 +200,22 @@
               </div>
             </li>
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Selecione o exercício mais recente</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Selecione o exercício mais recente</h4>
                 <p class="text-sm text-slate-600 leading-relaxed">
                   Clique na declaração do último ano entregue e abra o <strong>Resumo da Declaração</strong>.
                 </p>
               </div>
             </li>
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Localize o campo "Imposto Devido"</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Localize o campo "Imposto Devido"</h4>
                 <p class="text-sm text-slate-600 leading-relaxed mb-3">Na seção <em>Cálculo do Imposto</em>, procure a linha:</p>
                 <!-- Mockup de tela -->
                 <div class="rounded-xl p-5 font-mono text-sm leading-loose" style="background:#1E1E2E">
-                  <div class="text-[11px] uppercase tracking-widest mb-3" style="color:#aaa;font-family:'Inter',sans-serif">
+                  <div class="text-[11px] uppercase tracking-widest mb-3" style="color:#aaa;font-family:'Montserrat',sans-serif">
                     Resumo da Declaração — Cálculo do Imposto
                   </div>
                   <div><span class="sm-label">Rendimentos Tributáveis:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sm-value">R$ 85.200,00</span></div>
@@ -227,8 +245,8 @@
       <!-- Método 2: Contracheque -->
       <details class="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden">
         <summary class="flex items-center gap-3 px-6 py-5 cursor-pointer hover:bg-slate-50 transition-colors">
-          <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">2</div>
-          <h3 class="font-bold text-[#0D1B3E] flex-1 text-[15px]">Via imposto retido na fonte (quando não tem a declaração em mãos)</h3>
+          <div class="w-8 h-8 rounded-full bg-[#0F1E3D] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">2</div>
+          <h3 class="font-bold text-[#0F1E3D] flex-1 text-[15px]">Via imposto retido na fonte (quando não tem a declaração em mãos)</h3>
           <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-700 uppercase tracking-wide flex-shrink-0 hidden sm:inline">Estimativa</span>
           <i class="fas fa-chevron-down text-slate-400 chevron transition-transform duration-200 flex-shrink-0 ml-1"></i>
         </summary>
@@ -239,20 +257,20 @@
           </p>
           <ol class="space-y-5">
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Abra o contracheque de dezembro do ano anterior</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Abra o contracheque de dezembro do ano anterior</h4>
                 <p class="text-sm text-slate-600 leading-relaxed">
                   O contracheque de dezembro geralmente acumula o total anual na coluna <strong>"Ano"</strong> ou <strong>"Acumulado"</strong>.
                 </p>
               </div>
             </li>
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Localize "IRRF" na coluna de descontos</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Localize "IRRF" na coluna de descontos</h4>
                 <div class="rounded-xl p-5 font-mono text-sm leading-loose mt-2" style="background:#1E1E2E">
-                  <div class="text-[11px] uppercase tracking-widest mb-3" style="color:#aaa;font-family:'Inter',sans-serif">
+                  <div class="text-[11px] uppercase tracking-widest mb-3" style="color:#aaa;font-family:'Montserrat',sans-serif">
                     Contracheque — Dezembro
                   </div>
                   <div><span class="sm-label">Provento Bruto:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="sm-value">R$ 7.100,00</span></div>
@@ -263,9 +281,9 @@
               </div>
             </li>
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Use o IRRF acumulado como estimativa do IR Devido</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Use o IRRF acumulado como estimativa do IR Devido</h4>
                 <p class="text-sm text-slate-600 leading-relaxed">
                   No exemplo: IRRF acumulado = R$ 7.900 → limite estimado = R$ 7.900 × 6% = <strong>R$ 474,00</strong>.
                 </p>
@@ -287,8 +305,8 @@
       <!-- Método 3: SIGEPE -->
       <details class="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden">
         <summary class="flex items-center gap-3 px-6 py-5 cursor-pointer hover:bg-slate-50 transition-colors">
-          <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">3</div>
-          <h3 class="font-bold text-[#0D1B3E] flex-1 text-[15px]">Via SIGEPE (servidor federal)</h3>
+          <div class="w-8 h-8 rounded-full bg-[#0F1E3D] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">3</div>
+          <h3 class="font-bold text-[#0F1E3D] flex-1 text-[15px]">Via SIGEPE (servidor federal)</h3>
           <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-700 uppercase tracking-wide flex-shrink-0 hidden sm:inline">Federal</span>
           <i class="fas fa-chevron-down text-slate-400 chevron transition-transform duration-200 flex-shrink-0 ml-1"></i>
         </summary>
@@ -299,27 +317,27 @@
           </p>
           <ol class="space-y-5">
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Acesse o SIGEPE</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Acesse o SIGEPE</h4>
                 <p class="text-sm text-slate-600 leading-relaxed">
                   Entre em <strong>sigepe.gov.br</strong> com seu login gov.br (CPF + senha).
                 </p>
               </div>
             </li>
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Vá em "Contracheque" → "Histórico de Pagamentos"</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Vá em "Contracheque" → "Histórico de Pagamentos"</h4>
                 <p class="text-sm text-slate-600 leading-relaxed">
                   Selecione o ano de referência e exporte o resumo anual.
                 </p>
               </div>
             </li>
             <li class="flex gap-4 items-start">
-              <div class="w-7 h-7 rounded-full bg-[#0D1B3E] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
+              <div class="w-7 h-7 rounded-full bg-[#0F1E3D] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
               <div>
-                <h4 class="font-bold text-[#0D1B3E] text-sm mb-1">Some todos os valores de "IRRF" do ano</h4>
+                <h4 class="font-bold text-[#0F1E3D] text-sm mb-1">Some todos os valores de "IRRF" do ano</h4>
                 <p class="text-sm text-slate-600 leading-relaxed">
                   A soma dos IRRF mensais é o total retido na fonte — use como base de estimativa do IR Devido.
                 </p>
@@ -348,7 +366,7 @@
         <div class="w-11 h-11 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 text-[18px]">
           <i class="fas fa-file-alt"></i>
         </div>
-        <h2 class="text-xl md:text-2xl font-extrabold text-[#0D1B3E] leading-tight">
+        <h2 class="text-xl md:text-2xl font-extrabold text-[#0F1E3D] leading-tight">
           Parte 2 — Como lançar a destinação na declaração de IR
         </h2>
       </div>
@@ -362,9 +380,9 @@
 
         <!-- Passo 1 -->
         <li class="flex gap-4 items-start">
-          <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
+          <div class="w-8 h-8 rounded-full bg-[#0F1E3D] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
           <div>
-            <h4 class="font-bold text-[#0D1B3E] mb-1">Abra o programa IRPF da Receita Federal</h4>
+            <h4 class="font-bold text-[#0F1E3D] mb-1">Abra o programa IRPF da Receita Federal</h4>
             <p class="text-sm text-slate-600 leading-relaxed">
               Baixe a versão mais recente em <strong>gov.br/receitafederal</strong> ou use o <strong>app Meu Imposto de Renda</strong>
               no celular. Abra sua declaração do ano correspondente.
@@ -374,9 +392,9 @@
 
         <!-- Passo 2 -->
         <li class="flex gap-4 items-start">
-          <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
+          <div class="w-8 h-8 rounded-full bg-[#0F1E3D] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
           <div>
-            <h4 class="font-bold text-[#0D1B3E] mb-1">Acesse a ficha "Doações Efetuadas"</h4>
+            <h4 class="font-bold text-[#0F1E3D] mb-1">Acesse a ficha "Doações Efetuadas"</h4>
             <p class="text-sm text-slate-600 leading-relaxed mb-2">No menu lateral do programa, localize a ficha:</p>
             <code class="inline-block bg-blue-50 border border-blue-200 text-blue-800 text-sm font-bold px-3 py-1.5 rounded-lg">
               <i class="fas fa-folder-open mr-2"></i>Doações Efetuadas
@@ -389,9 +407,9 @@
 
         <!-- Passo 3 -->
         <li class="flex gap-4 items-start">
-          <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
+          <div class="w-8 h-8 rounded-full bg-[#0F1E3D] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
           <div class="flex-1">
-            <h4 class="font-bold text-[#0D1B3E] mb-1">Clique em "Novo" e selecione o Código 41</h4>
+            <h4 class="font-bold text-[#0F1E3D] mb-1">Clique em "Novo" e selecione o Código 41</h4>
             <p class="text-sm text-slate-600 leading-relaxed mb-3">Na janela que abre, preencha os campos:</p>
             <!-- Ficha IRPF mockup -->
             <div class="bg-white border-2 border-slate-200 rounded-xl p-5">
@@ -401,19 +419,19 @@
               <div class="divide-y divide-slate-100">
                 <div class="flex flex-wrap items-center justify-between gap-2 py-2.5">
                   <span class="text-sm text-slate-500">Código da doação</span>
-                  <span class="text-sm font-bold text-[#0D1B3E] bg-blue-50 px-3 py-1 rounded-lg font-mono">41 — Atividade Cultural e Artística</span>
+                  <span class="text-sm font-bold text-[#0F1E3D] bg-blue-50 px-3 py-1 rounded-lg font-mono">41 — Atividade Cultural e Artística</span>
                 </div>
                 <div class="flex flex-wrap items-center justify-between gap-2 py-2.5">
                   <span class="text-sm text-slate-500">CNPJ do beneficiário</span>
-                  <span class="text-sm font-bold text-[#0D1B3E] bg-blue-50 px-3 py-1 rounded-lg font-mono">[CNPJ do proponente cultural]</span>
+                  <span class="text-sm font-bold text-[#0F1E3D] bg-blue-50 px-3 py-1 rounded-lg font-mono">[CNPJ do proponente cultural]</span>
                 </div>
                 <div class="flex flex-wrap items-center justify-between gap-2 py-2.5">
                   <span class="text-sm text-slate-500">Nome do beneficiário</span>
-                  <span class="text-sm font-bold text-[#0D1B3E] bg-blue-50 px-3 py-1 rounded-lg font-mono">[Nome do proponente]</span>
+                  <span class="text-sm font-bold text-[#0F1E3D] bg-blue-50 px-3 py-1 rounded-lg font-mono">[Nome do proponente]</span>
                 </div>
                 <div class="flex flex-wrap items-center justify-between gap-2 py-2.5">
                   <span class="text-sm text-slate-500">Data do pagamento</span>
-                  <span class="text-sm font-bold text-[#0D1B3E] bg-blue-50 px-3 py-1 rounded-lg font-mono">DD/MM/AAAA</span>
+                  <span class="text-sm font-bold text-[#0F1E3D] bg-blue-50 px-3 py-1 rounded-lg font-mono">DD/MM/AAAA</span>
                 </div>
                 <div class="flex flex-wrap items-center justify-between gap-2 py-2.5">
                   <span class="text-sm text-slate-500">Valor pago</span>
@@ -433,9 +451,9 @@
 
         <!-- Passo 4 -->
         <li class="flex gap-4 items-start">
-          <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</div>
+          <div class="w-8 h-8 rounded-full bg-[#0F1E3D] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</div>
           <div>
-            <h4 class="font-bold text-[#0D1B3E] mb-1">Confira o limite automático</h4>
+            <h4 class="font-bold text-[#0F1E3D] mb-1">Confira o limite automático</h4>
             <p class="text-sm text-slate-600 leading-relaxed">
               O programa IRPF calcula automaticamente se você está dentro do limite de 6%.
               Se ultrapassar, ele avisa antes de você enviar a declaração.
@@ -445,9 +463,9 @@
 
         <!-- Passo 5 -->
         <li class="flex gap-4 items-start">
-          <div class="w-8 h-8 rounded-full bg-[#0D1B3E] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</div>
+          <div class="w-8 h-8 rounded-full bg-[#0F1E3D] text-white text-sm font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</div>
           <div>
-            <h4 class="font-bold text-[#0D1B3E] mb-1">Verifique a restituição (ou imposto a pagar)</h4>
+            <h4 class="font-bold text-[#0F1E3D] mb-1">Verifique a restituição (ou imposto a pagar)</h4>
             <p class="text-sm text-slate-600 leading-relaxed">
               Após lançar a doação, observe o <strong>Resumo da Declaração</strong>. O valor da restituição deve aumentar
               exatamente no valor que você doou — comprovando que a destinação foi reconhecida.
@@ -479,7 +497,7 @@
         <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0 text-[18px]">
           <i class="fas fa-folder"></i>
         </div>
-        <h2 class="text-xl md:text-2xl font-extrabold text-[#0D1B3E] leading-tight">
+        <h2 class="text-xl md:text-2xl font-extrabold text-[#0F1E3D] leading-tight">
           Parte 3 — Documentos que você precisa guardar
         </h2>
       </div>
@@ -492,7 +510,7 @@
       <div class="overflow-x-auto rounded-xl border border-slate-200">
         <table class="w-full text-sm">
           <thead>
-            <tr class="bg-[#0D1B3E] text-white">
+            <tr class="bg-[#0F1E3D] text-white">
               <th class="text-left px-4 py-3 font-semibold">Documento</th>
               <th class="text-left px-4 py-3 font-semibold">Onde obter</th>
               <th class="text-left px-4 py-3 font-semibold whitespace-nowrap">Prazo</th>
@@ -501,7 +519,7 @@
           <tbody class="divide-y divide-slate-100">
             <tr class="hover:bg-slate-50 transition-colors">
               <td class="px-4 py-3">
-                <span class="font-semibold text-[#0D1B3E]">Recibo de Mecenato</span>
+                <span class="font-semibold text-[#0F1E3D]">Recibo de Mecenato</span>
                 <span class="text-slate-400"> (emitido pela IncentivaBR)</span>
               </td>
               <td class="px-4 py-3 text-slate-600">Dashboard do site · E-mail de confirmação</td>
@@ -509,7 +527,7 @@
             </tr>
             <tr class="hover:bg-slate-50 transition-colors">
               <td class="px-4 py-3">
-                <span class="font-semibold text-[#0D1B3E]">Comprovante de transferência</span>
+                <span class="font-semibold text-[#0F1E3D]">Comprovante de transferência</span>
                 <span class="text-slate-400"> (extrato / PIX)</span>
               </td>
               <td class="px-4 py-3 text-slate-600">App ou internet banking do seu banco</td>
@@ -517,7 +535,7 @@
             </tr>
             <tr class="hover:bg-slate-50 transition-colors">
               <td class="px-4 py-3">
-                <span class="font-semibold text-[#0D1B3E]">CNPJ e dados do proponente</span>
+                <span class="font-semibold text-[#0F1E3D]">CNPJ e dados do proponente</span>
               </td>
               <td class="px-4 py-3 text-slate-600">Recibo de Mecenato · Página do projeto no SALIC</td>
               <td class="px-4 py-3 font-semibold text-slate-700">5 anos</td>
@@ -558,7 +576,7 @@
         <div class="w-11 h-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 text-[18px]">
           <i class="fas fa-calculator"></i>
         </div>
-        <h2 class="text-xl md:text-2xl font-extrabold text-[#0D1B3E] leading-tight">
+        <h2 class="text-xl md:text-2xl font-extrabold text-[#0F1E3D] leading-tight">
           Parte 4 — Exemplo numérico completo
         </h2>
       </div>
@@ -568,8 +586,8 @@
       </p>
 
       <!-- Box numérico -->
-      <div class="rounded-2xl p-7 text-white" style="background:linear-gradient(135deg,#0D1B3E 0%,#132247 100%)">
-        <h4 class="text-[#FFD700] text-[12px] font-bold uppercase tracking-widest mb-5">
+      <div class="rounded-2xl p-7 text-white" style="background:linear-gradient(135deg,#0F1E3D 0%,#132247 100%)">
+        <h4 class="text-[#EE985C] text-[12px] font-bold uppercase tracking-widest mb-5">
           <i class="fas fa-user-tie mr-2"></i>Perfil: Analista Judiciário Federal
         </h4>
         <div class="divide-y divide-white/10">
@@ -595,7 +613,7 @@
           </div>
           <div class="flex justify-between py-2.5 text-sm gap-3">
             <span class="text-white/65">Limite Lei Rouanet (6% do IR Devido)</span>
-            <span class="font-bold text-[#FFD700] tabular-nums">R$ 491,00</span>
+            <span class="font-bold text-[#EE985C] tabular-nums">R$ 491,00</span>
           </div>
           <div class="flex justify-between py-2.5 text-sm gap-3">
             <span class="text-white/65">IR retido na fonte (anual)</span>
@@ -607,9 +625,9 @@
           </div>
         </div>
         <!-- Total -->
-        <div class="flex items-center justify-between pt-5 mt-3 border-t border-[#FFD700]/30 gap-3">
-          <span class="text-[#FFD700] font-bold text-sm">Restituição <em>com</em> destinação de R$ 491</span>
-          <span class="text-[#FFD700] font-extrabold text-xl tabular-nums">R$ 1.807,00</span>
+        <div class="flex items-center justify-between pt-5 mt-3 border-t border-[#EE985C]/30 gap-3">
+          <span class="text-[#EE985C] font-bold text-sm">Restituição <em>com</em> destinação de R$ 491</span>
+          <span class="text-[#EE985C] font-extrabold text-xl tabular-nums">R$ 1.807,00</span>
         </div>
       </div>
 
@@ -628,24 +646,24 @@
     <!-- ══════════════════════════════════════════ -->
     <!-- CTA Final                                  -->
     <!-- ══════════════════════════════════════════ -->
-    <div class="fade-up bg-[#FFD700] rounded-2xl p-8 text-center mt-4">
-      <h3 class="text-2xl font-extrabold text-[#0D1B3E] mb-2">Pronto para destinar seu IR?</h3>
-      <p class="text-[#0D1B3E]/70 text-sm mb-6 max-w-md mx-auto">
+    <div class="fade-up bg-[#EE985C] rounded-2xl p-8 text-center mt-4">
+      <h3 class="text-2xl font-extrabold text-[#0F1E3D] mb-2">Pronto para destinar seu IR?</h3>
+      <p class="text-[#0F1E3D]/70 text-sm mb-6 max-w-md mx-auto">
         Use o MeuLimite para descobrir seu limite exato e, se quiser, confirme com seu contador antes de fazer a transferência.
       </p>
       <div class="flex gap-3 justify-center flex-wrap">
-        <a href="calculadora.html" class="inline-flex items-center gap-2 bg-[#0D1B3E] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#132247] transition-colors">
+        <a href="calculadora.html" class="inline-flex items-center gap-2 bg-[#0F1E3D] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#132247] transition-colors">
           <i class="fas fa-calculator"></i> Calcular com MeuLimite
         </a>
-        <a href="destinar-rouanet.html" class="inline-flex items-center gap-2 bg-[#132247] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#0D1B3E] transition-colors">
+        <a href="destinar-rouanet.html" class="inline-flex items-center gap-2 bg-[#132247] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#0F1E3D] transition-colors">
           <i class="fas fa-arrow-right"></i> Destinar agora
         </a>
       </div>
-      <p class="mt-5 text-[12px] text-[#0D1B3E]/55">
+      <p class="mt-5 text-[12px] text-[#0F1E3D]/55">
         Fonte oficial:
         <a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/preenchimento/manual-mir/pagamentos-ou-doacoes/deducoes-incentivadas"
            target="_blank" rel="noopener"
-           class="underline font-semibold text-[#0D1B3E]/75 hover:text-[#0D1B3E]">
+           class="underline font-semibold text-[#0F1E3D]/75 hover:text-[#0F1E3D]">
           Manual da Declaração — Receita Federal
         </a>
       </p>

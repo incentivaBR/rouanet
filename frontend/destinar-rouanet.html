@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -16,13 +16,13 @@
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          fontFamily: { sans: ['Montserrat', 'sans-serif'] },
           colors: {
-            navy:     '#0D1B3E',
+            navy:     '#0F1E3D',
             navydark: '#0A1530',
             navymid:  '#132247',
-            gold:     '#FFD700',
-            golddk:   '#FFC000',
+            gold:     '#EE985C',
+            golddk:   '#d4874e',
           }
         }
       }
@@ -31,18 +31,18 @@
   <style>
     /* ── Variáveis de marca (navy + gold) ──────────────────────── */
     :root {
-      --rouanet:          #0D1B3E;
+      --rouanet:          #0F1E3D;
       --rouanet-dark:     #0A1530;
       --rouanet-light:    #EFF1F7;
-      --gold:             #FFD700;
-      --gold-dark:        #FFC000;
+      --gold:             #EE985C;
+      --gold-dark:        #d4874e;
       --success:          #059669;
       --success-light:    #ECFDF5;
       /* Base */
       --background-light: #F8F9FA;
       --border-light:     #E9ECEF;
       --border-color:     #DEE2E6;
-      --text-primary:     #0D1B3E;
+      --text-primary:     #0F1E3D;
       --text-secondary:   #495057;
       --text-muted:       #8B9BA8;
       --radius-sm:  6px;
@@ -53,7 +53,7 @@
       --shadow-md:  0 4px 16px rgba(0,0,0,0.08);
     }
 
-    body { font-family: 'Inter', sans-serif; background: var(--background-light); visibility: visible; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--background-light); visibility: visible; }
 
     /* ── Loading overlay ───────────────────────────────────────── */
     .loading-overlay {
@@ -150,14 +150,14 @@
     }
     .project-banner::before {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 3px; background: linear-gradient(90deg, #FFD700 0%, rgba(255,215,0,0.2) 100%);
+      height: 3px; background: linear-gradient(90deg, #EE985C 0%, rgba(255,215,0,0.2) 100%);
     }
     .pronac-chip {
       display: inline-block;
       background: rgba(255,215,0,.2); border: 1px solid rgba(255,215,0,.4);
       border-radius: 12px; padding: 3px 10px;
       font-size: 11px; font-weight: 700; letter-spacing: 1px;
-      color: #FFD700; margin-bottom: 12px;
+      color: #EE985C; margin-bottom: 12px;
     }
     .project-banner h3 { font-size: 20px; font-weight: 800; margin: 0 0 6px; line-height: 1.3; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
     .project-banner .sub { font-size: 13px; opacity: .75; }
@@ -198,7 +198,7 @@
     .form-group input[type="text"] {
       padding: 10px 14px; border: 2px solid var(--border-color);
       border-radius: var(--radius-md); font-size: 14px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       transition: border-color .2s; background: white;
     }
     .form-group input:focus { outline: none; border-color: var(--rouanet); }
@@ -245,7 +245,7 @@
     .valor-input-big input {
       flex: 1; font-size: 28px; font-weight: 700; color: var(--rouanet);
       border: none; background: transparent; outline: none; min-width: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .resumo-box { background: var(--background-light); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px; border: 1px solid var(--border-light); }
@@ -350,7 +350,7 @@
       width: 100%; padding: 14px 24px;
       background: var(--gold); color: var(--rouanet);
       border: none; border-radius: var(--radius-md);
-      font-size: 15px; font-weight: 700; font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 700; font-family: 'Montserrat', sans-serif;
       cursor: pointer; transition: background .2s, transform .15s;
       text-decoration: none;
     }
@@ -362,7 +362,7 @@
       width: 100%; padding: 12px 24px;
       background: white; color: var(--text-secondary);
       border: 2px solid var(--border-color); border-radius: var(--radius-md);
-      font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 600; font-family: 'Montserrat', sans-serif;
       cursor: pointer; margin-top: 10px; transition: all .2s;
     }
     .btn-secondary:hover { border-color: var(--rouanet); color: var(--rouanet); background: var(--rouanet-light); }
@@ -402,12 +402,12 @@
       <div style="display:flex;align-items:center;gap:10px">
         <span style="background:white;border-radius:6px;padding:3px 8px;display:inline-flex;align-items:center"><img src="assets/logo-incentivabr.png" alt="IncentivaBR" style="height:18px;width:auto"></span>
         <span style="color:rgba(255,255,255,0.2);font-size:14px">|</span>
-        <span style="color:white;font-weight:800;font-size:15px;font-family:'Inter',sans-serif;letter-spacing:-0.3px">Destine<span style="color:#FFD700">AI</span></span>
+        <span style="color:white;font-weight:800;font-size:15px;font-family:'Montserrat',sans-serif;letter-spacing:-0.3px">Destine<span style="color:#EE985C">AI</span></span>
       </div>
       <!-- Contexto do piloto -->
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="color:rgba(255,255,255,0.35);font-size:11px;font-family:'Inter',sans-serif;font-weight:600">Etapa 2 de 3</span>
-        <span style="color:#FFD700;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;border:1px solid rgba(255,215,0,0.3);background:rgba(255,215,0,0.08);border-radius:999px;padding:3px 10px">Piloto FGV</span>
+        <span style="color:rgba(255,255,255,0.35);font-size:11px;font-family:'Montserrat',sans-serif;font-weight:600">Etapa 2 de 3</span>
+        <span style="color:#EE985C;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;border:1px solid rgba(255,215,0,0.3);background:rgba(255,215,0,0.08);border-radius:999px;padding:3px 10px">Piloto FGV</span>
       </div>
     </div>
   </nav>
@@ -416,7 +416,7 @@
   <div style="padding-top:56px"></div>
 
   <!-- Faixa de simulação — visível só a partir do step1 -->
-  <div id="simStrip" style="display:none;background:#FFFBEB;border-bottom:1px solid #FDE68A;padding:8px 20px;text-align:center;font-size:12px;color:#92400E;font-family:'Inter',sans-serif;line-height:1.5">
+  <div id="simStrip" style="display:none;background:#FFFBEB;border-bottom:1px solid #FDE68A;padding:8px 20px;text-align:center;font-size:12px;color:#92400E;font-family:'Montserrat',sans-serif;line-height:1.5">
     🧪 <strong style="color:#78350F">Este é um fluxo de simulação desenvolvido para fins de pesquisa.</strong> Nenhum valor será transferido e nada muda na sua declaração de IR real.
   </div>
 
@@ -454,15 +454,15 @@
         <div style="position:absolute;inset:0;padding:20px 24px;display:flex;flex-direction:column;justify-content:space-between">
           <!-- badges topo -->
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <span style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.4);color:#FFD700;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">Projeto aprovado pelo MinC</span>
+            <span style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.4);color:#EE985C;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">Projeto aprovado pelo MinC</span>
             <span id="step0SimBadge" style="display:none;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-size:10px;padding:4px 10px;border-radius:20px">Simulação</span>
           </div>
           <!-- gancho emocional -->
           <div>
-            <p style="margin:0 0 6px;font-size:12px;color:rgba(255,255,255,0.55);font-family:'Inter',sans-serif" id="s0Local"></p>
-            <h2 id="s0Title" style="margin:0 0 8px;font-size:22px;font-weight:900;color:white;line-height:1.2;font-family:'Inter',sans-serif">Carregando projeto...</h2>
-            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;font-family:'Inter',sans-serif">
-              Com parte do IR que já sai do seu salário todo mês,<br>você pode apoiar este projeto — <strong style="color:#FFD700">sem pagar nada a mais.</strong>
+            <p style="margin:0 0 6px;font-size:12px;color:rgba(255,255,255,0.55);font-family:'Montserrat',sans-serif" id="s0Local"></p>
+            <h2 id="s0Title" style="margin:0 0 8px;font-size:22px;font-weight:900;color:white;line-height:1.2;font-family:'Montserrat',sans-serif">Carregando projeto...</h2>
+            <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;font-family:'Montserrat',sans-serif">
+              Com parte do IR que já sai do seu salário todo mês,<br>você pode apoiar este projeto — <strong style="color:#EE985C">sem pagar nada a mais.</strong>
             </p>
           </div>
         </div>
@@ -470,7 +470,7 @@
 
       <!-- Chips de informação -->
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
-        <span id="s0Pronac" style="background:rgba(13,27,62,0.07);border:1px solid rgba(13,27,62,0.15);color:#0D1B3E;font-size:11px;font-weight:700;letter-spacing:1px;padding:5px 12px;border-radius:20px"></span>
+        <span id="s0Pronac" style="background:rgba(13,27,62,0.07);border:1px solid rgba(13,27,62,0.15);color:#0F1E3D;font-size:11px;font-weight:700;letter-spacing:1px;padding:5px 12px;border-radius:20px"></span>
         <span id="s0Area"   style="background:rgba(13,27,62,0.07);border:1px solid rgba(13,27,62,0.12);color:#374151;font-size:11px;padding:5px 12px;border-radius:20px"></span>
         <span id="s0Proponente" style="background:rgba(13,27,62,0.07);border:1px solid rgba(13,27,62,0.12);color:#374151;font-size:11px;padding:5px 12px;border-radius:20px"></span>
       </div>
@@ -497,13 +497,13 @@
       <div style="background:white;border-radius:14px;border:1px solid #E8ECF4;padding:18px 20px;margin-bottom:16px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
           <span style="font-size:16px">🎻</span>
-          <strong style="font-size:13px;color:#0D1B3E">Sobre o projeto</strong>
+          <strong style="font-size:13px;color:#0F1E3D">Sobre o projeto</strong>
         </div>
         <p id="s0Desc" style="margin:0;font-size:13px;color:#4B5563;line-height:1.7">Carregando...</p>
       </div>
 
       <!-- CTA -->
-      <button onclick="confirmarProjeto()" style="width:100%;background:#FFD700;color:#0D1B3E;border:none;border-radius:14px;padding:16px 24px;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s;margin-bottom:10px">
+      <button onclick="confirmarProjeto()" style="width:100%;background:#EE985C;color:#0F1E3D;border:none;border-radius:14px;padding:16px 24px;font-size:16px;font-weight:800;font-family:'Montserrat',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s;margin-bottom:10px">
         Ver quanto posso destinar <i class="fas fa-arrow-right"></i>
       </button>
       <p style="text-align:center;font-size:12px;color:#9CA3AF;margin:0 0 8px">
@@ -521,9 +521,9 @@
     <div id="step1" style="display:none">
 
       <!-- Banner Modo Simulação (visível a partir da etapa 1) -->
-      <div id="testModeBanner" style="display:none;background:#0D1B3E;border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
+      <div id="testModeBanner" style="display:none;background:#0F1E3D;border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
         <span style="font-size:18px;flex-shrink:0">🧪</span>
-        <span><strong style="color:#FFD700">Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
+        <span><strong style="color:#EE985C">Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
       </div>
 
       <div class="card">
@@ -609,7 +609,7 @@
           <div id="calcRapida">
 
             <!-- Linha de benefício -->
-            <p style="font-size:14px;font-weight:700;color:#0D1B3E;margin-bottom:10px;line-height:1.5">
+            <p style="font-size:14px;font-weight:700;color:#0F1E3D;margin-bottom:10px;line-height:1.5">
               Com o valor do seu Imposto de Renda Devido, vamos calcular quanto você poderia destinar para este projeto sem pagar nada a mais.
             </p>
 
@@ -626,13 +626,13 @@
             </p>
 
             <!-- Card azul do campo IR Devido -->
-            <div style="background:linear-gradient(135deg,#0D1B3E 0%,#162444 100%);border:2px solid rgba(255,215,0,0.4);border-radius:16px;padding:20px 20px 16px;margin-bottom:4px">
+            <div style="background:linear-gradient(135deg,#0F1E3D 0%,#162444 100%);border:2px solid rgba(255,215,0,0.4);border-radius:16px;padding:20px 20px 16px;margin-bottom:4px">
               <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,215,0,0.7);margin-bottom:6px">IR Devido — Total do imposto na sua declaração</div>
               <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:12px">IR Devido (R$)</div>
               <div style="position:relative">
-                <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;font-weight:700;color:rgba(255,215,0,0.6);pointer-events:none;font-family:'Inter',sans-serif">R$</span>
+                <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;font-weight:700;color:rgba(255,215,0,0.6);pointer-events:none;font-family:'Montserrat',sans-serif">R$</span>
                 <input type="text" inputmode="decimal" id="rapidaIRDevido" placeholder="0,00" oninput="maskBRL(this)"
-                  style="width:100%;padding:14px 16px 14px 52px;font-size:28px;font-weight:800;color:white;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,215,0,0.25);border-radius:12px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;transition:border-color 0.2s"
+                  style="width:100%;padding:14px 16px 14px 52px;font-size:28px;font-weight:800;color:white;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,215,0,0.25);border-radius:12px;font-family:'Montserrat',sans-serif;outline:none;box-sizing:border-box;transition:border-color 0.2s"
                   onfocus="this.style.borderColor='rgba(255,215,0,0.7)'" onblur="this.style.borderColor='rgba(255,215,0,0.25)'">
               </div>
             </div>
@@ -684,7 +684,7 @@
           <div class="result-box" id="calcResultBox" style="display:none">
             <div class="title"><i class="fas fa-check-circle" style="color:var(--success)"></i> Resultado do cálculo</div>
             <!-- Frase de impacto dinâmica -->
-            <p style="font-size:15px;font-weight:700;color:#0D1B3E;margin:10px 0 0;line-height:1.5">
+            <p style="font-size:15px;font-weight:700;color:#0F1E3D;margin:10px 0 0;line-height:1.5">
               Com esse IR, você poderia destinar até <span id="resLimiteImpacto" style="color:#B45309;font-size:18px">R$ —</span> sem pagar nada a mais.
             </p>
             <!-- Elementos mantidos ocultos para o JS não quebrar -->
@@ -951,30 +951,30 @@
             </p>
 
             <!-- Aviso retorno piloto — Etapa 3 — PRIMEIRO elemento após título -->
-            <div style="background:#FFD700;border-radius:12px;padding:16px 18px;margin:0 0 20px;text-align:left;width:100%;box-sizing:border-box">
+            <div style="background:#EE985C;border-radius:12px;padding:16px 18px;margin:0 0 20px;text-align:left;width:100%;box-sizing:border-box">
               <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px">
                 <span style="font-size:22px;flex-shrink:0;line-height:1.2">↩️</span>
                 <div>
-                  <p style="margin:0 0 4px;font-size:13px;font-weight:800;color:#0D1B3E">Agora volte para a pesquisa</p>
-                  <p style="margin:0;font-size:12px;color:#0D1B3E;line-height:1.6">Conclua a <strong>Etapa 3 — pós-teste</strong> para completar sua participação. Use o mesmo código anônimo do passo 1. Obrigado por contribuir com esta pesquisa sobre destinação do IR pela Lei Rouanet.</p>
+                  <p style="margin:0 0 4px;font-size:13px;font-weight:800;color:#0F1E3D">Agora volte para a pesquisa</p>
+                  <p style="margin:0;font-size:12px;color:#0F1E3D;line-height:1.6">Conclua a <strong>Etapa 3 — pós-teste</strong> para completar sua participação. Use o mesmo código anônimo do passo 1. Obrigado por contribuir com esta pesquisa sobre destinação do IR pela Lei Rouanet.</p>
                 </div>
               </div>
               <a href="https://IncentivaBR.com.br/frontend/piloto-start.html?step=3"
-                style="display:flex;align-items:center;justify-content:center;gap:8px;background:#0D1B3E;color:#FFD700;font-weight:800;font-size:14px;padding:12px 20px;border-radius:10px;text-decoration:none;width:100%;box-sizing:border-box">
+                style="display:flex;align-items:center;justify-content:center;gap:8px;background:#0F1E3D;color:#EE985C;font-weight:800;font-size:14px;padding:12px 20px;border-radius:10px;text-decoration:none;width:100%;box-sizing:border-box">
                 ↩️ Voltar ao piloto — Iniciar o Pós-teste
               </a>
             </div>
 
             <!-- Card de impacto -->
-            <div style="background:linear-gradient(135deg,#0D1B3E 0%,#1a2f5a 100%);border-radius:16px;padding:20px;margin:0 0 20px;color:white;width:100%;box-sizing:border-box">
-              <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#FFD700;font-weight:700;margin-bottom:14px">Seu impacto estimado</div>
+            <div style="background:linear-gradient(135deg,#0F1E3D 0%,#1a2f5a 100%);border-radius:16px;padding:20px;margin:0 0 20px;color:white;width:100%;box-sizing:border-box">
+              <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#EE985C;font-weight:700;margin-bottom:14px">Seu impacto estimado</div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
                 <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center">
-                  <div id="impactEnsaios" style="font-size:28px;font-weight:900;color:#FFD700;line-height:1">—</div>
+                  <div id="impactEnsaios" style="font-size:28px;font-weight:900;color:#EE985C;line-height:1">—</div>
                   <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px">ensaios patrocinados</div>
                 </div>
                 <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center">
-                  <div style="font-size:28px;font-weight:900;color:#FFD700;line-height:1">80</div>
+                  <div style="font-size:28px;font-weight:900;color:#EE985C;line-height:1">80</div>
                   <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px">jovens alcançados</div>
                 </div>
               </div>
