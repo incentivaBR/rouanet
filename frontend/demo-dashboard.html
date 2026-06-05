@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Painel — Dr. Carlos Eduardo Mendes | DestineAI</title>
+  <title>Meu Painel — Dr. Carlos Eduardo Mendes | IncentivaBR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,12 +29,12 @@
       box-shadow: 0 2px 12px rgba(26,35,126,0.08);
       position: sticky; top: 0; z-index: 100;
     }
-    .destineai-wordmark {
+    .IncentivaBR-wordmark {
       font-family: 'Playfair Display', serif;
       font-size: 20px; font-weight: 700;
       color: var(--j-primary); letter-spacing: -0.5px;
     }
-    .destineai-wordmark span { color: var(--j-gold); }
+    .IncentivaBR-wordmark span { color: var(--j-gold); }
     .user-chip {
       display: flex; align-items: center; gap: 10px;
     }
@@ -640,7 +640,7 @@ function gerarComprovantePDF() {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(20);
   doc.setFont('helvetica', 'bold');
-  doc.text('DestineAI', pageW / 2, 14, { align: 'center' });
+  doc.text('IncentivaBR', pageW / 2, 14, { align: 'center' });
 
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
@@ -753,7 +753,7 @@ function gerarComprovantePDF() {
   doc.setTextColor(...MUTED);
   doc.setFontSize(7.5);
   doc.setFont('helvetica', 'normal');
-  doc.text(`Emitido em: ${hoje} · DestineAI — destineai.com.br · Powered by IncentivaBR`, pageW / 2, y, { align: 'center' });
+  doc.text(`Emitido em: ${hoje} · IncentivaBR — IncentivaBR.com.br · Powered by IncentivaBR`, pageW / 2, y, { align: 'center' });
 
   doc.save('comprovante-rouanet-orquestra-periferias.pdf');
 }
@@ -762,10 +762,10 @@ function gerarComprovantePDF() {
 <!-- FOOTER -->
 <footer class="footer">
   <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:white;margin-bottom:8px">
-    DestineAI<span style="color:var(--j-gold)">.</span>
+    IncentivaBR<span style="color:var(--j-gold)">.</span>
   </div>
   <p class="tagline">Lei Rouanet Simplificada · Powered by IncentivaBR</p>
-  <p class="footer-copyright">&copy; 2026 DestineAI · IncentivaBR · Todos os direitos reservados</p>
+  <p class="footer-copyright">&copy; 2026 IncentivaBR · IncentivaBR · Todos os direitos reservados</p>
 </footer>
 
 </body>
