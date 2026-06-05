@@ -32,10 +32,12 @@
 
     <!-- Header -->
     <div class="bg-[#0F1E3D] px-8 py-8 text-center">
-      <a href="index.html" class="inline-block mb-3">
-        <span class="text-2xl font-bold text-white tracking-tight">Destine<span class="text-[#EE985C]">AI</span></span>
+      <a href="index.html" class="inline-flex justify-center mb-4">
+        <span class="bg-white rounded-xl px-3 py-2 inline-flex items-center">
+          <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:32px;width:auto">
+        </span>
       </a>
-      <p class="text-white/70 text-sm">Destine seu IR para a cultura brasileira</p>
+      <p class="text-white/70 text-sm">Não é favor. É lei.</p>
     </div>
 
     <!-- Tabs -->
@@ -132,7 +134,7 @@
         </button>
       </form>
 
-      <a href="piloto.html" class="flex items-center justify-center gap-2 mt-5 text-gray-400 hover:text-[#0F1E3D] text-sm transition-colors">
+      <a href="index.html" class="flex items-center justify-center gap-2 mt-5 text-gray-400 hover:text-[#0F1E3D] text-sm transition-colors">
         <i class="fas fa-arrow-left text-xs"></i> Voltar para o início
       </a>
 
@@ -153,7 +155,7 @@
     if (auth.isLoggedIn()) {
       const isDemo = utils.getQueryParam('demo') === 'true';
       const defaultRedirect = isDemo
-        ? 'destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF'
+        ? 'destinar-rouanet.html'
         : 'dashboard.html';
       const redirect = utils.getQueryParam('redirect') || defaultRedirect;
       window.location.href = redirect;
@@ -282,7 +284,7 @@
 
         const isDemo = utils.getQueryParam('demo') === 'true';
         const defaultRedirect = isDemo
-          ? 'destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF'
+          ? 'destinar-rouanet.html'
           : 'dashboard.html';
         const redirect = utils.getQueryParam('redirect') || defaultRedirect;
         setTimeout(() => window.location.href = redirect, 1000);
@@ -375,11 +377,10 @@
       loader.style.cssText = 'text-align:center;padding:48px 24px;';
       loader.innerHTML =
         '<div style="margin-bottom:28px">' +
-          '<span style="font-size:30px;font-weight:900;color:white;letter-spacing:-0.5px;font-family:Inter,sans-serif">Destine<span style="color:#EE985C">AI</span></span>' +
+          '<img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:36px;background:white;padding:6px 12px;border-radius:10px">' +
         '</div>' +
-        '<div style="width:42px;height:42px;border:3px solid rgba(255,215,0,0.25);border-top-color:#EE985C;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 22px"></div>' +
-        '<p style="color:rgba(255,255,255,0.75);font-size:14px;font-weight:600;margin:0 0 14px;font-family:Inter,sans-serif">Entrando na simulação...</p>' +
-        '<span style="color:#EE985C;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;border:1px solid rgba(255,215,0,0.3);background:rgba(255,215,0,0.07);padding:4px 12px;border-radius:999px;font-family:Inter,sans-serif">Piloto FGV</span>';
+        '<div style="width:42px;height:42px;border:3px solid rgba(238,152,92,0.25);border-top-color:#EE985C;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 22px"></div>' +
+        '<p style="color:rgba(255,255,255,0.75);font-size:14px;font-weight:600;margin:0 0 14px;font-family:Montserrat,sans-serif">Entrando...</p>';
       document.body.appendChild(loader);
 
       document.getElementById('loginCpfEmail').value = 'demo@IncentivaBR.com.br';

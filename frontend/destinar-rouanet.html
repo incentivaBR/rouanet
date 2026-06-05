@@ -150,11 +150,11 @@
     }
     .project-banner::before {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 3px; background: linear-gradient(90deg, #EE985C 0%, rgba(255,215,0,0.2) 100%);
+      height: 3px; background: linear-gradient(90deg, #EE985C 0%,  100%);
     }
     .pronac-chip {
       display: inline-block;
-      background: rgba(255,215,0,.2); border: 1px solid rgba(255,215,0,.4);
+      background: ; border: 1px solid ;
       border-radius: 12px; padding: 3px 10px;
       font-size: 11px; font-weight: 700; letter-spacing: 1px;
       color: #EE985C; margin-bottom: 12px;
@@ -210,7 +210,7 @@
     .input-prefix input { padding-left: 40px !important; }
 
     .result-box {
-      background: rgba(255,215,0,.06); border: 1px solid rgba(255,215,0,.3);
+      background: ; border: 1px solid ;
       border-radius: var(--radius-lg); padding: 20px 24px; margin-top: 20px;
     }
     .result-box .title { font-size: 13px; color: var(--rouanet); font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
@@ -308,12 +308,12 @@
 
     /* ── Step 5: Comprovante ───────────────────────────────────── */
     .upload-area {
-      border: 2px dashed rgba(255,215,0,.5); border-radius: var(--radius-lg);
+      border: 2px dashed ; border-radius: var(--radius-lg);
       padding: 40px 20px; text-align: center; cursor: pointer;
       transition: all .2s; margin-bottom: 20px;
-      background: rgba(255,215,0,.04); position: relative;
+      background: ; position: relative;
     }
-    .upload-area:hover   { border-color: var(--gold); background: rgba(255,215,0,.08); }
+    .upload-area:hover   { border-color: var(--gold); background: ; }
     .upload-area.has-file { border-color: var(--success); border-style: solid; background: var(--success-light); }
     .upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     .upload-area i { font-size: 36px; color: var(--rouanet); margin-bottom: 12px; }
@@ -371,7 +371,7 @@
     .situacao-badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 12px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
     .situacao-andamento { background: #ECFDF5; color: #065F46; }
     .situacao-aprovado  { background: #EFF6FF; color: #1E40AF; }
-    .situacao-concluido { background: rgba(255,215,0,.15); color: #92400E; }
+    .situacao-concluido { background: ; color: #92400E; }
     .situacao-outro     { background: #FFFBEB; color: #92400E; }
 
     /* ── Responsivo ────────────────────────────────────────────── */
@@ -407,7 +407,7 @@
       <!-- Contexto do piloto -->
       <div style="display:flex;align-items:center;gap:10px">
         <span style="color:rgba(255,255,255,0.35);font-size:11px;font-family:'Montserrat',sans-serif;font-weight:600">Etapa 2 de 3</span>
-        <span style="color:#EE985C;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;border:1px solid rgba(255,215,0,0.3);background:rgba(255,215,0,0.08);border-radius:999px;padding:3px 10px">Piloto FGV</span>
+        <span style="color:#EE985C;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;border:1px solid ;background:;border-radius:999px;padding:3px 10px">Piloto FGV</span>
       </div>
     </div>
   </nav>
@@ -454,7 +454,7 @@
         <div style="position:absolute;inset:0;padding:20px 24px;display:flex;flex-direction:column;justify-content:space-between">
           <!-- badges topo -->
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <span style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.4);color:#EE985C;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">Projeto aprovado pelo MinC</span>
+            <span style="background:;border:1px solid ;color:#EE985C;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">Projeto aprovado pelo MinC</span>
             <span id="step0SimBadge" style="display:none;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-size:10px;padding:4px 10px;border-radius:20px">Simulação</span>
           </div>
           <!-- gancho emocional -->
@@ -521,7 +521,7 @@
     <div id="step1" style="display:none">
 
       <!-- Banner Modo Simulação (visível a partir da etapa 1) -->
-      <div id="testModeBanner" style="display:none;background:#0F1E3D;border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
+      <div id="testModeBanner" style="display:none;background:#0F1E3D;border:1px solid ;border-radius:12px;padding:14px 18px;margin-bottom:16px;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,0.85)">
         <span style="font-size:18px;flex-shrink:0">🧪</span>
         <span><strong style="color:#EE985C">Modo Simulação ativo</strong> — use seus dados reais de IR para simular a destinação completa. Nenhum valor será transferido.</span>
       </div>
@@ -626,14 +626,14 @@
             </p>
 
             <!-- Card azul do campo IR Devido -->
-            <div style="background:linear-gradient(135deg,#0F1E3D 0%,#162444 100%);border:2px solid rgba(255,215,0,0.4);border-radius:16px;padding:20px 20px 16px;margin-bottom:4px">
-              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,215,0,0.7);margin-bottom:6px">IR Devido — Total do imposto na sua declaração</div>
+            <div style="background:linear-gradient(135deg,#0F1E3D 0%,#162444 100%);border:2px solid ;border-radius:16px;padding:20px 20px 16px;margin-bottom:4px">
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:;margin-bottom:6px">IR Devido — Total do imposto na sua declaração</div>
               <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:12px">IR Devido (R$)</div>
               <div style="position:relative">
-                <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;font-weight:700;color:rgba(255,215,0,0.6);pointer-events:none;font-family:'Montserrat',sans-serif">R$</span>
+                <span style="position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;font-weight:700;color:;pointer-events:none;font-family:'Montserrat',sans-serif">R$</span>
                 <input type="text" inputmode="decimal" id="rapidaIRDevido" placeholder="0,00" oninput="maskBRL(this)"
-                  style="width:100%;padding:14px 16px 14px 52px;font-size:28px;font-weight:800;color:white;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,215,0,0.25);border-radius:12px;font-family:'Montserrat',sans-serif;outline:none;box-sizing:border-box;transition:border-color 0.2s"
-                  onfocus="this.style.borderColor='rgba(255,215,0,0.7)'" onblur="this.style.borderColor='rgba(255,215,0,0.25)'">
+                  style="width:100%;padding:14px 16px 14px 52px;font-size:28px;font-weight:800;color:white;background:rgba(255,255,255,0.07);border:1.5px solid ;border-radius:12px;font-family:'Montserrat',sans-serif;outline:none;box-sizing:border-box;transition:border-color 0.2s"
+                  onfocus="this.style.borderColor=''" onblur="this.style.borderColor=''">
               </div>
             </div>
           </div>

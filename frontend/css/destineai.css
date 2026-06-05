@@ -1,21 +1,21 @@
 /* ═══════════════════════════════════════════════════════════
-   destineai.css — Design system compartilhado
+   incentivabr.css — Design system IncentivaBR
    Tokens, flash-prevention, fade-up, nav e footer injetados
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Design Tokens ──────────────────────────────────────── */
 :root {
-  --dai-navy:    #0D1B3E;
+  --dai-navy:    #0F1E3D;
   --dai-dark:    #0A1530;
   --dai-mid:     #132247;
-  --dai-gold:    #FFD700;
-  --dai-golddk:  #FFC000;
+  --dai-gold:    #EE985C;
+  --dai-golddk:  #d4874e;
   --dai-success: #059669;
 }
 
 /* ── Flash prevention ───────────────────────────────────── */
 /* Mantém o body invisível até Layout.init() adicionar .dai-ready */
-body           { visibility: hidden; margin: 0; font-family: 'Inter', sans-serif; }
+body           { visibility: hidden; margin: 0; font-family: 'Montserrat', sans-serif; }
 body.dai-ready { visibility: visible; }
 
 /* ── Fade-up on scroll ──────────────────────────────────── */
@@ -32,7 +32,7 @@ body.dai-ready { visibility: visible; }
 
 /* Padrão: sólido (maioria das páginas) */
 .dai-nav {
-  background: rgba(13, 27, 62, 0.97);
+  background: rgba(15, 30, 61, 0.97);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
@@ -48,7 +48,7 @@ body.dai-ready { visibility: visible; }
 
 /* Solidifica ao fazer scroll (classe adicionada por JS) */
 .dai-nav.dai-nav--scrolled {
-  background: rgba(13, 27, 62, 0.97) !important;
+  background: rgba(15, 30, 61, 0.97) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2) !important;
@@ -137,7 +137,7 @@ body.dai-ready { visibility: visible; }
   color: rgba(255, 255, 255, 0.4);
   letter-spacing: -0.02em;
 }
-.dai-footer__logo span { color: rgba(255, 215, 0, 0.55); }
+.dai-footer__logo span { color: rgba(238, 152, 92, 0.55); }
 
 /* Links legais (privacidade, termos) */
 .dai-footer__links {
