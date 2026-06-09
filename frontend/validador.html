@@ -164,22 +164,49 @@
           <p id="msg-fidfia" class="text-xs mt-2 hidden"></p>
         </div>
 
-        <!-- PRONON + PRONAS -->
-        <div class="card" id="card-pronon">
+        <!-- Reciclagem -->
+        <div class="card" id="card-reciclagem">
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
-              <span>🏥</span>
+              <span>♻️</span>
               <div>
-                <div class="font-semibold text-sm">PRONON + PRONAS — Saúde</div>
-                <div class="text-white/40 text-xs">Limite conjunto: <strong class="text-gold/80" id="lim-pronon">—</strong> · 1% do IR Devido · Lei 12.715/2012</div>
+                <div class="font-semibold text-sm">Lei de Incentivo à Reciclagem — Recicla+</div>
+                <div class="text-white/40 text-xs">Limite: <strong class="text-gold/80" id="lim-reciclagem">—</strong> · 6% do IR Devido · Lei 14.260/2021</div>
               </div>
+            </div>
+            <span id="icon-reciclagem" class="text-lg">—</span>
+          </div>
+          <div class="bar-track mb-2"><div id="bar-reciclagem" class="bar-fill status-ok" style="width:0%"></div></div>
+          <input type="text" id="v-reciclagem" placeholder="R$ 0,00" oninput="formatar(this); validar()"
+            class="input-field text-sm" autocomplete="off"/>
+          <p id="msg-reciclagem" class="text-xs mt-1.5 hidden"></p>
+        </div>
+
+        <!-- PRONON + PRONAS -->
+        <div class="card" id="card-pronon">
+          <div class="flex items-center justify-between mb-1">
+            <div>
+              <div class="font-semibold text-sm">PRONON + PRONAS — Saúde</div>
+              <div class="text-white/40 text-xs">Limite conjunto: <strong class="text-gold/80" id="lim-pronon">—</strong> · 1% do IR Devido · Lei 12.715/2012</div>
             </div>
             <span id="icon-pronon" class="text-lg">—</span>
           </div>
-          <div class="bar-track mb-2"><div id="bar-pronon" class="bar-fill status-ok" style="width:0%"></div></div>
-          <input type="text" id="v-pronon" placeholder="R$ 0,00" oninput="formatar(this); validar()"
-            class="input-field text-sm" autocomplete="off"/>
-          <p id="msg-pronon" class="text-xs mt-1.5 hidden"></p>
+          <div class="bar-track mb-3"><div id="bar-pronon" class="bar-fill status-ok" style="width:0%"></div></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs text-white/40 mb-1 block">🎗️ PRONON — Oncologia</label>
+              <input type="text" id="v-pronon" placeholder="R$ 0,00" oninput="formatar(this); validar()"
+                class="input-field text-sm" autocomplete="off"/>
+              <p id="msg-pronon" class="text-xs mt-1 hidden"></p>
+            </div>
+            <div>
+              <label class="text-xs text-white/40 mb-1 block">♿ PRONAS — Deficiência</label>
+              <input type="text" id="v-pronas" placeholder="R$ 0,00" oninput="formatar(this); validar()"
+                class="input-field text-sm" autocomplete="off"/>
+              <p id="msg-pronas" class="text-xs mt-1 hidden"></p>
+            </div>
+          </div>
+          <p id="msg-pronon-total" class="text-xs mt-2 hidden"></p>
         </div>
 
       </div>
@@ -326,30 +353,35 @@
 
     // Limites
     const L = {
-      rouanet: ir * 0.06,
-      esporte:  ir * 0.07,
-      fia:      ir * 0.06,  // FDCA — Criança e Adolescente
-      fdi:      ir * 0.06,  // FDI — Idoso
-      pronon:   ir * 0.01,
+      rouanet:    ir * 0.06,
+      esporte:    ir * 0.07,
+      fia:        ir * 0.06,  // FDCA — Criança e Adolescente
+      fdi:        ir * 0.06,  // FDI — Idoso
+      reciclagem: ir * 0.06,  // Recicla+ — Lei 14.260/2021
+      pronon:     ir * 0.01,  // PRONON + PRONAS — limite conjunto
     };
 
     // Valores
     const V = {
-      rouanet: parseVal('v-rouanet'),
-      esporte:  parseVal('v-esporte'),
-      fia:      parseVal('v-fia'),
-      fdi:      parseVal('v-fdi'),
-      pronon:   parseVal('v-pronon'),
+      rouanet:    parseVal('v-rouanet'),
+      esporte:    parseVal('v-esporte'),
+      fia:        parseVal('v-fia'),
+      fdi:        parseVal('v-fdi'),
+      reciclagem: parseVal('v-reciclagem'),
+      pronon:     parseVal('v-pronon'),
+      pronas:     parseVal('v-pronas'),
     };
     V.fidfia = V.fia + V.fdi;
+    V.pronon_pronas = V.pronon + V.pronas;
 
     // Atualizar limites no UI
     if (ir > 0) {
-      document.getElementById('lim-rouanet').textContent = fmtBRL(L.rouanet);
-      document.getElementById('lim-esporte').textContent  = fmtBRL(L.esporte);
-      document.getElementById('lim-fia').textContent     = fmtBRL(L.fia);
-      document.getElementById('lim-fdi').textContent     = fmtBRL(L.fdi);
-      document.getElementById('lim-pronon').textContent  = fmtBRL(L.pronon);
+      document.getElementById('lim-rouanet').textContent    = fmtBRL(L.rouanet);
+      document.getElementById('lim-esporte').textContent     = fmtBRL(L.esporte);
+      document.getElementById('lim-fia').textContent         = fmtBRL(L.fia);
+      document.getElementById('lim-fdi').textContent         = fmtBRL(L.fdi);
+      document.getElementById('lim-reciclagem').textContent  = fmtBRL(L.reciclagem);
+      document.getElementById('lim-pronon').textContent      = fmtBRL(L.pronon);
     }
 
     if (ir <= 0) {
@@ -359,7 +391,7 @@
     }
 
     // Verificações individuais
-    const checks = ['rouanet','esporte','pronon'];
+    const checks = ['rouanet','esporte','reciclagem'];
     checks.forEach(key => {
       const cls = statusClass(V[key], L[key]);
       setBar(key, V[key], L[key]);
@@ -395,25 +427,55 @@
     setCard('fidfia', (V.fia > 0 || V.fdi > 0) ? clsFidFia : 'ok');
     setMsg('fidfia', '', 'ok');
 
+    // PRONON — Oncologia (mensagem individual)
+    const clsPronon = statusClass(V.pronon, L.pronon);
+    if (V.pronon > 0) setMsg('pronon', `PRONON: ${fmtBRL(V.pronon)}`, clsPronon);
+    else setMsg('pronon', '', 'ok');
+
+    // PRONAS — Deficiência (mensagem individual)
+    const clsPronas = statusClass(V.pronas, L.pronon);
+    if (V.pronas > 0) setMsg('pronas', `PRONAS: ${fmtBRL(V.pronas)}`, clsPronas);
+    else setMsg('pronas', '', 'ok');
+
+    // Card combinado PRONON + PRONAS — limite conjunto de 1%
+    const clsPrononTotal = statusClass(V.pronon_pronas, L.pronon);
+    setBar('pronon', V.pronon_pronas, L.pronon);
+    document.getElementById('icon-pronon').textContent = (V.pronon > 0 || V.pronas > 0) ? statusIcon(clsPrononTotal) : '—';
+    setCard('pronon', (V.pronon > 0 || V.pronas > 0) ? clsPrononTotal : 'ok');
+    const elPT = document.getElementById('msg-pronon-total');
+    if (V.pronon_pronas > 0) {
+      let m = '';
+      if (clsPrononTotal === 'over') m = `Total excede o limite conjunto em ${fmtBRL(V.pronon_pronas - L.pronon)}. Reduza para até ${fmtBRL(L.pronon)}.`;
+      else if (clsPrononTotal === 'warn') m = `Total próximo do limite conjunto (${Math.round(V.pronon_pronas/L.pronon*100)}% de ${fmtBRL(L.pronon)}).`;
+      else m = `✓ Total: ${fmtBRL(V.pronon_pronas)} de ${fmtBRL(L.pronon)} disponível.`;
+      elPT.textContent = m;
+      elPT.className = 'text-xs mt-2 ' + (clsPrononTotal === 'over' ? 'text-red-400' : clsPrononTotal === 'warn' ? 'text-yellow-400' : 'text-green-400');
+      elPT.classList.remove('hidden');
+    } else {
+      elPT.classList.add('hidden');
+    }
+
     // Status geral
-    const total = V.rouanet + V.esporte + V.fidfia + V.pronon;
+    const total = V.rouanet + V.esporte + V.fidfia + V.reciclagem + V.pronon_pronas;
     const temValor = total > 0;
 
     const problemas = [];
-    if (V.rouanet > L.rouanet) problemas.push('Rouanet excede o limite');
-    if (V.esporte > L.esporte)   problemas.push('Esporte excede o limite');
-    if (V.fia > L.fia)           problemas.push('FDCA excede o limite de 6%');
-    if (V.fdi > L.fdi)           problemas.push('FDI excede o limite de 6%');
-    if (V.pronon > L.pronon)     problemas.push('PRONON/PRONAS excede o limite');
-    if (total > ir)              problemas.push('Total destinado excede o IR Devido');
+    if (V.rouanet > L.rouanet)           problemas.push('Rouanet excede o limite');
+    if (V.esporte > L.esporte)           problemas.push('Esporte excede o limite');
+    if (V.fia > L.fia)                   problemas.push('FDCA excede o limite de 6%');
+    if (V.fdi > L.fdi)                   problemas.push('FDI excede o limite de 6%');
+    if (V.reciclagem > L.reciclagem)     problemas.push('Reciclagem excede o limite');
+    if (V.pronon_pronas > L.pronon)      problemas.push('PRONON+PRONAS excede o limite conjunto de 1%');
+    if (total > ir)                      problemas.push('Total destinado excede o IR Devido');
 
     const warns = [];
     if (!problemas.length) {
-      if (V.rouanet/L.rouanet >= 0.85 && V.rouanet > 0) warns.push('Rouanet próximo do limite');
-      if (V.esporte/L.esporte >= 0.85 && V.esporte > 0)   warns.push('Esporte próximo do limite');
-      if (V.fia/L.fia >= 0.85 && V.fia > 0)               warns.push('FDCA próximo do limite');
-      if (V.fdi/L.fdi >= 0.85 && V.fdi > 0)               warns.push('FDI próximo do limite');
-      if (V.pronon/L.pronon >= 0.85 && V.pronon > 0)      warns.push('Saúde próximo do limite');
+      if (V.rouanet/L.rouanet >= 0.85 && V.rouanet > 0)         warns.push('Rouanet próximo do limite');
+      if (V.esporte/L.esporte >= 0.85 && V.esporte > 0)         warns.push('Esporte próximo do limite');
+      if (V.fia/L.fia >= 0.85 && V.fia > 0)                     warns.push('FDCA próximo do limite');
+      if (V.fdi/L.fdi >= 0.85 && V.fdi > 0)                     warns.push('FDI próximo do limite');
+      if (V.reciclagem/L.reciclagem >= 0.85 && V.reciclagem > 0) warns.push('Reciclagem próximo do limite');
+      if (V.pronon_pronas/L.pronon >= 0.85 && V.pronon_pronas > 0) warns.push('Saúde próximo do limite conjunto');
     }
 
     const geral = document.getElementById('status-geral');
@@ -452,9 +514,12 @@
     itens.push(`IR Devido informado: ${fmtBRL(ir)}`);
     if (V.rouanet > 0) itens.push(`Rouanet Art. 18: ${fmtBRL(V.rouanet)} de ${fmtBRL(L.rouanet)} disponível (${Math.round(V.rouanet/L.rouanet*100)}%) ${V.rouanet <= L.rouanet ? '✅' : '❌'}`);
     if (V.esporte > 0)  itens.push(`Esporte: ${fmtBRL(V.esporte)} de ${fmtBRL(L.esporte)} disponível (${Math.round(V.esporte/L.esporte*100)}%) ${V.esporte <= L.esporte ? '✅' : '❌'}`);
-    if (V.fia > 0)      itens.push(`FDCA — Criança e Adolescente: ${fmtBRL(V.fia)} de ${fmtBRL(L.fia)} disponível (6%) ${V.fia <= L.fia ? '✅' : '❌'}`);
-    if (V.fdi > 0)      itens.push(`FDI — Idoso: ${fmtBRL(V.fdi)} de ${fmtBRL(L.fdi)} disponível (6%) ${V.fdi <= L.fdi ? '✅' : '❌'}`);
-    if (V.pronon > 0)   itens.push(`PRONON/PRONAS: ${fmtBRL(V.pronon)} de ${fmtBRL(L.pronon)} disponível ${V.pronon <= L.pronon ? '✅' : '❌'}`);
+    if (V.fia > 0)        itens.push(`FDCA — Criança e Adolescente: ${fmtBRL(V.fia)} de ${fmtBRL(L.fia)} disponível (6%) ${V.fia <= L.fia ? '✅' : '❌'}`);
+    if (V.fdi > 0)        itens.push(`FDI — Idoso: ${fmtBRL(V.fdi)} de ${fmtBRL(L.fdi)} disponível (6%) ${V.fdi <= L.fdi ? '✅' : '❌'}`);
+    if (V.reciclagem > 0) itens.push(`Recicla+ (Lei 14.260/2021): ${fmtBRL(V.reciclagem)} de ${fmtBRL(L.reciclagem)} disponível (6%) ${V.reciclagem <= L.reciclagem ? '✅' : '❌'}`);
+    if (V.pronon > 0)     itens.push(`PRONON — Oncologia: ${fmtBRL(V.pronon)} ${V.pronon_pronas <= L.pronon ? '✅' : '❌'}`);
+    if (V.pronas > 0)     itens.push(`PRONAS — Deficiência: ${fmtBRL(V.pronas)} ${V.pronon_pronas <= L.pronon ? '✅' : '❌'}`);
+    if (V.pronon_pronas > 0) itens.push(`PRONON+PRONAS total: ${fmtBRL(V.pronon_pronas)} de ${fmtBRL(L.pronon)} disponível (limite conjunto 1%) ${V.pronon_pronas <= L.pronon ? '✅' : '❌'}`);
     if (total > 0)      itens.push(`Total destinado: ${fmtBRL(total)} | IR Devido: ${fmtBRL(ir)} ${total <= ir ? '✅' : '❌'}`);
     itens.push(`Conclusão: ${problemas.length ? 'NÃO CONFORME — ' + problemas.join('; ') : 'CONFORME — dentro dos limites legais vigentes'}`);
 
