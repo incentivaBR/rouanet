@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca Jurídica — IncentivaBR</title>
+  <meta name="description" content="Base legal completa dos 7 mecanismos de destinação do IR: leis, instruções normativas, fichas DIRPF e requisitos de comprovante para cada modalidade.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Montserrat', 'sans-serif'] },
+          colors: { navy: '#0F1E3D', gold: '#EE985C' }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .accordion-content.open { max-height: 600px; }
+    .accordion-icon { transition: transform 0.3s ease; }
+    .accordion-icon.open { transform: rotate(180deg); }
+    .nav-link { transition: color 0.2s; }
+    .nav-link:hover { color: #EE985C; }
+    .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+    .ficha-tab { transition: all 0.2s; cursor: pointer; }
+    .ficha-tab.active { background: rgba(238,152,92,0.2); color: #EE985C; border-color: rgba(238,152,92,0.4); }
+    .ficha-section { display: none; }
+    .ficha-section.active { display: block; }
+    .lei-chip { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7); }
+    .pct-chip { background: rgba(238,152,92,0.15); border: 1px solid rgba(238,152,92,0.3); color: #EE985C; }
+    .dirpf-chip { background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.25); color: #a5b4fc; }
+    .info-row { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.30); text-transform: uppercase; letter-spacing: 0.06em; min-width: 130px; flex-shrink: 0; padding-top: 2px; }
+    .info-value { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+    .alerta-box { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); border-radius: 12px; padding: 12px 16px; margin-top: 16px; font-size: 12px; color: #fde68a; line-height: 1.5; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0F1E3D; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-navy font-sans text-white min-h-screen">
+
+  <!-- ── NAVBAR ── -->
+  <nav style="background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,215,0,0.12)" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="bg-white rounded-xl px-2 py-1 inline-flex items-center">
+          <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-7 w-auto">
+        </span>
+        <span class="text-white/40 text-sm hidden sm:inline">· Biblioteca Jurídica</span>
+      </a>
+      <div class="flex items-center gap-5 text-sm text-white/70">
+        <a href="#fichas" class="nav-link hidden md:inline">Fichas Legais</a>
+        <a href="#compliance" class="nav-link hidden md:inline">Compliance</a>
+        <a href="espaco-contador.html" class="nav-link hidden md:inline">Espaço do Contador</a>
+        <a href="validador.html" class="bg-gold text-navy font-bold px-4 py-1.5 rounded-full text-xs hover:brightness-110 transition">Validar IR →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="pt-32 pb-14 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="tag bg-indigo-500/20 text-indigo-300 mb-4 block">F03 · Biblioteca Jurídica</span>
+      <h1 class="text-4xl md:text-5xl font-black leading-tight mb-4">
+        A lei está do seu lado.<br>
+        <span class="text-gold">O laudo também.</span>
+      </h1>
+      <p class="text-white/70 text-lg max-w-xl mx-auto leading-relaxed">
+        Base normativa completa dos 7 mecanismos de destinação do IR — leis, instruções normativas, fichas DIRPF e requisitos de comprovante. Para orientar clientes com segurança jurídica total.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 mt-8">
+        <a href="#fichas" class="bg-gold text-navy font-bold px-6 py-3 rounded-xl hover:brightness-110 transition">Ver fichas por modalidade →</a>
+        <a href="espaco-contador.html" class="border border-white/20 text-white font-semibold px-6 py-3 rounded-xl hover:border-gold/50 transition">Espaço do Contador</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <section class="py-8 px-4 border-t border-white/8 border-b border-white/8">
+    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="text-center">
+        <div class="text-3xl font-black text-gold">7</div>
+        <div class="text-xs text-white/50 mt-1">mecanismos com base legal consolidada</div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-black text-gold">34</div>
+        <div class="text-xs text-white/50 mt-1">anos de consolidação normativa (desde 1991)</div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-black text-gold">0</div>
+        <div class="text-xs text-white/50 mt-1">risco na malha fina com limites e documentação corretos</div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-black text-gold">84%</div>
+        <div class="text-xs text-white/50 mt-1">dos contribuintes do DF desconhecem (CRC-DF 2021)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FICHAS LEGAIS ── -->
+  <section id="fichas" class="py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <span class="tag bg-gold/20 text-gold mb-3 block">BASE NORMATIVA POR MODALIDADE</span>
+      <h2 class="text-2xl font-black mb-2">7 Fichas Legais Completas</h2>
+      <p class="text-white/50 text-sm mb-8">Selecione a modalidade para ver lei, IN RFB, ficha DIRPF e requisitos do comprovante.</p>
+
+      <!-- TABS -->
+      <div class="flex flex-wrap gap-2 mb-8">
+        <button class="ficha-tab active border border-white/15 rounded-full px-3 py-1.5 text-xs font-semibold text-white/60" onclick="showFicha('rouanet', this)">🎭 Rouanet</button>
+        <button class="ficha-tab border border-white/15 rounded-full px-3 py-1.5 text-xs font-semibold text-white/60" onclick="showFicha('esporte', this)">⚽ Esporte</button>
+        <button class="ficha-tab border border-white/15 rounded-full px-3 py-1.5 text-xs font-semibold text-white/60" onclick="showFicha('fdca', this)">👧 FDCA</button>
+        <button class="ficha-tab border border-white/15 rounded-full px-3 py-1.5 text-xs font-semibold text-white/60" onclick="showFicha('fdi', this)">👴 FDI</button>
+        <button class="ficha-tab border border-white/15 rounded-full px-3 py-1.5 text-xs font-semibold text-white/60" onclick="showFicha('pronon', this)">🏥 PRONON</button>
+        <button class="ficha-tab border border-white/15 rounded-full px-3 py-1.5 text-xs font-semibold text-white/60" onclick="showFicha('pronas', this)">💊 PRONAS</button>
+        <button class="ficha-tab border border-white/15 rounded-full px-3 py-1.5 text-xs font-semibold text-white/60" onclick="showFicha('reciclagem', this)">♻️ Reciclagem</button>
+      </div>
+
+      <!-- ── FICHA: ROUANET ── -->
+      <div id="ficha-rouanet" class="ficha-section active">
+        <div class="bg-white/4 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-start gap-4 mb-5">
+            <span class="text-4xl">🎭</span>
+            <div>
+              <h3 class="text-xl font-black">Lei Rouanet — Art. 18</h3>
+              <p class="text-white/50 text-sm mt-0.5">Atividade Cultural e Artística — destinação direta ao projeto aprovado via SALIC</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="lei-chip">Lei nº 8.313/1991</span>
+            <span class="lei-chip pct-chip">6% do IR Devido</span>
+            <span class="lei-chip dirpf-chip">DIRPF: Incentivos Fiscais → PRONAC/Cultura</span>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Base Legal</span>
+              <span class="info-value">Lei nº 8.313, de 23 de dezembro de 1991, Art. 18 — Programa Nacional de Apoio à Cultura (PRONAC). Destinação direta ao projeto cultural aprovado pelo Ministério da Cultura via Sistema de Apoio às Leis de Incentivo à Cultura (SALIC).</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Norma RFB</span>
+              <span class="info-value">Instrução Normativa RFB nº 1.131/2011 e atualizações. Consulte sempre a IN vigente no exercício da declaração.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Limite</span>
+              <span class="info-value"><strong class="text-gold">6% do IR Devido</strong> — independente dos demais mecanismos. O valor destinado abate diretamente do IR Devido. Custo líquido zero ao final do ano-calendário.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Quem pode usar</span>
+              <span class="info-value">Pessoa Física com IR Devido positivo, declaração obrigatória no <strong>modelo completo</strong> (deduções legais). Exige imposto a pagar antes da destinação.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Ficha DIRPF</span>
+              <span class="info-value"><strong class="text-indigo-300">Deduções → Incentivos Fiscais → PRONAC/Cultura</strong><br><span class="text-white/40 text-xs mt-1 block">Art. 26 (patrocínio, 80%) fica em ficha diferente — confirme sempre qual modalidade o projeto usa antes de orientar.</span></span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Comprovante</span>
+              <span class="info-value">Recibo de Mecenato emitido pelo proponente contendo: CNPJ do proponente, número do PRONAC, valor destinado, data da transferência, nome e CPF do destinador. Guardar também o comprovante bancário (PIX/TED).</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Como verificar</span>
+              <span class="info-value">Validar PRONAC ativo em <strong>salic.cultura.gov.br</strong> — projetos com captação encerrada ou suspensa não são elegíveis para novas destinações.</span>
+            </div>
+          </div>
+          <div class="alerta-box">
+            ⚠️ <strong>Art. 18 vs Art. 26:</strong> Art. 18 = 100% abatível do IR Devido (destinação direta). Art. 26 = 80% abatível (patrocínio). São tratamentos distintos na DIRPF. Confirme qual consta no PRONAC do projeto antes de orientar o cliente.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FICHA: ESPORTE ── -->
+      <div id="ficha-esporte" class="ficha-section">
+        <div class="bg-white/4 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-start gap-4 mb-5">
+            <span class="text-4xl">⚽</span>
+            <div>
+              <h3 class="text-xl font-black">Lei de Incentivo ao Esporte</h3>
+              <p class="text-white/50 text-sm mt-0.5">Projetos desportivos e paradesportivos aprovados pelo Ministério do Esporte</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="lei-chip">Lei nº 11.438/2006</span>
+            <span class="lei-chip pct-chip">7% do IR Devido</span>
+            <span class="lei-chip dirpf-chip">DIRPF: Incentivos Fiscais → Desporto</span>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Base Legal</span>
+              <span class="info-value">Lei nº 11.438, de 29 de dezembro de 2006 — incentivo a projetos desportivos e paradesportivos aprovados e habilitados pelo Ministério do Esporte.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Norma RFB</span>
+              <span class="info-value">Instrução Normativa RFB nº 1.339/2013 e atualizações. Consulte a IN vigente no exercício da declaração.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Limite</span>
+              <span class="info-value"><strong class="text-gold">7% do IR Devido</strong> — o maior limite individual entre os mecanismos. Independente dos demais. O valor abate diretamente do IR Devido.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Quem pode usar</span>
+              <span class="info-value">Pessoa Física com IR Devido positivo, declaração obrigatória no <strong>modelo completo</strong>.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Ficha DIRPF</span>
+              <span class="info-value"><strong class="text-indigo-300">Deduções → Incentivos Fiscais → Desporto</strong></span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Comprovante</span>
+              <span class="info-value">Recibo emitido pelo projeto contendo: CNPJ do projeto esportivo, número de aprovação ministerial, valor destinado e data da transferência. Guardar também o comprovante bancário.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Como verificar</span>
+              <span class="info-value">Confirmar aprovação ativa no portal do Ministério do Esporte. O projeto deve estar com captação em andamento no período da destinação.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FICHA: FDCA ── -->
+      <div id="ficha-fdca" class="ficha-section">
+        <div class="bg-white/4 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-start gap-4 mb-5">
+            <span class="text-4xl">👧</span>
+            <div>
+              <h3 class="text-xl font-black">FDCA — Fundo da Criança e do Adolescente</h3>
+              <p class="text-white/50 text-sm mt-0.5">Estatuto da Criança e do Adolescente — destinação ao fundo municipal, estadual ou federal</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="lei-chip">Lei nº 8.069/1990 — ECA, Art. 260 II</span>
+            <span class="lei-chip pct-chip">6% do IR Devido</span>
+            <span class="lei-chip dirpf-chip">DIRPF: Doações Efetuadas → Código 40</span>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Base Legal</span>
+              <span class="info-value">Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente — ECA), Art. 260, inciso II. Destinação direta ao Fundo Municipal, Estadual ou Nacional dos Direitos da Criança e do Adolescente (FDCA / FIA).</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Norma RFB</span>
+              <span class="info-value">Instrução Normativa RFB vigente para o exercício. O fundo deve estar devidamente registrado no CNPJ e com conta corrente ativa junto ao CDCA competente.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Limite</span>
+              <span class="info-value"><strong class="text-gold">6% do IR Devido</strong> — limite independente do FDI. Os dois mecanismos (FDCA + FDI) têm limites separados: cada um até 6%, sem limite conjunto entre eles.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Quem pode usar</span>
+              <span class="info-value">Pessoa Física com IR Devido positivo, declaração obrigatória no <strong>modelo completo</strong>.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Ficha DIRPF</span>
+              <span class="info-value"><strong class="text-indigo-300">Doações Efetuadas → Código 40</strong></span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Comprovante</span>
+              <span class="info-value">Recibo emitido pelo fundo contendo: CNPJ do fundo, número do recibo, valor destinado e data da transferência. O comprovante bancário (PIX/TED) é indispensável.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Como verificar</span>
+              <span class="info-value">Confirmar conta corrente e CNPJ do FDCA diretamente com o CDCA (Conselho dos Direitos da Criança e do Adolescente) antes de transferir.</span>
+            </div>
+          </div>
+          <div class="alerta-box">
+            ⚠️ <strong>Atenção:</strong> Confirme a conta bancária do FDCA-DF diretamente com o CDCA antes de realizar a transferência. Contas desatualizadas são o erro mais frequente nesse mecanismo.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FICHA: FDI ── -->
+      <div id="ficha-fdi" class="ficha-section">
+        <div class="bg-white/4 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-start gap-4 mb-5">
+            <span class="text-4xl">👴</span>
+            <div>
+              <h3 class="text-xl font-black">FDI — Fundo do Idoso</h3>
+              <p class="text-white/50 text-sm mt-0.5">Política Nacional do Idoso — destinação ao fundo municipal, estadual ou federal</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="lei-chip">Lei nº 12.213/2010</span>
+            <span class="lei-chip pct-chip">6% do IR Devido</span>
+            <span class="lei-chip dirpf-chip">DIRPF: Doações Efetuadas → Código 41</span>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Base Legal</span>
+              <span class="info-value">Lei nº 12.213, de 20 de janeiro de 2010 — institui o Fundo Nacional do Idoso e autoriza a destinação de parcela do IR ao Fundo Nacional, Estadual ou Municipal do Idoso.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Norma RFB</span>
+              <span class="info-value">Instrução Normativa RFB vigente para o exercício. O fundo deve estar devidamente registrado com CNPJ e conta corrente ativa.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Limite</span>
+              <span class="info-value"><strong class="text-gold">6% do IR Devido</strong> — limite independente do FDCA. Os dois mecanismos (FDCA + FDI) têm limites separados: cada um até 6%, sem limite conjunto entre eles.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Quem pode usar</span>
+              <span class="info-value">Pessoa Física com IR Devido positivo, declaração obrigatória no <strong>modelo completo</strong>.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Ficha DIRPF</span>
+              <span class="info-value"><strong class="text-indigo-300">Doações Efetuadas → Código 41</strong></span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Comprovante</span>
+              <span class="info-value">Recibo emitido pelo fundo contendo: CNPJ do fundo, número do recibo, valor destinado e data da transferência. Guardar também o comprovante bancário.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FICHA: PRONON ── -->
+      <div id="ficha-pronon" class="ficha-section">
+        <div class="bg-white/4 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-start gap-4 mb-5">
+            <span class="text-4xl">🏥</span>
+            <div>
+              <h3 class="text-xl font-black">PRONON — Apoio à Atenção Oncológica</h3>
+              <p class="text-white/50 text-sm mt-0.5">Destinação a entidade habilitada de oncologia pelo Ministério da Saúde</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="lei-chip">Lei nº 12.715/2012, Art. 1º</span>
+            <span class="lei-chip pct-chip">até 1% do IR Devido*</span>
+            <span class="lei-chip dirpf-chip">DIRPF: Incentivos Fiscais → PRONON</span>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Base Legal</span>
+              <span class="info-value">Lei nº 12.715, de 17 de setembro de 2012, Art. 1º — Programa Nacional de Apoio à Atenção Oncológica (PRONON). Destinação a entidades de saúde habilitadas pelo Ministério da Saúde para atendimento em oncologia.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Norma RFB</span>
+              <span class="info-value">Instrução Normativa RFB vigente para o exercício. A entidade deve estar habilitada pelo Ministério da Saúde e constar no CNES (Cadastro Nacional de Estabelecimentos de Saúde).</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Limite</span>
+              <span class="info-value"><strong class="text-gold">Até 1% do IR Devido</strong> — este é o <strong>limite conjunto entre PRONON e PRONAS somados</strong>. Os dois mecanismos compartilham esse teto de 1%.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Quem pode usar</span>
+              <span class="info-value">Pessoa Física com IR Devido positivo, declaração obrigatória no <strong>modelo completo</strong>.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Ficha DIRPF</span>
+              <span class="info-value"><strong class="text-indigo-300">Deduções → Incentivos Fiscais → PRONON</strong></span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Comprovante</span>
+              <span class="info-value">Recibo emitido pela entidade habilitada contendo: CNPJ da entidade, número CNES, valor destinado e data da transferência. Guardar também o comprovante bancário.</span>
+            </div>
+          </div>
+          <div class="alerta-box">
+            ⚠️ <strong>Limite conjunto:</strong> PRONON e PRONAS somados não podem ultrapassar 1% do IR Devido. Se o cliente usar ambos, a soma das duas destinações deve respeitar esse teto de 1%.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FICHA: PRONAS ── -->
+      <div id="ficha-pronas" class="ficha-section">
+        <div class="bg-white/4 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-start gap-4 mb-5">
+            <span class="text-4xl">💊</span>
+            <div>
+              <h3 class="text-xl font-black">PRONAS — Atenção à Pessoa com Deficiência</h3>
+              <p class="text-white/50 text-sm mt-0.5">Destinação a entidade habilitada de atenção à pessoa com deficiência</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="lei-chip">Lei nº 12.715/2012, Art. 3º</span>
+            <span class="lei-chip pct-chip">até 1% do IR Devido*</span>
+            <span class="lei-chip dirpf-chip">DIRPF: Incentivos Fiscais → PRONAS</span>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Base Legal</span>
+              <span class="info-value">Lei nº 12.715, de 17 de setembro de 2012, Art. 3º — Programa Nacional de Apoio à Atenção da Saúde da Pessoa com Deficiência (PRONAS/PCD). Destinação a entidades habilitadas pelo Ministério da Saúde.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Norma RFB</span>
+              <span class="info-value">Instrução Normativa RFB vigente para o exercício. A entidade deve estar habilitada pelo Ministério da Saúde e constar no CNES.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Limite</span>
+              <span class="info-value"><strong class="text-gold">Até 1% do IR Devido</strong> — este é o <strong>limite conjunto entre PRONON e PRONAS somados</strong>. Os dois mecanismos compartilham esse teto de 1%.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Quem pode usar</span>
+              <span class="info-value">Pessoa Física com IR Devido positivo, declaração obrigatória no <strong>modelo completo</strong>.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Ficha DIRPF</span>
+              <span class="info-value"><strong class="text-indigo-300">Deduções → Incentivos Fiscais → PRONAS</strong></span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Comprovante</span>
+              <span class="info-value">Recibo emitido pela entidade habilitada contendo: CNPJ da entidade, número CNES, valor destinado e data da transferência. Guardar também o comprovante bancário.</span>
+            </div>
+          </div>
+          <div class="alerta-box">
+            ⚠️ <strong>Limite conjunto:</strong> PRONON e PRONAS somados não podem ultrapassar 1% do IR Devido. Se o cliente usar ambos, a soma das duas destinações deve respeitar esse teto de 1%.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FICHA: RECICLAGEM ── -->
+      <div id="ficha-reciclagem" class="ficha-section">
+        <div class="bg-white/4 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-start gap-4 mb-5">
+            <span class="text-4xl">♻️</span>
+            <div>
+              <h3 class="text-xl font-black">Recicla+ — Lei de Incentivo à Reciclagem</h3>
+              <p class="text-white/50 text-sm mt-0.5">Destinação a cooperativas de catadores habilitadas pelo MAPA</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="lei-chip">Lei nº 14.260/2021</span>
+            <span class="lei-chip pct-chip">6% do IR Devido</span>
+            <span class="lei-chip dirpf-chip">DIRPF: Incentivos Fiscais → Reciclagem</span>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Base Legal</span>
+              <span class="info-value">Lei nº 14.260, de 8 de dezembro de 2021 — institui incentivo fiscal para pessoas físicas que apoiam cooperativas e associações de catadores de materiais recicláveis habilitadas pelo Ministério da Agricultura, Pecuária e Abastecimento (MAPA).</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Norma RFB</span>
+              <span class="info-value">Instrução Normativa RFB vigente para o exercício. Lei relativamente recente (2021) — confirme sempre na IN do exercício corrente se há atualizações regulatórias.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Limite</span>
+              <span class="info-value"><strong class="text-gold">6% do IR Devido</strong> — independente dos demais mecanismos.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Quem pode usar</span>
+              <span class="info-value">Pessoa Física com IR Devido positivo, declaração obrigatória no <strong>modelo completo</strong>.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Ficha DIRPF</span>
+              <span class="info-value"><strong class="text-indigo-300">Deduções → Incentivos Fiscais → Reciclagem</strong></span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Comprovante</span>
+              <span class="info-value">Recibo emitido pela cooperativa contendo: CNPJ da cooperativa, número do recibo, valor destinado e data da transferência. Confirmar que a habilitação MAPA está ativa.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Como verificar</span>
+              <span class="info-value">Verificar habilitação ativa da cooperativa junto ao MAPA antes de realizar a transferência.</span>
+            </div>
+          </div>
+          <div class="alerta-box">
+            ⚠️ <strong>Mecanismo mais recente (2021):</strong> Confirme com a cooperativa que a habilitação MAPA está vigente e que a entidade emite recibo com todos os dados exigidos pela RFB. Menos habilitadas disponíveis que nas modalidades mais antigas.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── TABELA RESUMO ── -->
+  <section class="py-12 px-4 border-t border-white/8">
+    <div class="max-w-4xl mx-auto">
+      <span class="tag bg-gold/20 text-gold mb-3 block">VISÃO CONSOLIDADA</span>
+      <h2 class="text-xl font-black mb-6">Tabela de Limites — 7 Mecanismos</h2>
+      <div class="bg-white/4 border border-white/10 rounded-2xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-white/10 text-white/35 text-xs">
+              <th class="text-left px-4 py-3 font-semibold">Mecanismo</th>
+              <th class="text-left px-4 py-3 font-semibold hidden sm:table-cell">Base Legal</th>
+              <th class="text-center px-4 py-3 font-semibold">Limite PF</th>
+              <th class="text-left px-4 py-3 font-semibold hidden md:table-cell">Ficha DIRPF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-white/6 hover:bg-white/2 transition cursor-pointer" onclick="showFichaFromTable('rouanet')">
+              <td class="px-4 py-3 font-medium"><span class="mr-2">🎭</span>Rouanet Art. 18</td>
+              <td class="px-4 py-3 text-white/45 hidden sm:table-cell">Lei 8.313/1991</td>
+              <td class="px-4 py-3 text-center font-black text-gold">6%</td>
+              <td class="px-4 py-3 text-white/35 text-xs hidden md:table-cell">Incentivos Fiscais → PRONAC/Cultura</td>
+            </tr>
+            <tr class="border-b border-white/6 hover:bg-white/2 transition cursor-pointer" onclick="showFichaFromTable('esporte')">
+              <td class="px-4 py-3 font-medium"><span class="mr-2">⚽</span>Lei do Esporte</td>
+              <td class="px-4 py-3 text-white/45 hidden sm:table-cell">Lei 11.438/2006</td>
+              <td class="px-4 py-3 text-center font-black text-gold">7%</td>
+              <td class="px-4 py-3 text-white/35 text-xs hidden md:table-cell">Incentivos Fiscais → Desporto</td>
+            </tr>
+            <tr class="border-b border-white/6 hover:bg-white/2 transition cursor-pointer" onclick="showFichaFromTable('fdca')">
+              <td class="px-4 py-3 font-medium"><span class="mr-2">👧</span>FDCA</td>
+              <td class="px-4 py-3 text-white/45 hidden sm:table-cell">Lei 8.069/1990, Art. 260 II</td>
+              <td class="px-4 py-3 text-center font-black text-gold">6%</td>
+              <td class="px-4 py-3 text-white/35 text-xs hidden md:table-cell">Doações Efetuadas → Código 40</td>
+            </tr>
+            <tr class="border-b border-white/6 hover:bg-white/2 transition cursor-pointer" onclick="showFichaFromTable('fdi')">
+              <td class="px-4 py-3 font-medium"><span class="mr-2">👴</span>FDI</td>
+              <td class="px-4 py-3 text-white/45 hidden sm:table-cell">Lei 12.213/2010</td>
+              <td class="px-4 py-3 text-center font-black text-gold">6%</td>
+              <td class="px-4 py-3 text-white/35 text-xs hidden md:table-cell">Doações Efetuadas → Código 41</td>
+            </tr>
+            <tr class="border-b border-white/6 hover:bg-white/2 transition cursor-pointer" onclick="showFichaFromTable('reciclagem')">
+              <td class="px-4 py-3 font-medium"><span class="mr-2">♻️</span>Reciclagem</td>
+              <td class="px-4 py-3 text-white/45 hidden sm:table-cell">Lei 14.260/2021</td>
+              <td class="px-4 py-3 text-center font-black text-gold">6%</td>
+              <td class="px-4 py-3 text-white/35 text-xs hidden md:table-cell">Incentivos Fiscais → Reciclagem</td>
+            </tr>
+            <tr class="border-b border-white/6 hover:bg-white/2 transition cursor-pointer" onclick="showFichaFromTable('pronon')">
+              <td class="px-4 py-3 font-medium"><span class="mr-2">🏥</span>PRONON</td>
+              <td class="px-4 py-3 text-white/45 hidden sm:table-cell">Lei 12.715/2012, Art. 1º</td>
+              <td class="px-4 py-3 text-center font-black text-white/50">1%*</td>
+              <td class="px-4 py-3 text-white/35 text-xs hidden md:table-cell">Incentivos Fiscais → PRONON</td>
+            </tr>
+            <tr class="hover:bg-white/2 transition cursor-pointer" onclick="showFichaFromTable('pronas')">
+              <td class="px-4 py-3 font-medium"><span class="mr-2">💊</span>PRONAS</td>
+              <td class="px-4 py-3 text-white/45 hidden sm:table-cell">Lei 12.715/2012, Art. 3º</td>
+              <td class="px-4 py-3 text-center font-black text-white/50">1%*</td>
+              <td class="px-4 py-3 text-white/35 text-xs hidden md:table-cell">Incentivos Fiscais → PRONAS</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="px-4 py-3 border-t border-white/8 text-xs text-white/30">
+          * PRONON e PRONAS compartilham limite conjunto de 1% do IR Devido. Nunca some percentuais de modalidades diferentes para apresentar ao cliente — cada uma tem base legal própria e limite independente. Clique em qualquer linha para ver a ficha completa.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMPLIANCE ── -->
+  <section id="compliance" class="py-12 px-4 border-t border-white/8">
+    <div class="max-w-4xl mx-auto">
+      <span class="tag bg-gold/20 text-gold mb-3 block">DÚVIDAS DE COMPLIANCE</span>
+      <h2 class="text-xl font-black mb-2">Perguntas que o contador precisa responder</h2>
+      <p class="text-white/50 text-sm mb-6">As 5 dúvidas mais frequentes de quem valida tudo antes de assinar.</p>
+
+      <div class="space-y-2">
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('c1')" class="w-full flex items-center justify-between px-5 py-4 text-left">
+            <span class="font-semibold text-sm pr-4">A RFB pode questionar a destinação mesmo dentro do limite legal?</span>
+            <svg id="icon-c1" class="accordion-icon w-4 h-4 flex-shrink-0 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-c1" class="accordion-content px-5 pb-5">
+            <p class="text-white/70 text-sm leading-relaxed">Não, se três condições forem atendidas: <strong>(1)</strong> o valor destinado respeita o limite percentual da modalidade, <strong>(2)</strong> o código e a ficha DIRPF foram preenchidos corretamente, e <strong>(3)</strong> o comprovante original está disponível (recibo + comprovante bancário). A RFB pode solicitar documentação em caso de intimação, mas não pode glosar a dedução se tudo estiver em ordem. <strong>Guarde toda documentação por mínimo 5 anos.</strong></p>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('c2')" class="w-full flex items-center justify-between px-5 py-4 text-left">
+            <span class="font-semibold text-sm pr-4">Qual a diferença entre "abate do IR" e "aumenta a restituição"?</span>
+            <svg id="icon-c2" class="accordion-icon w-4 h-4 flex-shrink-0 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-c2" class="accordion-content px-5 pb-5">
+            <p class="text-white/70 text-sm leading-relaxed">O valor destinado <strong>abate diretamente do IR Devido</strong>. O efeito financeiro depende da situação de cada contribuinte:</p>
+            <ul class="text-white/60 text-sm mt-3 space-y-1.5 list-disc list-inside">
+              <li>Se IR retido na fonte &gt; IR Devido: o abate <strong>aumenta a restituição</strong> a receber</li>
+              <li>Se IR retido &lt; IR Devido: o abate <strong>reduz o valor a pagar</strong> na declaração</li>
+            </ul>
+            <p class="text-white/60 text-sm mt-3">Em ambos os casos, o resultado líquido para o contribuinte é zero — ele não desembolsa mais do que pagaria sem a destinação. Há um desembolso prévio (PIX/TED ao fundo) antes da declaração, mas o custo <strong>líquido final é zero</strong>.</p>
+            <p class="text-white/40 text-xs mt-3">⚠️ Nunca afirme "aumenta a restituição" como certeza — depende do saldo de IR retido de cada cliente específico.</p>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('c3')" class="w-full flex items-center justify-between px-5 py-4 text-left">
+            <span class="font-semibold text-sm pr-4">Posso orientar a destinação após o encerramento da DIRPF?</span>
+            <svg id="icon-c3" class="accordion-icon w-4 h-4 flex-shrink-0 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-c3" class="accordion-content px-5 pb-5">
+            <p class="text-white/70 text-sm leading-relaxed">Sim — e é o momento ideal para começar. A destinação ocorre <strong>durante o ano-calendário</strong> (1° jan a 31 dez), não na declaração. Após o encerramento da DIRPF (maio de cada ano), o posicionamento correto é:</p>
+            <p class="text-white/60 text-sm mt-3 italic">"A destinação de 2027 começa agora. Vamos planejar juntos."</p>
+            <p class="text-white/60 text-sm mt-3">O cliente tem o ano inteiro para fazer a destinação — e pode fazê-la em parcelas ao longo do ano. Isso é planejamento tributário preventivo.</p>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('c4')" class="w-full flex items-center justify-between px-5 py-4 text-left">
+            <span class="font-semibold text-sm pr-4">O que o cliente deve guardar como comprovação?</span>
+            <svg id="icon-c4" class="accordion-icon w-4 h-4 flex-shrink-0 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-c4" class="accordion-content px-5 pb-5">
+            <p class="text-white/70 text-sm leading-relaxed">Para cada destinação, guardar por <strong>mínimo 5 anos</strong>:</p>
+            <ul class="text-white/60 text-sm mt-3 space-y-1.5 list-disc list-inside">
+              <li>Comprovante bancário da transferência (PIX/TED) — com data, CNPJ destino e valor</li>
+              <li>Recibo emitido pelo beneficiário — com todos os dados exigidos por modalidade</li>
+              <li>Rouanet: número do PRONAC visível no recibo</li>
+              <li>FDCA/FDI: CNPJ do fundo e número do recibo</li>
+              <li>PRONON/PRONAS: número CNES da entidade habilitada</li>
+              <li>Reciclagem: CNPJ da cooperativa com habilitação MAPA ativa</li>
+            </ul>
+            <p class="text-white/40 text-xs mt-3">O Recibo de Mecenato gerado pela plataforma IncentivaBR já contém automaticamente todos os dados exigidos por modalidade.</p>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button onclick="toggleAccordion('c5')" class="w-full flex items-center justify-between px-5 py-4 text-left">
+            <span class="font-semibold text-sm pr-4">Posso orientar o mesmo cliente em mais de uma modalidade?</span>
+            <svg id="icon-c5" class="accordion-icon w-4 h-4 flex-shrink-0 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="content-c5" class="accordion-content px-5 pb-5">
+            <p class="text-white/70 text-sm leading-relaxed">Sim — cada modalidade tem base legal própria e <strong>limites independentes entre si</strong> (exceto PRONON + PRONAS que compartilham 1%). Um cliente pode destinar simultaneamente para Rouanet (6%), Esporte (7%), FDCA (6%) e FDI (6%) — cada um com seu próprio teto legal.</p>
+            <p class="text-white/60 text-sm mt-2">O único limite absoluto: <strong>a soma total destinada não pode superar o IR Devido total</strong> do contribuinte. Nunca apresente como "você pode destinar até X% do IR" — isso induz erro. Cada modalidade tem percentual específico independente.</p>
+            <p class="text-white/50 text-xs mt-3">Use o Validador Anti-Malha Fina para verificar os limites de cada cliente de forma segura.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FERRAMENTAS ── -->
+  <section class="py-12 px-4 border-t border-white/8">
+    <div class="max-w-4xl mx-auto">
+      <span class="tag bg-gold/20 text-gold mb-3 block">FERRAMENTAS RELACIONADAS</span>
+      <h2 class="text-xl font-black mb-6">Complete o atendimento ao cliente com</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="validador.html" class="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-gold/30 transition group block">
+          <div class="text-2xl mb-3">✅</div>
+          <div class="font-bold text-sm mb-1 group-hover:text-gold transition">Validador Anti-Malha Fina</div>
+          <div class="text-white/40 text-xs">Verifica se o cliente está dentro dos limites em todas as 7 modalidades antes de declarar</div>
+        </a>
+        <a href="espaco-contador.html" class="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-gold/30 transition group block">
+          <div class="text-2xl mb-3">📊</div>
+          <div class="font-bold text-sm mb-1 group-hover:text-gold transition">Espaço do Contador</div>
+          <div class="text-white/40 text-xs">Calculadora de limites por cliente, modelos de comprovante e FAQ profissional</div>
+        </a>
+        <a href="agenda-fiscal.html" class="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-gold/30 transition group block">
+          <div class="text-2xl mb-3">📅</div>
+          <div class="font-bold text-sm mb-1 group-hover:text-gold transition">Agenda Fiscal</div>
+          <div class="text-white/40 text-xs">Prazos e janelas de destinação por modalidade para planejar com antecedência</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="border-t border-white/8 py-8 px-4 text-center text-white/30 text-xs">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex justify-center mb-2">
+        <span class="bg-white rounded-xl px-3 py-1.5 inline-flex items-center">
+          <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-5 w-auto">
+        </span>
+      </div>
+      <div class="mb-1">Registro INPI nº BR512025000647-0</div>
+      <div class="mb-4">As informações desta página têm caráter educativo e de referência. Consulte sempre a legislação vigente e a Instrução Normativa da Receita Federal do exercício corrente.</div>
+      <a href="index.html" class="text-gold/60 hover:text-gold transition">← Voltar ao início</a>
+    </div>
+  </footer>
+
+  <script>
+    function showFicha(id, btn) {
+      document.querySelectorAll('.ficha-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.ficha-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('ficha-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function showFichaFromTable(id) {
+      document.querySelectorAll('.ficha-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.ficha-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('ficha-' + id).classList.add('active');
+      const tabs = document.querySelectorAll('.ficha-tab');
+      const order = ['rouanet','esporte','fdca','fdi','pronon','pronas','reciclagem'];
+      const idx = order.indexOf(id);
+      if (tabs[idx]) tabs[idx].classList.add('active');
+      document.getElementById('fichas').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleAccordion(id) {
+      const content = document.getElementById('content-' + id);
+      const icon = document.getElementById('icon-' + id);
+      const isOpen = content.classList.contains('open');
+      content.classList.toggle('open', !isOpen);
+      icon.classList.toggle('open', !isOpen);
+    }
+  </script>
+
+</body>
+</html>
