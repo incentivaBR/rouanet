@@ -9,6 +9,22 @@ const anthropic = process.env.ANTHROPIC_API_KEY
   ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   : null;
 
+// Vai como ÚLTIMO bloco do system, depois do núcleo e do tenant.
+// A regra de concisão já existe no SYSTEM_PROMPT, mas ficou soterrada: com os
+// 9,3k tokens de base entre ela e a pergunta, o modelo passou a escrever
+// respostas longas e a ser cortado no max_tokens. Repetir a instrução no fim,
+// perto da mensagem do usuário, é o que faz ela pegar em prompt longo.
+const LEMBRETE_FORMATO = `<formato_resposta>
+Antes de responder, lembre: no máximo 3 parágrafos curtos OU uma lista de até 5 itens.
+
+Responda a pergunta que foi feita e pare. Não antecipe as próximas dúvidas, não
+repita o que já foi dito antes na conversa, e só ofereça "próximos passos" quando
+o usuário perguntar o que fazer.
+
+Se a resposta completa não couber nesse espaço, dê a parte essencial e ofereça
+detalhar: "quer que eu explique X?" é melhor que uma resposta cortada no meio.
+</formato_resposta>`;
+
 const SYSTEM_PROMPT = `Você é a TINA (Tax Incentive Navigator Assistant), assistente virtual da IncentivaBR (www.incentivabr.com.br) — plataforma brasileira especializada em destinação de Imposto de Renda via incentivos fiscais federais, focada em servidores públicos.
 
 ## Seu papel
@@ -240,7 +256,10 @@ router.post('/tina', async (req, res) => {
     // folga — mas se o núcleo for enxugado, confira o cache_read antes.
     const response = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 450,
+      // 450 cortava respostas no meio da frase depois que a base de conhecimento
+      // entrou. 800 dá margem para a resposta terminar; o LEMBRETE_FORMATO abaixo
+      // é o que impede que ela cresça para ocupar o espaço novo.
+      max_tokens: 800,
       system: [
         // Se o núcleo não carregou, o cache_control migra para a persona: um
         // bloco de texto vazio é rejeitado pela API, e sem ele o prefixo cairia
@@ -252,7 +271,8 @@ router.post('/tina', async (req, res) => {
         ...(NUCLEO
           ? [{ type: 'text', text: NUCLEO, cache_control: { type: 'ephemeral' } }]
           : []),
-        { type: 'text', text: blocoDoTenant(req.organization) }
+        { type: 'text', text: blocoDoTenant(req.organization) },
+        { type: 'text', text: LEMBRETE_FORMATO }
       ],
       messages: [
         ...safeHistory.map(m => ({ role: m.role, content: m.content })),
