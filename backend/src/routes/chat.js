@@ -1,7 +1,13 @@
 import express from 'express';
 import Anthropic from '@anthropic-ai/sdk';
+import { NUCLEO, blocoDoTenant } from '../knowledge/index.js';
 
 const router = express.Router();
+
+// Cliente instanciado uma vez, na subida do processo — não a cada requisição.
+const anthropic = process.env.ANTHROPIC_API_KEY
+  ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+  : null;
 
 const SYSTEM_PROMPT = `Você é a TINA (Tax Incentive Navigator Assistant), assistente virtual da IncentivaBR (www.incentivabr.com.br) — plataforma brasileira especializada em destinação de Imposto de Renda via incentivos fiscais federais, focada em servidores públicos.
 
@@ -194,7 +200,7 @@ A destinação abate diretamente do IR Devido:
 
 // POST /api/chat/tina
 router.post('/tina', async (req, res) => {
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!anthropic) {
     return res.status(503).json({
       status: 'error',
       message: 'Assistente IA temporariamente indisponível.'
@@ -217,21 +223,66 @@ router.post('/tina', async (req, res) => {
       ? history.slice(-12).filter(m => m.role && m.content)
       : [];
 
-    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
+    // ORDEM IMPORTA. O prompt cache é casamento de prefixo: o que é estável vem
+    // primeiro, o que varia vem depois. Persona + núcleo são idênticos em toda
+    // requisição e em todo tenant, então UMA entrada de cache serve todas as
+    // organizações; só o bloco do tenant é reprocessado.
+    //
+    // O cache_control marca o fim do prefixo estável. TTL de 1h (escrita 2x em
+    // vez de 1,25x) porque o tráfego do piloto é esparso: com os 5 minutos
+    // padrão o cache expiraria entre conversas e pagaríamos escrita toda vez.
+    //
+    // O Haiku 4.5 exige no mínimo 4.096 tokens de prefixo para cachear, e falha
+    // em silêncio abaixo disso. Persona (~3,2k) + núcleo (~9,2k) passam com
+    // folga — mas se o núcleo for enxugado, confira o cache_read antes.
     const response = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 450,
-      system: SYSTEM_PROMPT,
+      system: [
+        { type: 'text', text: SYSTEM_PROMPT },
+        {
+          type: 'text',
+          text: NUCLEO,
+          cache_control: { type: 'ephemeral', ttl: '1h' }
+        },
+        { type: 'text', text: blocoDoTenant(req.organization) }
+      ],
       messages: [
         ...safeHistory.map(m => ({ role: m.role, content: m.content })),
         { role: 'user', content: message.trim() }
       ]
     });
 
+    // Cache silencioso: se cache_read vier zero em chamadas repetidas, algo está
+    // invalidando o prefixo (valor dinâmico no núcleo, prefixo curto demais).
+    const u = response.usage;
+    console.log(
+      `[TINA] org=${req.tenantSlug || 'www'} ` +
+      `cache_write=${u.cache_creation_input_tokens ?? 0} ` +
+      `cache_read=${u.cache_read_input_tokens ?? 0} ` +
+      `input=${u.input_tokens} output=${u.output_tokens}`
+    );
+
+    // content[0] nem sempre é texto — filtra pelo tipo em vez de indexar.
+    const texto = response.content
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
+      .join('\n')
+      .trim();
+
+    if (!texto) {
+      console.error('[TINA] resposta sem bloco de texto', {
+        stop_reason: response.stop_reason
+      });
+      return res.status(502).json({
+        status: 'error',
+        message: 'Não consegui formular uma resposta. Tente reformular a pergunta.'
+      });
+    }
+
     res.json({
       status: 'success',
-      reply: response.content[0].text
+      reply: texto
     });
 
   } catch (error) {
