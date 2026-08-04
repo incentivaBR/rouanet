@@ -20,10 +20,24 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  * compartilhamento do cache entre tenants e faz cada organização pagar o
  * prompt inteiro a preço cheio.
  */
-export const NUCLEO = fs.readFileSync(
-  path.join(__dirname, 'nucleo.md'),
-  'utf-8'
-);
+function carregaNucleo() {
+  try {
+    return fs.readFileSync(path.join(__dirname, 'nucleo.md'), 'utf-8');
+  } catch (err) {
+    // Falha aqui NÃO pode derrubar o processo. Este módulo é importado pela
+    // rota de chat, que é importada pelo server.js: um readFileSync solto no
+    // escopo do módulo transformaria um arquivo faltando (build incompleto,
+    // .railwayignore mal configurado) na queda do site inteiro — inclusive do
+    // fluxo de destinação, que é o negócio. A TINA responde pior; o site fica.
+    console.error(
+      '[TINA] nucleo.md não carregou — assistente seguirá apenas com a persona. ' +
+      `Motivo: ${err.message}`
+    );
+    return '';
+  }
+}
+
+export const NUCLEO = carregaNucleo();
 
 /**
  * Monta o bloco específico do tenant a partir da linha de `organizations` que o
