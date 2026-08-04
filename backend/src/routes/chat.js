@@ -228,9 +228,12 @@ router.post('/tina', async (req, res) => {
     // requisição e em todo tenant, então UMA entrada de cache serve todas as
     // organizações; só o bloco do tenant é reprocessado.
     //
-    // O cache_control marca o fim do prefixo estável. TTL de 1h (escrita 2x em
-    // vez de 1,25x) porque o tráfego do piloto é esparso: com os 5 minutos
-    // padrão o cache expiraria entre conversas e pagaríamos escrita toda vez.
+    // O cache_control marca o fim do prefixo estável, com o TTL padrão de 5
+    // minutos. O TTL de 1h seria melhor para o tráfego esparso do piloto, mas
+    // é recurso que exigiu header beta quando saiu e o SDK aqui está travado em
+    // ^0.39.0 (início de 2025). Enquanto isso não for testado numa chamada real,
+    // fica o padrão: cacheia dentro de cada conversa, que é onde o prompt se
+    // repete, e não corre risco de 400 em produção.
     //
     // O Haiku 4.5 exige no mínimo 4.096 tokens de prefixo para cachear, e falha
     // em silêncio abaixo disso. Persona (~3,2k) + núcleo (~9,2k) passam com
@@ -245,9 +248,9 @@ router.post('/tina', async (req, res) => {
         // silenciosamente deixa de existir.
         NUCLEO
           ? { type: 'text', text: SYSTEM_PROMPT }
-          : { type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral', ttl: '1h' } },
+          : { type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } },
         ...(NUCLEO
-          ? [{ type: 'text', text: NUCLEO, cache_control: { type: 'ephemeral', ttl: '1h' } }]
+          ? [{ type: 'text', text: NUCLEO, cache_control: { type: 'ephemeral' } }]
           : []),
         { type: 'text', text: blocoDoTenant(req.organization) }
       ],
