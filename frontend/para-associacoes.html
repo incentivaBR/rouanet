@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncentivaBR para Associações — Transforme sua base em captação incentivada</title>
+  <meta name="description" content="Sua associação vira um canal de captação via destinação de IR — white-label, pronto em dias, sem equipe de TI. Seus associados destinam imposto que já pagariam, sem custo adicional.">
+  <meta property="og:title" content="IncentivaBR para Associações — capte mais, sem custo para o doador">
+  <meta property="og:description" content="Plataforma white-label de destinação de IR para a sua base de associados. Conformidade, LGPD e dashboard de captação em tempo real. Pronto em dias.">
+  <meta property="og:image" content="assets/logo-incentivabr.png">
+  <link rel="icon" type="image/png" href="assets/logo-incentivabr-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Montserrat', 'sans-serif'] },
+          colors: {
+            navy:   '#273F77',
+            navydark: '#1A2D5A',
+            navydeep: '#0F1E3D',
+            orange: '#EE985C',
+            orangelight: '#F5B483',
+            light:  '#EDEDED',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #0F1E3D; }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(.16,1,.3,1), transform 0.65s cubic-bezier(.16,1,.3,1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    .card-hover { transition: transform 0.22s cubic-bezier(.16,1,.3,1), box-shadow 0.22s; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(238,152,92,0.18); }
+
+    .nav-link { transition: color 0.18s; }
+    .nav-link:hover { color: #EE985C; }
+
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.32s ease; }
+    .accordion-content.open { max-height: 400px; }
+    .accordion-icon { transition: transform 0.28s; }
+    .accordion-icon.open { transform: rotate(180deg); }
+
+    .orange-glow { box-shadow: 0 8px 32px rgba(238,152,92,0.35); }
+    .orange-glow:hover { box-shadow: 0 12px 48px rgba(238,152,92,0.5); }
+
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(238,152,92,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(238,152,92,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #0F1E3D; }
+    ::-webkit-scrollbar-thumb { background: rgba(238,152,92,0.35); border-radius: 4px; }
+  </style>
+</head>
+<body class="font-sans text-white min-h-screen">
+
+  <!-- ── NAVBAR ── -->
+  <nav style="background:rgba(15,30,61,0.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(238,152,92,0.12)" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="bg-white rounded-lg px-2 py-1 inline-flex items-center">
+          <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-6 w-auto">
+        </span>
+      </a>
+      <div class="flex items-center gap-4 text-sm text-white/65">
+        <a href="#como-funciona" class="nav-link hidden md:inline">Como funciona</a>
+        <a href="#incluso"       class="nav-link hidden md:inline">O que está incluso</a>
+        <a href="index.html"     class="nav-link hidden md:inline">Para servidores</a>
+        <a href="espaco-contador.html" class="nav-link hidden md:inline">Contadores</a>
+        <a href="https://wa.me/5561999682929?text=Ol%C3%A1%2C%20represento%20uma%20associa%C3%A7%C3%A3o%20e%20quero%20conhecer%20o%20IncentivaBR%20white-label"
+           target="_blank"
+           class="bg-orange hover:brightness-105 text-white font-bold px-4 py-1.5 rounded-full text-xs transition orange-glow">
+          Agendar conversa
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="pt-28 pb-20 px-4 text-center relative overflow-hidden hero-grid">
+    <div class="absolute inset-0 pointer-events-none"
+         style="background:radial-gradient(ellipse 90% 60% at 50% -5%, rgba(238,152,92,0.12), transparent 70%)">
+    </div>
+    <div class="max-w-3xl mx-auto relative">
+
+      <div class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold tracking-widest uppercase fade-up"
+           style="background:rgba(238,152,92,0.12);border:1px solid rgba(238,152,92,0.28);color:#EE985C">
+        Plataforma white-label para associações
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.1] mb-6 fade-up">
+        Sua base já paga IR.<br>
+        <span style="color:#EE985C">Parte disso pode virar recurso pra sua causa.</span>
+      </h1>
+
+      <p class="text-white/55 text-lg leading-relaxed max-w-xl mx-auto mb-9 fade-up">
+        A IncentivaBR entrega a plataforma <strong class="text-white">com a sua marca</strong>, para
+        sua associação mobilizar os próprios associados a destinar parte do imposto que
+        <strong class="text-white">já pagariam</strong> — sem custo adicional para quem doa.
+        Você capta mais. Eles não gastam nada a mais.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 fade-up">
+        <a href="https://wa.me/5561999682929?text=Ol%C3%A1%2C%20represento%20uma%20associa%C3%A7%C3%A3o%20e%20quero%20conhecer%20o%20IncentivaBR%20white-label"
+           target="_blank"
+           class="inline-block font-black px-9 py-4 rounded-2xl text-base transition-all hover:scale-[1.02] text-white orange-glow"
+           style="background:linear-gradient(135deg,#EE985C,#e07a35)">
+          Agendar uma conversa →
+        </a>
+        <a href="#como-funciona"
+           class="inline-block font-bold px-9 py-4 rounded-2xl text-base border border-white/20 hover:border-orange/50 text-white/80 hover:text-white transition">
+          Ver como funciona
+        </a>
+      </div>
+      <p class="text-white/30 text-xs mt-5 fade-up">Sem custo de setup para avaliar · Demonstração com a sua marca</p>
+    </div>
+  </section>
+
+  <!-- ── STAT STRIP ── -->
+  <section class="border-y border-white/5 py-6 px-4" style="background:rgba(26,45,90,0.35)">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div class="fade-up">
+        <div class="text-2xl font-black text-orange">R$ 20 bi</div>
+        <div class="text-white/40 text-xs mt-1 uppercase tracking-wider">Deixam de ser destinados por ano no Brasil</div>
+      </div>
+      <div class="fade-up">
+        <div class="text-2xl font-black text-orange">Custo zero</div>
+        <div class="text-white/40 text-xs mt-1 uppercase tracking-wider">Para o associado que destina</div>
+      </div>
+      <div class="fade-up">
+        <div class="text-2xl font-black text-orange">Dias</div>
+        <div class="text-white/40 text-xs mt-1 uppercase tracking-wider">Para colocar no ar, sem TI sua</div>
+      </div>
+      <div class="fade-up">
+        <div class="text-2xl font-black text-orange">Sua marca</div>
+        <div class="text-white/40 text-xs mt-1 uppercase tracking-wider">A plataforma é white-label</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OS 4 GANCHOS ── -->
+  <section class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-black text-white text-center mb-3 fade-up">Por que sua associação deveria oferecer isso</h2>
+      <p class="text-white/45 text-center max-w-xl mx-auto mb-12 fade-up">Não é pedir mais dinheiro para o seu apoiador. É mostrar um recurso que ele já tem e não usa.</p>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="rounded-2xl p-7 card-hover fade-up" style="background:rgba(26,45,90,0.45);border:1px solid rgba(238,152,92,0.14)">
+          <div class="text-orange text-2xl mb-3">💸</div>
+          <h3 class="text-lg font-black text-white mb-2">Capta mais, sem custo pro doador</h3>
+          <p class="text-white/50 text-sm leading-relaxed">O associado destina parte do IR devido que já pagaria à Receita. É recurso novo para a sua causa — e custo líquido zero para quem doa ao final do ano.</p>
+        </div>
+        <div class="rounded-2xl p-7 card-hover fade-up" style="background:rgba(26,45,90,0.45);border:1px solid rgba(238,152,92,0.14)">
+          <div class="text-orange text-2xl mb-3">⚡</div>
+          <h3 class="text-lg font-black text-white mb-2">Pronto em dias, sem equipe de TI</h3>
+          <p class="text-white/50 text-sm leading-relaxed">Você não precisa desenvolver nada. Entregamos a plataforma configurada com a sua marca, suas cores e o seu projeto — sua equipe só divulga para a base.</p>
+        </div>
+        <div class="rounded-2xl p-7 card-hover fade-up" style="background:rgba(26,45,90,0.45);border:1px solid rgba(238,152,92,0.14)">
+          <div class="text-orange text-2xl mb-3">🛡️</div>
+          <h3 class="text-lg font-black text-white mb-2">Conformidade e segurança</h3>
+          <p class="text-white/50 text-sm leading-relaxed">Base legal por mecanismo, tratamento de dados conforme a LGPD e comprovante correto para a declaração. A associação não assume o risco fiscal do doador.</p>
+        </div>
+        <div class="rounded-2xl p-7 card-hover fade-up" style="background:rgba(26,45,90,0.45);border:1px solid rgba(238,152,92,0.14)">
+          <div class="text-orange text-2xl mb-3">📊</div>
+          <h3 class="text-lg font-black text-white mb-2">Dashboard de captação em tempo real</h3>
+          <p class="text-white/50 text-sm leading-relaxed">Acompanhe quanto foi destinado, por quantos apoiadores e para qual projeto — em tempo real, para prestar contas ao conselho e planejar a campanha.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMO FUNCIONA ── -->
+  <section id="como-funciona" class="py-20 px-4" style="background:rgba(26,45,90,0.3)">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-black text-white text-center mb-3 fade-up">Como funciona a parceria</h2>
+      <p class="text-white/45 text-center max-w-xl mx-auto mb-14 fade-up">Da conversa ao primeiro apoiador destinando — em poucos passos.</p>
+
+      <div class="space-y-5">
+        <div class="flex gap-5 items-start fade-up">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-white" style="background:linear-gradient(135deg,#EE985C,#e07a35)">1</div>
+          <div>
+            <h3 class="text-lg font-black text-white mb-1">Conversamos e desenhamos o modelo</h3>
+            <p class="text-white/50 text-sm leading-relaxed">Entendemos o seu projeto, a sua base de associados e o mecanismo de incentivo mais adequado. Definimos juntos o formato da parceria conforme o seu porte.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start fade-up">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-white" style="background:linear-gradient(135deg,#EE985C,#e07a35)">2</div>
+          <div>
+            <h3 class="text-lg font-black text-white mb-1">Configuramos a plataforma com a sua marca</h3>
+            <p class="text-white/50 text-sm leading-relaxed">Logo, cores, domínio e o seu projeto entram na plataforma white-label. Você recebe um ambiente pronto, sem escrever uma linha de código.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start fade-up">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-white" style="background:linear-gradient(135deg,#EE985C,#e07a35)">3</div>
+          <div>
+            <h3 class="text-lg font-black text-white mb-1">Sua base destina — guiada passo a passo</h3>
+            <p class="text-white/50 text-sm leading-relaxed">O associado calcula quanto pode destinar, escolhe o projeto e recebe o comprovante na hora. A IncentivaBR não recebe nem retém recursos — o repasse vai direto para a conta do projeto.</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start fade-up">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-white" style="background:linear-gradient(135deg,#EE985C,#e07a35)">4</div>
+          <div>
+            <h3 class="text-lg font-black text-white mb-1">Você acompanha e presta contas</h3>
+            <p class="text-white/50 text-sm leading-relaxed">O dashboard mostra a captação em tempo real. Você reporta ao conselho, ajusta a campanha e volta à base com resultado concreto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── O QUE ESTÁ INCLUSO ── -->
+  <section id="incluso" class="py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-black text-white text-center mb-12 fade-up">O que está incluso</h2>
+      <div class="grid sm:grid-cols-2 gap-x-10 gap-y-4">
+        <div class="flex items-start gap-3 fade-up"><span class="text-orange font-black">✓</span><p class="text-white/60 text-sm">Plataforma white-label com a marca da associação</p></div>
+        <div class="flex items-start gap-3 fade-up"><span class="text-orange font-black">✓</span><p class="text-white/60 text-sm">Calculadora de destinação guiada para o associado</p></div>
+        <div class="flex items-start gap-3 fade-up"><span class="text-orange font-black">✓</span><p class="text-white/60 text-sm">Geração automática de comprovante para a declaração</p></div>
+        <div class="flex items-start gap-3 fade-up"><span class="text-orange font-black">✓</span><p class="text-white/60 text-sm">Repasse direto ao projeto — sem custódia de recursos</p></div>
+        <div class="flex items-start gap-3 fade-up"><span class="text-orange font-black">✓</span><p class="text-white/60 text-sm">Dashboard de captação em tempo real</p></div>
+        <div class="flex items-start gap-3 fade-up"><span class="text-orange font-black">✓</span><p class="text-white/60 text-sm">Base legal e conformidade LGPD</p></div>
+        <div class="flex items-start gap-3 fade-up"><span class="text-orange font-black">✓</span><p class="text-white/60 text-sm">Material de campanha para mobilizar a base</p></div>
+        <div class="flex items-start gap-3 fade-up"><span class="text-orange font-black">✓</span><p class="text-white/60 text-sm">Suporte na configuração e no lançamento</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="py-20 px-4" style="background:rgba(26,45,90,0.3)">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-black text-white text-center mb-12 fade-up">Perguntas das associações</h2>
+
+      <div class="space-y-3">
+        <div class="rounded-xl overflow-hidden fade-up" style="background:rgba(15,30,61,0.6);border:1px solid rgba(255,255,255,0.07)">
+          <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+            <span class="font-bold text-white text-sm">A IncentivaBR fica com o dinheiro da doação?</span>
+            <span class="accordion-icon text-orange">▾</span>
+          </button>
+          <div class="accordion-content px-5"><p class="text-white/50 text-sm leading-relaxed pb-5">Não. Em nenhum momento. O associado transfere direto para a conta oficial do projeto (CNPJ verificado). A plataforma é o canal técnico que organiza, orienta e comprova — o recurso vai do apoiador para o beneficiário.</p></div>
+        </div>
+
+        <div class="rounded-xl overflow-hidden fade-up" style="background:rgba(15,30,61,0.6);border:1px solid rgba(255,255,255,0.07)">
+          <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+            <span class="font-bold text-white text-sm">Precisamos de equipe de tecnologia?</span>
+            <span class="accordion-icon text-orange">▾</span>
+          </button>
+          <div class="accordion-content px-5"><p class="text-white/50 text-sm leading-relaxed pb-5">Não. Entregamos a plataforma configurada com a sua marca. A sua equipe só divulga para a base de associados — nós cuidamos da parte técnica, da hospedagem e das atualizações.</p></div>
+        </div>
+
+        <div class="rounded-xl overflow-hidden fade-up" style="background:rgba(15,30,61,0.6);border:1px solid rgba(255,255,255,0.07)">
+          <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+            <span class="font-bold text-white text-sm">A associação assume algum risco fiscal do doador?</span>
+            <span class="accordion-icon text-orange">▾</span>
+          </button>
+          <div class="accordion-content px-5"><p class="text-white/50 text-sm leading-relaxed pb-5">A plataforma valida os limites legais de cada mecanismo e gera o comprovante correto para a declaração do associado. A responsabilidade pela declaração é sempre do próprio contribuinte — e a plataforma dá a ele a documentação certa para ficar em conformidade.</p></div>
+        </div>
+
+        <div class="rounded-xl overflow-hidden fade-up" style="background:rgba(15,30,61,0.6);border:1px solid rgba(255,255,255,0.07)">
+          <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+            <span class="font-bold text-white text-sm">Serve para qualquer causa ou só cultura?</span>
+            <span class="accordion-icon text-orange">▾</span>
+          </button>
+          <div class="accordion-content px-5"><p class="text-white/50 text-sm leading-relaxed pb-5">A plataforma cobre os principais mecanismos federais de incentivo — cultura, esporte, criança e adolescente, idoso, saúde e reciclagem. Na conversa inicial identificamos qual se encaixa no seu projeto e na sua base.</p></div>
+        </div>
+
+        <div class="rounded-xl overflow-hidden fade-up" style="background:rgba(15,30,61,0.6);border:1px solid rgba(255,255,255,0.07)">
+          <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+            <span class="font-bold text-white text-sm">Como começamos?</span>
+            <span class="accordion-icon text-orange">▾</span>
+          </button>
+          <div class="accordion-content px-5"><p class="text-white/50 text-sm leading-relaxed pb-5">Uma conversa de 30 minutos. Entendemos o seu projeto e a sua base, mostramos a plataforma com a sua marca e desenhamos o formato da parceria. A partir daí, a configuração leva poucos dias.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ── -->
+  <section class="py-20 px-4">
+    <div class="max-w-2xl mx-auto text-center fade-up">
+      <div class="rounded-3xl p-10"
+           style="background:linear-gradient(135deg,rgba(238,152,92,0.14),rgba(238,152,92,0.05));border:1px solid rgba(238,152,92,0.22)">
+        <h2 class="text-3xl sm:text-4xl font-black text-white mb-4 leading-tight">
+          Sua base já tem o recurso.<br>
+          <span style="color:#EE985C">Falta a ferramenta para captá-lo.</span>
+        </h2>
+        <p class="text-white/45 text-base mb-8">Vamos desenhar juntos a parceria certa para a sua associação. Uma conversa de 30 minutos.</p>
+        <a href="https://wa.me/5561999682929?text=Ol%C3%A1%2C%20represento%20uma%20associa%C3%A7%C3%A3o%20e%20quero%20conhecer%20o%20IncentivaBR%20white-label"
+           target="_blank"
+           class="inline-block font-black px-10 py-4 rounded-2xl text-base transition-all hover:scale-[1.02] text-white orange-glow"
+           style="background:linear-gradient(135deg,#EE985C,#e07a35)">
+          Agendar conversa no WhatsApp →
+        </a>
+        <p class="text-white/30 text-sm mt-4">
+          ou escreva para <a href="mailto:adactoarturdornas@gmail.com" class="text-orange hover:underline">adactoarturdornas@gmail.com</a>
+        </p>
+        <p class="text-white/20 text-xs mt-5">Registro INPI BR512025000647-0 · LGPD · A plataforma não substitui contador ou advogado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer style="border-top:1px solid rgba(255,255,255,0.08)" class="py-10 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <span class="bg-white rounded-lg px-2 py-1 inline-flex items-center">
+            <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-6 w-auto">
+          </span>
+          <span class="text-white/25 text-xs">Incentivos Fiscais Simplificados</span>
+        </div>
+        <div class="flex flex-wrap gap-5 text-xs text-white/35">
+          <a href="index.html" class="hover:text-white/60 transition">Para servidores</a>
+          <a href="espaco-contador.html" class="hover:text-white/60 transition">Para contadores</a>
+          <a href="faq.html" class="hover:text-white/60 transition">FAQ</a>
+          <a href="politica-privacidade.html" class="hover:text-white/60 transition">Privacidade</a>
+          <a href="termos-uso.html" class="hover:text-white/60 transition">Termos</a>
+        </div>
+      </div>
+      <div class="mt-6 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/18"
+           style="border-top:1px solid rgba(255,255,255,0.05)">
+        <p>© 2026 IncentivaBR · INPI BR512025000647-0</p>
+        <p>
+          <a href="mailto:adactoarturdornas@gmail.com" class="hover:text-white/40 transition">adactoarturdornas@gmail.com</a>
+          <span class="mx-2">·</span>
+          <a href="https://wa.me/5561999682929" target="_blank" class="hover:text-white/40 transition">WhatsApp</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Fade-up ao scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('.accordion-icon');
+      const isOpen = content.classList.contains('open');
+      document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+      document.querySelectorAll('.accordion-icon').forEach(i => i.classList.remove('open'));
+      if (!isOpen) { content.classList.add('open'); icon.classList.add('open'); }
+    }
+  </script>
+</body>
+</html>
