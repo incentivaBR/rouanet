@@ -296,7 +296,8 @@ export function gerarComprovante(donation, user, project, fund) {
   doc.fontSize(7)
      .fillColor('#999999')
      .text(
-       '© 2026 Adacto Artur Dornas de Oliveira. Programa de computador registrado no INPI nº BR512025000647‑0. Marca mista depositada sob os processos nº 939403005 (NCL 35) e nº 939403110 (NCL 42).',
+       // Fonte única do texto: scripts/sync-aviso-legal.mjs — mantenha em sincronia.
+       '© 2026 Adacto Artur Dornas de Oliveira. Programa de computador registrado no INPI nº BR512025000647‑0. Marca mista depositada sob os processos nº 939403005 (NCL 35) e nº 939403110 (NCL 42). Documentação técnica registrada no 2º Ofício de RTD de Brasília/DF.',
        { align: 'center' }
      );
   doc.text('Reprodução não autorizada sujeita às sanções legais.', { align: 'center' });
