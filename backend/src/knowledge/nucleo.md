@@ -406,7 +406,9 @@ Destinar agora
 Fonte oficial:
 Manual da Declaração — Receita Federal
 IncentivaBR programa de computador registrado no INPI sob o n BR512025000647-0.
-2026 IncentivaBR. Todos os direitos reservados. &Eacute; vedada a reprodu o, distribui o ou engenharia reversa, total ou parcial, sem autoriza o expressa.
+Marca mista depositada no INPI sob os processos n 939403005 (NCL 35) e n 939403110 (NCL 42).
+Documenta o t cnica registrada no 2 Of cio de Registro Civil, T tulos e Documentos e Pessoas Jur dicas de Bras lia/DF.
+2026 Adacto Artur Dornas de Oliveira. Todos os direitos reservados. vedada a reprodu o, distribui o ou engenharia reversa, total ou parcial, sem autoriza o expressa.
 
 ---
 
@@ -492,6 +494,7 @@ O Orquestra das Periferias do DF é cultura popular que ressoa em cada área do 
 O Orquestra das Periferias do DF leva cultura popular brasileira a praças, teatros e centros culturais. Você pode fazer isso acontecer.
 #### Educação
 O Orquestra das Periferias do DF preserva e difunde a cultura popular brasileira — amplia o que você faz na sala de aula.
+🛡️
 #### Segurança Pública
 Cultura fortalece comunidades. O Orquestra das Periferias do DF leva arte e identidade cultural a quem mais precisa.
 #### Saúde
@@ -506,7 +509,9 @@ Calcular meu limite
 Ver o Orquestra das Periferias do DF
 Guia do Servidor →
 IncentivaBR programa de computador registrado no INPI sob o n BR512025000647-0.
-2026 IncentivaBR. Todos os direitos reservados. &Eacute; vedada a reprodu o, distribui o ou engenharia reversa, total ou parcial, sem autoriza o expressa.
+Marca mista depositada no INPI sob os processos n 939403005 (NCL 35) e n 939403110 (NCL 42).
+Documenta o t cnica registrada no 2 Of cio de Registro Civil, T tulos e Documentos e Pessoas Jur dicas de Bras lia/DF.
+2026 Adacto Artur Dornas de Oliveira. Todos os direitos reservados. vedada a reprodu o, distribui o ou engenharia reversa, total ou parcial, sem autoriza o expressa.
 
 ---
 
@@ -566,7 +571,9 @@ Seu IR vira música, arte e cultura para jovens que precisam.
 Começar pelo MeuLimite
 Tirar dúvidas →
 IncentivaBR programa de computador registrado no INPI sob o n BR512025000647-0.
-2026 IncentivaBR. Todos os direitos reservados. &Eacute; vedada a reprodu o, distribui o ou engenharia reversa, total ou parcial, sem autoriza o expressa.
+Marca mista depositada no INPI sob os processos n 939403005 (NCL 35) e n 939403110 (NCL 42).
+Documenta o t cnica registrada no 2 Of cio de Registro Civil, T tulos e Documentos e Pessoas Jur dicas de Bras lia/DF.
+2026 Adacto Artur Dornas de Oliveira. Todos os direitos reservados. vedada a reprodu o, distribui o ou engenharia reversa, total ou parcial, sem autoriza o expressa.
 
 ---
 
@@ -591,7 +598,7 @@ O que é a Lei Rouanet?
 A Lei 8.313/1991 permite que pessoas físicas destinem até 6% do IR devido para projetos culturais aprovados pelo Ministério da Cultura (MinC) e cadastrados no sistema SALIC .
 O dinheiro vai para o Fundo Nacional de Cultura (FNC) , gerido pelo Banco do Brasil, e é repassado ao projeto escolhido.
 É seguro? Como verifico os dados?
-100% seguro. Os projetos são aprovados e publicados no SALIC (salic.cultura.gov.br), sistema oficial do governo federal. O FNC é gerido pelo Banco do Brasil.
+É verificável — e essa é a melhor garantia. Os projetos são aprovados e publicados no SALIC (salic.cultura.gov.br), sistema oficial do governo federal. O FNC é gerido pelo Banco do Brasil.
 Você pode verificar qualquer projeto em salic.cultura.gov.br pelo número PRONAC.
 Qual o limite que posso destinar?
 O limite é 6% do IR devido — não do salário, mas do imposto calculado. Use nossa calculadora para saber o valor exato.
@@ -664,4 +671,6 @@ Calculadora IR
 Guia do Servidor
 Destinar agora
 IncentivaBR programa de computador registrado no INPI sob o n BR512025000647-0.
-2026 IncentivaBR. Todos os direitos reservados. &Eacute; vedada a reprodu o, distribui o ou engenharia reversa, total ou parcial, sem autoriza o expressa.
+Marca mista depositada no INPI sob os processos n 939403005 (NCL 35) e n 939403110 (NCL 42).
+Documenta o t cnica registrada no 2 Of cio de Registro Civil, T tulos e Documentos e Pessoas Jur dicas de Bras lia/DF.
+2026 Adacto Artur Dornas de Oliveira. Todos os direitos reservados. vedada a reprodu o, distribui o ou engenharia reversa, total ou parcial, sem autoriza o expressa.
