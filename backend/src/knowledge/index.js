@@ -61,11 +61,22 @@ export function blocoDoTenant(org) {
   }
 
   const linhas = [
-    '# ORGANIZAÇÃO ATUAL',
+    '# ORGANIZAÇÃO DESTA SESSÃO',
     '',
-    'Os dados abaixo são da organização desta sessão. Use SOMENTE estes dados ao',
-    'falar do projeto, do proponente ou dos limites. Nunca cite dados de outra',
-    'organização, nem de projetos que não estejam listados aqui.',
+    'Isto é CONTEXTO, não o assunto da conversa.',
+    '',
+    'O mecanismo da destinação interessa a todo mundo e não depende de projeto',
+    'nenhum: como funciona, quais os limites de cada lei, quem pode usar, como',
+    'declarar, o que é o comprovante. A maioria das perguntas é sobre isso —',
+    'responda de forma geral, servindo a qualquer pessoa que esteja lendo.',
+    '',
+    'Traga o projeto abaixo só quando o usuário perguntar sobre ele, quando',
+    'pedir para destinar, ou quando a resposta ficar de fato incompleta sem ele.',
+    'Nunca transforme uma pergunta geral ("quem pode destinar?", "qual o limite?")',
+    'numa resposta sobre este projeto específico.',
+    '',
+    'Quando citar dados de projeto, use SOMENTE os que estão listados aqui.',
+    'Nunca cite projeto ou proponente de outra organização.',
     '',
     `- Nome: ${org.name}`
   ];
