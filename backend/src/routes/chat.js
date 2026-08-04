@@ -239,12 +239,16 @@ router.post('/tina', async (req, res) => {
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 450,
       system: [
-        { type: 'text', text: SYSTEM_PROMPT },
-        {
-          type: 'text',
-          text: NUCLEO,
-          cache_control: { type: 'ephemeral', ttl: '1h' }
-        },
+        // Se o núcleo não carregou, o cache_control migra para a persona: um
+        // bloco de texto vazio é rejeitado pela API, e sem ele o prefixo cairia
+        // para 3,2k tokens — abaixo do mínimo de 4.096 do Haiku, onde o cache
+        // silenciosamente deixa de existir.
+        NUCLEO
+          ? { type: 'text', text: SYSTEM_PROMPT }
+          : { type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral', ttl: '1h' } },
+        ...(NUCLEO
+          ? [{ type: 'text', text: NUCLEO, cache_control: { type: 'ephemeral', ttl: '1h' } }]
+          : []),
         { type: 'text', text: blocoDoTenant(req.organization) }
       ],
       messages: [
