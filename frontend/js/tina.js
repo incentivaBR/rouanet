@@ -1,4 +1,4 @@
-// TINA - Assistente Virtual DestineAI (powered by Claude AI)
+// TINA - Assistente Virtual IncentivaBR (powered by Claude AI)
 
 const TINA = (function() {
   'use strict';
@@ -174,7 +174,7 @@ const TINA = (function() {
     // SERVIDOR PÚBLICO
     servidorPublico: {
       keywords: ['servidor', 'público', 'federal', 'estadual', 'municipal', 'gdf'],
-      response: '👔 <strong>SERVIDORES PÚBLICOS:</strong><br><br>O DestineAI foi desenvolvido especialmente para servidores! Federal, estadual ou municipal — se você faz <strong>declaração completa</strong>, pode destinar até <strong>6% do IR devido</strong> para projetos culturais via Lei Rouanet.<br><br>Custo real: <strong>R$ 0</strong>. Neste piloto, tudo é simulação — mas o processo real funciona exatamente assim.'
+      response: '👔 <strong>SERVIDORES PÚBLICOS:</strong><br><br>A IncentivaBR foi desenvolvida especialmente para servidores! Federal, estadual ou municipal — se você faz <strong>declaração completa</strong>, pode destinar até <strong>6% do IR devido</strong> para projetos culturais via Lei Rouanet.<br><br>Custo real: <strong>R$ 0</strong>. Neste piloto, tudo é simulação — mas o processo real funciona exatamente assim.'
     },
 
     // IMPACTO
@@ -203,7 +203,7 @@ const TINA = (function() {
     }
 
     // Resposta padrão
-    return '🤖 Sou a <strong>TINA</strong>, assistente da simulação DestineAI!<br><br>Posso ajudar com:<br>• O que é este piloto e como funciona<br>• Como calcular quanto você pode destinar<br>• O que é a Lei Rouanet (Art. 18)<br>• Como completar o pós-teste<br>• Dúvidas sobre a declaração de IR<br><br>Faça sua pergunta ou clique nos botões abaixo!';
+    return '🤖 Sou a <strong>TINA</strong>, assistente da IncentivaBR!<br><br>Posso ajudar com:<br>• O que é este piloto e como funciona<br>• Como calcular quanto você pode destinar<br>• O que é a Lei Rouanet (Art. 18)<br>• Como completar o pós-teste<br>• Dúvidas sobre a declaração de IR<br><br>Faça sua pergunta ou clique nos botões abaixo!';
   }
 
   // Inicializa o widget
@@ -261,7 +261,7 @@ const TINA = (function() {
             <div class="tina-avatar"><img src="assets/tina-avatar.svg" alt="TINA" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
             <div>
               <div class="tina-name">TINA</div>
-              <div class="tina-status">Assistente DestineAI</div>
+              <div class="tina-status">Assistente IncentivaBR</div>
             </div>
           </div>
           <button class="tina-close" onclick="TINA.close()">
