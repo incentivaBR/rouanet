@@ -29,3 +29,34 @@ UPDATE organizations
    SET name = 'IncentivaBR'
  WHERE slug = 'www'
    AND name IN ('DestineAI', 'Destinai', 'DestinaAI');
+
+-- 3. A organização 'www' é o domínio institucional, não um projeto.
+--
+--    Ela carregava o PRONAC 261847 (Orquestra das Periferias) como resíduo do
+--    último teste — os campos foram sendo sobrescritos a cada projeto desde a
+--    migration 019. Como o blocoDoTenant() injeta esses dados no prompt, a TINA
+--    do site institucional respondia como se fosse aquele projeto.
+--
+--    Só o bloco da TINA lê estes campos; a demo-projeto.html tem o projeto
+--    fixo no HTML e não depende deles.
+UPDATE organizations
+   SET pronac            = NULL,
+       pronac_titulo     = NULL,
+       pronac_area       = NULL,
+       pronac_proponente = NULL
+ WHERE slug = 'www';
+
+-- 4. Fundo e limite também saem do institucional.
+--
+--    Estavam fixos em "Lei Rouanet" e 6%. Num domínio que cobre os 7
+--    mecanismos isso é pior que resíduo: faria a TINA responder "seu limite é
+--    6%" a quem pergunta sobre Incentivo ao Esporte, cujo limite é 7%.
+--    Sem esses campos, ela responde pelo núcleo, que cobre os sete.
+--
+--    Continuam disponíveis para organizações de projeto, onde fazem sentido.
+UPDATE organizations
+   SET fund_type      = NULL,
+       fund_name      = NULL,
+       legal_basis    = NULL,
+       max_percentage = NULL
+ WHERE slug = 'www';
