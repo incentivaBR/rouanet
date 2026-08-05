@@ -20,6 +20,7 @@ import configRoutes from './src/routes/config.js';
 import salicRoutes from './src/routes/salic.js';
 import adminRoutes from './src/routes/admin.js';
 import chatRoutes from './src/routes/chat.js';
+import mecenatoRoutes from './src/routes/mecenato.js';
 import tenantMiddleware from './src/middleware/tenant.js';
 
 dotenv.config();
@@ -197,6 +198,7 @@ app.use('/api/config', configRoutes);
 app.use('/api/salic', salicRoutes);   // Lei Rouanet — proxy SALIC API
 app.use('/api/admin', adminRoutes);   // Super-admin IncentivaBR
 app.use('/api/chat', chatRoutes);     // TINA — assistente virtual IA
+app.use('/api/mecenato', mecenatoRoutes); // Recibo de Mecenato — emitido pelo proponente
 
 // Servir arquivos de upload
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
