@@ -345,9 +345,24 @@
       }
     }
 
+    // Estados em que a transferência JÁ foi conferida. awaiting_mecenato e
+    // mecenato_issued vêm depois de confirmed — o dinheiro chegou, o que resta
+    // é o Recibo de Mecenato, que quem emite é o proponente. Tratar esses dois
+    // como "não confirmado" faria a destinação regredir para "aguardando
+    // pagamento" na tela do destinador, que é exatamente o susto a evitar.
+    const STATUS_CONFIRMADOS = ['confirmed', 'test_simulated', 'processed', 'awaiting_mecenato', 'mecenato_issued'];
+
     function renderDonation(d) {
-      const isConfirmed = d.status === 'confirmed' || d.status === 'test_simulated' || d.status === 'processed';
-      const statusLabel = { confirmed:'Confirmada', test_simulated:'Simulada ✓', processed:'Processada', pending:'Aguardando pagamento', cancelled:'Cancelada' }[d.status] || d.status;
+      const isConfirmed = STATUS_CONFIRMADOS.includes(d.status);
+      const statusLabel = {
+        confirmed:         'Confirmada',
+        test_simulated:    'Simulada ✓',
+        processed:         'Processada',
+        awaiting_mecenato: 'Confirmada · recibo a caminho',
+        mecenato_issued:   'Recibo disponível',
+        pending:           'Aguardando pagamento',
+        cancelled:         'Cancelada'
+      }[d.status] || d.status;
       const statusCls   = isConfirmed ? 'status-confirmed' : 'status-pending';
       const pronac      = d.pronac || '—';
       const titulo      = d.projeto_titulo || `Projeto PRONAC ${pronac}`;
@@ -454,7 +469,7 @@
           return;
         }
 
-        const hasConfirmed = donations.some(d => d.status === 'confirmed' || d.status === 'test_simulated' || d.status === 'processed');
+        const hasConfirmed = donations.some(d => STATUS_CONFIRMADOS.includes(d.status));
         const count = donations.length;
 
         // Banner de confirmação

@@ -277,7 +277,11 @@ router.get('/dashboard', async (req, res) => {
                   FROM users WHERE cpf != '00000000000'`),
       pool.query(`SELECT COUNT(*) AS total,
                   COALESCE(SUM(donation_amount) FILTER (WHERE status != 'cancelled'), 0) AS volume,
-                  COUNT(*) FILTER (WHERE status = 'confirmed') AS confirmadas,
+                  -- awaiting_mecenato e mecenato_issued são POSTERIORES à confirmação:
+                  -- a transferência já foi conferida, falta só o recibo do proponente.
+                  -- Contar apenas 'confirmed' subestimaria o número justamente na
+                  -- medida em que o ciclo do recibo passa a funcionar.
+                  COUNT(*) FILTER (WHERE status IN ('confirmed','awaiting_mecenato','mecenato_issued')) AS confirmadas,
                   COUNT(*) FILTER (WHERE status = 'pending') AS pendentes,
                   COUNT(*) FILTER (WHERE created_at > NOW() - INTERVAL '30 days') AS novas_30d
                   FROM donations`),
