@@ -200,8 +200,21 @@ app.use('/api/admin', adminRoutes);   // Super-admin IncentivaBR
 app.use('/api/chat', chatRoutes);     // TINA — assistente virtual IA
 app.use('/api/mecenato', mecenatoRoutes); // Recibo de Mecenato — emitido pelo proponente
 
-// Servir arquivos de upload
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// A pasta de uploads NAO e publicada.
+//
+// Ate aqui havia um express.static sobre /uploads, servindo comprovantes
+// bancarios e recibos sem qualquer autenticacao: bastava ter o nome do arquivo
+// para baixar documento alheio — e eles trazem nome, CPF e valor. O nome tem
+// componente aleatorio, mas isso e seguranca por obscuridade, e sob a LGPD e
+// dado pessoal em caminho publico.
+//
+// Conferido antes de remover: nada consumia esse caminho. O frontend faz POST
+// em /api/uploads/receipt/:id e le apenas o status; o painel admin nao usa.
+//
+// Os arquivos passam a ser entregues por rotas autenticadas, que verificam se
+// quem pede e o dono da destinacao ou o proponente:
+//   GET /api/uploads/receipt/:id/arquivo   — comprovante bancario
+//   GET /api/mecenato/:id/arquivo          — recibo de mecenato
 
 // Rota catch-all: serve index.html para rotas não-API (SPA)
 app.get('*', (req, res, next) => {
