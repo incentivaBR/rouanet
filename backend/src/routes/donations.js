@@ -320,11 +320,28 @@ router.get('/', authenticateToken, async (req, res) => {
         d.fiscal_year,
         d.status,
         d.created_at,
+        d.confirmed_at,
+        -- receipt_url é a coluna que o upload grava; receipt_file_path é de uma
+        -- migração anterior e ficou vazia. O mapeamento abaixo lia receipt_url
+        -- sem que ele estivesse no SELECT, então vinha undefined sempre.
+        d.receipt_url,
         d.receipt_file_path,
+        -- Ciclo do Recibo de Mecenato, para a linha do tempo do destinador.
+        -- Vem junto da listagem de propósito: uma requisição por card só para
+        -- saber se o recibo saiu seria um pedido por destinação na tela.
+        d.proponente_notified_at,
+        d.mecenato_issued_at,
+        d.mecenato_url,
+        o.name             AS proponente_nome,
+        o.contact_person   AS proponente_responsavel,
+        o.contact_email    AS proponente_email,
+        o.contact_whatsapp AS proponente_whatsapp,
+        o.mecenato_prazo_dias,
         f.code AS fund_code,
         f.name AS fund_name
       FROM donations d
       LEFT JOIN official_funds f ON d.official_fund_id = f.id
+      LEFT JOIN organizations o ON o.id = d.organization_id
       ${whereClause}
       ORDER BY d.created_at DESC
       LIMIT $${paramIndex++} OFFSET $${paramIndex++}
@@ -361,7 +378,23 @@ router.get('/', authenticateToken, async (req, res) => {
         fiscal_year:      d.fiscal_year,
         status:           d.status,
         created_at:       d.created_at,
-        receipt_url: d.receipt_url,
+        confirmed_at:     d.confirmed_at,
+        receipt_url:      d.receipt_url,
+        // O recibo em si sai por rota autenticada — aqui vai só o suficiente
+        // para a tela dizer em que pé está e a quem recorrer.
+        mecenato: {
+          emitido:       Boolean(d.mecenato_url),
+          emitido_em:    d.mecenato_issued_at,
+          download_url:  d.mecenato_url ? `/api/mecenato/${d.id}/arquivo` : null,
+          notificado_em: d.proponente_notified_at,
+          prazo_dias:    d.mecenato_prazo_dias,
+          proponente: {
+            nome:        d.proponente_nome,
+            responsavel: d.proponente_responsavel,
+            email:       d.proponente_email,
+            whatsapp:    d.proponente_whatsapp
+          }
+        },
         fund: { code: d.fund_code, name: d.fund_name }
       }))
     });

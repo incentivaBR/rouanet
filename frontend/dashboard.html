@@ -119,6 +119,65 @@
     .fiscal-val { font-size: 15px; font-weight: 700; color: #0F1E3D; }
     .fiscal-val.green { color: #15803D; }
 
+    /* Ciclo do Recibo de Mecenato — o que acontece DEPOIS de transferir.
+       Quem emite o recibo é o proponente, não a plataforma; sem mostrar o
+       caminho, o destinador fica sem saber se receberá o documento que vai
+       usar na declaração. */
+    .ciclo {
+      padding: 18px 24px;
+      border-bottom: 1px solid #F0F2F8;
+      background: #FAFBFE;
+    }
+    .ciclo-titulo {
+      font-size: 11px; color: #8B96A8; text-transform: uppercase;
+      letter-spacing: 0.5px; margin-bottom: 14px; font-weight: 700;
+    }
+    .ciclo-passos { list-style: none; margin: 0; padding: 0; }
+    .ciclo-passo {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding-bottom: 14px; position: relative;
+    }
+    .ciclo-passo:last-child { padding-bottom: 0; }
+    /* linha vertical ligando os marcadores */
+    .ciclo-passo:not(:last-child)::before {
+      content: ''; position: absolute; left: 10px; top: 22px; bottom: 0;
+      width: 2px; background: #E4E9F5;
+    }
+    .ciclo-passo.feito:not(:last-child)::before { background: #86EFAC; }
+    .ciclo-marca {
+      flex: 0 0 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; background: #E4E9F5; color: #8B96A8; z-index: 1;
+    }
+    .ciclo-passo.feito .ciclo-marca { background: #DCFCE7; color: #15803D; }
+    .ciclo-passo.agora .ciclo-marca { background: #FEF9C3; color: #92400E; }
+    .ciclo-texto { flex: 1; min-width: 0; }
+    .ciclo-nome { font-size: 14px; font-weight: 600; color: #0F1E3D; }
+    .ciclo-passo:not(.feito):not(.agora) .ciclo-nome { color: #8B96A8; font-weight: 500; }
+    .ciclo-quando { font-size: 12px; color: #8B96A8; margin-top: 2px; }
+    .ciclo-nota {
+      margin-top: 12px; padding: 12px 14px; border-radius: 10px;
+      background: #FFF; border: 1px solid #E4E9F5;
+      font-size: 13px; color: #5566A0; line-height: 1.55;
+    }
+    .ciclo-acoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .btn-ponte {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #25D366; color: #fff; border: none; border-radius: 10px;
+      padding: 10px 16px; font-size: 13px; font-weight: 700;
+      font-family: 'Montserrat', sans-serif; cursor: pointer; text-decoration: none;
+    }
+    .btn-ponte:hover { background: #1EBE5A; }
+    .btn-ponte.email { background: #273F77; }
+    .btn-ponte.email:hover { background: #1D2F59; }
+    .btn-recibo {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #15803D; color: #fff; border: none; border-radius: 10px;
+      padding: 10px 16px; font-size: 13px; font-weight: 700;
+      font-family: 'Montserrat', sans-serif; cursor: pointer; text-decoration: none;
+    }
+    .btn-recibo:hover { background: #116932; }
+
     /* Ações */
     .donation-actions {
       padding: 16px 24px;
@@ -218,6 +277,9 @@
       .fiscal-item { border-right: none; }
       .donation-actions { flex-direction: column; }
       .btn-comprovante, .btn-nova { width: 100%; justify-content: center; }
+      .ciclo { padding: 16px; }
+      .ciclo-acoes { flex-direction: column; }
+      .btn-ponte, .btn-recibo { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -320,6 +382,46 @@
       return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' });
     }
 
+    /**
+     * Baixa o Recibo de Mecenato que o proponente anexou.
+     *
+     * A pasta de uploads não é publicada — o arquivo traz nome, CPF e valor.
+     * A entrega sai por rota autenticada, que confere se quem pede é o dono da
+     * destinação ou o proponente. Por isso fetch com Bearer, não link direto.
+     */
+    async function baixarMecenato(donationId, btn) {
+      const token = localStorage.getItem('incentivabr_token');
+      if (!token) { alert('Você precisa estar logado.'); return; }
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Baixando...';
+      try {
+        const resp = await fetch(`/api/mecenato/${donationId}/arquivo`, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!resp.ok) {
+          const erro = await resp.json().catch(() => ({}));
+          throw new Error(erro.message || 'Recibo indisponível');
+        }
+        const blob = await resp.blob();
+        // Preserva o nome que o proponente enviou, quando o servidor o informa.
+        const cd   = resp.headers.get('content-disposition') || '';
+        const nome = (cd.match(/filename="?([^"]+)"?/) || [])[1]
+                     || `recibo-mecenato-${donationId.substring(0,8)}.pdf`;
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = nome;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        alert('Não foi possível baixar o recibo: ' + e.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+      }
+    }
+
     async function baixarComprovante(donationId, btn) {
       const token = localStorage.getItem('incentivabr_token');
       if (!token) { alert('Você precisa estar logado.'); return; }
@@ -351,6 +453,101 @@
     // como "não confirmado" faria a destinação regredir para "aguardando
     // pagamento" na tela do destinador, que é exatamente o susto a evitar.
     const STATUS_CONFIRMADOS = ['confirmed', 'test_simulated', 'processed', 'awaiting_mecenato', 'mecenato_issued'];
+
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
+      ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+
+    /**
+     * O que acontece DEPOIS de transferir.
+     *
+     * O documento que vale na declaração é o Recibo de Mecenato, e quem o
+     * emite é o proponente, no modelo do Ministério da Cultura, em três vias.
+     * A plataforma não emite e não deve fingir que emite. O que ela pode fazer
+     * é mostrar o caminho inteiro e dar a ponte pronta com quem emite — sem
+     * isso o destinador transfere e fica no escuro, que é o momento em que ele
+     * desiste de destinar no ano seguinte.
+     */
+    function renderCicloRecibo(d) {
+      const m = d.mecenato || {};
+      const p = m.proponente || {};
+
+      const avisado = Boolean(m.notificado_em);
+      const emitido = Boolean(m.emitido);
+      const prazo   = m.prazo_dias || 10;
+      // Dois textos para o mesmo nome: um corre solto na frase, o outro abre o
+      // passo da linha do tempo — "a instituição avisada" ficaria truncado.
+      const orgNome = p.nome || 'a instituição';
+      const orgPasso = p.nome ? `${p.nome} avisada` : 'Instituição avisada';
+
+      const passo = (feito, agora, nome, quando) => `
+        <li class="ciclo-passo ${feito ? 'feito' : agora ? 'agora' : ''}">
+          <span class="ciclo-marca"><i class="fas ${feito ? 'fa-check' : agora ? 'fa-clock' : 'fa-circle'}"></i></span>
+          <span class="ciclo-texto">
+            <span class="ciclo-nome">${nome}</span>
+            ${quando ? `<span class="ciclo-quando">${quando}</span>` : ''}
+          </span>
+        </li>`;
+
+      // Mensagem pronta para a ponte. Em ONG pequena o WhatsApp chega antes do
+      // e-mail, e o destinador não deveria ter que redigir nada.
+      const msg =
+        `Olá! Fiz uma destinação de ${BRL(d.donation_amount)} ao projeto ` +
+        `${d.projeto_titulo || 'PRONAC ' + (d.pronac || '')} pela Lei Rouanet. ` +
+        `Gostaria de saber sobre a emissão do meu Recibo de Mecenato. Obrigado!`;
+
+      const whats = p.whatsapp
+        ? `<a class="btn-ponte" target="_blank" rel="noopener"
+              href="https://wa.me/${encodeURIComponent(String(p.whatsapp).replace(/\D/g, ''))}?text=${encodeURIComponent(msg)}">
+             <i class="fab fa-whatsapp"></i> Falar com ${esc(orgNome)}
+           </a>` : '';
+
+      const mail = p.email
+        ? `<a class="btn-ponte email"
+              href="mailto:${esc(p.email)}?subject=${encodeURIComponent('Recibo de Mecenato — ' + (d.projeto_titulo || ''))}&body=${encodeURIComponent(msg)}">
+             <i class="fas fa-envelope"></i> Enviar e-mail
+           </a>` : '';
+
+      // Não pode ser <a href> puro: a rota do recibo exige o JWT no cabeçalho,
+      // e link direto não o envia — daria 401. Vai por fetch + blob, como o
+      // comprovante.
+      const baixar = emitido
+        ? `<button class="btn-recibo" onclick="baixarMecenato('${d.id}', this)">
+             <i class="fas fa-file-invoice"></i> Baixar Recibo de Mecenato
+           </button>` : '';
+
+      // Só convida a falar com o proponente se houver com quem falar. Terminar
+      // a nota em "fale direto com quem emite:" sem botão nenhum é pior do que
+      // não oferecer a ponte.
+      const temPonte = Boolean(whats || mail);
+
+      const nota = emitido
+        ? `O Recibo de Mecenato foi emitido por ${esc(orgNome)} no modelo do Ministério da
+           Cultura. <strong>É este o documento da sua declaração</strong> — o comprovante em
+           PDF abaixo é o registro da operação, não substitui o recibo.`
+        : `O Recibo de Mecenato é emitido por <strong>${esc(orgNome)}</strong>, não pela
+           plataforma: assim determina a Lei Rouanet, e o modelo é o do Ministério da Cultura,
+           em três vias. ${avisado
+             ? `A instituição já foi avisada automaticamente, com os seus dados prontos, e costuma emitir em até ${prazo} dias úteis.`
+             // Este bloco só aparece com a transferência já confirmada — logo,
+             // aqui o aviso está saindo agora, não "quando for conferida".
+             : `A instituição está sendo avisada agora, com os seus dados prontos.`}
+           ${temPonte ? 'Se quiser acompanhar de perto, fale direto com quem emite:' : ''}`;
+
+      return `
+        <div class="ciclo">
+          <div class="ciclo-titulo"><i class="fas fa-route"></i> Seu Recibo de Mecenato</div>
+          <ul class="ciclo-passos">
+            ${passo(true, false, 'Destinação registrada', fmtDate(d.created_at))}
+            ${passo(true, false, 'Transferência confirmada', d.confirmed_at ? fmtDate(d.confirmed_at) : '')}
+            ${passo(avisado, !avisado, esc(orgPasso),
+                     avisado ? fmtDate(m.notificado_em) : 'em instantes')}
+            ${passo(emitido, avisado && !emitido, 'Recibo de Mecenato emitido',
+                     emitido ? fmtDate(m.emitido_em) : `prazo declarado: até ${prazo} dias úteis`)}
+          </ul>
+          <div class="ciclo-nota">${nota}</div>
+          ${(whats || mail || baixar) ? `<div class="ciclo-acoes">${baixar}${whats}${mail}</div>` : ''}
+        </div>`;
+    }
 
     function renderDonation(d) {
       const isConfirmed = STATUS_CONFIRMADOS.includes(d.status);
@@ -405,6 +602,8 @@
               </div>
             </div>
           </div>
+
+          ${isConfirmed ? renderCicloRecibo(d) : ''}
 
           <div class="donation-actions">
             ${isConfirmed
