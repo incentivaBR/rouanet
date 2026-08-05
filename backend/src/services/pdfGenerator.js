@@ -276,7 +276,7 @@ export function gerarComprovante(donation, user, project, fund) {
   doc.moveDown(0.3);
   doc.fontSize(9)
      .text('Nenhum valor foi transferido. Este documento é gerado exclusivamente para fins de', { align: 'center' });
-  doc.text('pesquisa acadêmica do MBA em IA & Analytics da FGV.', { align: 'center' });
+  doc.text('demonstrar como funciona o fluxo de destinação.', { align: 'center' });
   doc.text('Quando você fizer uma destinação real, um comprovante oficial com validade fiscal será emitido.', { align: 'center' });
 
   // ===== RODAPE =====
@@ -289,8 +289,8 @@ export function gerarComprovante(donation, user, project, fund) {
 
   doc.moveDown(1);
   doc.fontSize(8)
-     .text('DestineAI / IncentivaBR — Piloto Acadêmico MBA FGV IA & Analytics', { align: 'center' });
-  doc.text('destineai.com.br  ·  incentivabr.com.br', { align: 'center' });
+     .text('IncentivaBR — Incentivos Fiscais Simplificados', { align: 'center' });
+  doc.text('www.incentivabr.com.br', { align: 'center' });
 
   doc.moveDown(1);
   doc.fontSize(7)
