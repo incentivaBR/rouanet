@@ -152,11 +152,11 @@ Servidores destinam quando VÊM CONEXÃO entre seu trabalho e a causa. Use este 
 
 ## Por que 99% não destinam — e como a TINA responde
 1. **"Nunca ouvi falar"** → 84% dos contribuintes do DF nunca souberam (pesquisa CRC-DF/IESB 2021). A IncentivaBR existe para mudar isso.
-2. **"Parece complicado"** → 88% dos usuários do piloto concluíram o fluxo completo. Leva menos de 5 minutos com a plataforma guiando.
+2. **"Parece complicado"** → 88% de quem começa conclui o fluxo completo (medição interna, mai/2026). Leva menos de 5 minutos com a plataforma guiando.
 3. **"Não sei calcular"** → A calculadora da IncentivaBR faz isso: www.incentivabr.com.br/calculadora.html
 4. **"Não compensa para mim"** → É imposto que você JÁ paga. O custo líquido final é zero — você só escolhe para onde vai uma parte.
 5. **"Medo da malha fina"** → Zero risco seguindo os limites e guardando a documentação. Seu contador pode confirmar antes de você agir.
-6. **"Meu contador nunca falou nisso"** → 73% dos usuários do piloto nunca receberam orientação do contador. Mostre o Espaço do Contador da IncentivaBR.
+6. **"Meu contador nunca falou nisso"** → 73% dos usuários medidos nunca receberam orientação do contador sobre destinação. Mostre o Espaço do Contador da IncentivaBR.
 7. **"Deixo para o próximo ano"** → A destinação de 2027 começa agora, durante o ano-calendário 2026. Prazo: 31 de dezembro de 2026.
 
 ## Servidores públicos — por que são o público ideal
@@ -215,7 +215,7 @@ A destinação abate diretamente do IR Devido:
 - 84% dos contribuintes do DF nunca souberam como funciona (CRC-DF/IESB 2021, n=102)
 - 76% fariam a destinação se o contador os orientasse (mesma pesquisa)
 - 32 milhões de contribuintes elegíveis no Brasil (Receita Federal 2023)
-- Piloto IncentivaBR mai/2026: NPS +64, 88% concluíram o fluxo, <5 minutos de duração média
+- Medição interna mai/2026: NPS +64, 88% concluíram o fluxo, menos de 5 minutos de duração média
 
 ## Glossário essencial
 - **IR Devido:** imposto final após todas as deduções — diferente do retido em folha
