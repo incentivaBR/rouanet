@@ -257,3 +257,54 @@ export async function sendNewDonationToAdminEmail(adminEmail, user, donation, pr
     console.error('Erro ao enviar email para admin:', error.message);
   }
 }
+
+/**
+ * Avisa o proponente que ha um Recibo de Mecenato a emitir.
+ *
+ * Quem emite o recibo e o proponente, no modelo oficial do MinC. Este e-mail
+ * existe para que o destinador nao precise correr atras: ele transfere, e a
+ * instituicao ja e avisada com todos os campos que o modelo exige.
+ */
+export async function sendMecenatoPendenteEmail(org, user, donation, project) {
+  if (!resendClient && !transporter) return null;
+  const destino = org?.contact_email;
+  if (!destino) {
+    console.warn('[mecenato] organização sem contact_email — proponente não notificado');
+    return null;
+  }
+
+  const valor = parseFloat(donation.amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const prazo = org?.mecenato_prazo_dias || 10;
+
+  const content = `
+    <h2>Recibo de Mecenato a emitir 📄</h2>
+    <p>Uma destinação foi confirmada e aguarda o recibo.</p>
+    <div class="highlight">
+      <strong>Destinador:</strong> ${user.nome || user.name}<br>
+      <strong>CPF:</strong> ${user.cpf || '—'}<br>
+      <strong>Valor:</strong> ${valor}<br>
+      <strong>Projeto:</strong> ${project?.title || donation.projeto_titulo || '—'}<br>
+      <strong>PRONAC:</strong> ${donation.pronac || '—'}<br>
+      <strong>Data:</strong> ${new Date(donation.confirmed_at || Date.now()).toLocaleDateString('pt-BR')}
+    </div>
+    <p>Estes são os campos exigidos pelo modelo do Ministério da Cultura. Emita o
+    recibo em três vias — Ministério, instituição e destinador — e anexe a via do
+    destinador na plataforma: ele baixa direto da conta dele.</p>
+    <a href="${getAppUrl()}/dashboard.html" class="button">Anexar recibo</a>
+    <p style="margin-top:18px;color:#666;font-size:13px">
+      O destinador foi informado de que o recibo costuma sair em até ${prazo} dias úteis.
+    </p>
+  `;
+
+  try {
+    await doSend({
+      to: destino,
+      subject: `📄 Recibo de Mecenato a emitir — ${valor}`,
+      html: getEmailTemplate(content, org)
+    });
+    return true;
+  } catch (error) {
+    console.error('Erro ao notificar proponente:', error.message);
+    return null;
+  }
+}

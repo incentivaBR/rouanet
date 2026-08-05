@@ -2,7 +2,7 @@ import express from 'express';
 import pool from '../../config/database.js';
 import { authenticateToken } from '../middleware/auth.js';
 import { gerarComprovante } from '../services/pdfGenerator.js';
-import { notifyDestinationRegistered, notifyAdminNewDonation } from '../services/notificationService.js';
+import { notifyDestinationRegistered, notifyAdminNewDonation, notifyProponenteMecenatoPendente } from '../services/notificationService.js';
 
 const router = express.Router();
 
@@ -10,6 +10,68 @@ const router = express.Router();
 function isValidUUID(id) {
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   return uuidRegex.test(id);
+}
+
+/**
+ * Avisa o proponente que ha um Recibo de Mecenato a emitir.
+ *
+ * Chamado sempre que uma destinacao passa a confirmed — hoje pela rota de
+ * simulacao, e pela rota de confirmacao real quando ela existir. Deixe esta
+ * funcao como ponto unico: o campo proponente_notified_at e o que permite a
+ * tela dizer ao destinador "a instituicao ja foi avisada", que e o que tira a
+ * ansiedade de depender de terceiro para o documento da declaracao.
+ *
+ * Falha aqui NAO desfaz a confirmacao. Se o e-mail nao sair, o status fica em
+ * confirmed e a destinacao continua aparecendo na fila do proponente — a
+ * notificacao e conveniencia, a fila e a garantia.
+ */
+async function avisarProponente(donationId) {
+  try {
+    const { rows } = await pool.query(
+      `SELECT d.id, d.donation_amount AS amount, d.pronac, d.projeto_titulo,
+              d.confirmed_at, d.organization_id,
+              u.nome, u.cpf, u.email, u.phone,
+              o.name AS org_name, o.contact_email, o.contact_whatsapp,
+              o.contact_person, o.mecenato_prazo_dias,
+              o.primary_color, o.secondary_color, o.logo_url
+         FROM donations d
+         JOIN users u ON u.id = d.user_id
+         LEFT JOIN organizations o ON o.id = d.organization_id
+        WHERE d.id = $1`,
+      [donationId]
+    );
+    if (!rows.length) return;
+
+    const r = rows[0];
+    const org = {
+      name: r.org_name, contact_email: r.contact_email,
+      contact_whatsapp: r.contact_whatsapp, contact_person: r.contact_person,
+      mecenato_prazo_dias: r.mecenato_prazo_dias,
+      primary_color: r.primary_color, secondary_color: r.secondary_color,
+      logo_url: r.logo_url
+    };
+
+    const resultado = await notifyProponenteMecenatoPendente(
+      org,
+      { nome: r.nome, name: r.nome, cpf: r.cpf, email: r.email, phone: r.phone },
+      { amount: r.amount, pronac: r.pronac, projeto_titulo: r.projeto_titulo, confirmed_at: r.confirmed_at },
+      { title: r.projeto_titulo }
+    );
+
+    if (resultado?.email) {
+      await pool.query(
+        `UPDATE donations
+            SET proponente_notified_at = NOW(), status = 'awaiting_mecenato'
+          WHERE id = $1 AND status = 'confirmed'`,
+        [donationId]
+      );
+      console.log(`[mecenato] proponente notificado — destinação ${donationId}`);
+    } else {
+      console.warn(`[mecenato] proponente NAO notificado — destinação ${donationId} segue na fila`);
+    }
+  } catch (erro) {
+    console.error('[mecenato] falha ao avisar proponente:', erro.message);
+  }
 }
 
 // Lei Rouanet — limite máximo de 6% do IR devido
@@ -205,6 +267,9 @@ router.post('/:id/simulate', authenticateToken, async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ status: 'error', message: 'Destinação não encontrada ou já processada.' });
     }
+
+    // Nao aguarda: o destinador nao deve esperar e-mail sair para ver a tela.
+    avisarProponente(id);
 
     res.json({
       status:  'success',

@@ -81,3 +81,31 @@ export async function notifyAdminNewDonation(adminEmail, adminPhone, user, donat
 
   return results;
 }
+
+/**
+ * Notifica o proponente de que ha recibo a emitir.
+ *
+ * Devolve tambem um link de WhatsApp pronto, para quando a organizacao tiver
+ * numero cadastrado — em ONG pequena o WhatsApp chega antes do e-mail.
+ */
+export async function notifyProponenteMecenatoPendente(org, user, donation, project) {
+  const results = { email: null, whatsapp: null };
+
+  try {
+    results.email = await emailService.sendMecenatoPendenteEmail(org, user, donation, project);
+  } catch (err) {
+    console.error('❌ Erro email proponente:', err.message);
+  }
+
+  if (org?.contact_whatsapp) {
+    const valor = parseFloat(donation.amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const msg =
+      `Nova destinação confirmada no projeto ${donation.projeto_titulo || project?.title || ''}` +
+      ` (PRONAC ${donation.pronac || '—'}).\n\n` +
+      `Destinador: ${user.nome || user.name}\nCPF: ${user.cpf || '—'}\nValor: ${valor}\n\n` +
+      `Recibo de Mecenato a emitir.`;
+    results.whatsapp = whatsappService.generateWhatsAppLink(org.contact_whatsapp, msg);
+  }
+
+  return results;
+}
