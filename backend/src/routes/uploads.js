@@ -119,4 +119,51 @@ router.get('/receipt/:donationId', authenticateToken, async (req, res) => {
   }
 });
 
+// ───────────────────────────────────────────────────────────────────────────
+// GET /api/uploads/receipt/:donationId/arquivo — entrega o comprovante
+//
+// Substitui o acesso pelo caminho estatico, que era publico. So o dono da
+// destinacao e quem administra a organizacao dela podem baixar.
+// ───────────────────────────────────────────────────────────────────────────
+router.get('/receipt/:donationId/arquivo', authenticateToken, async (req, res) => {
+  const { donationId } = req.params;
+  try {
+    const { rows } = await pool.query(
+      `SELECT d.user_id, d.organization_id, d.receipt_url, d.receipt_filename
+         FROM donations d WHERE d.id = $1`,
+      [donationId]
+    );
+    if (!rows.length || !rows[0].receipt_url) {
+      return res.status(404).json({ status: 'error', message: 'Comprovante não encontrado.' });
+    }
+    const d = rows[0];
+
+    let autorizado = d.user_id === req.user.userId;
+    if (!autorizado) {
+      const { rows: perm } = await pool.query(
+        `SELECT 1 FROM organization_users
+          WHERE user_id = $1 AND is_active = true
+            AND (role = 'superadmin' OR (organization_id = $2 AND role IN ('org_admin','org_viewer')))
+          LIMIT 1`,
+        [req.user.userId, d.organization_id]
+      );
+      autorizado = perm.length > 0;
+    }
+    if (!autorizado) {
+      return res.status(403).json({ status: 'error', message: 'Sem permissão.' });
+    }
+
+    // basename impede que um valor manipulado escape da pasta de uploads
+    const arquivo = path.join(uploadDir, path.basename(d.receipt_url));
+    if (!arquivo.startsWith(uploadDir) || !fs.existsSync(arquivo)) {
+      return res.status(404).json({ status: 'error', message: 'Arquivo não encontrado.' });
+    }
+
+    res.download(arquivo, d.receipt_filename || 'comprovante');
+  } catch (erro) {
+    console.error('Erro ao entregar comprovante:', erro);
+    res.status(500).json({ status: 'error', message: 'Erro ao entregar o comprovante.' });
+  }
+});
+
 export default router;
