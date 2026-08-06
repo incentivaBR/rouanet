@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receber avisos — IncentivaBR</title>
+  <meta name="description" content="Receba avisos sobre prazos do Imposto de Renda e projetos aprovados. Cadastro com consentimento, conforme a LGPD.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/IncentivaBR.css">
+  <style>
+    :root {
+      --primary-color: #273F77;
+      --secondary-color: #EE985C;
+      --shadow-md: 0 4px 16px rgba(13,27,62,0.14);
+      --text-primary: #1a1a2e;
+    }
+    .wrap { max-width: 620px; margin: 0 auto; padding: 34px 20px 60px; }
+    .card { background: #fff; border-radius: 16px; padding: 36px; box-shadow: var(--shadow-md); }
+    h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
+    .sub { color: #556; font-size: 15px; line-height: 1.65; margin-bottom: 28px; }
+    label.campo { display: block; font-size: 13px; font-weight: 600; color: var(--primary-color); margin: 0 0 6px; }
+    .opcional { font-weight: 500; color: #8B96A8; }
+    input[type=text], input[type=email], input[type=tel] {
+      width: 100%; padding: 12px 14px; border: 1.5px solid #D1D9EC; border-radius: 10px;
+      font-family: inherit; font-size: 15px; color: var(--text-primary); margin-bottom: 18px;
+    }
+    input:focus { outline: none; border-color: var(--primary-color); }
+    fieldset { border: 1px solid #E4E9F5; border-radius: 12px; padding: 18px 18px 6px; margin: 6px 0 20px; }
+    legend { font-size: 13px; font-weight: 700; color: var(--primary-color); padding: 0 8px; }
+    .escolha { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 14px; }
+    .escolha input { margin-top: 3px; width: 17px; height: 17px; accent-color: var(--primary-color); flex-shrink: 0; cursor: pointer; }
+    .escolha label { font-size: 14px; line-height: 1.55; color: var(--text-primary); cursor: pointer; }
+    .escolha label small { display: block; color: #8B96A8; font-size: 12.5px; margin-top: 2px; }
+    #blocoTelefone { display: none; }
+    #blocoTelefone.on { display: block; }
+    .consentimento {
+      background: #FAFBFE; border: 1px solid #E4E9F5; border-radius: 12px;
+      padding: 16px 18px; font-size: 13px; line-height: 1.65; color: #556; margin-bottom: 20px;
+    }
+    .consentimento a { color: var(--primary-color); font-weight: 600; }
+    button.enviar {
+      width: 100%; background: var(--primary-color); color: #fff; border: none;
+      border-radius: 10px; padding: 15px; font-size: 15px; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: background .15s;
+    }
+    button.enviar:hover:not(:disabled) { background: #1D2F59; }
+    button.enviar:disabled { opacity: .55; cursor: default; }
+    .aviso { padding: 16px 18px; border-radius: 12px; font-size: 14px; line-height: 1.6; margin-bottom: 20px; display: none; }
+    .aviso.on { display: block; }
+    .aviso.ok  { background: #DCFCE7; color: #15803D; border: 1px solid #86EFAC; }
+    .aviso.erro{ background: #FEE2E2; color: #B91C1C; border: 1px solid #FCA5A5; }
+    .direitos { margin-top: 22px; font-size: 12.5px; color: #8B96A8; line-height: 1.7; }
+    .direitos a { color: var(--primary-color); }
+    @media (max-width: 640px) { .card { padding: 24px; } h1 { font-size: 23px; } }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>Receba os avisos que importam</h1>
+      <p class="sub">
+        O prazo da declaração passa todo ano, e com ele a chance de destinar parte do
+        imposto que você pagaria de qualquer forma. Deixe seu e-mail e nós avisamos
+        na hora certa.
+      </p>
+
+      <div id="aviso" class="aviso"></div>
+
+      <form id="form" novalidate>
+        <label class="campo" for="email">E-mail</label>
+        <input type="email" id="email" name="email" autocomplete="email"
+               placeholder="seu.email@exemplo.gov.br" required>
+
+        <label class="campo" for="nome">Nome <span class="opcional">— opcional</span></label>
+        <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Como prefere ser chamado">
+
+        <label class="campo" for="orgao">Órgão ou instituição <span class="opcional">— opcional</span></label>
+        <input type="text" id="orgao" name="orgao" placeholder="Ajuda a enviar só o que faz sentido para você">
+
+        <fieldset>
+          <legend>O que você quer receber</legend>
+
+          <div class="escolha">
+            <input type="checkbox" id="c_prazos" checked>
+            <label for="c_prazos">
+              Avisos de prazo
+              <small>Quando abre e quando fecha a janela para destinar no ano.</small>
+            </label>
+          </div>
+
+          <div class="escolha">
+            <input type="checkbox" id="c_projetos">
+            <label for="c_projetos">
+              Novos projetos aprovados
+              <small>Projetos culturais habilitados a receber destinação.</small>
+            </label>
+          </div>
+
+          <div class="escolha">
+            <input type="checkbox" id="c_whatsapp">
+            <label for="c_whatsapp">
+              Também por WhatsApp
+              <small>Mesmo conteúdo, outro canal. Só se você informar o número.</small>
+            </label>
+          </div>
+
+          <div id="blocoTelefone">
+            <label class="campo" for="phone">WhatsApp</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(61) 99999-9999">
+          </div>
+        </fieldset>
+
+        <!--
+          O texto abaixo é enviado ao servidor junto do cadastro e guardado como
+          está. O ônus de provar o consentimento é do controlador (LGPD, art. 8º
+          §2º): guardar um booleano não prova o que a pessoa leu. Se este texto
+          mudar aqui, o que fica registrado muda junto — é essa a razão de ele
+          viver num só lugar.
+        -->
+        <div class="consentimento" id="textoConsentimento">
+          Concordo em receber as comunicações que marquei acima e autorizo o IncentivaBR
+          a tratar meu e-mail (e os demais dados que eu tiver informado) apenas para
+          esse fim, conforme a
+          <a href="politica-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.
+          Posso cancelar quando quiser, em um clique, pelo link presente em toda mensagem.
+        </div>
+
+        <button type="submit" class="enviar" id="botao">Quero receber os avisos</button>
+      </form>
+
+      <p class="direitos">
+        Não pedimos CPF nem senha: para avisar você sobre um prazo, o e-mail basta.
+        A qualquer momento você pode consultar, corrigir, exportar ou eliminar seus
+        dados — o link para isso vai em toda mensagem que enviamos.
+        Encarregado de Proteção de Dados:
+        <a href="mailto:privacidade@incentivabr.com.br">privacidade@incentivabr.com.br</a>.
+      </p>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/layout.js"></script>
+  <script>Layout.init('');</script>
+  <script>
+    const $ = id => document.getElementById(id);
+    const aviso = $('aviso');
+
+    // Telefone só aparece — e só é enviado — se a pessoa pedir WhatsApp.
+    // Campo escondido que viaja mesmo assim é coleta sem finalidade.
+    $('c_whatsapp').addEventListener('change', e => {
+      $('blocoTelefone').classList.toggle('on', e.target.checked);
+      if (!e.target.checked) $('phone').value = '';
+    });
+
+    function mostra(tipo, texto) {
+      aviso.className = 'aviso on ' + tipo;
+      aviso.textContent = texto;
+      aviso.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    $('form').addEventListener('submit', async ev => {
+      ev.preventDefault();
+      const botao = $('botao');
+
+      const prazos   = $('c_prazos').checked;
+      const projetos = $('c_projetos').checked;
+      if (!prazos && !projetos) {
+        return mostra('erro', 'Escolha ao menos um tipo de comunicação que deseja receber.');
+      }
+
+      const corpo = {
+        email:            $('email').value.trim(),
+        nome:             $('nome').value.trim() || null,
+        orgao:            $('orgao').value.trim() || null,
+        phone:            $('c_whatsapp').checked ? $('phone').value.trim() : null,
+        consent_prazos:   prazos,
+        consent_projetos: projetos,
+        consent_whatsapp: $('c_whatsapp').checked,
+        // O texto exatamente como está na tela, sem reescrever.
+        consent_text:     $('textoConsentimento').innerText.replace(/\s+/g, ' ').trim()
+      };
+
+      botao.disabled = true;
+      botao.textContent = 'Enviando...';
+      try {
+        const resp = await fetch('/api/interessados', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(corpo)
+        });
+        const dados = await resp.json();
+        if (!resp.ok) throw new Error(dados.message || 'Não foi possível concluir.');
+        mostra('ok', dados.message);
+        $('form').reset();
+        $('blocoTelefone').classList.remove('on');
+      } catch (e) {
+        mostra('erro', e.message);
+      } finally {
+        botao.disabled = false;
+        botao.textContent = 'Quero receber os avisos';
+      }
+    });
+  </script>
+  <script src="js/tina.js"></script>
+
+<!-- incentivabr-legal -->
+<div style="max-width:1100px;margin:0 auto;padding:22px 18px 30px;text-align:center;border-top:1px solid rgba(128,128,128,0.14);font-size:11px;line-height:1.7;color:rgba(128,128,128,0.75);font-family:inherit">
+  <strong>IncentivaBR</strong>&trade; &mdash; programa de computador registrado no INPI sob o n&ordm; BR512025000647-0.<br>
+  Marca mista depositada no INPI sob os processos n&ordm; 939403005 (NCL 35) e n&ordm; 939403110 (NCL 42).<br>
+  Documenta&ccedil;&atilde;o t&eacute;cnica registrada no 2&ordm; Of&iacute;cio de Registro Civil, T&iacute;tulos e Documentos e Pessoas Jur&iacute;dicas de Bras&iacute;lia/DF.<br>
+  &copy; 2026 Adacto Artur Dornas de Oliveira. Todos os direitos reservados. &Eacute; vedada a reprodu&ccedil;&atilde;o, distribui&ccedil;&atilde;o ou engenharia reversa, total ou parcial, sem autoriza&ccedil;&atilde;o expressa.
+</div>
+</body>
+</html>

@@ -62,6 +62,8 @@ const Layout = {
       <div class="dai-footer__inner">
         <span style="display:inline-flex;align-items:center;background:#fff;border-radius:8px;padding:3px 10px"><img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:20px;width:auto"></span>
         <div class="dai-footer__links">
+          <a href="cadastro-avisos.html" class="dai-footer__link">Receber avisos</a>
+          <span class="dai-footer__sep">|</span>
           <a href="politica-privacidade.html" class="dai-footer__link">Política de Privacidade</a>
           <span class="dai-footer__sep">|</span>
           <a href="termos-uso.html" class="dai-footer__link">Termos de Uso</a>
