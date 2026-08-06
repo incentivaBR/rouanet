@@ -61,8 +61,18 @@ export async function initEmailService() {
 }
 
 export function getEmailStatus() {
-  return emailServiceStatus;
+  return {
+    ...emailServiceStatus,
+    // Expostos porque foi exatamente a invisibilidade disto que deixou passar
+    // uma semana de e-mails com link morto: o envio dava certo, o clique não.
+    appUrl: getAppUrl(),
+    from:   getFromAddress()
+  };
 }
+
+/** Domínio que realmente serve a aplicação. O apex fica fora: responde com
+ *  falha de TLS (SEC_E_WRONG_PRINCIPAL). */
+export const URL_CANONICA = 'https://www.incentivabr.com.br';
 
 /**
  * Onde a aplicação realmente atende — é daqui que sai todo link de e-mail.
@@ -74,14 +84,18 @@ export function getEmailStatus() {
  * redefinição de senha, confirmação de cadastro, aviso ao proponente. O e-mail
  * saía, ninguém conseguia clicar, e nada denunciava.
  *
- * Ordem: APP_URL (explícito) → o domínio canônico em produção → localhost.
- * O apex incentivabr.com.br não entra: responde com falha de TLS
- * (SEC_E_WRONG_PRINCIPAL).
+ * O padrão é o domínio de verdade, e localhost só entra quando o ambiente diz
+ * explicitamente que é local. A versão anterior fazia o contrário — caía em
+ * localhost sempre que NODE_ENV não fosse exatamente 'production' — e um
+ * ambiente sem NODE_ENV definido mandaria todo link de e-mail para a máquina de
+ * quem recebe, que é o pior desfecho possível para uma falha silenciosa.
  */
 const getAppUrl = () => {
   if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, '');
-  if (process.env.NODE_ENV === 'production') return 'https://www.incentivabr.com.br';
-  return 'http://localhost:3000';
+  if (['development', 'test', 'local'].includes(process.env.NODE_ENV)) {
+    return `http://localhost:${process.env.PORT || 3000}`;
+  }
+  return URL_CANONICA;
 };
 
 const getFromAddress = () => {
