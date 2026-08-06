@@ -9,36 +9,35 @@ chave fica como está.
 
 ---
 
-## 0. Bloqueador absoluto — não existe caminho de confirmação em produção
+## 0. ~~Bloqueador absoluto~~ — RESOLVIDO em 6 de agosto de 2026
 
-**Este é o item que impede a virada hoje, independentemente de todos os outros.**
+Este item era o que impedia a virada: o único ponto que marcava uma destinação
+como confirmada era `POST /api/donations/:id/simulate`, que recusa quando
+`SIMULATION_MODE` não é `'true'`. Com a chave desligada, o destinador
+registrava, transferia, anexava o comprovante — e a destinação ficava em
+`awaiting_confirmation` para sempre.
 
-O único ponto do sistema que marca uma destinação como confirmada é
-`POST /api/donations/:id/simulate` ([donations.js:246](backend/src/routes/donations.js:246)),
-e ele começa com:
+**O que existe agora:**
 
-```js
-if (process.env.SIMULATION_MODE !== 'true') {
-  return res.status(403).json({ status: 'error', message: 'Modo simulação não está ativo.' });
-}
-```
+| Rota | O que faz |
+|---|---|
+| `GET /api/donations/conferencia` | fila do que aguarda conferência, com CPF, valor e link do comprovante |
+| `POST /api/donations/:id/confirmar` | confirma; registra quem confirmou; dispara o aviso ao proponente |
+| `POST /api/donations/:id/recusar` | devolve para `pending` com motivo obrigatório |
 
-Ou seja: com a simulação desligada, o destinador registra a destinação, envia o
-comprovante bancário — e a destinação fica em `pending` para sempre. Ninguém
-consegue confirmar. E como a notificação ao proponente e o ciclo do Recibo de
-Mecenato dependem da confirmação, todo o resto do fluxo morre junto.
+Tela: [`conferencia.html`](frontend/conferencia.html), acessível a `org_admin` e
+`superadmin`. O acesso aparece no topo do painel só para quem tem permissão — a
+própria fila responde 403 para os demais, e é essa resposta que decide se o
+atalho aparece.
 
-**O que falta construir:** uma rota de confirmação para produção, em que alguém
-com permissão na organização confere o extrato bancário e confirma. Ela deve
-chamar `avisarProponente(id)` — a mesma função que a rota de simulação já chama
-([donations.js](backend/src/routes/donations.js)) — para que o proponente seja
-avisado e o campo `proponente_notified_at` seja preenchido.
+O motivo da recusa vai para a tela do destinador em bloco vermelho. Sem isso a
+devolução seria invisível: a destinação voltaria para "aguardando pagamento" e
+quem já transferiu dinheiro não saberia o que corrigir.
 
-Decisão a tomar junto: a conferência é manual (alguém olha o extrato) ou
-automática (conciliação por valor e data)? Para o primeiro cliente, manual
-resolve e é auditável.
-
----
+**Ainda em aberto neste item:** a conferência é manual, por decisão — o dinheiro
+cai na Conta de Captação do Banco do Brasil, fora do alcance da plataforma, e
+não há como conciliar sem integração bancária. Se o volume crescer, vale
+avaliar conciliação por arquivo de extrato (OFX/CNAB).
 
 ## 1. PRONAC — hoje é fictício, em 12 arquivos
 

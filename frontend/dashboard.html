@@ -65,6 +65,13 @@
       font-family: 'Montserrat', sans-serif;
     }
     .btn-logout:hover { border-color: rgba(255,255,255,0.5); color: white; }
+    .btn-conferencia {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(238,152,92,0.16); border: 1px solid rgba(238,152,92,0.45);
+      color: var(--secondary-color,#EE985C); padding: 6px 14px; border-radius: 8px;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+    }
+    .btn-conferencia:hover { background: rgba(238,152,92,0.26); }
 
     /* ── Layout ── */
     .page { max-width: 720px; margin: 0 auto; padding: 80px 24px 60px; }
@@ -178,6 +185,24 @@
     .ciclo-nome { font-size: 14px; font-weight: 600; color: #0F1E3D; }
     .ciclo-passo:not(.feito):not(.agora) .ciclo-nome { color: #8B96A8; font-weight: 500; }
     .ciclo-quando { font-size: 12px; color: #8B96A8; margin-top: 2px; }
+    /* Comprovante recusado na conferência — precisa ser impossível de não ver,
+       porque é a única pista de que a pessoa tem algo a fazer. */
+    .recusa {
+      padding: 16px 24px;
+      border-bottom: 1px solid #F0F2F8;
+      background: #FEF2F2;
+      border-left: 4px solid #DC2626;
+    }
+    .recusa-topo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700; color: #B91C1C; margin-bottom: 8px;
+    }
+    .recusa-motivo {
+      background: #FFF; border: 1px solid #FCA5A5; border-radius: 10px;
+      padding: 12px 14px; font-size: 14px; color: #1a1a2e; line-height: 1.55;
+    }
+    .recusa-saida { margin-top: 10px; font-size: 13px; color: #7F1D1D; line-height: 1.55; }
+
     .ciclo-nota {
       margin-top: 12px; padding: 12px 14px; border-radius: 10px;
       background: #FFF; border: 1px solid #E4E9F5;
@@ -314,6 +339,14 @@
         <img class="brand-logo" src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:24px;width:auto">
       </a>
       <div class="nav-right">
+        <!--
+          Só aparece para quem administra a organização. Sem um caminho visível,
+          a fila de conferência existe e ninguém a encontra — e é ela que faz a
+          destinação sair de "aguardando" e virar recibo.
+        -->
+        <a href="conferencia.html" id="linkConferencia" class="btn-conferencia" style="display:none">
+          <i class="fas fa-clipboard-check"></i> <span id="qtdConferencia">Conferência</span>
+        </a>
         <button class="btn-logout" onclick="auth.logout()">Sair</button>
       </div>
     </div>
@@ -481,6 +514,29 @@
       ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 
     /**
+     * O comprovante foi recusado na conferência.
+     *
+     * Sem isto a devolução é invisível: a destinação simplesmente volta para
+     * "aguardando pagamento" e a pessoa — que já transferiu dinheiro — não
+     * descobre que precisa reenviar, muito menos o que corrigir. Por isso o
+     * motivo é obrigatório na rota de recusa: é este texto que aparece aqui.
+     */
+    function renderRecusa(recusa) {
+      return `
+        <div class="recusa">
+          <div class="recusa-topo">
+            <i class="fas fa-triangle-exclamation"></i>
+            Comprovante não aceito${recusa.em ? ' em ' + fmtDate(recusa.em) : ''}
+          </div>
+          <div class="recusa-motivo">${esc(recusa.motivo)}</div>
+          <div class="recusa-saida">
+            Corrija o que foi apontado e envie o comprovante novamente. Sua
+            destinação continua registrada — nada se perdeu.
+          </div>
+        </div>`;
+    }
+
+    /**
      * O que acontece DEPOIS de transferir.
      *
      * O documento que vale na declaração é o Recibo de Mecenato, e quem o
@@ -598,14 +654,18 @@
 
     function renderDonation(d) {
       const isConfirmed = STATUS_CONFIRMADOS.includes(d.status);
+      // Todo estado da constraint precisa de rótulo aqui. Sem ele, o `||
+      // d.status` deixa vazar a string crua do banco — o destinador via
+      // "awaiting_confirmation" escrito em inglês na tela dele.
       const statusLabel = {
-        confirmed:         'Confirmada',
-        test_simulated:    'Simulada ✓',
-        processed:         'Processada',
-        awaiting_mecenato: 'Confirmada · recibo a caminho',
-        mecenato_issued:   'Recibo disponível',
-        pending:           'Aguardando pagamento',
-        cancelled:         'Cancelada'
+        pending:               'Aguardando pagamento',
+        awaiting_confirmation: 'Comprovante em conferência',
+        confirmed:             'Confirmada',
+        awaiting_mecenato:     'Confirmada · recibo a caminho',
+        mecenato_issued:       'Recibo disponível',
+        processed:             'Processada',
+        test_simulated:        'Simulada ✓',
+        cancelled:             'Cancelada'
       }[d.status] || d.status;
       const statusCls   = isConfirmed ? 'status-confirmed' : 'status-pending';
       const pronac      = d.pronac || '—';
@@ -650,6 +710,7 @@
             </div>
           </div>
 
+          ${!isConfirmed && d.recusa ? renderRecusa(d.recusa) : ''}
           ${isConfirmed ? renderCicloRecibo(d) : ''}
 
           <div class="donation-actions">
@@ -694,10 +755,36 @@
       }
     }
 
+    /**
+     * Mostra o acesso à conferência para quem administra a organização.
+     *
+     * Não há um endpoint de "quais são meus papéis", e criar um só para isto
+     * seria mais superfície para manter. A própria fila já responde 403 para
+     * quem não pode — a resposta dela é a permissão.
+     */
+    async function verificaAcessoConferencia() {
+      const token = localStorage.getItem('incentivabr_token');
+      if (!token) return;
+      try {
+        const resp = await fetch('/api/donations/conferencia',
+          { headers: { 'Authorization': 'Bearer ' + token } });
+        if (!resp.ok) return;                 // 403 para destinador comum
+        const r = await resp.json();
+        const link = document.getElementById('linkConferencia');
+        link.style.display = 'inline-flex';
+        document.getElementById('qtdConferencia').textContent =
+          r.total ? `Conferência (${r.total})` : 'Conferência';
+      } catch (_) { /* silencioso: é um atalho, não uma funcionalidade */ }
+    }
+
     async function loadDonations() {
       const container = document.getElementById('donationsList');
       try {
-        const resp = await api.getMyDonations({ fiscal_year: 2026, limit: 1 });
+        // Era limit: 1 — só a destinação mais recente aparecia. Bastava fazer
+        // uma segunda para a anterior sumir da tela, e com ela o aviso de
+        // comprovante recusado e o andamento do Recibo de Mecenato. Quem tem
+        // duas destinações no ano é justamente quem mais precisa acompanhar.
+        const resp = await api.getMyDonations({ fiscal_year: 2026, limit: 20 });
         const donations = resp.donations || [];
 
         if (donations.length === 0) {
@@ -743,6 +830,7 @@
 
     updateNav();
     loadDonations();
+    verificaAcessoConferencia();
   </script>
   <script src="js/tenant.js"></script>
   <script src="js/tina.js"></script>
