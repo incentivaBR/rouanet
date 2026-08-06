@@ -2,6 +2,57 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <style>
+    /*
+      White label — cor de acento.
+
+      tenant.js escreve --secondary-color em :root a partir da organizacao.
+      O fallback de cada var() e a cor original desta pagina, entao sem tenant
+      carregado (ou se a requisicao falhar) nada muda de aparencia. O tema e
+      acrescimo, nunca dependencia.
+    */
+    :root {
+      /*
+        O Tailwind, ao ver um hex dentro de bg-[var(--x,#hex)], extrai os canais
+        para poder aplicar opacidade — e com isso a cor volta a ficar fixa,
+        ignorando a variavel. Esta variavel intermediaria carrega o fallback
+        sem expor o hex ao parser dele.
+      */
+      --secondary-solid: var(--secondary-color,#EE985C);
+      /*
+        Estes botoes saem do Tailwind de proposito. O compilador do CDN nao
+        resolve de forma confiavel bg-[var(...)] nestes casos — o fundo continua
+        na cor antiga mesmo com a variavel trocada. Uma classe CSS comum nao
+        depende do compilador dele.
+      */
+    }
+    .btn-acento        { background-color: var(--secondary-solid); }
+    .btn-acento:hover  { background-color: var(--secondary-hover); }
+    :root { /* continua abaixo */
+      /*
+        O Tailwind nao consegue aplicar o modificador de opacidade (bg-[cor]/10)
+        sobre uma var(): ele precisa decompor a cor em canais, e uma variavel e
+        opaca para ele. Entao as versoes translucidas viram variaveis proprias,
+        calculadas a partir da mesma cor de acento.
+      */
+      --secondary-03: color-mix(in srgb, var(--secondary-color,#EE985C) 3%, transparent);
+      --secondary-04: color-mix(in srgb, var(--secondary-color,#EE985C) 4%, transparent);
+      --secondary-10: color-mix(in srgb, var(--secondary-color,#EE985C) 10%, transparent);
+      --secondary-12: color-mix(in srgb, var(--secondary-color,#EE985C) 12%, transparent);
+      --secondary-20: color-mix(in srgb, var(--secondary-color,#EE985C) 20%, transparent);
+      --secondary-30: color-mix(in srgb, var(--secondary-color,#EE985C) 30%, transparent);
+      --secondary-50: color-mix(in srgb, var(--secondary-color,#EE985C) 50%, transparent);
+      /*
+        Tons derivados. Os valores abaixo sao os originais desta pagina, nao um
+        calculo: #E07A35 nao e #EE985C escurecido — e outro matiz, escolhido a
+        mao. Calcular aqui mudaria a aparencia de quem usa a marca padrao.
+        Quando a organizacao traz cor propria, o tenant.js sobrescreve estes
+        dois com uma derivacao coerente com a cor dela.
+      */
+      --secondary-hover: #D4874E;
+      --secondary-dark:  #E07A35;
+    }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projetos Disponíveis — IncentivaBR</title>
   <meta name="description" content="Conheça o Orquestra das Periferias do DF (PRONAC 261847) e destine até 6% do seu IR para música e cultura popular. Aprovado pelo Ministério da Cultura. Zero custo para você.">
@@ -20,8 +71,8 @@
             navy:     '#0F1E3D',
             navydark: '#0A1530',
             navymid:  '#132247',
-            gold:     '#EE985C',
-            golddk:   '#d4874e',
+            gold:     'var(--secondary-color,#EE985C)',
+            golddk:   'var(--secondary-hover)',
           }
         }
       }
@@ -41,11 +92,11 @@
 </head>
 <body class="bg-white">
   <!-- ── NAVBAR ── -->
-  <nav style="background:rgba(15,30,61,0.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(238,152,92,0.12)" class="fixed top-0 left-0 right-0 z-50">
+  <nav style="background:rgba(15,30,61,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--secondary-12)" class="fixed top-0 left-0 right-0 z-50">
     <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
         <span class="bg-white rounded-lg px-2 py-1 inline-flex items-center">
-          <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-6 w-auto">
+          <img class="brand-logo" src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-6 w-auto">
         </span>
       </a>
       <div class="flex items-center gap-4 text-sm text-white/65">
@@ -53,7 +104,7 @@
         <a href="espaco-contador.html" class="hover:text-white transition hidden md:inline">Contadores</a>
         <a href="faq.html" class="hover:text-white transition hidden md:inline">FAQ</a>
         <a href="login.html" class="border border-white/20 hover:border-white/40 text-white/75 hover:text-white px-4 py-1.5 rounded-full text-xs transition">Entrar</a>
-        <a href="calculadora-rapida.html" style="background:linear-gradient(135deg,#EE985C,#e07a35)" class="text-white font-bold px-4 py-1.5 rounded-full text-xs transition hidden sm:inline">Calcular meu IR</a>
+        <a href="calculadora-rapida.html" style="background:linear-gradient(135deg,var(--secondary-color,#EE985C),var(--secondary-dark))" class="text-white font-bold px-4 py-1.5 rounded-full text-xs transition hidden sm:inline">Calcular meu IR</a>
       </div>
     </div>
   </nav>
@@ -77,20 +128,20 @@
         <span class="text-white/20">›</span>
         <a href="calculadora.html" class="text-white/40 hover:text-white/70 transition-colors">MeuLimite</a>
         <span class="text-white/20">›</span>
-        <span class="text-[#EE985C]">Projeto</span>
+        <span class="text-[var(--secondary-solid)]">Projeto</span>
         <span class="text-white/20">›</span>
         <span class="text-white/30">Destinação</span>
       </div>
 
-      <div class="inline-flex items-center gap-2 rounded-full bg-[#EE985C]/10 border border-[#EE985C]/30 px-5 py-2 mb-6">
-        <svg class="w-4 h-4 text-[#EE985C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[var(--secondary-10)] border border-[var(--secondary-30)] px-5 py-2 mb-6">
+        <svg class="w-4 h-4 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <span class="text-[#EE985C] font-semibold text-sm">PRONAC 261847 · Aprovado pelo MinC</span>
+        <span class="text-[var(--secondary-solid)] font-semibold text-sm">PRONAC 261847 · Aprovado pelo MinC</span>
       </div>
 
       <h1 class="text-5xl sm:text-6xl font-black text-white leading-[1.05] tracking-tight mb-5">
-        Orquestra das <span class="text-[#EE985C]">Periferias do DF</span>
+        Orquestra das <span class="text-[var(--secondary-solid)]">Periferias do DF</span>
       </h1>
 
       <p class="text-xl text-white/70 leading-relaxed mb-6">
@@ -100,19 +151,19 @@
 
       <!-- Banner personalizado com valor da calculadora -->
       <div id="valorPersonalizado" class="hidden mb-8">
-        <div class="inline-flex items-center gap-3 rounded-2xl bg-[#EE985C]/10 border border-[#EE985C]/20 px-6 py-3">
-          <svg class="w-5 h-5 text-[#EE985C] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="inline-flex items-center gap-3 rounded-2xl bg-[var(--secondary-10)] border border-[var(--secondary-20)] px-6 py-3">
+          <svg class="w-5 h-5 text-[var(--secondary-solid)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
           <span class="text-white font-semibold text-sm">
-            Você pode destinar <span id="valorDisplay" class="text-[#EE985C] font-black text-lg"></span> para este projeto
+            Você pode destinar <span id="valorDisplay" class="text-[var(--secondary-solid)] font-black text-lg"></span> para este projeto
           </span>
         </div>
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <a href="#destinar-agora"
-          class="inline-flex items-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold text-lg px-8 py-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
+          class="inline-flex items-center gap-2 btn-acento text-[#0F1E3D] font-bold text-lg px-8 py-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
           Quero destinar meu IR
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
@@ -138,7 +189,7 @@
 
       <div class="text-center mb-14">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0F1E3D] tracking-tight mb-3">
-          Por que o <span class="text-[#EE985C]">Orquestra das Periferias do DF?</span>
+          Por que o <span class="text-[var(--secondary-solid)]">Orquestra das Periferias do DF?</span>
         </h2>
         <p class="text-gray-500 text-lg max-w-xl mx-auto">
           Seu IR pode financiar algo concreto e verificável. Aqui está a história.
@@ -148,9 +199,9 @@
       <div class="grid md:grid-cols-3 gap-6">
 
         <!-- Quem são -->
-        <div class="rounded-2xl border border-gray-100 bg-gray-50/50 p-8 hover:shadow-xl hover:border-[#EE985C]/30 transition-all duration-300">
+        <div class="rounded-2xl border border-gray-100 bg-gray-50/50 p-8 hover:shadow-xl hover:border-[var(--secondary-30)] transition-all duration-300">
           <div class="w-12 h-12 rounded-xl bg-[#0F1E3D] flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
           </div>
@@ -161,9 +212,9 @@
         </div>
 
         <!-- O que fazem -->
-        <div class="rounded-2xl border border-gray-100 bg-gray-50/50 p-8 hover:shadow-xl hover:border-[#EE985C]/30 transition-all duration-300">
+        <div class="rounded-2xl border border-gray-100 bg-gray-50/50 p-8 hover:shadow-xl hover:border-[var(--secondary-30)] transition-all duration-300">
           <div class="w-12 h-12 rounded-xl bg-[#0F1E3D] flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
             </svg>
           </div>
@@ -174,9 +225,9 @@
         </div>
 
         <!-- Por que agora -->
-        <div class="rounded-2xl border border-gray-100 bg-gray-50/50 p-8 hover:shadow-xl hover:border-[#EE985C]/30 transition-all duration-300">
+        <div class="rounded-2xl border border-gray-100 bg-gray-50/50 p-8 hover:shadow-xl hover:border-[var(--secondary-30)] transition-all duration-300">
           <div class="w-12 h-12 rounded-xl bg-[#0F1E3D] flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10"/>
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/>
             </svg>
@@ -191,13 +242,13 @@
 
       <!-- Destaque: servidor público tem vantagem -->
       <div class="mt-10 rounded-2xl bg-[#0F1E3D] p-8 sm:p-10 flex flex-col sm:flex-row items-center gap-6">
-        <div class="w-14 h-14 rounded-full bg-[#EE985C]/10 border border-[#EE985C]/20 flex items-center justify-center shrink-0">
-          <svg class="w-7 h-7 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <div class="w-14 h-14 rounded-full bg-[var(--secondary-10)] border border-[var(--secondary-20)] flex items-center justify-center shrink-0">
+          <svg class="w-7 h-7 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
         </div>
         <div>
-          <p class="text-[#EE985C] font-bold text-sm uppercase tracking-widest mb-1">Servidor público tem vantagem</p>
+          <p class="text-[var(--secondary-solid)] font-bold text-sm uppercase tracking-widest mb-1">Servidor público tem vantagem</p>
           <p class="text-white/80 leading-relaxed text-sm">
             Renda previsível + declaração completa = cálculo exato do quanto pode destinar.
             Ao contrário de autônomos e empresários, você já sabe o seu IR retido em folha —
@@ -262,14 +313,14 @@
 
   <!-- ── CTA DESTINAR ──────────────────────────────────────────── -->
   <section id="destinar-agora" class="bg-[#0F1E3D] py-20 sm:py-28 relative overflow-hidden">
-    <div class="pointer-events-none absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[#EE985C]/[0.04] blur-[100px]"></div>
-    <div class="pointer-events-none absolute -bottom-40 -left-40 w-[600px] h-[600px] rounded-full bg-[#EE985C]/[0.03] blur-[100px]"></div>
+    <div class="pointer-events-none absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[var(--secondary-04)] blur-[100px]"></div>
+    <div class="pointer-events-none absolute -bottom-40 -left-40 w-[600px] h-[600px] rounded-full bg-[var(--secondary-03)] blur-[100px]"></div>
 
     <div class="fade-up relative z-10 max-w-2xl mx-auto px-6 text-center">
       <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
         Seu imposto já está sendo cobrado.
       </h2>
-      <p class="text-xl text-[#EE985C] font-semibold mb-3">
+      <p class="text-xl text-[var(--secondary-solid)] font-semibold mb-3">
         Falta só você escolher para onde vai.
       </p>
       <p class="text-white/40 text-base mb-10">
@@ -277,7 +328,7 @@
       </p>
 
       <a id="btnDestinar" href="destinar-rouanet.html?pronac=261847"
-        class="inline-flex items-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold text-lg px-10 py-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
+        class="inline-flex items-center gap-2 btn-acento text-[#0F1E3D] font-bold text-lg px-10 py-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
         Destinar agora — é grátis
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
@@ -286,19 +337,19 @@
 
       <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-5 text-sm text-white/30">
         <span class="flex items-center gap-1.5">
-          <svg class="w-4 h-4 text-[#EE985C]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 text-[var(--secondary-50)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
           Aprovado pelo MinC
         </span>
         <span class="flex items-center gap-1.5">
-          <svg class="w-4 h-4 text-[#EE985C]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 text-[var(--secondary-50)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
           Comprovante PDF automático
         </span>
         <span class="flex items-center gap-1.5">
-          <svg class="w-4 h-4 text-[#EE985C]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 text-[var(--secondary-50)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10"/>
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/>
           </svg>
@@ -395,14 +446,14 @@
                   <h3 class="text-xl font-bold text-[#0F1E3D] leading-tight">${escapeHtml(p.nome)}</h3>
                   ${p.proponente?.nome ? `<p class="text-sm text-gray-400 mt-1">${escapeHtml(p.proponente.nome)}</p>` : ''}
                 </div>
-                <span class="shrink-0 bg-[#0F1E3D] text-[#EE985C] text-xs font-black px-3 py-1.5 rounded-lg tracking-wide whitespace-nowrap">
+                <span class="shrink-0 bg-[#0F1E3D] text-[var(--secondary-solid)] text-xs font-black px-3 py-1.5 rounded-lg tracking-wide whitespace-nowrap">
                   PRONAC ${escapeHtml(String(p.pronac))}
                 </span>
               </div>
 
               <!-- Resumo -->
               ${p.resumo || p.objetivos ? `
-              <blockquote class="border-l-4 border-[#EE985C] pl-4 py-1 mb-6 bg-amber-50/40 rounded-r-xl pr-4">
+              <blockquote class="border-l-4 border-[var(--secondary-solid)] pl-4 py-1 mb-6 bg-amber-50/40 rounded-r-xl pr-4">
                 <p class="text-sm text-gray-500 leading-relaxed italic">"${escapeHtml((p.resumo || p.objetivos).substring(0, 300))}${(p.resumo || p.objetivos).length > 300 ? '…' : ''}"</p>
               </blockquote>` : ''}
 
@@ -417,14 +468,14 @@
                   <p class="text-xs text-gray-400 mb-1">Já captado</p>
                   <p class="text-base font-bold text-green-700">${formatBRL(p.valores.captado)}</p>
                 </div>
-                <div class="rounded-xl bg-[#EE985C]/10 border border-[#EE985C]/20 p-4 text-center">
+                <div class="rounded-xl bg-[var(--secondary-10)] border border-[var(--secondary-20)] p-4 text-center">
                   <p class="text-xs text-gray-400 mb-1">Progresso</p>
                   <p class="text-base font-bold text-[#0F1E3D]">${cap}%</p>
                 </div>
               </div>
               <div class="mb-6">
                 <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-[#EE985C] to-[#0F1E3D] rounded-full transition-all duration-700" style="width:${cap}%"></div>
+                  <div class="h-full bg-gradient-to-r from-[var(--secondary-solid)] to-[#0F1E3D] rounded-full transition-all duration-700" style="width:${cap}%"></div>
                 </div>
                 <div class="flex justify-between text-xs text-gray-400 mt-1.5">
                   <span>${cap}% captado</span>
@@ -455,7 +506,7 @@
               <!-- Botões -->
               <div class="flex flex-col sm:flex-row gap-3">
                 <a href="${destinarUrl}"
-                  class="flex-1 inline-flex items-center justify-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold px-6 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.02] text-sm no-underline">
+                  class="flex-1 inline-flex items-center justify-center gap-2 btn-acento text-[#0F1E3D] font-bold px-6 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.02] text-sm no-underline">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                   </svg>
@@ -485,7 +536,7 @@
             <h3 class="text-lg font-bold text-[#0F1E3D] mb-2">Dados temporariamente indisponíveis</h3>
             <p class="text-gray-400 text-sm mb-6">${escapeHtml(err.message)}</p>
             <a href="destinar-rouanet.html?pronac=261847"
-              class="inline-flex items-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold px-6 py-3 rounded-xl text-sm no-underline transition-all">
+              class="inline-flex items-center gap-2 btn-acento text-[#0F1E3D] font-bold px-6 py-3 rounded-xl text-sm no-underline transition-all">
               Destinar mesmo assim →
             </a>
           </div>`;

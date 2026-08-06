@@ -2,6 +2,55 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <style>
+    /*
+      White label — cor de acento.
+
+      tenant.js escreve --secondary-color em :root a partir da organizacao.
+      O fallback de cada var() e a cor original desta pagina, entao sem tenant
+      carregado (ou se a requisicao falhar) nada muda de aparencia. O tema e
+      acrescimo, nunca dependencia.
+    */
+    :root {
+      /*
+        O Tailwind, ao ver um hex dentro de bg-[var(--x,#hex)], extrai os canais
+        para poder aplicar opacidade — e com isso a cor volta a ficar fixa,
+        ignorando a variavel. Esta variavel intermediaria carrega o fallback
+        sem expor o hex ao parser dele.
+      */
+      --secondary-solid: var(--secondary-color,#EE985C);
+      /*
+        Estes botoes saem do Tailwind de proposito. O compilador do CDN nao
+        resolve de forma confiavel bg-[var(...)] nestes casos — o fundo continua
+        na cor antiga mesmo com a variavel trocada. Uma classe CSS comum nao
+        depende do compilador dele.
+      */
+    }
+    .btn-acento        { background-color: var(--secondary-solid); }
+    .btn-acento:hover  { background-color: var(--secondary-hover); }
+    :root { /* continua abaixo */
+      /*
+        O Tailwind nao consegue aplicar o modificador de opacidade (bg-[cor]/10)
+        sobre uma var(): ele precisa decompor a cor em canais, e uma variavel e
+        opaca para ele. Entao as versoes translucidas viram variaveis proprias,
+        calculadas a partir da mesma cor de acento.
+      */
+      --secondary-05: color-mix(in srgb, var(--secondary-color,#EE985C) 5%, transparent);
+      --secondary-10: color-mix(in srgb, var(--secondary-color,#EE985C) 10%, transparent);
+      --secondary-12: color-mix(in srgb, var(--secondary-color,#EE985C) 12%, transparent);
+      --secondary-30: color-mix(in srgb, var(--secondary-color,#EE985C) 30%, transparent);
+      --secondary-40: color-mix(in srgb, var(--secondary-color,#EE985C) 40%, transparent);
+      /*
+        Tons derivados. Os valores abaixo sao os originais desta pagina, nao um
+        calculo: #E07A35 nao e #EE985C escurecido — e outro matiz, escolhido a
+        mao. Calcular aqui mudaria a aparencia de quem usa a marca padrao.
+        Quando a organizacao traz cor propria, o tenant.js sobrescreve estes
+        dois com uma derivacao coerente com a cor dela.
+      */
+      --secondary-hover: #D4874E;
+      --secondary-dark:  #E07A35;
+    }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MeuLimite — Descubra quanto pode destinar · IncentivaBR</title>
   <meta name="description" content="Descubra até onde seu IR pode ir. Calcule seu limite de destinação via Lei Rouanet e faça seu imposto virar cultura — sem custo nenhum.">
@@ -20,8 +69,8 @@
             navy:     '#0F1E3D',
             navydark: '#0A1530',
             navymid:  '#132247',
-            gold:     '#EE985C',
-            golddk:   '#d4874e',
+            gold:     'var(--secondary-color,#EE985C)',
+            golddk:   'var(--secondary-hover)',
           }
         }
       }
@@ -36,11 +85,11 @@
 <body class="bg-gray-50 min-h-screen">
 
   <!-- ── NAVBAR ── -->
-  <nav style="background:rgba(15,30,61,0.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(238,152,92,0.12)" class="fixed top-0 left-0 right-0 z-50">
+  <nav style="background:rgba(15,30,61,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--secondary-12)" class="fixed top-0 left-0 right-0 z-50">
     <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
         <span class="bg-white rounded-lg px-2 py-1 inline-flex items-center">
-          <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-6 w-auto">
+          <img class="brand-logo" src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" class="h-6 w-auto">
         </span>
       </a>
       <div class="flex items-center gap-4 text-sm text-white/65">
@@ -48,7 +97,7 @@
         <a href="espaco-contador.html" class="hover:text-white transition hidden md:inline">Contadores</a>
         <a href="faq.html" class="hover:text-white transition hidden md:inline">FAQ</a>
         <a href="login.html" class="border border-white/20 hover:border-white/40 text-white/75 hover:text-white px-4 py-1.5 rounded-full text-xs transition">Entrar</a>
-        <a href="login.html" style="background:linear-gradient(135deg,#EE985C,#e07a35)" class="text-white font-bold px-4 py-1.5 rounded-full text-xs transition hidden sm:inline">Destinar agora</a>
+        <a href="login.html" style="background:linear-gradient(135deg,var(--secondary-color,#EE985C),var(--secondary-dark))" class="text-white font-bold px-4 py-1.5 rounded-full text-xs transition hidden sm:inline">Destinar agora</a>
       </div>
     </div>
   </nav>
@@ -56,12 +105,12 @@
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <section class="bg-[#0F1E3D] pt-24 pb-12">
     <div class="max-w-3xl mx-auto px-6 text-center">
-      <div class="inline-flex items-center gap-2 rounded-full bg-[#EE985C]/10 border border-[#EE985C]/30 px-5 py-2 mb-6">
-        <svg class="w-4 h-4 text-[#EE985C]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        <span class="text-[#EE985C] font-semibold text-sm">7 modalidades de incentivo · até 7% do IR · custo líquido zero</span>
+      <div class="inline-flex items-center gap-2 rounded-full bg-[var(--secondary-10)] border border-[var(--secondary-30)] px-5 py-2 mb-6">
+        <svg class="w-4 h-4 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span class="text-[var(--secondary-solid)] font-semibold text-sm">7 modalidades de incentivo · até 7% do IR · custo líquido zero</span>
       </div>
       <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight mb-3">
-        Meu<span class="text-[#EE985C]">Limite</span>
+        Meu<span class="text-[var(--secondary-solid)]">Limite</span>
       </h1>
       <p class="text-white/60 text-lg max-w-xl mx-auto">Descubra quanto do seu IR pode ser destinado — sem pagar nada a mais</p>
     </div>
@@ -72,10 +121,10 @@
 
     <!-- Banner modalidades -->
     <div class="bg-[#0F1E3D] rounded-2xl overflow-hidden mb-6 relative">
-      <div class="absolute top-0 right-0 w-40 h-40 rounded-full bg-[#EE985C]/5 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+      <div class="absolute top-0 right-0 w-40 h-40 rounded-full bg-[var(--secondary-05)] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
       <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-5">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-[#EE985C] flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-[var(--secondary-solid)] flex items-center justify-center shrink-0">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
           <div>
@@ -91,7 +140,7 @@
     </div>
 
     <!-- Preview rápido: estimativa em tempo real -->
-    <div id="previewCard" class="hidden bg-white border-2 border-[#EE985C] rounded-2xl px-5 py-4 mb-4 flex items-center justify-between gap-4 transition-all">
+    <div id="previewCard" class="hidden bg-white border-2 border-[var(--secondary-solid)] rounded-2xl px-5 py-4 mb-4 flex items-center justify-between gap-4 transition-all">
       <div>
         <div class="text-xs font-semibold text-[#0F1E3D]/50 uppercase tracking-wider mb-1">Seu limite estimado</div>
         <div id="previewValor" class="text-3xl font-black text-[#0F1E3D] tabular-nums">R$ 0,00</div>
@@ -104,8 +153,8 @@
     </div>
 
     <!-- CTA -->
-    <div class="flex items-start gap-3 bg-[#EE985C]/10 border border-[#EE985C]/40 rounded-xl px-5 py-4 mb-6 text-sm text-[#0F1E3D]">
-      <svg class="w-5 h-5 text-[#EE985C] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    <div class="flex items-start gap-3 bg-[var(--secondary-10)] border border-[var(--secondary-40)] rounded-xl px-5 py-4 mb-6 text-sm text-[#0F1E3D]">
+      <svg class="w-5 h-5 text-[var(--secondary-solid)] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
       <span><strong>Em 30 segundos você descobre quanto pode destinar</strong> — sem pagar nada a mais ao governo. Informe seus rendimentos abaixo e veja o resultado na hora.</span>
     </div>
 
@@ -127,7 +176,7 @@
     <div id="formRapida" style="display:none">
       <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 mb-6">
         <h2 class="flex items-center gap-2 text-lg font-bold text-[#0F1E3D] mb-2">
-          <svg class="w-5 h-5 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <svg class="w-5 h-5 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           Cálculo rápido
         </h2>
         <p class="text-gray-500 text-sm mb-6">Se você já sabe o IR Devido (da declaração anterior), informe o valor e descubra seu limite de destinação.</p>
@@ -138,7 +187,7 @@
           <p class="text-gray-400 text-xs mt-2">Campo "IR Devido" da declaração — ou estimativa do ano anterior</p>
         </div>
         <button type="button" id="calcRapidoBtn" onclick="calcularRapido()"
-          class="w-full flex items-center justify-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold py-4 rounded-xl transition-all hover:scale-[1.01]">
+          class="w-full flex items-center justify-center gap-2 btn-acento text-[#0F1E3D] font-bold py-4 rounded-xl transition-all hover:scale-[1.01]">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           Calcular meu Limite
         </button>
@@ -149,7 +198,7 @@
     <div id="formCompleta">
       <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 mb-6">
         <h2 class="flex items-center gap-2 text-lg font-bold text-[#0F1E3D] mb-6">
-          <svg class="w-5 h-5 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <svg class="w-5 h-5 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           Seus Dados
         </h2>
 
@@ -168,7 +217,7 @@
           </div>
 
           <h3 class="flex items-center gap-2 text-sm font-bold text-[#0F1E3D] mt-6 mb-4 pb-3 border-b border-gray-100">
-            <svg class="w-4 h-4 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
+            <svg class="w-4 h-4 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
             Deduções (Declaração Completa)
           </h3>
 
@@ -212,7 +261,7 @@
           </div>
 
           <button type="submit" id="calcBtn"
-            class="w-full flex items-center justify-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold py-4 rounded-xl transition-all hover:scale-[1.01]">
+            class="w-full flex items-center justify-center gap-2 btn-acento text-[#0F1E3D] font-bold py-4 rounded-xl transition-all hover:scale-[1.01]">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
             Calcular IR
           </button>
@@ -226,7 +275,7 @@
       <!-- Grid de métricas -->
       <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 mb-4">
         <h2 class="flex items-center gap-2 text-lg font-bold text-[#0F1E3D] mb-6">
-          <svg class="w-5 h-5 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          <svg class="w-5 h-5 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
           Resultado do Cálculo
         </h2>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -261,7 +310,7 @@
       <!-- Limite Rouanet -->
       <div id="limitesCard" class="hidden bg-[#0F1E3D] rounded-2xl p-6 sm:p-8 mb-4">
         <h3 class="flex items-center gap-2 text-white font-bold text-lg mb-6">
-          <svg class="w-5 h-5 text-[#EE985C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"/></svg>
+          <svg class="w-5 h-5 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"/></svg>
           Você pode destinar via Lei Rouanet:
         </h3>
         <div class="flex items-center justify-between py-4 border-b border-white/10">
@@ -269,15 +318,15 @@
           <span id="limRouanet" class="text-white font-bold text-xl">R$ 0</span>
         </div>
         <div class="flex items-center justify-between pt-5">
-          <span class="text-[#EE985C] font-bold tracking-wide">SEU LIMITE ROUANET</span>
-          <span id="limTotal" class="text-[#EE985C] font-black text-2xl">R$ 0</span>
+          <span class="text-[var(--secondary-solid)] font-bold tracking-wide">SEU LIMITE ROUANET</span>
+          <span id="limTotal" class="text-[var(--secondary-solid)] font-black text-2xl">R$ 0</span>
         </div>
       </div>
 
       <!-- Ações -->
       <div id="actionsCompleta" class="hidden flex gap-3 flex-col sm:flex-row mb-4">
         <a href="destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF"
-          class="flex-1 flex items-center justify-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold py-4 rounded-xl transition-all hover:scale-[1.01] no-underline">
+          class="flex-1 flex items-center justify-center gap-2 btn-acento text-[#0F1E3D] font-bold py-4 rounded-xl transition-all hover:scale-[1.01] no-underline">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
           Destinar para a Orquestra das Periferias
         </a>
@@ -290,12 +339,12 @@
 
       <!-- Login push -->
       <div id="loginPush" class="hidden bg-[#0F1E3D] rounded-2xl p-7 text-center">
-        <svg class="w-10 h-10 text-[#EE985C] mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <svg class="w-10 h-10 text-[var(--secondary-solid)] mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         <h3 class="text-white font-bold text-xl mb-2">Salve seu cálculo e escolha um projeto</h3>
         <p class="text-white/60 text-sm mb-6">Crie sua conta gratuita para acompanhar sua destinação e receber o comprovante fiscal.</p>
         <div class="flex gap-3 justify-center flex-wrap">
           <a href="cadastro.html"
-            class="flex items-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold px-6 py-3 rounded-xl transition-all no-underline">
+            class="flex items-center gap-2 btn-acento text-[#0F1E3D] font-bold px-6 py-3 rounded-xl transition-all no-underline">
             Criar Conta Grátis
           </a>
           <a href="login.html"

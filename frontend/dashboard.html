@@ -2,6 +2,29 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <style>
+    /*
+      White label — cor de acento.
+
+      tenant.js escreve --secondary-color em :root a partir da organizacao.
+      O fallback de cada var() e a cor original desta pagina, entao sem tenant
+      carregado (ou se a requisicao falhar) nada muda de aparencia. O tema e
+      acrescimo, nunca dependencia.
+    */
+    :root {
+      --secondary-15: color-mix(in srgb, var(--secondary-color,#EE985C) 15%, transparent);
+      --secondary-40: color-mix(in srgb, var(--secondary-color,#EE985C) 40%, transparent);
+      /*
+        Tons derivados. Os valores abaixo sao os originais desta pagina, nao um
+        calculo: #E07A35 nao e #EE985C escurecido — e outro matiz, escolhido a
+        mao. Calcular aqui mudaria a aparencia de quem usa a marca padrao.
+        Quando a organizacao traz cor propria, o tenant.js sobrescreve estes
+        dois com uma derivacao coerente com a cor dela.
+      */
+      --secondary-hover: #D4874E;
+      --secondary-dark:  #E07A35;
+    }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minhas Destinações — IncentivaBR</title>
   <link rel="icon" type="image/png" href="assets/favicon.svg">
@@ -32,7 +55,7 @@
       padding: 0 24px;
     }
     .nav-logo { color: white; font-weight: 900; font-size: 20px; text-decoration: none; }
-    .nav-logo span { color: #EE985C; }
+    .nav-logo span { color: var(--secondary-color,#EE985C); }
     .nav-right { display: flex; align-items: center; gap: 14px; }
     .nav-user { color: rgba(255,255,255,0.7); font-size: 14px; }
     .btn-logout {
@@ -57,10 +80,10 @@
     }
     .confirm-icon {
       width: 56px; height: 56px; border-radius: 50%;
-      background: rgba(238,152,92,0.15);
-      border: 2px solid rgba(238,152,92,0.4);
+      background: var(--secondary-15);
+      border: 2px solid var(--secondary-40);
       display: flex; align-items: center; justify-content: center;
-      font-size: 24px; color: #EE985C; flex-shrink: 0;
+      font-size: 24px; color: var(--secondary-color,#EE985C); flex-shrink: 0;
     }
     .confirm-text h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
     .confirm-text p { font-size: 13px; opacity: 0.75; line-height: 1.5; }
@@ -82,15 +105,15 @@
     }
     .donation-header-icon {
       width: 40px; height: 40px; border-radius: 10px;
-      background: rgba(238,152,92,0.15);
+      background: var(--secondary-15);
       display: flex; align-items: center; justify-content: center;
-      color: #EE985C; font-size: 16px; flex-shrink: 0;
+      color: var(--secondary-color,#EE985C); font-size: 16px; flex-shrink: 0;
     }
     .donation-header-info { flex: 1; min-width: 0; }
     .donation-title { color: white; font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .donation-sub { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 2px; }
     .donation-amount { text-align: right; flex-shrink: 0; }
-    .donation-amount-val { color: #EE985C; font-size: 20px; font-weight: 800; }
+    .donation-amount-val { color: var(--secondary-color,#EE985C); font-size: 20px; font-weight: 800; }
     .donation-amount-lbl { color: rgba(255,255,255,0.5); font-size: 11px; }
 
     /* Status badge */
@@ -185,13 +208,13 @@
     }
     .btn-comprovante {
       display: inline-flex; align-items: center; gap: 8px;
-      background: #EE985C; color: #0F1E3D;
+      background: var(--secondary-color,#EE985C); color: #0F1E3D;
       border: none; border-radius: 10px;
       padding: 11px 22px; font-size: 14px; font-weight: 700;
       font-family: 'Montserrat', sans-serif; cursor: pointer;
       transition: background 0.15s;
     }
-    .btn-comprovante:hover { background: #d4874e; }
+    .btn-comprovante:hover { background: var(--secondary-hover); }
     .btn-comprovante:disabled { opacity: 0.5; cursor: default; }
     .btn-nova {
       display: inline-flex; align-items: center; gap: 7px;
@@ -261,7 +284,7 @@
     .empty-state p { font-size: 14px; color: #6B7280; margin-bottom: 24px; line-height: 1.6; }
     .btn-start {
       display: inline-flex; align-items: center; gap: 8px;
-      background: #EE985C; color: #0F1E3D;
+      background: var(--secondary-color,#EE985C); color: #0F1E3D;
       border: none; border-radius: 10px;
       padding: 13px 28px; font-size: 15px; font-weight: 700;
       font-family: 'Montserrat', sans-serif; cursor: pointer; text-decoration: none;
@@ -288,7 +311,7 @@
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" style="display:inline-flex;align-items:center;background:#fff;border-radius:10px;padding:4px 8px;text-decoration:none">
-        <img src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:24px;width:auto">
+        <img class="brand-logo" src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:24px;width:auto">
       </a>
       <div class="nav-right">
         <button class="btn-logout" onclick="auth.logout()">Sair</button>

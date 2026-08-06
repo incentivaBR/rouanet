@@ -2,6 +2,27 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <style>
+    /*
+      White label — cor de acento.
+
+      tenant.js escreve --secondary-color em :root a partir da organizacao.
+      O fallback de cada var() e a cor original desta pagina, entao sem tenant
+      carregado (ou se a requisicao falhar) nada muda de aparencia. O tema e
+      acrescimo, nunca dependencia.
+    */
+    :root {
+      /*
+        Tons derivados. Os valores abaixo sao os originais desta pagina, nao um
+        calculo: #E07A35 nao e #EE985C escurecido — e outro matiz, escolhido a
+        mao. Calcular aqui mudaria a aparencia de quem usa a marca padrao.
+        Quando a organizacao traz cor propria, o tenant.js sobrescreve estes
+        dois com uma derivacao coerente com a cor dela.
+      */
+      --secondary-hover: #D4874E;
+      --secondary-dark:  #E07A35;
+    }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projeto Cultural | IncentivaBR</title>
   <link rel="icon" type="image/png" href="assets/favicon.svg">
@@ -13,7 +34,7 @@
     :root {
       --primary-color: #0F1E3D;
       --secondary-color: #EE985C;
-      --accent-color: #d4874e;
+      --accent-color: var(--secondary-hover);
       --background-dark: #0F1E3D;
       --gradient-primary: linear-gradient(135deg, #0F1E3D 0%, #132247 100%);
     }
@@ -496,8 +517,8 @@
       font-size: 14px; text-decoration: none; cursor: pointer;
       border: 2px solid transparent; transition: all 0.2s; white-space: nowrap;
     }
-    .btn-primary { background: #EE985C; color: #0F1E3D; border-color: #EE985C; }
-    .btn-primary:hover { background: #d4874e; border-color: #d4874e; }
+    .btn-primary { background: var(--secondary-color,#EE985C); color: #0F1E3D; border-color: var(--secondary-color,#EE985C); }
+    .btn-primary:hover { background: var(--secondary-hover); border-color: var(--secondary-hover); }
     .btn-white { background: white; color: #0F1E3D; }
     .btn-white:hover { background: #f5f5f5; }
     .btn-outline { background: transparent; color: #0F1E3D; border-color: #0F1E3D; }
@@ -680,7 +701,7 @@
             }
             <div style="position:relative;z-index:2;display:flex;gap:8px;flex-wrap:wrap">
               <span class="projeto-hero-badge"><i class="fas ${icon}"></i> ${segmento || 'Projeto Cultural'}</span>
-              ${isOrquestra ? `<span class="projeto-hero-badge" style="background:rgba(255,215,0,0.25);color:#EE985C;border:1px solid rgba(255,215,0,0.4)"><i class="fas fa-star"></i> Art. 18 — 100% dedutível</span>` : ''}
+              ${isOrquestra ? `<span class="projeto-hero-badge" style="background:rgba(255,215,0,0.25);color:var(--secondary-color,#EE985C);border:1px solid rgba(255,215,0,0.4)"><i class="fas fa-star"></i> Art. 18 — 100% dedutível</span>` : ''}
             </div>
           </div>
           <div class="projeto-hero-info" style="background:linear-gradient(to bottom, transparent, ${isOrquestra ? '#0F1E3D' : '#164E63'} 60%)">
@@ -767,7 +788,7 @@
                 <div style="font-size:16px;font-weight:700;color:white">A Cadeira 47</div>
               </div>
               <p style="color:rgba(255,255,255,0.82);line-height:1.75;font-size:15px;margin-bottom:20px">
-                A orquestra tem <strong style="color:#EE985C">40 vagas</strong>. Cada vaga é uma cadeira. Cada cadeira é uma vida que encontrou na música um caminho.<br><br>
+                A orquestra tem <strong style="color:var(--secondary-color,#EE985C)">40 vagas</strong>. Cada vaga é uma cadeira. Cada cadeira é uma vida que encontrou na música um caminho.<br><br>
                 Quando você destina, uma cadeira é reservada. Você não sabe ainda quem vai sentar nela — mas alguém em Ceilândia, Samambaia ou Santa Maria vai.
               </p>
               <!-- Grid de cadeiras compacto -->
@@ -777,7 +798,7 @@
                   <span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:12px;background:rgba(255,215,0,0.8);border-radius:3px;display:inline-block"></span>Apoiada</span>
                   <span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:12px;background:rgba(255,255,255,0.15);border-radius:3px;display:inline-block;border:1px solid rgba(255,255,255,0.3)"></span>Disponível</span>
                 </div>
-                <span id="detalheCounter" style="font-weight:700;color:#EE985C">7 / 40 cadeiras apoiadas</span>
+                <span id="detalheCounter" style="font-weight:700;color:var(--secondary-color,#EE985C)">7 / 40 cadeiras apoiadas</span>
               </div>
             </div>
 
