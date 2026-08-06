@@ -3,6 +3,7 @@
 // remetente que ja funciona. Este teste troca o cliente do Resend por um dublê
 // para exercitar os dois desfechos sem enviar nada.
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -26,7 +27,10 @@ const derivado = fonte
   + '\nexport { doSend as __doSend };'
   + '\nexport function __setResend(c) { resendClient = c; }';
 
-const tmp = path.join(AQUI, '.emailService.derivado.mjs');
+// Fora do repositorio de proposito: no Windows o arquivo fica travado enquanto
+// o modulo esta carregado, entao apagar depois nem sempre funciona. Na pasta
+// temporaria do sistema, sobrar nao suja nada.
+const tmp = path.join(os.tmpdir(), `emailService.derivado.${process.pid}.mjs`);
 fs.writeFileSync(tmp, derivado, 'utf8');
 
 let mod;
