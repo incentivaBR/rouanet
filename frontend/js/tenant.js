@@ -3,6 +3,56 @@
  * IncentivaBR
  */
 
+/**
+ * Cor de acento da marca IncentivaBR.
+ *
+ * As paginas do fluxo trazem esta cor codificada, junto com dois tons
+ * derivados escolhidos a mao (#D4874E para hover, #E07A35 para gradiente) que
+ * NAO sao calculos sobre ela. Enquanto a organizacao usar o acento padrao, os
+ * tons ficam como estao — calcular repintaria o site de quem nao pediu nada.
+ * Assim que uma organizacao traz cor propria, ai sim os tons sao derivados
+ * dela, porque manter o laranja da IncentivaBR num tema alheio e pior.
+ */
+const ACENTO_PADRAO = '#EE985C';
+
+/**
+ * Suspende as transicoes CSS enquanto o tema e trocado.
+ *
+ * Sem isso, elementos com `transition: all` (varios botoes do fluxo usam)
+ * ficam com a cor ANTIGA depois que a variavel muda: a transicao fixa o valor
+ * ja computado e nao reavalia o var(). Da para comprovar clonando o botao —
+ * o clone, sem historico de transicao, nasce com a cor nova; o original nao.
+ *
+ * A supressao dura dois quadros: tempo de o navegador recalcular o estilo sem
+ * animar. E a mesma tecnica usada para evitar o "flash" ao trocar de tema.
+ */
+function semTransicoes(fn) {
+  const trava = document.createElement('style');
+  trava.textContent = '*, *::before, *::after { transition: none !important; }';
+  document.head.appendChild(trava);
+  fn();
+  // leitura forcada: garante que o estilo foi recalculado com a trava ativa
+  void document.body?.offsetHeight;
+  requestAnimationFrame(() => requestAnimationFrame(() => trava.remove()));
+}
+
+/**
+ * Escreve o acento e, se ele nao for o padrao, os tons que dependem dele.
+ */
+function aplicaAcento(cor) {
+  if (!cor) return;
+  semTransicoes(() => {
+    const raiz = document.documentElement;
+    raiz.style.setProperty('--secondary-color', cor);
+    raiz.style.setProperty('--accent-color', cor);
+
+    if (String(cor).trim().toUpperCase() === ACENTO_PADRAO) return;
+
+    raiz.style.setProperty('--secondary-hover', `color-mix(in srgb, ${cor} 88%, #000)`);
+    raiz.style.setProperty('--secondary-dark',  `color-mix(in srgb, ${cor} 78%, #000)`);
+  });
+}
+
 const tenant = {
   // Cache da organização
   _organization: null,
@@ -55,9 +105,7 @@ const tenant = {
     if (org.primary_color) {
       document.documentElement.style.setProperty('--primary-color', org.primary_color);
     }
-    if (org.secondary_color) {
-      document.documentElement.style.setProperty('--secondary-color', org.secondary_color);
-    }
+    aplicaAcento(org.secondary_color);
 
     // Atualizar nome da organização onde existir
     const orgNameElements = document.querySelectorAll('.org-name');
@@ -180,10 +228,7 @@ const tenant = {
     if (brand.color_primary) {
       document.documentElement.style.setProperty('--primary-color', brand.color_primary);
     }
-    if (brand.color_accent) {
-      document.documentElement.style.setProperty('--secondary-color', brand.color_accent);
-      document.documentElement.style.setProperty('--accent-color', brand.color_accent);
-    }
+    aplicaAcento(brand.color_accent);
 
     // Atualizar elementos com classe .brand-name
     document.querySelectorAll('.brand-name').forEach(el => {
