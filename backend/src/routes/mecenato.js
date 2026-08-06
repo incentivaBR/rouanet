@@ -19,6 +19,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import pool from '../../config/database.js';
 import { authenticateToken } from '../middleware/auth.js';
+import { podeGerirOrganizacao } from '../lib/permissoes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
@@ -50,18 +51,13 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /**
  * O usuário pode agir como proponente desta destinação?
- * superadmin da IncentivaBR, ou org_admin da organização dona da destinação.
+ *
+ * A regra mora em lib/permissoes.js. Estava duplicada aqui e em outra
+ * formulação no admin.js — duas cópias da mesma autorização derivam com o
+ * tempo, e a que deriva para o lado permissivo ninguém percebe.
  */
-async function podeEmitir(userId, organizationId) {
-  const { rows } = await pool.query(
-    `SELECT role FROM organization_users
-      WHERE user_id = $1 AND is_active = true
-        AND (role = 'superadmin' OR (organization_id = $2 AND role = 'org_admin'))
-      LIMIT 1`,
-    [userId, organizationId]
-  );
-  return rows.length > 0;
-}
+const podeEmitir = (userId, organizationId, jwtUser) =>
+  podeGerirOrganizacao(userId, organizationId, jwtUser);
 
 // ───────────────────────────────────────────────────────────────────────────
 // GET /api/mecenato/fila — recibos que o proponente ainda precisa emitir
@@ -76,7 +72,7 @@ router.get('/fila', authenticateToken, async (req, res) => {
     if (!orgId) {
       return res.status(400).json({ status: 'error', message: 'Organização não identificada.' });
     }
-    if (!(await podeEmitir(req.user.userId, orgId))) {
+    if (!(await podeEmitir(req.user.userId, orgId, req.user))) {
       return res.status(403).json({ status: 'error', message: 'Sem permissão para emitir recibos desta organização.' });
     }
 
@@ -122,7 +118,7 @@ router.post('/:donationId', authenticateToken, upload.single('mecenato'), async 
     }
     const destinacao = rows[0];
 
-    if (!(await podeEmitir(req.user.userId, destinacao.organization_id))) {
+    if (!(await podeEmitir(req.user.userId, destinacao.organization_id, req.user))) {
       return res.status(403).json({ status: 'error', message: 'Sem permissão para emitir o recibo desta destinação.' });
     }
 
@@ -187,7 +183,7 @@ router.get('/:donationId', authenticateToken, async (req, res) => {
     const d = rows[0];
 
     const ehDono = d.user_id === req.user.userId;
-    if (!ehDono && !(await podeEmitir(req.user.userId, d.organization_id))) {
+    if (!ehDono && !(await podeEmitir(req.user.userId, d.organization_id, req.user))) {
       return res.status(403).json({ status: 'error', message: 'Sem permissão.' });
     }
 
@@ -241,7 +237,7 @@ router.get('/:donationId/arquivo', authenticateToken, async (req, res) => {
     const d = rows[0];
 
     const ehDono = d.user_id === req.user.userId;
-    if (!ehDono && !(await podeEmitir(req.user.userId, d.organization_id))) {
+    if (!ehDono && !(await podeEmitir(req.user.userId, d.organization_id, req.user))) {
       return res.status(403).json({ status: 'error', message: 'Sem permissão.' });
     }
 

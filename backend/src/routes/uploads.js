@@ -5,6 +5,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import pool from '../../config/database.js';
 import { authenticateToken } from '../middleware/auth.js';
+import { podeVerDadosDaOrganizacao } from '../lib/permissoes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -140,14 +141,7 @@ router.get('/receipt/:donationId/arquivo', authenticateToken, async (req, res) =
 
     let autorizado = d.user_id === req.user.userId;
     if (!autorizado) {
-      const { rows: perm } = await pool.query(
-        `SELECT 1 FROM organization_users
-          WHERE user_id = $1 AND is_active = true
-            AND (role = 'superadmin' OR (organization_id = $2 AND role IN ('org_admin','org_viewer')))
-          LIMIT 1`,
-        [req.user.userId, d.organization_id]
-      );
-      autorizado = perm.length > 0;
+      autorizado = await podeVerDadosDaOrganizacao(req.user.userId, d.organization_id, req.user);
     }
     if (!autorizado) {
       return res.status(403).json({ status: 'error', message: 'Sem permissão.' });
