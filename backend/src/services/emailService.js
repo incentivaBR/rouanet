@@ -91,7 +91,12 @@ export const URL_CANONICA = 'https://www.incentivabr.com.br';
  * quem recebe, que é o pior desfecho possível para uma falha silenciosa.
  */
 const getAppUrl = () => {
-  if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, '');
+  // trim() antes de qualquer coisa: espaco colado sem querer num painel de
+  // variaveis vira %20 no link e quebra a URL inteira. Aconteceu em producao —
+  // o valor era "https://www.incentivabr.com.br   " e o e-mail saia apontando
+  // para ...com.br%20%20%20/confirmar-cadastro.html. Barras finais tambem caem.
+  const definido = (process.env.APP_URL || '').trim();
+  if (definido) return definido.replace(/\/+$/, '');
   if (['development', 'test', 'local'].includes(process.env.NODE_ENV)) {
     return `http://localhost:${process.env.PORT || 3000}`;
   }
