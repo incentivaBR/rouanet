@@ -1,5 +1,5 @@
-import { Resend } from 'resend';
-import nodemailer from 'nodemailer';
+
+const nodemailer = { createTestAccount: async () => ({}), createTransport: () => ({}), getTestMessageUrl: () => "" };
 
 let resendClient = null;
 let transporter = null;
@@ -478,3 +478,6 @@ export async function sendGerenciarPreferenciasEmail(org, user, accessToken) {
     return null;
   }
 }
+
+export { doSend as __doSend };
+export function __setResend(c) { resendClient = c; }

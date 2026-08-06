@@ -11,7 +11,8 @@
     "test:lgpd": "node tests/lgpd.test.mjs",
     "test:conferencia": "node tests/conferencia.test.mjs",
     "test:conferencia-http": "node tests/conferencia-http.test.mjs",
-    "test": "npm run test:lgpd && npm run test:conferencia && npm run test:conferencia-http",
+    "test:remetente": "node tests/remetente.test.mjs",
+    "test": "npm run test:lgpd && npm run test:conferencia && npm run test:conferencia-http && npm run test:remetente",
     "dev:memoria": "node tests/servidor-memoria.mjs"
   },
   "dependencies": {
