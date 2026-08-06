@@ -100,6 +100,29 @@ await teste('SMTP_FROM sobrepoe o padrao', async () => {
   delete process.env.SMTP_FROM;
 });
 
+// Aconteceu em producao: a variavel foi salva no painel do Railway com tres
+// espacos no fim. Eles viraram %20%20%20 no link e o e-mail saiu apontando para
+// ...com.br%20%20%20/confirmar-cadastro.html. Espaco invisivel colado num painel
+// e um classico — o codigo tem que absorver, nao gerar link quebrado.
+await teste('APP_URL suja nao quebra o link', async () => {
+  const antes = process.env.NODE_ENV;
+  process.env.NODE_ENV = 'production';
+  const casos = [
+    ['https://www.incentivabr.com.br   ', 'espaco no fim'],
+    ['  https://www.incentivabr.com.br',  'espaco no inicio'],
+    ['https://www.incentivabr.com.br///', 'barras sobrando'],
+    ['   ',                               'so espacos: vale como ausente']
+  ];
+  for (const [valor, rotulo] of casos) {
+    process.env.APP_URL = valor;
+    const u = mod.getEmailStatus().appUrl;
+    if (u !== 'https://www.incentivabr.com.br')
+      throw new Error(rotulo + ': virou "' + u + '"');
+  }
+  delete process.env.APP_URL;
+  process.env.NODE_ENV = antes;
+});
+
 await teste('em producao, o link dos e-mails aponta para o dominio que atende', async () => {
   const antes = process.env.NODE_ENV;
   process.env.NODE_ENV = 'production';
