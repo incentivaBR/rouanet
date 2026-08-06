@@ -377,9 +377,13 @@ router.post('/forgot-password', async (req, res) => {
     );
 
     const org = req.organization;
+    // O fallback tem que ser um domínio que realmente sirva a aplicação.
+    // destineai.com.br é apêndice da marca, não o core, e o apex
+    // incentivabr.com.br responde com falha de TLS (SEC_E_WRONG_PRINCIPAL) —
+    // por isso o www. Link de redefinição que não abre é conta perdida.
     const baseUrl = org?.custom_domain
       ? `https://${org.custom_domain}`
-      : 'https://destineai.com.br';
+      : (process.env.APP_URL || 'https://www.incentivabr.com.br');
 
     const resetLink = `${baseUrl}/reset-password.html?token=${token}`;
 
