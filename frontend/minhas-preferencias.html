@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas preferências — IncentivaBR</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/IncentivaBR.css">
+  <style>
+    :root { --primary-color:#273F77; --secondary-color:#EE985C; --shadow-md:0 4px 16px rgba(13,27,62,.14); }
+    .wrap { max-width: 640px; margin: 0 auto; padding: 34px 20px 60px; }
+    .card { background:#fff; border-radius:16px; padding:34px; box-shadow:var(--shadow-md); margin-bottom:20px; }
+    h1 { font-size:26px; font-weight:800; color:#1a1a2e; margin-bottom:6px; }
+    .sub { color:#556; font-size:14.5px; line-height:1.65; margin-bottom:24px; }
+    h2 { font-size:15px; font-weight:700; color:var(--primary-color); margin:0 0 14px;
+         padding-bottom:8px; border-bottom:2px solid var(--secondary-color); }
+    .escolha { display:flex; gap:11px; align-items:flex-start; margin-bottom:14px; }
+    .escolha input { margin-top:3px; width:17px; height:17px; accent-color:var(--primary-color); flex-shrink:0; cursor:pointer; }
+    .escolha label { font-size:14px; line-height:1.55; color:#1a1a2e; cursor:pointer; }
+    .escolha label small { display:block; color:#8B96A8; font-size:12.5px; margin-top:2px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px;
+           padding:12px 20px; font-size:14px; font-weight:700; font-family:inherit;
+           text-decoration:none; border:none; cursor:pointer; transition:background .15s, border-color .15s; }
+    .btn.principal { background:var(--primary-color); color:#fff; }
+    .btn.principal:hover:not(:disabled) { background:#1D2F59; }
+    .btn.secundario{ background:none; border:1.5px solid #D1D9EC; color:#5566A0; }
+    .btn.secundario:hover { border-color:var(--primary-color); color:var(--primary-color); }
+    .btn.perigo { background:none; border:1.5px solid #FCA5A5; color:#B91C1C; }
+    .btn.perigo:hover { background:#FEE2E2; }
+    .btn:disabled { opacity:.55; cursor:default; }
+    .linha-botoes { display:flex; gap:10px; flex-wrap:wrap; }
+    .dado { display:flex; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px solid #F0F2F8; font-size:14px; }
+    .dado:last-child { border-bottom:none; }
+    .dado span:first-child { color:#8B96A8; }
+    .dado span:last-child { color:#1a1a2e; font-weight:600; text-align:right; word-break:break-word; }
+    .aviso { padding:14px 16px; border-radius:10px; font-size:14px; line-height:1.6; margin-bottom:18px; display:none; }
+    .aviso.on { display:block; }
+    .aviso.ok  { background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; }
+    .aviso.erro{ background:#FEE2E2; color:#B91C1C; border:1px solid #FCA5A5; }
+    .nota { font-size:12.5px; color:#8B96A8; line-height:1.7; margin-top:14px; }
+    .nota a { color:var(--primary-color); }
+    #conteudo { display:none; }
+    @media (max-width:640px){ .card{padding:22px} h1{font-size:22px} .btn{width:100%} }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div id="carregando" class="card" style="text-align:center">
+      <i class="fas fa-spinner fa-spin" style="font-size:26px;color:#CBD5E1"></i>
+      <p class="sub" style="margin:14px 0 0">Carregando seus dados...</p>
+    </div>
+
+    <div id="conteudo">
+      <div id="aviso" class="aviso"></div>
+
+      <div class="card">
+        <h1>Suas preferências</h1>
+        <p class="sub">Você decide o que recebe. Mudar aqui vale a partir do próximo envio.</p>
+
+        <h2>O que você recebe</h2>
+        <div class="escolha">
+          <input type="checkbox" id="c_prazos">
+          <label for="c_prazos">Avisos de prazo
+            <small>Quando abre e quando fecha a janela para destinar no ano.</small>
+          </label>
+        </div>
+        <div class="escolha">
+          <input type="checkbox" id="c_projetos">
+          <label for="c_projetos">Novos projetos aprovados
+            <small>Projetos culturais habilitados a receber destinação.</small>
+          </label>
+        </div>
+        <div class="escolha">
+          <input type="checkbox" id="c_whatsapp">
+          <label for="c_whatsapp">Também por WhatsApp
+            <small>Só funciona se houver um número no seu cadastro.</small>
+          </label>
+        </div>
+
+        <div class="linha-botoes" style="margin-top:18px">
+          <button class="btn principal" id="btnSalvar">Salvar preferências</button>
+          <button class="btn secundario" id="btnSair">Sair de todas as listas</button>
+        </div>
+        <p class="nota">
+          Desmarcar tudo e salvar tem o mesmo efeito de sair: sem finalidade declarada,
+          não há por que continuarmos com seus dados.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Seus dados</h2>
+        <div id="dados"></div>
+        <div class="linha-botoes" style="margin-top:18px">
+          <button class="btn secundario" id="btnExportar">
+            <i class="fas fa-download"></i> Baixar meus dados
+          </button>
+          <button class="btn perigo" id="btnEliminar">
+            <i class="fas fa-trash-can"></i> Eliminar meus dados
+          </button>
+        </div>
+        <p class="nota">
+          Direitos garantidos pelo art. 18 da LGPD: confirmação do tratamento, acesso,
+          correção, portabilidade em formato aberto e eliminação. Dúvidas ou pedidos
+          pelo Encarregado de Proteção de Dados:
+          <a href="mailto:privacidade@incentivabr.com.br">privacidade@incentivabr.com.br</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/layout.js"></script>
+  <script>Layout.init('');</script>
+  <script>
+    const $ = id => document.getElementById(id);
+    const token = new URLSearchParams(location.search).get('t');
+    const API = '/api/interessados/meus-dados/' + encodeURIComponent(token || '');
+    let dadosTitular = null;
+
+    function mostra(tipo, texto) {
+      const a = $('aviso');
+      a.className = 'aviso on ' + tipo;
+      a.textContent = texto;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const fmt = iso => iso
+      ? new Date(iso).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' })
+      : '—';
+
+    function pinta(d) {
+      dadosTitular = d;
+      const c = d.consentimento_atual;
+      $('c_prazos').checked   = c.avisos_de_prazo;
+      $('c_projetos').checked = c.novos_projetos;
+      $('c_whatsapp').checked = c.whatsapp;
+
+      const linhas = [
+        ['E-mail',            d.titular.email],
+        ['Nome',              d.titular.nome     || '—'],
+        ['Telefone',          d.titular.telefone || '—'],
+        ['Órgão',             d.titular.orgao    || '—'],
+        ['Cadastro em',       fmt(c.concedido_em)],
+        ['Confirmado em',     fmt(c.confirmado_em)],
+        ['Versão da política aceita', c.versao_politica || '—']
+      ];
+      if (c.revogado_em) linhas.push(['Consentimento revogado em', fmt(c.revogado_em)]);
+
+      $('dados').innerHTML = linhas
+        .map(([r, v]) => `<div class="dado"><span>${r}</span><span>${v}</span></div>`)
+        .join('');
+
+      $('carregando').style.display = 'none';
+      $('conteudo').style.display = 'block';
+    }
+
+    async function salvar(preferencias, mensagem) {
+      const resp = await fetch(API, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(preferencias)
+      });
+      const r = await resp.json();
+      if (!resp.ok) throw new Error(r.message || 'Não foi possível salvar.');
+      mostra('ok', mensagem || r.message);
+    }
+
+    $('btnSalvar').addEventListener('click', async () => {
+      const b = $('btnSalvar'); b.disabled = true;
+      try {
+        await salvar({
+          consent_prazos:   $('c_prazos').checked,
+          consent_projetos: $('c_projetos').checked,
+          consent_whatsapp: $('c_whatsapp').checked
+        });
+      } catch (e) { mostra('erro', e.message); }
+      finally { b.disabled = false; }
+    });
+
+    $('btnSair').addEventListener('click', async () => {
+      const b = $('btnSair'); b.disabled = true;
+      try {
+        // Revogar não exige confirmação: o art. 8º §5º manda que sair seja tão
+        // fácil quanto entrar, e um "tem certeza?" existe para dificultar.
+        // Reversível de qualquer forma — basta cadastrar de novo.
+        const resp = await fetch('/api/interessados/descadastrar/' + encodeURIComponent(token), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ motivo: 'Solicitado pela página de preferências' })
+        });
+        const r = await resp.json();
+        if (!resp.ok) throw new Error(r.message || 'Não foi possível processar.');
+        ['c_prazos','c_projetos','c_whatsapp'].forEach(id => $(id).checked = false);
+        mostra('ok', r.message);
+      } catch (e) { mostra('erro', e.message); }
+      finally { b.disabled = false; }
+    });
+
+    // Portabilidade em formato aberto (art. 18 V) — o JSON que o servidor
+    // devolveu, sem reprocessar, para que o arquivo seja o dado de verdade.
+    $('btnExportar').addEventListener('click', () => {
+      if (!dadosTitular) return;
+      const blob = new Blob([JSON.stringify(dadosTitular, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'meus-dados-incentivabr.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Eliminar é irreversível — aqui a confirmação protege a pessoa, não a base.
+    $('btnEliminar').addEventListener('click', async () => {
+      if (!confirm('Eliminar seus dados é definitivo e não pode ser desfeito. Confirma?')) return;
+      const b = $('btnEliminar'); b.disabled = true;
+      try {
+        const resp = await fetch(API, { method: 'DELETE' });
+        const r = await resp.json();
+        if (!resp.ok) throw new Error(r.message || 'Não foi possível eliminar.');
+        $('conteudo').innerHTML =
+          '<div class="card" style="text-align:center">' +
+          '<h1>Dados eliminados</h1><p class="sub">' + r.message + '</p>' +
+          '<a class="btn principal" href="index.html">Voltar ao início</a></div>';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (e) { mostra('erro', e.message); b.disabled = false; }
+    });
+
+    (async () => {
+      if (!token) {
+        $('carregando').innerHTML =
+          '<h1>Link incompleto</h1><p class="sub">Este endereço não traz o código de acesso. ' +
+          'Abra o link direto de uma das mensagens que enviamos.</p>';
+        return;
+      }
+      try {
+        const resp = await fetch(API);
+        const d = await resp.json();
+        if (!resp.ok) throw new Error(d.message || 'Link inválido.');
+        pinta(d);
+      } catch (e) {
+        $('carregando').innerHTML =
+          '<h1>Não foi possível abrir</h1><p class="sub">' + e.message + '</p>' +
+          '<a class="btn principal" href="cadastro-avisos.html">Fazer o cadastro</a>';
+      }
+    })();
+  </script>
+
+<!-- incentivabr-legal -->
+<div style="max-width:1100px;margin:0 auto;padding:22px 18px 30px;text-align:center;border-top:1px solid rgba(128,128,128,0.14);font-size:11px;line-height:1.7;color:rgba(128,128,128,0.75);font-family:inherit">
+  <strong>IncentivaBR</strong>&trade; &mdash; programa de computador registrado no INPI sob o n&ordm; BR512025000647-0.<br>
+  Marca mista depositada no INPI sob os processos n&ordm; 939403005 (NCL 35) e n&ordm; 939403110 (NCL 42).<br>
+  Documenta&ccedil;&atilde;o t&eacute;cnica registrada no 2&ordm; Of&iacute;cio de Registro Civil, T&iacute;tulos e Documentos e Pessoas Jur&iacute;dicas de Bras&iacute;lia/DF.<br>
+  &copy; 2026 Adacto Artur Dornas de Oliveira. Todos os direitos reservados. &Eacute; vedada a reprodu&ccedil;&atilde;o, distribui&ccedil;&atilde;o ou engenharia reversa, total ou parcial, sem autoriza&ccedil;&atilde;o expressa.
+</div>
+</body>
+</html>

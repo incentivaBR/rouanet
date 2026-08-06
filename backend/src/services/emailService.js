@@ -83,7 +83,15 @@ const getFromAddress = () => {
   return `"${brand}" <contato@${domain}>`;
 };
 
-function getEmailTemplate(content, org = null) {
+/**
+ * @param {string} content
+ * @param {Object} [org]
+ * @param {string} [accessToken] - token do interessado. Informe SEMPRE que o
+ *   destinatário estiver na lista de comunicação: é ele que faz o rodapé
+ *   ganhar o link de cancelamento em um clique (LGPD, art. 8º §5º). E-mail de
+ *   comunicação sem saída é o que transforma consentimento em armadilha.
+ */
+function getEmailTemplate(content, org = null, accessToken = null) {
   const orgName       = org?.name           || process.env.BRAND_NAME          || 'IncentivaBR';
   const primaryColor  = org?.primary_color  || process.env.BRAND_COLOR_PRIMARY || '#273F77';
   const appUrl        = getAppUrl();
@@ -113,6 +121,12 @@ function getEmailTemplate(content, org = null) {
         <div class="footer">
           <p>Este é um email automático do ${orgName}.</p>
           <p><a href="${appUrl}" style="color:#273F77">${appUrl.replace('https://', '')}</a></p>
+          ${accessToken ? `
+          <p style="margin-top:14px">
+            <a href="${appUrl}/minhas-preferencias.html?t=${encodeURIComponent(accessToken)}" style="color:#8B96A8">
+              Gerenciar preferências ou cancelar o recebimento
+            </a>
+          </p>` : ''}
         </div>
       </div>
     </body>
@@ -310,6 +324,90 @@ export async function sendMecenatoPendenteEmail(org, user, donation, project) {
     return true;
   } catch (error) {
     console.error('Erro ao notificar proponente:', error.message);
+    return null;
+  }
+}
+
+
+// ───────────────────────────────────────────────────────────────────────────
+// Cadastro de interessados (LGPD)
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * Confirmacao de cadastro — duplo opt-in.
+ *
+ * Este e-mail e a unica coisa que a pessoa recebe antes de confirmar. Se ela
+ * nao pediu o cadastro, ele precisa deixar isso obvio e nao custar nada:
+ * ignorar ja resolve, porque sem o clique o cadastro nao vale.
+ */
+export async function sendConfirmacaoCadastroEmail(org, user, confirmToken) {
+  if (!resendClient && !transporter) return null;
+  if (!user?.email) return null;
+
+  const link = `${getAppUrl()}/confirmar-cadastro.html?t=${encodeURIComponent(confirmToken)}`;
+  const saudacao = user.nome ? `Ola, ${user.nome}!` : 'Ola!';
+
+  const content = `
+    <h2>Confirme seu cadastro</h2>
+    <p>${saudacao}</p>
+    <p>Voce pediu para receber avisos sobre destinacao de Imposto de Renda.
+    Para valer, falta so confirmar — e um clique:</p>
+    <a href="${link}" class="button">Confirmar meu cadastro</a>
+    <p style="margin-top:18px;color:#666;font-size:13px">
+      Nao foi voce? Entao ignore esta mensagem. Sem esse clique o cadastro nao
+      se completa e voce nao recebera mais nada de nossa parte.
+    </p>
+    <p style="color:#666;font-size:13px">Este link vale por 7 dias.</p>
+  `;
+
+  try {
+    await doSend({
+      to: user.email,
+      subject: 'Confirme seu cadastro',
+      html: getEmailTemplate(content, org)
+    });
+    return true;
+  } catch (error) {
+    console.error('Erro ao enviar confirmacao de cadastro:', error.message);
+    return null;
+  }
+}
+
+/**
+ * Link para gerenciar preferencias.
+ *
+ * Enviado quando alguem tenta se cadastrar com um e-mail que ja confirmou. O
+ * endpoint de cadastro e aberto, entao ele nao pode alterar o consentimento de
+ * quem ja tem vinculo — quem chega por ali recebe o caminho autenticado, que
+ * so cai na caixa da propria pessoa.
+ */
+export async function sendGerenciarPreferenciasEmail(org, user, accessToken) {
+  if (!resendClient && !transporter) return null;
+  if (!user?.email) return null;
+
+  const base = `${getAppUrl()}/minhas-preferencias.html?t=${encodeURIComponent(accessToken)}`;
+
+  const content = `
+    <h2>Suas preferencias de comunicacao</h2>
+    <p>Recebemos um pedido de cadastro com este e-mail, que ja esta na nossa
+    lista. Nada foi alterado.</p>
+    <p>Para mudar o que voce recebe — ou para sair da lista — use o link abaixo:</p>
+    <a href="${base}" class="button">Gerenciar minhas preferencias</a>
+    <p style="margin-top:18px;color:#666;font-size:13px">
+      Se nao foi voce quem pediu, nao ha nada a fazer: nenhuma preferencia sua
+      foi modificada.
+    </p>
+  `;
+
+  try {
+    await doSend({
+      to: user.email,
+      subject: 'Suas preferencias de comunicacao',
+      html: getEmailTemplate(content, org)
+    });
+    return true;
+  } catch (error) {
+    console.error('Erro ao enviar link de preferencias:', error.message);
     return null;
   }
 }
