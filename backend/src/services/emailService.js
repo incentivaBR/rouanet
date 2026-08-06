@@ -64,13 +64,22 @@ export function getEmailStatus() {
   return emailServiceStatus;
 }
 
+/**
+ * Onde a aplicação realmente atende — é daqui que sai todo link de e-mail.
+ *
+ * NÃO usa BRAND_DOMAIN, e isso é deliberado. BRAND_DOMAIN é um valor de MARCA
+ * (aparece em rodapé e remetente), não uma promessa de que aquele domínio
+ * serve a aplicação. Em produção ele está como `destineai.com.br`, que responde
+ * 404 — então enquanto essa função o usava, TODO link de e-mail chegava morto:
+ * redefinição de senha, confirmação de cadastro, aviso ao proponente. O e-mail
+ * saía, ninguém conseguia clicar, e nada denunciava.
+ *
+ * Ordem: APP_URL (explícito) → o domínio canônico em produção → localhost.
+ * O apex incentivabr.com.br não entra: responde com falha de TLS
+ * (SEC_E_WRONG_PRINCIPAL).
+ */
 const getAppUrl = () => {
   if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, '');
-  const domain = process.env.BRAND_DOMAIN;
-  if (domain) return `https://${domain.replace(/^https?:\/\//, '')}`;
-  // Sem APP_URL nem BRAND_DOMAIN, o fallback antigo era localhost:3000 — em
-  // produção isso manda TODO link de e-mail para a máquina de quem recebe.
-  // Falha silenciosa: o e-mail sai, ninguém consegue clicar.
   if (process.env.NODE_ENV === 'production') return 'https://www.incentivabr.com.br';
   return 'http://localhost:3000';
 };
