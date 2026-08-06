@@ -1,0 +1,177 @@
+# Checklist de virada — sair de `SIMULATION_MODE=true`
+
+Este documento existe porque desligar a simulação não é mexer numa variável de
+ambiente: é passar a receber dinheiro real de servidores públicos, com
+consequência fiscal para eles. Enquanto qualquer item abaixo estiver aberto, a
+chave fica como está.
+
+Última revisão: 6 de agosto de 2026.
+
+---
+
+## 0. Bloqueador absoluto — não existe caminho de confirmação em produção
+
+**Este é o item que impede a virada hoje, independentemente de todos os outros.**
+
+O único ponto do sistema que marca uma destinação como confirmada é
+`POST /api/donations/:id/simulate` ([donations.js:246](backend/src/routes/donations.js:246)),
+e ele começa com:
+
+```js
+if (process.env.SIMULATION_MODE !== 'true') {
+  return res.status(403).json({ status: 'error', message: 'Modo simulação não está ativo.' });
+}
+```
+
+Ou seja: com a simulação desligada, o destinador registra a destinação, envia o
+comprovante bancário — e a destinação fica em `pending` para sempre. Ninguém
+consegue confirmar. E como a notificação ao proponente e o ciclo do Recibo de
+Mecenato dependem da confirmação, todo o resto do fluxo morre junto.
+
+**O que falta construir:** uma rota de confirmação para produção, em que alguém
+com permissão na organização confere o extrato bancário e confirma. Ela deve
+chamar `avisarProponente(id)` — a mesma função que a rota de simulação já chama
+([donations.js](backend/src/routes/donations.js)) — para que o proponente seja
+avisado e o campo `proponente_notified_at` seja preenchido.
+
+Decisão a tomar junto: a conferência é manual (alguém olha o extrato) ou
+automática (conciliação por valor e data)? Para o primeiro cliente, manual
+resolve e é auditável.
+
+---
+
+## 1. PRONAC — hoje é fictício, em 12 arquivos
+
+O PRONAC **261847** é fictício, criado para o piloto. Ele está espalhado por:
+
+| Onde | Arquivos |
+|---|---|
+| Backend | `migrations/022_orquestra_periferias.sql`, `migrations/025_knowledge_extra.sql`, `routes/salic.js` |
+| Frontend | `calculadora.html`, `dashboard.html`, `demo-dashboard.html`, `demo-projeto.html`, `destinar-rouanet.html`, `faq.html`, `passo-a-passo.html`, `projeto-detalhes.html`, `projetos-rouanet.html` |
+
+O PRONAC real do projeto aprovado da Casa Azul — **2511274** — não aparece em
+nenhum lugar do código hoje.
+
+Atenção a `routes/salic.js:325`: em modo simulação a rota devolve um projeto
+inventado **sem consultar a API do SALIC**, com dados bancários fixos. Ao
+desligar a simulação, essa rota passa a consultar o SALIC de verdade. Isso
+precisa ser testado antes, não depois: se a consulta falhar, a página de
+projetos fica vazia.
+
+- [ ] Confirmar o PRONAC real e a vigência da captação junto ao proponente
+- [ ] Substituir 261847 por 2511274 nos 12 arquivos
+- [ ] Exercitar `GET /api/salic/...` contra a API real, com o PRONAC real
+- [ ] Decidir o destino das páginas `demo-*` (elas existem para demonstração;
+      ou saem do ar ou deixam explícito que são demonstração)
+
+---
+
+## 2. Conta de Captação — o dinheiro vai para o Banco do Brasil, não para nós
+
+Pelo Manual do Proponente do MinC, o incentivador deposita na **Conta de
+Captação** do projeto, que é bloqueada e específica por PRONAC. O proponente só
+movimenta pela conta livre, após liberação. A plataforma nunca toca no dinheiro.
+
+Hoje os dados bancários exibidos em simulação são fixos no código
+(`routes/salic.js`). Em produção precisam vir da organização.
+
+- [ ] Obter da Casa Azul: banco, agência, conta de captação e CNPJ do proponente
+- [ ] Conferir que a conta informada é a **de captação** do PRONAC, não a
+      conta institucional — depósito na conta errada não gera recibo e o
+      servidor perde a dedução
+- [ ] Preencher em `organizations` e confirmar que a tela lê de lá, não do código
+- [ ] Fazer uma destinação real de valor baixo, ponta a ponta, antes de anunciar
+
+---
+
+## 3. A questão dos 6% — precisa de tributarista, não de opinião nossa
+
+O código aplica um teto rígido de 6%:
+
+```js
+const LIMITE_ROUANET = 0.06;   // donations.js:78
+```
+
+A base é o art. 22 da Lei 9.532/97, que fixa o limite **global** de 6% do imposto
+devido para o conjunto das deduções de incentivo (Rouanet art. 26, ECA, Idoso).
+Já a destinação a projeto aprovado no art. 18 da Lei 8.313/91 é deduzida
+integralmente do imposto devido, e é justamente sobre a interação entre os dois
+dispositivos que existe divergência de interpretação.
+
+**Onde a divergência aparece hoje no nosso próprio material:** o
+`biblioteca-juridica.html` diverge do deck e da Lean Inception. Como esse arquivo
+alimenta as respostas da TINA, a assistente pode estar dizendo algo diferente do
+que a apresentação comercial afirma.
+
+- [ ] Levar a um tributarista e obter parecer escrito
+- [ ] Alinhar `biblioteca-juridica.html`, o deck e a Lean Inception à mesma tese
+- [ ] Ajustar `LIMITE_ROUANET` se o parecer indicar outro tratamento
+- [ ] Guardar o parecer: se um servidor for questionado na declaração, é ele que
+      responde por nós
+
+---
+
+## 4. Texto de consentimento — hoje fala em "demonstração"
+
+`destinar-rouanet.html` pede o aceite com este texto:
+
+> "Declaro que sou contribuinte de Imposto de Renda (Pessoa Física) e que as
+> informações prestadas são verdadeiras **para fins desta demonstração**.
+> Autorizo o registro **desta simulação** para que a plataforma calcule meu
+> limite e gere o comprovante (...)"
+
+Com dinheiro real, esse texto fica falso — e um consentimento colhido sob
+descrição falsa não é consentimento (LGPD, art. 5º XII: livre, **informado** e
+inequívoco).
+
+- [ ] Reescrever o texto para a operação real, dizendo o que de fato acontece:
+      os dados vão ao proponente, é ele quem emite o Recibo de Mecenato
+- [ ] Versionar a Política de Privacidade junto (`POLITICA_VERSAO` em
+      `backend/src/config/lgpd.js` e a data em `politica-privacidade.html` —
+      os dois andam juntos, senão a prova do consentimento aponta para um
+      texto que já não existe)
+- [ ] Guardar o texto do aceite como já fazemos no cadastro de interessados
+
+---
+
+## 5. Documentos — o que a plataforma emite e o que ela não emite
+
+Já resolvido no código, registrado aqui para não se perder:
+
+O gerador de PDF (`services/pdfGenerator.js`) tem dois modos e o padrão vem de
+`SIMULATION_MODE`. Em produção o documento se identifica como **registro de
+operação** e diz, na primeira dobra, que **não é o Recibo de Mecenato**. Quem
+emite o recibo é o proponente, no modelo do Ministério da Cultura, em três vias.
+
+A versão anterior prometia que "um comprovante oficial com validade fiscal será
+emitido" — promessa que a plataforma nunca poderia cumprir, e que só se
+frustraria na hora da declaração.
+
+- [ ] Ler o PDF de produção uma vez, impresso, antes da primeira destinação real
+
+---
+
+## 6. Ambiente
+
+- [ ] `APP_URL` definido. Sem ele, os links de e-mail caem no fallback; em
+      produção o fallback é `https://www.incentivabr.com.br` (o apex responde
+      com falha de TLS — `SEC_E_WRONG_PRINCIPAL`)
+- [ ] `DPO_EMAIL` — a caixa `privacidade@incentivabr.com.br` precisa existir de
+      verdade. Ela está publicada na Política de Privacidade e é o canal do
+      art. 18; e-mail que volta é descumprimento
+- [ ] `RESEND_API_KEY` ou SMTP configurados. Sem transporte de e-mail, o
+      proponente não é avisado e o interessado não confirma cadastro
+- [ ] DNS do apex `incentivabr.com.br` corrigido
+- [ ] `SIMULATION_MODE=false` — **por último, depois de tudo acima**
+
+---
+
+## 7. Depois de virar, nas primeiras 48 horas
+
+- [ ] Acompanhar `GET /api/mecenato/fila` — é onde aparece o que o proponente
+      precisa emitir
+- [ ] Conferir que `proponente_notified_at` está sendo preenchido; se não
+      estiver, a notificação falhou e a tela do destinador não dirá que a
+      instituição foi avisada
+- [ ] Fazer o caminho inteiro como se fosse um servidor: destinar, transferir,
+      receber o aviso, baixar o recibo
