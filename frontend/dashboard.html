@@ -543,6 +543,30 @@
       // não oferecer a ponte.
       const temPonte = Boolean(whats || mail);
 
+      // Em simulação ninguém está sendo avisado de nada: não há transferência,
+      // não há recibo a emitir. Mostrar o caminho continua valendo — é o que
+      // explica ao servidor o que aconteceria de verdade —, mas dizer "a
+      // instituição já foi avisada" seria mentira.
+      if (window.SIMULATION_MODE) {
+        return `
+          <div class="ciclo">
+            <div class="ciclo-titulo"><i class="fas fa-route"></i> Como você receberia o recibo</div>
+            <ul class="ciclo-passos">
+              ${passo(true, false, 'Destinação registrada', fmtDate(d.created_at))}
+              ${passo(true, false, 'Transferência confirmada', d.confirmed_at ? fmtDate(d.confirmed_at) : '')}
+              ${passo(false, true, `${esc(orgPasso)}`, 'automaticamente, ao confirmar')}
+              ${passo(false, false, 'Recibo de Mecenato emitido', `prazo declarado: até ${prazo} dias úteis`)}
+            </ul>
+            <div class="ciclo-nota">
+              <strong>Esta é uma simulação</strong> — nenhum valor foi transferido e nenhuma
+              instituição foi avisada. Numa destinação real, o percurso é este: o Recibo de
+              Mecenato é emitido pelo proponente do projeto, no modelo do Ministério da
+              Cultura, em três vias, e a plataforma avisa a instituição automaticamente com
+              os seus dados prontos.
+            </div>
+          </div>`;
+      }
+
       const nota = emitido
         ? `O Recibo de Mecenato foi emitido por ${esc(orgNome)} no modelo do Ministério da
            Cultura. <strong>É este o documento da sua declaração</strong> — o comprovante em
