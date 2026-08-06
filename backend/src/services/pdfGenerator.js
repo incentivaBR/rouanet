@@ -59,41 +59,54 @@ function maskCPF(cpf) {
 }
 
 /**
- * Formata CPF com pontuacao
+ * Gera o documento em PDF da destinacao.
+ *
+ * ATENCAO ao que este documento NAO e. Na Lei Rouanet, o papel que o
+ * contribuinte usa para deduzir e o RECIBO DE MECENATO, emitido pelo
+ * PROPONENTE no modelo do Ministerio da Cultura, em tres vias. A plataforma
+ * nao emite esse recibo e nao deve sugerir que emitira: o que ela produz e o
+ * REGISTRO da operacao — util para controle pessoal e para pedir o recibo a
+ * quem o emite, nao para substitui-lo.
+ *
+ * @param {Object} donation
+ * @param {Object} user
+ * @param {Object} project
+ * @param {Object} fund
+ * @param {Object} [opts]
+ * @param {boolean} [opts.simulacao] - forca o modo; por padrao segue SIMULATION_MODE
+ * @returns {PDFDocument}
  */
-function formatCPF(cpf) {
-  if (!cpf || cpf.length !== 11) return cpf;
-  return `${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(6, 9)}-${cpf.substring(9, 11)}`;
-}
+export function gerarComprovante(donation, user, project, fund, opts = {}) {
+  // O padrao vem do ambiente para que nenhum chamador esqueca de informar e
+  // acabe emitindo um documento de producao a partir de dados ficticios.
+  const simulacao = opts.simulacao !== undefined
+    ? Boolean(opts.simulacao)
+    : process.env.SIMULATION_MODE === 'true';
 
-/**
- * Gera comprovante de destinacao em PDF
- * @param {Object} donation - Dados da doacao
- * @param {Object} user - Dados do contribuinte
- * @param {Object} project - Dados do projeto
- * @param {Object} fund - Dados do fundo
- * @returns {PDFDocument} - Stream do PDF
- */
-export function gerarComprovante(donation, user, project, fund) {
   const doc = new PDFDocument({
     size: 'A4',
     margin: 50,
     info: {
-      Title: 'Comprovante de Destinacao - IncentivaBR',
+      Title: simulacao
+        ? 'Simulacao de Destinacao - IncentivaBR'
+        : 'Registro de Destinacao - IncentivaBR',
       Author: 'IncentivaBR',
-      Subject: 'Comprovante de Destinacao de Incentivo Fiscal',
-      Keywords: 'incentivo, fiscal, destinacao, comprovante'
+      Subject: simulacao
+        ? 'Simulacao de destinacao de incentivo fiscal'
+        : 'Registro de operacao - nao substitui o Recibo de Mecenato',
+      Keywords: 'incentivo, fiscal, destinacao, rouanet, mecenato'
     }
   });
 
   const codigoVerificacao = gerarCodigoVerificacao(donation.id, donation.created_at);
   const dataEmissao = new Date().toLocaleString('pt-BR');
 
-  // Cores
-  const primaryColor = '#1E3A5F';
-  const secondaryColor = '#F7941D';
-  const textColor = '#333333';
-  const mutedColor = '#666666';
+  // Paleta do manual da marca IncentivaBR. Os valores anteriores (#1E3A5F,
+  // #F7941D) eram de um protótipo antigo e não constam do manual.
+  const primaryColor   = '#273F77';
+  const secondaryColor = '#EE985C';
+  const textColor      = '#333333';
+  const mutedColor     = '#666666';
 
   // ===== CABECALHO =====
   try {
@@ -119,24 +132,35 @@ export function gerarComprovante(donation, user, project, fund) {
 
   doc.moveDown(1);
 
-  // ===== BOX SIMULACAO (PILOTO) =====
+  // ===== BOX DE NATUREZA DO DOCUMENTO =====
+  // O que muda entre simulação e produção não é a estética: é o que o
+  // documento afirma ser. Em produção ele precisa dizer, na cara, que não é o
+  // Recibo de Mecenato — senão o destinador arquiva isto achando que tem o
+  // documento da declaração e descobre em abril que não tem.
   const boxY = doc.y;
   const boxH = 125;
   doc.rect(50, boxY, 495, boxH).fillAndStroke('#0D1B3E', '#1a2f5e');
 
   // texto com y explícito para não depender do cursor após fillAndStroke
   doc.fontSize(11).fillColor('#FFD700')
-     .text('DOCUMENTO DE SIMULAÇÃO — PILOTO DESTINEAI / INCENTIVABR',
+     .text(simulacao
+             ? 'DOCUMENTO DE SIMULAÇÃO — INCENTIVABR'
+             : 'REGISTRO DE OPERAÇÃO — NÃO É O RECIBO DE MECENATO',
            70, boxY + 14, { width: 455, align: 'center' });
 
   doc.fontSize(9).fillColor('#FFFFFF')
-     .text('Este comprovante foi gerado em modo de simulação. Nenhum valor foi ou será transferido.',
+     .text(simulacao
+             ? 'Este documento foi gerado em modo de simulação. Nenhum valor foi ou será transferido.'
+             : 'O documento que você usa na declaração é o Recibo de Mecenato, emitido pelo proponente.',
            70, boxY + 38, { width: 455, align: 'center' });
 
   doc.fontSize(9).fillColor('#AAC4E0')
      .text(
-       'Em produção, este documento conterá seus dados reais e servirá como controle pessoal\n' +
-       'para declaração do Imposto de Renda (Código 41 — Lei Rouanet).',
+       simulacao
+         ? 'Em produção, este documento traz seus dados reais e serve como registro pessoal da\n' +
+           'operação — o recibo fiscal continua sendo emitido pelo proponente do projeto.'
+         : 'Guarde este registro e o comprovante bancário: são eles que você apresenta ao\n' +
+           'proponente para receber o Recibo de Mecenato, no modelo do Ministério da Cultura.',
        70, boxY + 60, { width: 455, align: 'center' }
      );
 
@@ -147,7 +171,7 @@ export function gerarComprovante(donation, user, project, fund) {
   // ===== TITULO =====
   doc.fontSize(16)
      .fillColor(primaryColor)
-     .text('COMPROVANTE DE SIMULAÇÃO', { align: 'center' });
+     .text(simulacao ? 'COMPROVANTE DE SIMULAÇÃO' : 'REGISTRO DE DESTINAÇÃO', { align: 'center' });
 
   doc.fontSize(14)
      .text('Lei Rouanet — Destinação de IR', { align: 'center' });
@@ -236,11 +260,14 @@ export function gerarComprovante(donation, user, project, fund) {
      .fillColor(mutedColor);
 
   if (fund.code === 'FDCA') {
-    doc.text('Base Legal: Art. 260 do ECA (Lei 8.069/90) — Dedução de até 3% do IR');
+    doc.text('Base Legal: Art. 260 do ECA (Lei 8.069/90) — Dedução de até 3% do IR devido');
   } else if (fund.code === 'FDI') {
-    doc.text('Base Legal: Art. 3º da Lei 12.213/10 — Dedução de até 3% do IR');
-  } else if (fund.code === 'FNC') {
-    doc.text('Base Legal: Lei 8.313/1991 (Lei Rouanet) — Dedução de até 6% do IR devido');
+    doc.text('Base Legal: Art. 3º da Lei 12.213/10 — Dedução de até 3% do IR devido');
+  } else if (fund.code === 'FNC' || project?.code) {
+    // Destinação direta a projeto aprovado tem PRONAC; a base é o art. 18 da
+    // Lei 8.313/91, com o limite global do art. 22 da Lei 9.532/97.
+    doc.text('Base Legal: Lei 8.313/1991, art. 18 (Lei Rouanet) — Dedução do valor destinado,');
+    doc.text('observado o limite global de 6% do IR devido (Lei 9.532/97, art. 22).');
   } else {
     doc.text('Base Legal: Legislação de incentivo fiscal vigente');
   }
@@ -264,6 +291,13 @@ export function gerarComprovante(donation, user, project, fund) {
   doc.moveDown(2);
 
   // ===== AVISO IMPORTANTE =====
+  //
+  // A versão anterior prometia que "quando você fizer uma destinação real, um
+  // comprovante oficial com validade fiscal será emitido". A plataforma nunca
+  // vai emitir esse documento: pela Lei 8.313/91 quem emite o Recibo de
+  // Mecenato é o proponente do projeto, no modelo do Ministério da Cultura.
+  // Manter a promessa seria criar uma expectativa que só se frustra na hora da
+  // declaração — o pior momento possível.
   doc.moveDown(1);
   doc.rect(50, doc.y, 495, 70)
      .fillAndStroke('#fff3cd', '#ffc107');
@@ -271,13 +305,22 @@ export function gerarComprovante(donation, user, project, fund) {
   doc.moveDown(0.3);
   doc.fontSize(10)
      .fillColor('#856404')
-     .text('SIMULAÇÃO — SEM VALIDADE FISCAL', { align: 'center' });
+     .text(simulacao
+             ? 'SIMULAÇÃO — SEM VALIDADE FISCAL'
+             : 'REGISTRO DE OPERAÇÃO — NÃO SUBSTITUI O RECIBO DE MECENATO',
+           { align: 'center' });
 
   doc.moveDown(0.3);
-  doc.fontSize(9)
-     .text('Nenhum valor foi transferido. Este documento é gerado exclusivamente para fins de', { align: 'center' });
-  doc.text('demonstrar como funciona o fluxo de destinação.', { align: 'center' });
-  doc.text('Quando você fizer uma destinação real, um comprovante oficial com validade fiscal será emitido.', { align: 'center' });
+  doc.fontSize(9);
+  if (simulacao) {
+    doc.text('Nenhum valor foi transferido. Este documento é gerado exclusivamente para', { align: 'center' });
+    doc.text('demonstrar como funciona o fluxo de destinação.', { align: 'center' });
+    doc.text('Numa destinação real, o recibo fiscal é emitido pelo proponente do projeto.', { align: 'center' });
+  } else {
+    doc.text('Este documento registra a operação realizada por meio da plataforma.', { align: 'center' });
+    doc.text('O documento fiscal da dedução é o Recibo de Mecenato, emitido pelo proponente', { align: 'center' });
+    doc.text('do projeto no modelo do Ministério da Cultura, em três vias.', { align: 'center' });
+  }
 
   // ===== RODAPE =====
   doc.moveDown(3);

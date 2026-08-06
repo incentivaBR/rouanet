@@ -68,18 +68,23 @@ const getAppUrl = () => {
   if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, '');
   const domain = process.env.BRAND_DOMAIN;
   if (domain) return `https://${domain.replace(/^https?:\/\//, '')}`;
+  // Sem APP_URL nem BRAND_DOMAIN, o fallback antigo era localhost:3000 — em
+  // produção isso manda TODO link de e-mail para a máquina de quem recebe.
+  // Falha silenciosa: o e-mail sai, ninguém consegue clicar.
+  if (process.env.NODE_ENV === 'production') return 'https://www.incentivabr.com.br';
   return 'http://localhost:3000';
 };
 
 const getFromAddress = () => {
   if (process.env.SMTP_FROM) return process.env.SMTP_FROM;
-  const brand = process.env.BRAND_NAME || 'DestineAI';
-  const domain = process.env.BRAND_DOMAIN || 'destineai.com.br';
+  // A marca do core é IncentivaBR; destineai.com.br é apêndice, não padrão.
+  const brand = process.env.BRAND_NAME || 'IncentivaBR';
+  const domain = process.env.BRAND_DOMAIN || 'incentivabr.com.br';
   return `"${brand}" <contato@${domain}>`;
 };
 
 function getEmailTemplate(content, org = null) {
-  const orgName       = org?.name           || process.env.BRAND_NAME          || 'DestineAI';
+  const orgName       = org?.name           || process.env.BRAND_NAME          || 'IncentivaBR';
   const primaryColor  = org?.primary_color  || process.env.BRAND_COLOR_PRIMARY || '#273F77';
   const appUrl        = getAppUrl();
 
@@ -162,7 +167,7 @@ export async function sendWelcomeEmail(user, org = null) {
     <a href="${getAppUrl()}/calculadora.html" class="button">Calcular meu potencial</a>
   `;
 
-  const brandName = process.env.BRAND_NAME || 'DestineAI';
+  const brandName = process.env.BRAND_NAME || 'IncentivaBR';
   try {
     await doSend({
       to: user.email,
