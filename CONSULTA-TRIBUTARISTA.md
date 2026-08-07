@@ -87,14 +87,14 @@ aprovamos destinação acima do permitido.
 
 ---
 
-## 5. Qual é exatamente a base do percentual?
+## 5. ~~Qual é exatamente a base do percentual?~~ — RESPONDIDA
 
-Confirmar que os 6% incidem sobre o **imposto devido apurado na declaração**
-(antes das deduções de incentivo) e não sobre o imposto a pagar após retenções e
-antecipações.
+**Imposto devido.** É o que o sistema já usa: o `ir_devido` apurado pela tabela
+progressiva, antes das deduções de incentivo — não o imposto a pagar depois de
+retenções e antecipações.
 
-**O que muda no sistema:** o campo que pedimos ao servidor e o número que a
-calculadora usa. Errar a base erra todo o cálculo, mesmo com o percentual certo.
+Fica a confirmação formal no parecer, mas não bloqueia nada: o cálculo já opera
+sobre essa base, em toda a plataforma.
 
 ---
 
