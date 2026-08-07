@@ -321,45 +321,17 @@ router.get('/org-project', async (req, res) => {
       return res.status(404).json({ status: 'error', message: 'Organização não encontrada.' });
     }
 
-    // Em modo simulação, retorna projeto fictício sem consultar SALIC
-    if (process.env.SIMULATION_MODE === 'true') {
-      return res.json({
-        status: 'success',
-        source: 'simulation',
-        lei: 'Lei Rouanet (Lei 8.313/1991)',
-        organizacao: {
-          slug:             org.slug,
-          name:             org.name,
-          pronac:           '261847',
-          max_percentage:   6.00,
-          contact_email:    org.contact_email,
-          contact_phone:    org.contact_phone,
-          bank_name:        'Banco do Brasil',
-          bank_code:        '001',
-          bank_agency:      '3217-4',
-          bank_account:     '12345-6',
-          pix_key:          null,
-          pix_key_type:     null,
-          beneficiary_name: 'Orquestra das Periferias do DF',
-          beneficiary_cnpj: '00.000.000/0001-00'
-        },
-        projeto: {
-          pronac:     '261847',
-          nome:       'Orquestra das Periferias do DF',
-          area:       'Música',
-          segmento:   'Música Erudita / Orquestral',
-          uf:         'DF',
-          municipio:  'Brasília',
-          mecanismo:  'Art. 18 (100% dedutível)',
-          proponente: { nome: 'Associação Cultural das Periferias do DF' },
-          situacao:   'Em execução',
-          valores:    { aprovado: 480000, captado: 0 },
-          link_salic: 'https://salic.cultura.gov.br/cidadao/projeto/detalharProjeto/261847/versao/1'
-        }
-      });
-    }
-
-    // Buscar projeto em destaque na tabela org_projects (nova estrutura)
+    // O projeto vem SEMPRE da tabela, inclusive em simulação.
+    //
+    // Antes havia aqui um bloco que devolvia um projeto inventado, com PRONAC,
+    // proponente e conta bancária escritos no código. Isso fazia cadastrar um
+    // cliente virar deploy: para a Casa Azul aparecer, alguém editaria arquivo
+    // e publicaria. E o projeto fictício já existia no banco — a migração 022 o
+    // semeia — então o bloco era uma segunda cópia do mesmo dado, livre para
+    // divergir da primeira.
+    //
+    // O que a simulação muda é só uma coisa: não consulta o SALIC. Os dados
+    // saem do cadastro em vez da API do Ministério.
     const projectResult = await import('../../config/database.js').then(m =>
       m.default.query(
         `SELECT * FROM org_projects
@@ -375,7 +347,45 @@ router.get('/org-project', async (req, res) => {
     if (!pronac) {
       return res.status(404).json({
         status: 'error',
-        message: 'Esta organização não possui um projeto SALIC vinculado. Configure no painel admin.'
+        message: 'Esta organização ainda não tem um projeto cadastrado. Cadastre em Projetos, no painel administrativo.'
+      });
+    }
+
+    /** Como a organização e o projeto são devolvidos, com ou sem SALIC. */
+    const organizacao = {
+      slug:             org.slug,
+      name:             org.name,
+      pronac,
+      max_percentage:   parseFloat(org.max_percentage) || 6.00,
+      contact_email:    org.contact_email,
+      contact_phone:    org.contact_phone,
+      bank_name:        orgProject?.bank_name        || null,
+      bank_code:        orgProject?.bank_code        || null,
+      bank_agency:      orgProject?.bank_agency      || null,
+      bank_account:     orgProject?.bank_account     || null,
+      pix_key:          orgProject?.pix_key          || null,
+      pix_key_type:     orgProject?.pix_key_type     || null,
+      beneficiary_name: orgProject?.proponente_nome  || null,
+      beneficiary_cnpj: orgProject?.proponente_cnpj  || null
+    };
+
+    if (process.env.SIMULATION_MODE === 'true') {
+      return res.json({
+        status: 'success',
+        source: 'simulation',
+        lei: 'Lei Rouanet (Lei 8.313/1991)',
+        organizacao,
+        projeto: {
+          pronac,
+          nome:       orgProject?.titulo    || `Projeto PRONAC ${pronac}`,
+          area:       orgProject?.area      || null,
+          segmento:   orgProject?.segmento  || null,
+          uf:         orgProject?.uf        || null,
+          descricao:  orgProject?.descricao || null,
+          proponente: { nome: orgProject?.proponente_nome || null },
+          situacao:   'Em execução',
+          link_salic: `https://salic.cultura.gov.br/cidadao/projeto/detalharProjeto/${pronac}/versao/1`
+        }
       });
     }
 
