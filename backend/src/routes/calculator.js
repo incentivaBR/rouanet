@@ -1,5 +1,6 @@
 import express from 'express';
 import pool from '../../config/database.js';
+import { tetoDoMecanismo } from '../lib/tetos.js';
 
 const router = express.Router();
 
@@ -16,21 +17,32 @@ const TABELA_IR_2026 = [
 const DEDUCAO_DEPENDENTE = 2275.08;
 const DEDUCAO_EDUCACAO_MAX = 3561.50;
 
-// Lei Rouanet (Lei 8.313/1991) — limite fixo de 6% do IR devido
-const LIMITE_ROUANET = 0.06;
-
 /**
- * Retorna limite de destinação via Lei Rouanet.
- * Permite customização via max_percentage da organização (padrão: 6%).
+ * Limite de destinação, em fração (0.06 = 6%).
+ *
+ * O percentual vem de `tetos_deducao`, não daqui. Ele estava escrito como
+ * constante em três pontos do código — e é uma TESE JURÍDICA, não um fato do
+ * sistema: a interação entre o art. 18 da Lei 8.313/91 e o teto do art. 22 da
+ * Lei 9.532/97 ainda depende de parecer tributário. Enquanto morasse no código,
+ * cada resposta do tributarista seria um deploy.
+ *
+ * A organização pode REDUZIR o teto, nunca aumentá-lo. Um cliente que queira ser
+ * mais conservador pode; nenhum cliente pode liberar acima da lei.
  */
-function getOrganizationLimits(org) {
+async function getOrganizationLimits(org) {
+  const teto = await tetoDoMecanismo(org?.incentive_group_code || 'ROUANET');
+  const tetoLegal = teto.percentual / 100;
+
   const maxPercent = org?.max_percentage
     ? parseFloat(org.max_percentage) / 100
-    : LIMITE_ROUANET;
+    : tetoLegal;
+
+  const efetivo = Math.min(maxPercent, tetoLegal);
 
   return {
-    rouanet: Math.min(maxPercent, LIMITE_ROUANET),
-    total_maximo: Math.min(maxPercent, LIMITE_ROUANET)
+    rouanet: efetivo,
+    total_maximo: efetivo,
+    teto: { codigo: teto.codigo, percentual: teto.percentual, base_legal: teto.base_legal }
   };
 }
 
@@ -114,7 +126,7 @@ router.post('/ir', async (req, res) => {
       : 0;
 
     // Obter limites baseado na organização/tenant
-    const limites = getOrganizationLimits(req.organization);
+    const limites = await getOrganizationLimits(req.organization);
 
     // Calcular limites de doação via Lei Rouanet (6% IR)
     const limitesDoacao = {
@@ -173,7 +185,7 @@ router.post('/limites-rapido', async (req, res) => {
     }
 
     // Obter limites baseado na organização/tenant
-    const limites = getOrganizationLimits(req.organization);
+    const limites = await getOrganizationLimits(req.organization);
 
     // Calcular limites via Lei Rouanet (6% IR)
     const limitesDoacao = {
@@ -246,11 +258,13 @@ router.post('/distribuir', async (req, res) => {
       projetos.push({ pronac: item.pronac, valor: item.valor });
     }
 
-    // Limite Lei Rouanet: 6% do IR devido
-    const limiteRouanet = Math.round(ir_devido * LIMITE_ROUANET * 100) / 100;
+    // O teto vem do banco, pela mesma função dos demais pontos do cálculo —
+    // três cópias do mesmo número era como uma delas ficava para trás.
+    const limites = await getOrganizationLimits(req.organization);
+    const limiteRouanet = Math.round(ir_devido * limites.total_maximo * 100) / 100;
 
     if (totalDistribuido > limiteRouanet) {
-      errors.push(`Limite Rouanet de R$ ${limiteRouanet.toFixed(2)} (6% do IR) excedido. Valor: R$ ${totalDistribuido.toFixed(2)}`);
+      errors.push(`Limite de R$ ${limiteRouanet.toFixed(2)} (${limites.teto.percentual}% do IR) excedido. Valor: R$ ${totalDistribuido.toFixed(2)}`);
     }
 
     const isValid = errors.length === 0;
