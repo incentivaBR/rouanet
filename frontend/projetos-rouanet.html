@@ -492,16 +492,35 @@
                 ${escapeHtml(p.situacao)}
               </div>` : ''}
 
-              <!-- Info FNC -->
+              <!--
+                Aqui havia uma conta bancária escrita no código — Ag. 1419-2,
+                Conta 36.068-6 — apresentada como sendo do Fundo Nacional de
+                Cultura. Três problemas:
+
+                1. Não era a conta que o fluxo de destinação apresenta. Lá os
+                   dados vêm da API, do cadastro do projeto. Duas contas
+                   diferentes na mesma jornada, e quem transferisse pela que
+                   está aqui mandaria dinheiro para o lugar errado.
+                2. Também não coincidia com a conta do FNC cadastrada no banco
+                   (Ag. 3902-5, Conta 170500-8).
+                3. Na destinação a projeto pelo art. 18, o recurso vai para a
+                   CONTA DE CAPTAÇÃO do projeto, específica por PRONAC — não
+                   para o FNC, que é outro mecanismo.
+
+                Dado bancário só deve aparecer onde vem do cadastro, e é o que
+                a tela de destinação já faz.
+              -->
               <div class="rounded-xl bg-[#0F1E3D]/[0.04] border border-[#0F1E3D]/[0.08] p-4 mb-6">
                 <p class="text-xs font-bold text-[#0F1E3D] mb-1.5 flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                   </svg>
-                  Fundo Nacional de Cultura — FNC
+                  Conta de Captação do projeto
                 </p>
                 <p class="text-xs text-gray-500 leading-relaxed">
-                  Banco do Brasil · Ag. 1419-2 · Conta 36.068-6 · Os recursos são destinados diretamente ao FNC e deduzidos do seu IR na declaração anual.
+                  Os dados bancários corretos aparecem na etapa de pagamento, após você
+                  registrar a destinação — são específicos deste projeto e conferidos no
+                  momento. Nunca transfira para uma conta obtida fora desse fluxo.
                 </p>
               </div>
 
