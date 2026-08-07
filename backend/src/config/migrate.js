@@ -27,6 +27,32 @@ async function applyFile(client, filePath, label) {
   }
 }
 
+/**
+ * O que já foi aplicado e o que ficou para trás.
+ *
+ * O runner acima, de propósito, não trava o servidor quando uma migration
+ * falha: prende o boot inteiro por causa de um conflito antigo seria pior. O
+ * preço é que a falha vira uma linha de log que ninguém lê. `pendentes` é a
+ * resposta: depois de um boot bem-sucedido ela tem que estar vazia. Se tiver
+ * qualquer nome dentro, aquela migration falhou e o banco está diferente do
+ * que o código espera.
+ */
+export async function statusDasMigracoes() {
+  const naPasta = fs.existsSync(MIGRATIONS_DIR)
+    ? fs.readdirSync(MIGRATIONS_DIR).filter(f => f.endsWith('.sql')).sort()
+    : [];
+
+  const { rows } = await pool.query('SELECT filename FROM migrations_log');
+  const aplicadas = new Set(rows.map(r => r.filename));
+
+  return {
+    total: naPasta.length,
+    aplicadas: naPasta.filter(f => aplicadas.has(f)).length,
+    ultima: naPasta.filter(f => aplicadas.has(f)).pop() || null,
+    pendentes: naPasta.filter(f => !aplicadas.has(f))
+  };
+}
+
 export async function runMigrations() {
   const client = await pool.connect();
   try {

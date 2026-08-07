@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import pool, { testConnection } from './config/database.js';
-import { runMigrations } from './src/config/migrate.js';
+import { runMigrations, statusDasMigracoes } from './src/config/migrate.js';
 import { initEmailService, getEmailStatus } from './src/services/emailService.js';
 
 // ES modules: criar __dirname
@@ -161,6 +161,17 @@ app.get('/diagnostico', async (req, res) => {
       status: 'error',
       error: error.message
     };
+  }
+
+  // Estado das migrations. Uma que falha não derruba o boot — só some num log.
+  // `pendentes` não vazio depois de um deploy significa que o banco não tem a
+  // forma que este código supõe.
+  try {
+    diagnostico.services.migrations = await statusDasMigracoes();
+    diagnostico.services.migrations.status =
+      diagnostico.services.migrations.pendentes.length === 0 ? 'ok' : 'error';
+  } catch (error) {
+    diagnostico.services.migrations = { status: 'error', error: error.message };
   }
 
   // Status do serviço de email
