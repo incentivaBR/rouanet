@@ -112,7 +112,9 @@ CREATE TABLE IF NOT EXISTS donations (
   user_id UUID REFERENCES users(id),
   project_id UUID REFERENCES projects(id),
   official_fund_id UUID REFERENCES official_funds(id),
-  ir_total DECIMAL(10,2) NOT NULL,
+  -- Imposto devido apurado na declaração, base do teto de 6%. Chamava-se
+  -- ir_total, nome que se lia como "total de rendimentos" — ver migração 032.
+  ir_devido DECIMAL(10,2) NOT NULL,
   donation_amount DECIMAL(10,2) NOT NULL,
   fiscal_year INTEGER NOT NULL,
   status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'processed', 'cancelled')),
