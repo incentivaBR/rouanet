@@ -441,8 +441,8 @@ PASSO 2
 #### Escolha o projeto
 Acesse nosso projeto aprovado pelo MinC/SALIC. Você verá o PRONAC, o proponente e quanto ainda pode ser captado.
 PASSO 3
-#### Transfira para o FNC
-A destinação é feita via transferência bancária para o Fundo Nacional de Cultura (FNC) , administrado pelo Banco do Brasil.
+#### Transfira para a conta do projeto
+A destinação é feita por transferência bancária para a Conta de Captação do projeto — uma conta bloqueada, específica daquele PRONAC, aberta pelo Ministério da Cultura no Banco do Brasil.
 Banco: Banco do Brasil (001)
 Agência: 1419-2
 Conta: 36.068-6
@@ -461,7 +461,7 @@ Tem solução
 É menos complicado do que parece. São 4 passos: calcular → escolher projeto → fazer TED → declarar. O IncentivaBR guia cada etapa.
 "Desconfio que o dinheiro não chega"
 Tem solução
-Os projetos são aprovados pelo Ministério da Cultura e listados no SALIC (sistema oficial do governo federal). O FNC é gerido pelo Banco do Brasil . Você pode verificar qualquer dado no site oficial antes de transferir.
+Os projetos são aprovados pelo Ministério da Cultura e listados no SALIC (sistema oficial do governo federal). A Conta de Captação de cada projeto é aberta pelo MinC no Banco do Brasil e fica bloqueada até a liberação. Você pode verificar qualquer dado no site oficial antes de transferir.
 "O valor é pequeno, não compensa"
 Tem solução
 Não é dinheiro novo — é o imposto que você já pagaria ao governo , só redirecionado. Seu bolso fica exatamente igual. E mesmo R$ 300 pagam 10 aulas de música para jovens em situação de vulnerabilidade.
@@ -488,7 +488,7 @@ A transferência deve ser feita dentro do exercício fiscal (1º de janeiro a 31
 O que acontece se destinar mais que 6%?
 O excedente não é deduzível — você perderá o benefício fiscal sobre o valor acima do limite. Use o MeuLimite para saber seu limite exato.
 É seguro?
-Sim. Os projetos são aprovados pelo MinC e listados no SALIC (sistema oficial do governo federal). O FNC é gerido pelo Banco do Brasil.
+Sim. Os projetos são aprovados pelo MinC e listados no SALIC (sistema oficial do governo federal). A Conta de Captação de cada projeto é aberta pelo Ministério da Cultura no Banco do Brasil e fica bloqueada até a liberação.
 ### O projeto fala com você
 O Orquestra das Periferias do DF é cultura popular que ressoa em cada área do serviço público.
 #### Justiça e Judiciário
@@ -543,12 +543,12 @@ Clique em "Destinar para este projeto", faça login (ou crie sua conta em segund
 Login ou cadastro rápido
 Informe o valor
 Confirme seus dados
-Receba os dados do FNC
+Receba os dados da conta do projeto
 Iniciar destinação
 PASSO 4
 ~2 minutos
-### Faça a transferência para o FNC
-Transfira o valor para a conta oficial do Fundo Nacional de Cultura (FNC) no Banco do Brasil usando PIX, TED ou transferência.
+### Transfira para a Conta de Captação
+Transfira o valor para a Conta de Captação do projeto no Banco do Brasil, usando PIX, TED ou transferência. É uma conta bloqueada e específica daquele PRONAC — confira os dados na tela antes de transferir.
 Banco: Banco do Brasil (001)
 Agência: 1419-2
 Conta: 36.068-6
@@ -597,9 +597,9 @@ Não! O valor destinado é deduzido integralmente do IR devido. Você redirecion
 Exemplo: IR devido R$ 10.000 → destina R$ 600 (6%) → paga só R$ 9.400 ao governo. A diferença vai para a cultura.
 O que é a Lei Rouanet?
 A Lei 8.313/1991 permite que pessoas físicas destinem até 6% do IR devido para projetos culturais aprovados pelo Ministério da Cultura (MinC) e cadastrados no sistema SALIC .
-O dinheiro vai para o Fundo Nacional de Cultura (FNC) , gerido pelo Banco do Brasil, e é repassado ao projeto escolhido.
+O dinheiro vai direto para a Conta de Captação do projeto , no Banco do Brasil. É uma conta bloqueada, aberta pelo Ministério da Cultura e específica daquele PRONAC — o proponente só movimenta os recursos após a liberação do MinC.
 É seguro? Como verifico os dados?
-É verificável — e essa é a melhor garantia. Os projetos são aprovados e publicados no SALIC (salic.cultura.gov.br), sistema oficial do governo federal. O FNC é gerido pelo Banco do Brasil.
+É verificável — e essa é a melhor garantia. Os projetos são aprovados e publicados no SALIC (salic.cultura.gov.br), sistema oficial do governo federal. A Conta de Captação de cada projeto é aberta pelo MinC no Banco do Brasil.
 Você pode verificar qualquer projeto em salic.cultura.gov.br pelo número PRONAC.
 Qual o limite que posso destinar?
 O limite é 6% do IR devido — não do salário, mas do imposto calculado. Use nossa calculadora para saber o valor exato.
@@ -624,14 +624,14 @@ Posso destinar para projetos fora da minha cidade?
 Sim. Você pode escolher projetos de qualquer localidade do Brasil , independentemente do seu domicílio fiscal. A Lei Rouanet não restringe por região.
 ### Processo
 Como faço a transferência? Posso usar PIX?
-Sim! Você pode usar PIX, TED ou transferência bancária para a conta do FNC no Banco do Brasil:
+Sim! Você pode usar PIX, TED ou transferência bancária para a Conta de Captação do projeto, no Banco do Brasil:
 - Banco: Banco do Brasil (001)
 - Agência: 1419-2
 - Conta: 36.068-6
 - Favorecido: Fundo Nacional de Cultura
 No campo descrição/referência, informe o PRONAC do projeto (fornecido no sistema após registrar a destinação).
 Que comprovante preciso enviar?
-Envie o comprovante da transferência em PDF, JPG ou PNG (até 5MB). Deve mostrar data, valor e destinatário (FNC).
+Envie o comprovante da transferência em PDF, JPG ou PNG (até 5MB). Deve mostrar data, valor e destinatário (a Conta de Captação do projeto).
 Print da tela do aplicativo do banco funciona perfeitamente!
 O que é o Comunicado de Mecenato?
 O Comunicado de Mecenato é o recibo oficial emitido pelo proponente do projeto. É o documento com valor fiscal para a declaração do IR — diferente do comprovante da plataforma (só para controle pessoal).
