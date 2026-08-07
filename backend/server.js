@@ -139,6 +139,47 @@ app.get('/db-test', async (req, res) => {
   }
 });
 
+/**
+ * Descreve a DATABASE_URL sem revelar a senha.
+ *
+ * Devolve para onde a conexão aponta e duas características do valor da senha
+ * — espaço nas pontas e caractere que quebra a URL — que são as duas causas
+ * reais de "password authentication failed" quando a senha acabou de ser
+ * trocada. Nenhum trecho da senha sai daqui.
+ */
+function descreveConexao() {
+  const bruta = process.env.DATABASE_URL;
+  if (!bruta) return { origem: 'DATABASE_URL ausente' };
+
+  // O valor pode ter vindo com espaço colado — variável mal colada no painel.
+  const limpa = bruta.trim();
+  const resultado = { url_com_espaco_nas_pontas: bruta !== limpa };
+
+  if (limpa.includes('${{')) {
+    // Railway resolve referências antes de injetar. Se o texto ainda está aqui,
+    // a referência não foi resolvida — nome do serviço errado, ou outro projeto.
+    resultado.origem = 'referencia nao resolvida — o texto ${{...}} chegou cru';
+    return resultado;
+  }
+
+  try {
+    const u = new URL(limpa);
+    const senha = decodeURIComponent(u.password || '');
+    return {
+      ...resultado,
+      host: u.hostname,
+      porta: u.port || '(padrao)',
+      usuario: u.username,
+      banco: u.pathname.replace(/^\//, ''),
+      senha_vazia: senha.length === 0,
+      senha_com_espaco_nas_pontas: senha !== senha.trim(),
+      senha_com_caractere_que_quebra_url: /[@:/#?[\]]/.test(senha)
+    };
+  } catch {
+    return { ...resultado, origem: 'DATABASE_URL nao e uma URL valida' };
+  }
+}
+
 // Rota de diagnóstico completo do sistema
 app.get('/diagnostico', async (req, res) => {
   const diagnostico = {
@@ -159,7 +200,15 @@ app.get('/diagnostico', async (req, res) => {
   } catch (error) {
     diagnostico.services.database = {
       status: 'error',
-      error: error.message
+      error: error.message,
+      // Para onde estamos discando, e com que cara de senha.
+      //
+      // "password authentication failed" sozinho nao distingue tres coisas
+      // muito diferentes: a variavel nao pegou, pegou o valor errado, ou pegou
+      // o valor certo com um espaco grudado na ponta. Sem isso, o conserto vira
+      // tentativa e erro no painel do Railway. A senha em si nunca aparece —
+      // so o formato dela.
+      conexao: descreveConexao()
     };
   }
 
