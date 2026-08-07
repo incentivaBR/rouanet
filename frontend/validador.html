@@ -142,7 +142,7 @@
           <div class="flex items-center justify-between mb-1">
             <div>
               <div class="font-semibold text-sm">FDCA + FDI — Criança, Adolescente e Idoso</div>
-              <div class="text-white/40 text-xs">FDCA: até 6% (Lei 8.069/1990 Art. 260 II) · FDI: até 6% (Lei 12.213/2010) — limites independentes</div>
+              <div class="text-white/40 text-xs">FDCA (ECA art. 260, II) e FDI (Lei 12.213/2010) — dividem o teto de 6% com as demais modalidades</div>
             </div>
             <span id="icon-fidfia" class="text-lg">—</span>
           </div>
@@ -279,11 +279,11 @@
         </div>
         <div class="flex gap-3 mt-4">
           <span class="flex-shrink-0">ℹ️</span>
-          <span><strong class="text-white">FDCA e FDI são independentes:</strong> cada um tem seu próprio limite de 6% do IR Devido. Você pode usar os dois no mesmo ano sem que um afete o outro.</span>
+          <span><strong class="text-white">FDCA e FDI dividem o mesmo teto:</strong> pode usar os dois no mesmo ano, mas a soma entra nos 6% — destinar a um reduz o que resta para o outro.</span>
         </div>
         <div class="flex gap-3">
           <span class="flex-shrink-0">ℹ️</span>
-          <span>Os limites são independentes entre todas as modalidades (Rouanet, Esporte, FDCA, FDI e Saúde). Você pode destinar para mais de uma no mesmo ano.</span>
+          <span>Pode destinar a mais de uma modalidade no mesmo ano, mas os percentuais <strong class="text-white">não se somam</strong>: Rouanet, Esporte, FDCA, FDI e Reciclagem dividem um teto único de 6% do IR devido (Lei 9.532/1997, art. 22). Só PRONON + PRONAS ficam fora, com 1% entre si.</span>
         </div>
       </div>
     </div>
@@ -359,6 +359,16 @@
   function validar() {
     const ir = parseVal('ir-devido');
 
+    // TETO GLOBAL — a verificação que faltava.
+    //
+    // Cada modalidade abaixo tem o percentual da sua lei própria, e o validador
+    // conferia só isso. Mas o art. 22 da Lei 9.532/1997 limita a SOMA das
+    // deduções a 6% do imposto devido. Sem esta conta, a ferramenta aprovava
+    // 6% + 7% + 6% + 6% = 25% do IR — e ela se chama Validador Anti-Malha Fina.
+    //
+    // Fora do teto global ficam apenas PRONON + PRONAS, que dividem 1% entre si.
+    const TETO_GLOBAL = ir * 0.06;
+
     // Limites
     const L = {
       rouanet:    ir * 0.06,
@@ -426,7 +436,8 @@
     else if (V.fdi > 0) setMsg('fdi', `✓ FDI: ${fmtBRL(V.fdi)} de ${fmtBRL(L.fdi)} disponível`, 'ok');
     else setMsg('fdi', '', 'ok');
 
-    // Card combinado FDCA + FDI — cada um tem limite independente de 6%
+    // Card combinado FDCA + FDI. Cada um tem o proprio percentual na lei,
+    // mas ambos entram na soma verificada contra o TETO_GLOBAL acima.
     const clsFidFia = (V.fia > L.fia || V.fdi > L.fdi) ? 'over'
                     : (clsFia === 'warn' || clsFdi === 'warn') ? 'warn' : 'ok';
     const barRef = Math.max(V.fia / L.fia, V.fdi / L.fdi) * L.fia;
@@ -467,7 +478,16 @@
     const total = V.rouanet + V.esporte + V.fidfia + V.reciclagem + V.pronon_pronas;
     const temValor = total > 0;
 
+    // A soma das modalidades que dividem o teto de 6%.
+    const somaNoTeto = V.rouanet + V.esporte + V.fia + V.fdi + V.reciclagem;
+
     const problemas = [];
+    // A verificação decisiva, e a primeira: uma destinação pode estar dentro de
+    // cada limite individual e ainda assim estourar o teto da soma.
+    if (somaNoTeto > TETO_GLOBAL)
+      problemas.push(`A soma das modalidades (${fmtBRL(somaNoTeto)}) excede o teto de 6% do IR devido `
+                   + `(${fmtBRL(TETO_GLOBAL)}) — Lei 9.532/1997, art. 22. `
+                   + `Reduza ${fmtBRL(somaNoTeto - TETO_GLOBAL)}.`);
     if (V.rouanet > L.rouanet)           problemas.push('Rouanet excede o limite');
     if (V.esporte > L.esporte)           problemas.push('Esporte excede o limite');
     if (V.fia > L.fia)                   problemas.push('FDCA excede o limite de 6%');

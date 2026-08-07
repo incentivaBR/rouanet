@@ -32,7 +32,7 @@ Lei nº 8.313, de 23 de dezembro de 1991, Art. 18 — Programa Nacional de Apoio
 Norma RFB
 Instrução Normativa RFB nº 1.131/2011 e atualizações. Consulte sempre a IN vigente no exercício da declaração.
 Limite
-6% do IR Devido — independente dos demais mecanismos. O valor destinado abate diretamente do IR Devido. Custo líquido zero ao final do ano-calendário.
+6% do IR Devido — Compartilha o teto de 6% do imposto devido com a Lei Rouanet, o FDCA, o Fundo do Idoso e o audiovisual — a soma das modalidades não ultrapassa esse limite (Lei 9.532/1997, art. 22). O valor destinado abate diretamente do IR Devido: custo líquido zero ao final do ano-calendário.
 Quem pode usar
 Pessoa Física com IR Devido positivo, declaração obrigatória no modelo completo (deduções legais). Exige imposto a pagar antes da destinação.
 Ficha DIRPF
@@ -52,7 +52,7 @@ Lei nº 11.438, de 29 de dezembro de 2006 — incentivo a projetos desportivos e
 Norma RFB
 Instrução Normativa RFB nº 1.339/2013 e atualizações. Consulte a IN vigente no exercício da declaração.
 Limite
-7% do IR Devido — o maior limite individual entre os mecanismos. Independente dos demais. O valor abate diretamente do IR Devido.
+Concorre com o teto de 6% — para pessoa física, a Lei de Incentivo ao Esporte disputa o mesmo limite da Lei Rouanet; não é percentual adicional. A LC 222/2025 revogou o marco anterior: confirme o percentual e a vigência no ano-calendário antes de orientar o cliente.
 Quem pode usar
 Pessoa Física com IR Devido positivo, declaração obrigatória no modelo completo .
 Ficha DIRPF
@@ -71,7 +71,7 @@ Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente —
 Norma RFB
 Instrução Normativa RFB vigente para o exercício. O fundo deve estar devidamente registrado no CNPJ e com conta corrente ativa junto ao CDCA competente.
 Limite
-6% do IR Devido — limite independente do FDI. Os dois mecanismos (FDCA + FDI) têm limites separados: cada um até 6%, sem limite conjunto entre eles.
+6% do IR Devido — Compartilha o teto de 6% do imposto devido com a Lei Rouanet, o FDCA, o Fundo do Idoso e o audiovisual — a soma das modalidades não ultrapassa esse limite (Lei 9.532/1997, art. 22). FDCA e Fundo do Idoso não têm limites separados : destinar aos dois no mesmo ano reparte os 6%, não os duplica.
 Quem pode usar
 Pessoa Física com IR Devido positivo, declaração obrigatória no modelo completo .
 Ficha DIRPF
@@ -91,7 +91,7 @@ Lei nº 12.213, de 20 de janeiro de 2010 — institui o Fundo Nacional do Idoso 
 Norma RFB
 Instrução Normativa RFB vigente para o exercício. O fundo deve estar devidamente registrado com CNPJ e conta corrente ativa.
 Limite
-6% do IR Devido — limite independente do FDCA. Os dois mecanismos (FDCA + FDI) têm limites separados: cada um até 6%, sem limite conjunto entre eles.
+6% do IR Devido — Compartilha o teto de 6% do imposto devido com a Lei Rouanet, o FDCA, o Fundo do Idoso e o audiovisual — a soma das modalidades não ultrapassa esse limite (Lei 9.532/1997, art. 22). Fundo do Idoso e FDCA não têm limites separados : destinar aos dois no mesmo ano reparte os 6%, não os duplica.
 Quem pode usar
 Pessoa Física com IR Devido positivo, declaração obrigatória no modelo completo .
 Ficha DIRPF
@@ -144,7 +144,7 @@ Lei nº 14.260, de 8 de dezembro de 2021 — institui incentivo fiscal para pess
 Norma RFB
 Instrução Normativa RFB vigente para o exercício. Lei relativamente recente (2021) — confirme sempre na IN do exercício corrente se há atualizações regulatórias.
 Limite
-6% do IR Devido — independente dos demais mecanismos.
+6% do IR Devido — Compartilha o teto de 6% do imposto devido com a Lei Rouanet, o FDCA, o Fundo do Idoso e o audiovisual — a soma das modalidades não ultrapassa esse limite (Lei 9.532/1997, art. 22).
 Quem pode usar
 Pessoa Física com IR Devido positivo, declaração obrigatória no modelo completo .
 Ficha DIRPF
@@ -183,7 +183,7 @@ Incentivos Fiscais → PRONON
 Lei 12.715/2012, Art. 3º
 1%*
 Incentivos Fiscais → PRONAS
-* PRONON e PRONAS compartilham limite conjunto de 1% do IR Devido. Nunca some percentuais de modalidades diferentes para apresentar ao cliente — cada uma tem base legal própria e limite independente. Clique em qualquer linha para ver a ficha completa.
+* PRONON e PRONAS compartilham limite conjunto de 1% do IR Devido, fora dos 6%. As demais modalidades — Rouanet, FDCA, Fundo do Idoso, audiovisual e, para pessoa física, o incentivo ao esporte — dividem um teto único de 6% (Lei 9.532/1997, art. 22). Nunca some os percentuais para apresentar um total ao cliente: o disponível é 6% no conjunto, a ser distribuído. Clique em qualquer linha para ver a ficha completa.
 DÚVIDAS DE COMPLIANCE
 ### Perguntas que o contador precisa responder
 As 5 dúvidas mais frequentes de quem valida tudo antes de assinar.
@@ -209,8 +209,9 @@ Para cada destinação, guardar por mínimo 5 anos :
 - Reciclagem: CNPJ da cooperativa com habilitação MAPA ativa
 O Recibo de Mecenato gerado pela plataforma IncentivaBR já contém automaticamente todos os dados exigidos por modalidade.
 Posso orientar o mesmo cliente em mais de uma modalidade?
-Sim — cada modalidade tem base legal própria e limites independentes entre si (exceto PRONON + PRONAS que compartilham 1%). Um cliente pode destinar simultaneamente para Rouanet (6%), Esporte (7%), FDCA (6%) e FDI (6%) — cada um com seu próprio teto legal.
-O único limite absoluto: a soma total destinada não pode superar o IR Devido total do contribuinte. Nunca apresente como "você pode destinar até X% do IR" — isso induz erro. Cada modalidade tem percentual específico independente.
+Sim, pode destinar a mais de uma modalidade no mesmo ano — mas os percentuais não se somam . O art. 22 da Lei 9.532/1997 limita a soma das deduções dos incisos I a III do art. 12 da Lei 9.250/1995 — fundos da criança e do idoso, projetos culturais do PRONAC e audiovisual — a 6% do imposto devido , sem limite específico para nenhuma delas. Para pessoa física, o incentivo ao esporte também concorre com esse teto.
+Na prática: um cliente com R$ 10.000 de IR devido tem R$ 600 no total , a distribuir entre Rouanet, FDCA e Fundo do Idoso como preferir — e não R$ 600 em cada. A única modalidade com limite à parte é PRONON + PRONAS, que compartilham 1% entre si.
+Apresente ao cliente um teto único de 6% a ser dividido. Somar percentuais por modalidade leva a destinar acima do permitido — e a glosa recai sobre ele, na malha fina.
 Use o Validador Anti-Malha Fina para verificar os limites de cada cliente de forma segura.
 FERRAMENTAS RELACIONADAS
 ### Complete o atendimento ao cliente com
