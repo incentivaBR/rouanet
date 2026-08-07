@@ -30,8 +30,32 @@ db.public.none(`
   );
   CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    nome TEXT, cpf TEXT, email TEXT, phone TEXT
+    nome TEXT, cpf TEXT, email TEXT, phone TEXT,
+    total_donated NUMERIC DEFAULT 0
   );
+  CREATE TABLE org_projects (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID, pronac TEXT, titulo TEXT,
+    proponente_nome TEXT, proponente_cnpj TEXT,
+    bank_name TEXT, bank_code TEXT, bank_agency TEXT, bank_account TEXT,
+    pix_key TEXT, pix_key_type TEXT,
+    is_active BOOLEAN DEFAULT true, is_featured BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT NOW()
+  );
+  CREATE TABLE incentive_groups (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code TEXT UNIQUE, name TEXT, max_percentage NUMERIC(5,2),
+    period_type TEXT, teto_codigo TEXT
+  );
+  CREATE TABLE tetos_deducao (
+    codigo TEXT PRIMARY KEY, descricao TEXT, percentual NUMERIC(5,2),
+    base_legal TEXT, vigencia_inicio DATE, vigencia_fim DATE,
+    confirmado_por_parecer BOOLEAN DEFAULT FALSE, observacao TEXT
+  );
+  INSERT INTO tetos_deducao (codigo, descricao, percentual, base_legal, vigencia_inicio)
+    VALUES ('irpf_global_6','Teto global',6.00,'Lei 9.532/1997, art. 22','1998-01-01');
+  INSERT INTO incentive_groups (code, name, max_percentage, period_type, teto_codigo)
+    VALUES ('ROUANET','Lei Rouanet',6.00,'annual','irpf_global_6');
   CREATE TABLE organization_users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     organization_id UUID, user_id UUID, role TEXT, is_active BOOLEAN DEFAULT true
@@ -43,7 +67,7 @@ db.public.none(`
   CREATE TABLE donations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID, organization_id UUID, official_fund_id UUID,
-    donation_amount NUMERIC, ir_total NUMERIC, fiscal_year INT,
+    donation_amount NUMERIC, ir_devido NUMERIC, fiscal_year INT,
     pronac TEXT, projeto_titulo TEXT, status TEXT DEFAULT 'pending',
     receipt_url TEXT, receipt_filename TEXT, receipt_file_path TEXT,
     confirmed_at TIMESTAMP, proponente_notified_at TIMESTAMP,
@@ -82,7 +106,7 @@ await q(`INSERT INTO organization_users (organization_id, user_id, role, is_acti
          VALUES ('${orgId}','${gestorId}','org_admin', true)`);
 
 const novaDestinacao = async (status = 'awaiting_confirmation') => (await q(
-  `INSERT INTO donations (user_id, organization_id, donation_amount, ir_total, fiscal_year,
+  `INSERT INTO donations (user_id, organization_id, donation_amount, ir_devido, fiscal_year,
                           pronac, projeto_titulo, status, receipt_url, receipt_filename)
    VALUES ('${destinadorId}','${orgId}',3200,208342,2026,'2511274','Mostra Casa Azul',
            '${status}','/uploads/receipts/x.pdf','comprovante.pdf') RETURNING id`))[0].id;
@@ -216,6 +240,46 @@ await teste('a listagem do destinador mostra o motivo da recusa', async () => {
   if (!alvo) throw new Error('destinacao nao apareceu na listagem');
   if (!alvo.recusa?.motivo)
     throw new Error('sem o motivo: a devolucao seria invisivel para quem transferiu');
+});
+
+// ── renomeacao de ir_total para ir_devido ──────────────────────────────────
+//
+// Cada caso usa um ano-calendario proprio: os testes anteriores ja acumularam
+// destinacoes para 2026, e a verificacao de teto anual — corretamente — recusa
+// o excedente.
+await teste('POST aceita ir_devido', async () => {
+  const r = await chamar('POST', '/api/donations/rouanet', tokenDestinador, {
+    pronac: '2511274', projeto_titulo: 'Mostra', ir_devido: 100000,
+    donation_amount: 5000, fiscal_year: 2030
+  });
+  if (r.status !== 201) throw new Error('status ' + r.status + ': ' + JSON.stringify(r.corpo));
+  const [d] = await q(`SELECT ir_devido FROM donations WHERE id='${r.corpo.donation.id}'`);
+  igual(Number(d.ir_devido), 100000, 'gravado no banco');
+});
+
+await teste('POST ainda aceita ir_total, para pagina em cache no deploy', async () => {
+  const r = await chamar('POST', '/api/donations/rouanet', tokenDestinador, {
+    pronac: '2511274', projeto_titulo: 'Mostra', ir_total: 100000,
+    donation_amount: 900, fiscal_year: 2031
+  });
+  igual(r.status, 201, 'status');
+  const [d] = await q(`SELECT ir_devido FROM donations WHERE id='${r.corpo.donation.id}'`);
+  igual(Number(d.ir_devido), 100000, 'nome antigo caiu na coluna certa');
+});
+
+await teste('sem nenhum dos dois -> 400', async () => {
+  const r = await chamar('POST', '/api/donations/rouanet', tokenDestinador, {
+    pronac: '2511274', donation_amount: 100, fiscal_year: 2032
+  });
+  igual(r.status, 400, 'status');
+});
+
+await teste('a resposta usa ir_devido, nao o nome antigo', async () => {
+  const r = await chamar('GET', '/api/donations?limit=5', tokenDestinador);
+  const d = (r.corpo.donations || [])[0];
+  if (!d) throw new Error('sem destinacoes para conferir');
+  if (!('ir_devido' in d)) throw new Error('resposta sem ir_devido');
+  if ('ir_total' in d) throw new Error('resposta ainda expoe ir_total');
 });
 
 servidor.close();

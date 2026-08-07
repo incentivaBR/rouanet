@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { req, login, hasFields } from './helpers.js';
 
 const PRONAC = '261847';
-const IR_TOTAL = 20000;
-const LIMITE_6PCT = IR_TOTAL * 0.06; // 1200
+const IR_DEVIDO = 20000;
+const LIMITE_6PCT = IR_DEVIDO * 0.06; // 1200
 
 describe('Donations — POST /api/donations/rouanet', () => {
   let token;
@@ -12,7 +12,7 @@ describe('Donations — POST /api/donations/rouanet', () => {
 
   test('sem autenticação → 401', async () => {
     const { status } = await req('POST', '/api/donations/rouanet', {
-      body: { pronac: PRONAC, ir_total: IR_TOTAL, donation_amount: 100, fiscal_year: 2026 },
+      body: { pronac: PRONAC, ir_devido: IR_DEVIDO, donation_amount: 100, fiscal_year: 2026 },
     });
     assert.equal(status, 401);
   });
@@ -20,7 +20,7 @@ describe('Donations — POST /api/donations/rouanet', () => {
   test('PRONAC inválido → 400', async () => {
     const { status, body } = await req('POST', '/api/donations/rouanet', {
       token,
-      body: { pronac: 'abc', ir_total: IR_TOTAL, donation_amount: 100, fiscal_year: 2026 },
+      body: { pronac: 'abc', ir_devido: IR_DEVIDO, donation_amount: 100, fiscal_year: 2026 },
     });
     assert.equal(status, 400);
     assert.match(body.message, /PRONAC/i);
@@ -31,7 +31,7 @@ describe('Donations — POST /api/donations/rouanet', () => {
       token,
       body: {
         pronac:          PRONAC,
-        ir_total:        IR_TOTAL,
+        ir_devido:        IR_DEVIDO,
         donation_amount: LIMITE_6PCT + 100, // excede o limite
         fiscal_year:     2026,
       },
@@ -43,7 +43,7 @@ describe('Donations — POST /api/donations/rouanet', () => {
   test('valor zero → 400', async () => {
     const { status } = await req('POST', '/api/donations/rouanet', {
       token,
-      body: { pronac: PRONAC, ir_total: IR_TOTAL, donation_amount: 0, fiscal_year: 2026 },
+      body: { pronac: PRONAC, ir_devido: IR_DEVIDO, donation_amount: 0, fiscal_year: 2026 },
     });
     assert.equal(status, 400);
   });
@@ -51,7 +51,7 @@ describe('Donations — POST /api/donations/rouanet', () => {
   test('IR total zero → 400', async () => {
     const { status } = await req('POST', '/api/donations/rouanet', {
       token,
-      body: { pronac: PRONAC, ir_total: 0, donation_amount: 100, fiscal_year: 2026 },
+      body: { pronac: PRONAC, ir_devido: 0, donation_amount: 100, fiscal_year: 2026 },
     });
     assert.equal(status, 400);
   });
@@ -62,7 +62,7 @@ describe('Donations — POST /api/donations/rouanet', () => {
       token,
       body: {
         pronac:          PRONAC,
-        ir_total:        IR_TOTAL,
+        ir_devido:        IR_DEVIDO,
         donation_amount: valor,
         fiscal_year:     2026,
         projeto_titulo:  'Orquestra das Periferias do DF',

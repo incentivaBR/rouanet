@@ -92,17 +92,27 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
   const client = await pool.connect();
 
   try {
-    const { pronac, projeto_titulo, ir_total, donation_amount, fiscal_year } = req.body;
+    const { pronac, projeto_titulo, donation_amount, fiscal_year } = req.body;
     const userId = req.user.userId;
     const org    = req.organization;
+
+    // `ir_total` era o nome antigo do campo. Ele se lia como "total de
+    // rendimentos", e quem integrasse pela API poderia mandar a renda bruta —
+    // multiplicando o limite por dez. Renomeado para `ir_devido` na migração
+    // 032; o nome antigo segue aceito por um ciclo, para que uma página em
+    // cache durante o deploy não quebre.
+    const ir_devido = req.body.ir_devido ?? req.body.ir_total;
 
     // Validações
     if (!pronac || !/^\d{6,7}$/.test(pronac)) {
       return res.status(400).json({ status: 'error', message: 'PRONAC inválido. Deve ter 6 ou 7 dígitos.' });
     }
 
-    if (!ir_total || ir_total <= 0) {
-      return res.status(400).json({ status: 'error', message: 'IR total deve ser maior que zero.' });
+    if (!ir_devido || ir_devido <= 0) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Informe o imposto devido apurado na declaração — deve ser maior que zero.'
+      });
     }
 
     if (!donation_amount || donation_amount <= 0) {
@@ -115,7 +125,7 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
 
     // Limite Rouanet: 6% do IR devido
     const teto = await tetoDoMecanismo(org?.incentive_group_code || 'ROUANET');
-    const limiteMax = Math.round(ir_total * (teto.percentual / 100) * 100) / 100;
+    const limiteMax = Math.round(ir_devido * (teto.percentual / 100) * 100) / 100;
 
     if (donation_amount > limiteMax) {
       return res.status(400).json({
@@ -160,10 +170,10 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
     await client.query('BEGIN');
 
     const result = await client.query(`
-      INSERT INTO donations (user_id, pronac, projeto_titulo, official_fund_id, organization_id, ir_total, donation_amount, fiscal_year, status)
+      INSERT INTO donations (user_id, pronac, projeto_titulo, official_fund_id, organization_id, ir_devido, donation_amount, fiscal_year, status)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'pending')
       RETURNING id, created_at
-    `, [userId, pronac, projeto_titulo || `Projeto PRONAC ${pronac}`, fncId, org?.id || null, ir_total, donation_amount, fiscal_year]);
+    `, [userId, pronac, projeto_titulo || `Projeto PRONAC ${pronac}`, fncId, org?.id || null, ir_devido, donation_amount, fiscal_year]);
 
     const donation = result.rows[0];
 
@@ -191,10 +201,10 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
         id:               donation.id,
         pronac,
         projeto_titulo:   projeto_titulo || `Projeto PRONAC ${pronac}`,
-        ir_total,
+        ir_devido,
         donation_amount,
         limite_rouanet:   limiteMax,
-        percentage_of_ir: Math.round((donation_amount / ir_total) * 10000) / 100,
+        percentage_of_ir: Math.round((donation_amount / ir_devido) * 10000) / 100,
         fiscal_year,
         status:           'pending',
         created_at:       donation.created_at,
@@ -543,7 +553,7 @@ router.get('/', authenticateToken, async (req, res) => {
         d.id,
         d.pronac,
         d.projeto_titulo,
-        d.ir_total,
+        d.ir_devido,
         d.donation_amount,
         d.fiscal_year,
         d.status,
@@ -603,10 +613,10 @@ router.get('/', authenticateToken, async (req, res) => {
         id:               d.id,
         pronac:           d.pronac,
         projeto_titulo:   d.projeto_titulo,
-        ir_total:         parseFloat(d.ir_total),
+        ir_devido:        parseFloat(d.ir_devido),
         donation_amount:  parseFloat(d.donation_amount),
-        percentage_of_ir: parseFloat(d.ir_total) > 0
-          ? Math.round((parseFloat(d.donation_amount) / parseFloat(d.ir_total)) * 10000) / 100
+        percentage_of_ir: parseFloat(d.ir_devido) > 0
+          ? Math.round((parseFloat(d.donation_amount) / parseFloat(d.ir_devido)) * 10000) / 100
           : 0,
         fiscal_year:      d.fiscal_year,
         status:           d.status,
@@ -677,10 +687,10 @@ router.get('/:id', authenticateToken, async (req, res) => {
         id:               d.id,
         pronac:           d.pronac,
         projeto_titulo:   d.projeto_titulo,
-        ir_total:         parseFloat(d.ir_total),
+        ir_devido:        parseFloat(d.ir_devido),
         donation_amount:  parseFloat(d.donation_amount),
-        percentage_of_ir: parseFloat(d.ir_total) > 0
-          ? Math.round((parseFloat(d.donation_amount) / parseFloat(d.ir_total)) * 10000) / 100
+        percentage_of_ir: parseFloat(d.ir_devido) > 0
+          ? Math.round((parseFloat(d.donation_amount) / parseFloat(d.ir_devido)) * 10000) / 100
           : 0,
         fiscal_year:      d.fiscal_year,
         status:           d.status,
@@ -746,7 +756,7 @@ router.get('/:id/comprovante', authenticateToken, async (req, res) => {
     const donation = {
       id:             row.id,
       donation_amount: parseFloat(row.donation_amount),
-      ir_total:       parseFloat(row.ir_total),
+      ir_devido:      parseFloat(row.ir_devido),
       fiscal_year:    row.fiscal_year,
       created_at:     row.created_at,
       confirmed_at:   row.confirmed_at

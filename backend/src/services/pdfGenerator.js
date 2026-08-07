@@ -206,13 +206,15 @@ export function gerarComprovante(donation, user, project, fund, opts = {}) {
   doc.fontSize(10)
      .fillColor(textColor);
 
-  const percentual = donation.ir_total > 0
-    ? ((donation.donation_amount / donation.ir_total) * 100).toFixed(2)
+  const percentual = donation.ir_devido > 0
+    ? ((donation.donation_amount / donation.ir_devido) * 100).toFixed(2)
     : '0.00';
 
   doc.text(`Valor Destinado: ${formatCurrency(donation.donation_amount)}`);
-  doc.text(`IR Total Declarado: ${formatCurrency(donation.ir_total)}`);
-  doc.text(`Percentual do IR: ${percentual}%`);
+  // Dizia "IR Total Declarado", que se confunde com total de rendimentos. É o
+  // imposto devido apurado na declaração — a base sobre a qual o limite incide.
+  doc.text(`IR Devido Apurado: ${formatCurrency(donation.ir_devido)}`);
+  doc.text(`Percentual do IR Devido: ${percentual}%`);
   doc.text(`Ano-Calendario: ${donation.fiscal_year}`);
   doc.text(`Data da Destinacao: ${formatDateTime(donation.created_at)}`);
   doc.text(`Data da Confirmacao: ${donation.confirmed_at ? formatDateTime(donation.confirmed_at) : 'N/A'}`);

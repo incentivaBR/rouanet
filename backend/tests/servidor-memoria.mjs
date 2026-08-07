@@ -70,7 +70,7 @@ db.public.none(`
   CREATE TABLE donations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID, organization_id UUID, official_fund_id UUID,
-    donation_amount NUMERIC, ir_total NUMERIC, fiscal_year INT,
+    donation_amount NUMERIC, ir_devido NUMERIC, fiscal_year INT,
     pronac TEXT, projeto_titulo TEXT, status TEXT DEFAULT 'pending',
     receipt_url TEXT, receipt_filename TEXT, receipt_file_path TEXT,
     confirmed_at TIMESTAMP, proponente_notified_at TIMESTAMP,
@@ -107,7 +107,7 @@ await q(`INSERT INTO organization_users (organization_id, user_id, role, is_acti
 
 for (const [valor, status] of [[3200,'awaiting_confirmation'], [12500.50,'awaiting_confirmation'],
                                [800,'awaiting_confirmation']]) {
-  await q(`INSERT INTO donations (user_id, organization_id, donation_amount, ir_total,
+  await q(`INSERT INTO donations (user_id, organization_id, donation_amount, ir_devido,
              fiscal_year, pronac, projeto_titulo, status, receipt_url, receipt_filename)
            VALUES ('${destinadorId}','${orgId}',${valor},208342,2026,'2511274',
                    'Mostra Casa Azul de Teatro Inclusivo','${status}',
