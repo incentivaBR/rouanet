@@ -4,6 +4,7 @@ import { authenticateToken } from '../middleware/auth.js';
 import { gerarComprovante } from '../services/pdfGenerator.js';
 import { notifyDestinationRegistered, notifyAdminNewDonation, notifyProponenteMecenatoPendente } from '../services/notificationService.js';
 import { podeGerirOrganizacao } from '../lib/permissoes.js';
+import { tetoDoMecanismo } from '../lib/tetos.js';
 
 const router = express.Router();
 
@@ -75,8 +76,13 @@ async function avisarProponente(donationId) {
   }
 }
 
-// Lei Rouanet — limite máximo de 6% do IR devido
-const LIMITE_ROUANET = 0.06;
+// O teto de dedução vem de `tetos_deducao` — ver src/lib/tetos.js.
+//
+// Ele era uma constante aqui, outra em calculator.js e uma terceira embutida na
+// validação de /distribuir. Três cópias de um número que é TESE JURÍDICA, não
+// fato do sistema: a interação entre o art. 18 da Lei 8.313/91 e o teto global
+// do art. 22 da Lei 9.532/97 ainda depende de parecer tributário. Enquanto
+// morava no código, cada revisão dessa tese seria um deploy.
 
 // ─────────────────────────────────────────────────────────────
 // POST /api/donations/rouanet
@@ -108,7 +114,8 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
     }
 
     // Limite Rouanet: 6% do IR devido
-    const limiteMax = Math.round(ir_total * LIMITE_ROUANET * 100) / 100;
+    const teto = await tetoDoMecanismo(org?.incentive_group_code || 'ROUANET');
+    const limiteMax = Math.round(ir_total * (teto.percentual / 100) * 100) / 100;
 
     if (donation_amount > limiteMax) {
       return res.status(400).json({
