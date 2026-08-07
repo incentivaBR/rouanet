@@ -55,7 +55,7 @@
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projetos Disponíveis — IncentivaBR</title>
-  <meta name="description" content="Conheça o Orquestra das Periferias do DF (PRONAC 261847) e destine até 6% do seu IR para música e cultura popular. Aprovado pelo Ministério da Cultura. Zero custo para você.">
+  <meta name="description" content="Conheça o projeto e destine até 6% do seu IR para música e cultura popular. Aprovado pelo Ministério da Cultura. Zero custo para você.">
   <link rel="icon" type="image/png" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -136,7 +136,7 @@
         <svg class="w-4 h-4 text-[var(--secondary-solid)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <span class="text-[var(--secondary-solid)] font-semibold text-sm">PRONAC 261847 · Aprovado pelo MinC</span>
+        <span class="text-[var(--secondary-solid)] font-semibold text-sm">PRONAC <span data-projeto="pronac">—</span> · Aprovado pelo MinC</span>
       </div>
 
       <h1 class="text-5xl sm:text-6xl font-black text-white leading-[1.05] tracking-tight mb-5">
@@ -326,7 +326,7 @@
         Menos de 5 minutos. Sem custo adicional. Comprovante gerado automaticamente.
       </p>
 
-      <a id="btnDestinar" href="destinar-rouanet.html?pronac=261847"
+      <a id="btnDestinar" data-destinar
         class="inline-flex items-center gap-2 btn-acento text-[#0F1E3D] font-bold text-lg px-10 py-4 rounded-xl shadow-lg transition-all duration-200 hover:scale-[1.03]">
         Destinar agora — é grátis
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -374,8 +374,11 @@
         const fmt = 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         document.getElementById('valorDisplay').textContent = fmt;
         document.getElementById('valorPersonalizado').classList.remove('hidden');
-        document.getElementById('btnDestinar').href =
-          `destinar-rouanet.html?pronac=261847&valor=${encodeURIComponent(valorParam)}`;
+        // O PRONAC e o título vêm do tenant.js, que lê o projeto da
+        // organização. Aqui só acrescentamos o valor trazido da calculadora —
+        // reescrever a href inteira desfaria o preenchimento.
+        document.getElementById('btnDestinar')
+          .setAttribute('data-destinar', 'valor=' + valorParam);
       }
     }
 
@@ -534,7 +537,7 @@
             </div>
             <h3 class="text-lg font-bold text-[#0F1E3D] mb-2">Dados temporariamente indisponíveis</h3>
             <p class="text-gray-400 text-sm mb-6">${escapeHtml(err.message)}</p>
-            <a href="destinar-rouanet.html?pronac=261847"
+            <a data-destinar
               class="inline-flex items-center gap-2 btn-acento text-[#0F1E3D] font-bold px-6 py-3 rounded-xl text-sm no-underline transition-all">
               Destinar mesmo assim →
             </a>

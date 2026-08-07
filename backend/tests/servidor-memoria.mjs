@@ -17,7 +17,7 @@ const PORTA = Number(process.argv[2] || 3100);
 
 process.env.JWT_SECRET = 'teste';
 process.env.NODE_ENV = 'test';
-process.env.SIMULATION_MODE = 'false';   // queremos o comportamento de producao
+process.env.SIMULATION_MODE = process.env.SIMULATION_MODE || 'true';
 
 const db = newDb();
 db.public.registerFunction({
@@ -42,6 +42,16 @@ db.public.none(`
   );
   CREATE TABLE official_funds (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(), code TEXT, name TEXT
+  );
+  CREATE TABLE org_projects (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID, pronac TEXT, titulo TEXT, area TEXT, segmento TEXT,
+    descricao TEXT, uf TEXT,
+    proponente_nome TEXT, proponente_cnpj TEXT,
+    bank_name TEXT, bank_code TEXT, bank_agency TEXT, bank_account TEXT,
+    pix_key TEXT, pix_key_type TEXT,
+    is_active BOOLEAN DEFAULT true, is_featured BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT NOW()
   );
   CREATE TABLE donations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -90,8 +100,20 @@ for (const [valor, status] of [[3200,'awaiting_confirmation'], [12500.50,'awaiti
                    '/uploads/receipts/exemplo.pdf','comprovante-${valor}.pdf')`);
 }
 
+// Projeto da organizacao — e daqui que o frontend tira PRONAC e titulo agora
+// que eles sairam do codigo.
+await q(`INSERT INTO org_projects
+  (organization_id, pronac, titulo, area, segmento, descricao, uf,
+   proponente_nome, proponente_cnpj, bank_name, bank_code, bank_agency, bank_account,
+   is_active, is_featured)
+  VALUES ('${orgId}', '2511274', 'Mostra Casa Azul de Teatro Inclusivo',
+          'Artes Cenicas', 'Teatro', 'Temporada de teatro inclusivo em Brasilia.', 'DF',
+          'Casa Azul Felipe Augusto', '12.345.678/0001-90',
+          'Banco do Brasil', '001', '1234-5', '98765-4', true, true)`);
+
 const { default: donationsRoutes } = await import('../src/routes/donations.js');
 const { default: configRoutes }    = await import('../src/routes/config.js');
+const { default: salicRoutes }     = await import('../src/routes/salic.js');
 
 const app = express();
 app.use(express.json());
@@ -102,6 +124,7 @@ app.use((req, _res, next) => {
 });
 app.use('/api/donations', donationsRoutes);
 app.use('/api/config', configRoutes);
+app.use('/api/salic', salicRoutes);
 app.use(express.static(path.join(AQUI, '../../frontend')));
 
 const token = (userId) => jwt.sign({ userId, orgId }, 'teste', { expiresIn: '8h' });

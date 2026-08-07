@@ -727,7 +727,7 @@
                    </button>
                  </div>`
             }
-            <a href="destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF" class="btn-nova">
+            <a data-destinar class="btn-nova">
               <i class="fas fa-plus"></i> Nova destinação
             </a>
           </div>
@@ -777,6 +777,20 @@
       } catch (_) { /* silencioso: é um atalho, não uma funcionalidade */ }
     }
 
+    /**
+     * Liga os links [data-destinar] que nascem depois do carregamento.
+     *
+     * O tenant.js preenche a página no DOMContentLoaded; estes cartões são
+     * montados por innerHTML depois da resposta da API, então chegam com o
+     * link vazio. Sem esta chamada, o botão de destinar fica sem destino.
+     *
+     * `tenant` é declarado com const em script clássico: existe como global
+     * léxica, mas NÃO como propriedade de window — daí o typeof.
+     */
+    function ligaLinksDeDestinar() {
+      if (typeof tenant !== 'undefined' && tenant.preencheProjeto) tenant.preencheProjeto();
+    }
+
     async function loadDonations() {
       const container = document.getElementById('donationsList');
       try {
@@ -794,11 +808,12 @@
               <i class="fas fa-file-invoice-dollar"></i>
               <h3>Nenhuma destinação registrada</h3>
               <p>Você ainda não fez nenhuma destinação via Lei Rouanet neste ano-base.</p>
-              <a href="destinar-rouanet.html?pronac=261847&titulo=Orquestra%20das%20Periferias%20do%20DF" class="btn-start">
+              <a data-destinar class="btn-start">
                 <i class="fas fa-play"></i> Iniciar destinação
               </a>
             </div>
           `;
+          ligaLinksDeDestinar();
           return;
         }
 
@@ -811,6 +826,8 @@
 
         // Cards
         container.innerHTML = donations.map(renderDonation).join('');
+
+        ligaLinksDeDestinar();
 
         // Instruções IRPF apenas quando há destinação confirmada
         if (hasConfirmed) {

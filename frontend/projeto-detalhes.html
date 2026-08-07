@@ -582,9 +582,18 @@
       return 'fa-theater-masks';
     }
 
-    // Dados fixos para PRONAC 261847 (Orquestra das Periferias — projeto de demonstração)
-    const DEMO_PROJETOS = {
-      '261847': {
+    // Conteúdo narrativo de DEMONSTRAÇÃO — não é dado de projeto.
+    //
+    // Existe para a plataforma poder ser mostrada antes de haver conteúdo real
+    // cadastrado. Era indexado pelo PRONAC fictício 261847, o que fazia esta
+    // página só funcionar para aquele número — e aplicava a narrativa da
+    // Orquestra a qualquer projeto que o tivesse.
+    //
+    // Só aparece em modo simulação. Em produção, o que não vier do cadastro não
+    // é exibido: inventar dado de projeto é ficção apresentada como fato a quem
+    // está decidindo onde colocar dinheiro.
+    const CONTEUDO_DEMO = {
+      demonstracao: {
         titulo: 'Orquestra das Periferias do DF — Temporada 2026',
         segmento: 'Apresentação/Gravação de Música Erudita',
         area: 'Música',
@@ -593,7 +602,7 @@
         proponente: { razao_social: 'Associação Cultural Orquestra das Periferias do DF', uf: 'DF' },
         valor_aprovado: 520000,
         valor_captado: 91000,
-        descricao: 'Formação orquestral contínua para 80 jovens de 14 a 24 anos das regiões administrativas de Ceilândia, Samambaia e Santa Maria. O programa oferece ensaios semanais, masterclasses com músicos profissionais, 6 concertos públicos gratuitos e gravação audiovisual da temporada.\n\nArt. 18 (FNC) — 100% dedutível do Imposto de Renda. PRONAC 261847.',
+        descricao: 'Formação orquestral contínua para 80 jovens de 14 a 24 anos das regiões administrativas de Ceilândia, Samambaia e Santa Maria. O programa oferece ensaios semanais, masterclasses com músicos profissionais, 6 concertos públicos gratuitos e gravação audiovisual da temporada.\n\nArt. 18 (FNC) — 100% dedutível do Imposto de Renda.',
         mecanismo: 'Art. 18 — FNC',
         art18: true,
         updates: [
@@ -607,7 +616,7 @@
             date: 'Março 2026',
             icon: 'fa-check-circle',
             title: 'Captação aprovada pelo MinC',
-            desc: 'PRONAC 261847 habilitado no SALIC. Banco do Brasil confirmado como agente financeiro. Captação aberta para servidores via Art. 18.'
+            desc: 'Projeto habilitado no SALIC. Banco do Brasil confirmado como agente financeiro. Captação aberta para servidores via Art. 18.'
           },
           {
             date: 'Janeiro 2026',
@@ -672,12 +681,16 @@
       const cidade = projeto.municipio || projeto.cidade || '';
       const local = [cidade, uf].filter(Boolean).join(', ');
 
-      const isOrquestra = pronac === '261847';
+      // Contagem real de contribuintes. Antes era `pronac === '261847' ? 7 :
+      // Math.random()*80+40` — um número inventado exibido como fato para quem
+      // ia destinar. Se não houver dado, a linha some em vez de mentir.
+      const contribuintesReais = Number.isFinite(projeto.total_contribuintes)
+        ? projeto.total_contribuintes : null;
       const demoCaptado = projeto.valor_captado || 0;
       const totalMeta = parseFloat(projeto.valor_aprovado || projeto.valor_projeto || 500000);
       const totalArrecadado = demoCaptado || totalMeta * 0.175;
       const progresso = Math.min(Math.round((totalArrecadado / totalMeta) * 100), 100);
-      const totalContribuintes = isOrquestra ? 7 : (Math.floor(Math.random() * 80) + 40);
+      const totalContribuintes = contribuintesReais;
 
       const bgColor = getCategoryColor(segmento);
       const icon = getCategoryIcon(segmento);
@@ -729,13 +742,15 @@
             <div class="fill" style="width:${progresso}%"></div>
           </div>
           <div class="projeto-progress-meta">
-            <span><i class="fas fa-users"></i> ${totalContribuintes} contribuintes</span>
+            ${totalContribuintes ? `<span><i class="fas fa-users"></i> ${totalContribuintes} contribuintes</span>` : ''}
             <span><i class="fas fa-calendar-alt"></i> Captação aberta</span>
             <span><i class="fas fa-shield-alt"></i> Aprovado pelo MinC</span>
           </div>
         </div>
 
-        <!-- PROVA SOCIAL -->
+        <!-- PROVA SOCIAL — só existe se houver contagem real. Avatares e número
+             inventados são ficção apresentada como fato a quem vai destinar. -->
+        ${!totalContribuintes ? '' : `
         <div class="social-proof-bar">
           <div class="social-proof-text">
             <div class="social-proof-avatars">
@@ -748,7 +763,7 @@
           <a href="destinar-rouanet.html${pronac ? '?pronac=' + pronac : ''}" class="btn btn-white" style="color:#EA580C;white-space:nowrap">
             <i class="fas fa-heart"></i> Destinar também
           </a>
-        </div>
+        </div>`}
 
         <!-- LAYOUT COM SIDEBAR -->
         <div class="projeto-layout">
@@ -968,8 +983,10 @@
 
         <!-- CTA FINAL -->
         <section class="cta" style="margin-top:0">
-          <h2>${isOrquestra ? 'Você não sabe ainda quem vai sentar na Cadeira 47.' : 'Seu IR pode financiar este projeto'}</h2>
-          <p>${isOrquestra ? 'Mas alguém em Ceilândia, Samambaia ou Santa Maria vai. Sem custo para você — 100% deduzido do seu IR (Art. 18).' : `Junte-se às <strong>${totalContribuintes} pessoas</strong> que já apoiaram. Sem custo adicional.`}</p>
+          <h2>Seu IR pode financiar este projeto</h2>
+          <p>${totalContribuintes
+                ? `Junte-se às <strong>${totalContribuintes} pessoas</strong> que já apoiaram. Sem custo adicional.`
+                : 'Sem custo adicional para você — o valor é deduzido do imposto que já seria pago.'}</p>
           <div class="cta-buttons">
             <a href="destinar-rouanet.html${pronac ? '?pronac=' + pronac : ''}" class="btn btn-white">
               <i class="fas fa-${isOrquestra ? 'chair' : 'heart'}"></i> ${isOrquestra ? 'Reservar minha cadeira' : 'Destinar via Lei Rouanet'}
@@ -1014,7 +1031,9 @@
     function normalizeOrgProject(data) {
       const p = data.projeto || {};
       const o = data.organizacao || {};
-      const local = DEMO_PROJETOS[p.pronac] || {};
+      // Sem simulação, nada de conteúdo inventado: o que não vier do cadastro
+      // simplesmente não aparece.
+      const local = window.SIMULATION_MODE ? CONTEUDO_DEMO.demonstracao : {};
       return {
         pronac:        p.pronac,
         titulo:        local.titulo || p.nome,
@@ -1046,7 +1065,7 @@
 
     // Carregar projeto:
     //  1. org-project (banco — correto para white-label e simulação)
-    //  2. DEMO_PROJETOS (fallback offline com conteúdo narrativo rico)
+    //  2. CONTEUDO_DEMO (só em modo simulação)
     //  3. SALIC direto (para qualquer outro PRONAC real)
     async function loadProjeto() {
       if (!pronac) {
@@ -1067,9 +1086,9 @@
         }
       } catch (e) { /* sem banco ou org não configurada — continuar */ }
 
-      // 2 — Dados locais (narrativa rica para PRONACs conhecidos)
-      if (DEMO_PROJETOS[pronac]) {
-        renderProjeto(DEMO_PROJETOS[pronac]);
+      // 2 — Conteúdo de demonstração, apenas com a simulação ligada
+      if (window.SIMULATION_MODE) {
+        renderProjeto({ ...CONTEUDO_DEMO.demonstracao, pronac });
         afterRender();
         return;
       }
