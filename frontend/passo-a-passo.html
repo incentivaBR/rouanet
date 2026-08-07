@@ -179,7 +179,7 @@
                   Receba os dados do FNC
                 </div>
               </div>
-              <a href="destinar-rouanet.html?pronac=261847"
+              <a data-destinar
                 class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-all hover:scale-[1.02]">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
                 Iniciar destinação
@@ -297,6 +297,8 @@
 
   <script src="js/auth.js"></script>
   <script src="js/layout.js"></script>
+  <!-- tenant.js preenche os links [data-destinar] com o projeto da organizacao -->
+  <script src="js/tenant.js"></script>
   <script>Layout.init('como');</script>
   <script src="js/tina.js"></script>
   <script>if (typeof TINA !== 'undefined') TINA.init();</script>

@@ -465,7 +465,7 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           Guia do Servidor
         </a>
-        <a href="destinar-rouanet.html?pronac=261847"
+        <a data-destinar
           class="flex items-center gap-2 bg-[#EE985C] hover:bg-[#d4874e] text-[#0F1E3D] font-bold px-6 py-3 rounded-xl transition-all no-underline text-sm">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
           Destinar agora
@@ -477,6 +477,8 @@
 
   <script src="js/auth.js"></script>
   <script src="js/layout.js"></script>
+  <!-- tenant.js preenche os links [data-destinar] com o projeto da organizacao -->
+  <script src="js/tenant.js"></script>
   <script>Layout.init('faq');</script>
   <script src="js/tina.js"></script>
   <script>if (typeof TINA !== 'undefined') TINA.init();</script>

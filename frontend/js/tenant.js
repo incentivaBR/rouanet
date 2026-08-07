@@ -249,9 +249,86 @@ const tenant = {
   }
 };
 
+/**
+ * Preenche a página com o projeto da organização.
+ *
+ * O PRONAC estava escrito à mão em nove arquivos do frontend, sempre o mesmo
+ * projeto fictício. Isso fazia entrar um cliente novo ser deploy: para a Casa
+ * Azul aparecer, alguém editaria arquivo e publicaria. Agora cada página só
+ * MARCA o que precisa ser preenchido, e o dado vem do cadastro.
+ *
+ * Três marcações, todas opcionais:
+ *
+ *   <a data-destinar>                → vira link para destinar, com pronac e título
+ *   <span data-projeto="pronac">     → recebe o PRONAC
+ *   <span data-projeto="titulo">     → recebe o nome do projeto
+ *
+ * Sem projeto cadastrado, os links de destinar são desativados em vez de
+ * apontarem para lugar nenhum — melhor um botão explicando que falta cadastro
+ * do que um que leva a uma tela quebrada.
+ */
+async function preencheProjeto() {
+  const marcados = document.querySelectorAll('[data-destinar], [data-projeto]');
+  if (!marcados.length) return;   // página não usa projeto
+
+  let projeto = null;
+  try {
+    const baseUrl = typeof api !== 'undefined' && api.baseUrl ? api.baseUrl : '';
+    const resp = await fetch(`${baseUrl}/api/salic/org-project`);
+    if (resp.ok) {
+      const dados = await resp.json();
+      projeto = dados.projeto || null;
+    }
+  } catch (erro) {
+    console.error('[tenant] não foi possível carregar o projeto da organização:', erro);
+  }
+
+  if (!projeto?.pronac) {
+    document.querySelectorAll('a[data-destinar]').forEach(a => {
+      a.removeAttribute('href');
+      a.setAttribute('aria-disabled', 'true');
+      a.style.opacity = '0.55';
+      a.style.cursor = 'not-allowed';
+      a.title = 'Nenhum projeto cadastrado para esta organização.';
+    });
+    return;
+  }
+
+  const titulo = projeto.nome || `Projeto PRONAC ${projeto.pronac}`;
+
+  document.querySelectorAll('a[data-destinar]').forEach(a => {
+    // O atributo pode trazer parâmetros extras que a página já usava,
+    // como o valor vindo da calculadora: data-destinar="valor=1200"
+    const extra = a.getAttribute('data-destinar');
+    const params = new URLSearchParams({ pronac: projeto.pronac, titulo });
+    if (extra) new URLSearchParams(extra).forEach((v, k) => params.set(k, v));
+    a.href = `destinar-rouanet.html?${params}`;
+  });
+
+  document.querySelectorAll('[data-projeto]').forEach(el => {
+    const campo = el.getAttribute('data-projeto');
+    const valor = campo === 'titulo' ? titulo : projeto[campo];
+    if (valor != null) el.textContent = valor;
+  });
+
+  window.__projeto = projeto;
+  window.dispatchEvent(new CustomEvent('projetoCarregado', { detail: projeto }));
+}
+
+// Exposta porque algumas páginas só descobrem os parâmetros do link depois de
+// carregar — a de projetos acrescenta o valor vindo da calculadora, e o painel
+// monta os cartões por innerHTML depois da resposta da API.
+tenant.preencheProjeto = preencheProjeto;
+
+// `const` em script clássico cria uma global léxica: outras páginas enxergam
+// `tenant`, mas nada fora do documento enxerga — nem código de teste, nem um
+// iframe. Publicar no window é o que torna isto uma biblioteca de fato.
+window.tenant = tenant;
+
 // Carregar automaticamente ao iniciar a página
 // loadBrand primeiro (rápido, usa .env) → loadOrganizationConfig depois (org sobrescreve se tiver cores próprias)
 document.addEventListener('DOMContentLoaded', async () => {
   await tenant.loadBrand();
   tenant.loadOrganizationConfig();
+  preencheProjeto();
 });
