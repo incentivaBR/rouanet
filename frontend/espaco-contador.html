@@ -696,7 +696,9 @@ Qualquer dúvida, é só me chamar!
     // Listar um valor por modalidade fazia o contador somar com os olhos e
     // chegar a um total que a lei não permite — o erro mais caro que esta página
     // podia cometer, porque é justamente o público que confere.
-    const TETO_GLOBAL = 0.06;
+    // Funcao, nao constante: se fosse avaliada no carregamento pegaria o
+    // fallback sempre, porque o tenant.js so resolve a chamada da API depois.
+    const tetoGlobal = () => window.TETO_FRACAO || 0.06;
     const BASE_TETO   = 'Lei 9.532/1997, art. 22';
 
     const modalidades = [
@@ -742,7 +744,7 @@ Qualquer dúvida, é só me chamar!
       document.getElementById('ir-valor').textContent = 'R$ ' + formatBRL(irDevido);
 
       const tabela = document.getElementById('tabela-limites');
-      const tetoTotal = irDevido * TETO_GLOBAL;
+      const tetoTotal = irDevido * tetoGlobal();
 
       const compartilhadas = modalidades.filter(m => m.divide);
       const proprias       = modalidades.filter(m => !m.divide);
@@ -770,7 +772,7 @@ Qualquer dúvida, é só me chamar!
           <div class="text-xs uppercase tracking-wide text-gold/80 mb-1">Teto único a distribuir</div>
           <div class="font-black text-gold text-2xl">R$ ${formatBRL(tetoTotal)}</div>
           <div class="text-white/60 text-xs mt-1">
-            6% do IR devido — ${BASE_TETO}. É a <strong class="text-white">soma</strong>
+            ${(tetoGlobal()*100).toLocaleString('pt-BR')}% do IR devido — ${BASE_TETO}. É a <strong class="text-white">soma</strong>
             das modalidades abaixo, não o limite de cada uma.
           </div>
         </div>
@@ -795,5 +797,7 @@ Qualquer dúvida, é só me chamar!
       });
     }
   </script>
+  <!-- tenant.js publica window.TETO_FRACAO, lido do banco -->
+  <script src="js/tenant.js"></script>
 </body>
 </html>

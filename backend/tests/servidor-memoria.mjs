@@ -40,6 +40,20 @@ db.public.none(`
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     organization_id UUID, user_id UUID, role TEXT, is_active BOOLEAN DEFAULT true
   );
+  CREATE TABLE incentive_groups (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code TEXT UNIQUE, name TEXT, max_percentage NUMERIC(5,2),
+    period_type TEXT, teto_codigo TEXT
+  );
+  CREATE TABLE tetos_deducao (
+    codigo TEXT PRIMARY KEY, descricao TEXT, percentual NUMERIC(5,2),
+    base_legal TEXT, vigencia_inicio DATE, vigencia_fim DATE,
+    confirmado_por_parecer BOOLEAN DEFAULT FALSE, observacao TEXT
+  );
+  INSERT INTO tetos_deducao (codigo, descricao, percentual, base_legal, vigencia_inicio)
+    VALUES ('irpf_global_6','Teto global',6.00,'Lei 9.532/1997, art. 22','1998-01-01');
+  INSERT INTO incentive_groups (code, name, max_percentage, period_type, teto_codigo)
+    VALUES ('ROUANET','Lei Rouanet',6.00,'annual','irpf_global_6');
   CREATE TABLE official_funds (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(), code TEXT, name TEXT
   );

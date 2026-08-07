@@ -245,6 +245,19 @@ const tenant = {
     // Expor simulation_mode globalmente
     window.SIMULATION_MODE = brand.simulation_mode === true;
 
+    // O teto de dedução, vindo do banco.
+    //
+    // Sem isto, cada tela guardava a própria cópia do 6% — havia oito no
+    // frontend. Mover o número para o banco não adiantaria: o banco diria uma
+    // coisa e a calculadora mostraria outra. O fallback de 6 mantém a tela de
+    // pé se a requisição falhar, e é o valor conservador.
+    //
+    // Incide sobre o IMPOSTO DEVIDO apurado na declaração — não sobre a renda,
+    // nem sobre o imposto a pagar depois de retenções.
+    window.TETO_PERCENTUAL = Number(brand.teto_percentual) || 6;
+    window.TETO_FRACAO     = window.TETO_PERCENTUAL / 100;
+    window.TETO_BASE_LEGAL = brand.teto_base_legal || 'Lei 9.532/1997, art. 22';
+
     window.dispatchEvent(new CustomEvent('brandLoaded', { detail: brand }));
   }
 };
