@@ -172,7 +172,24 @@ app.get('/diagnostico', async (req, res) => {
     user: emailStatus.user,
     port: emailStatus.port,
     secure: emailStatus.secure,
+    // De onde saem os links e quem assina as mensagens. Ficaram invisíveis por
+    // um tempo e isso custou caro: o envio dava certo, o e-mail chegava, e só o
+    // clique falhava — sem nada no log denunciando.
+    appUrl: emailStatus.appUrl,
+    from:   emailStatus.from,
     error: emailStatus.error
+  };
+
+  // Qual código está realmente rodando.
+  //
+  // O Railway injeta estas variáveis a cada deploy. Sem elas, descobrir se uma
+  // publicação subiu vira adivinhação a partir de sintomas — e adivinhar errado
+  // manda alguém reconectar repositório à toa, que foi o que aconteceu aqui.
+  diagnostico.build = {
+    commit:    process.env.RAILWAY_GIT_COMMIT_SHA?.slice(0, 7) || '(desconhecido)',
+    branch:    process.env.RAILWAY_GIT_BRANCH || '(desconhecida)',
+    mensagem:  process.env.RAILWAY_GIT_COMMIT_MESSAGE || null,
+    deployId:  process.env.RAILWAY_DEPLOYMENT_ID || null
   };
   if (emailStatus.etherealUrl) {
     diagnostico.services.email.etherealUrl = emailStatus.etherealUrl;
