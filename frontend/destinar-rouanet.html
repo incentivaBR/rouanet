@@ -1884,7 +1884,9 @@
         if (valorParam) {
           const v = parseFloat(valorParam);
           if (!isNaN(v) && v > 0) {
-            state.ir_devido = v / 0.06;
+            // A conta ao contrário: o valor veio da calculadora e daqui
+            // deduzimos o IR devido que o produziu. O teto vem do banco.
+            state.ir_devido = v / (window.TETO_FRACAO || 0.06);
             state.limite    = v;
           }
         }

@@ -407,7 +407,7 @@
         if (id === 'rendimentos') {
           // Estimativa rápida: IR ≈ 18% dos rendimentos → limite Rouanet = 6%
           const rend = utils.parseCurrency(this.value);
-          showPreview(Math.round(rend * 0.18 * 0.06 * 100) / 100);
+          showPreview(Math.round(rend * 0.18 * (window.TETO_FRACAO || 0.06) * 100) / 100);
         }
       });
     });
@@ -498,7 +498,7 @@
     if (irDiretoEl) irDiretoEl.addEventListener('input', function() {
       utils.maskCurrency(this);
       const ir = utils.parseCurrency(this.value);
-      showPreview(Math.round(ir * 0.06 * 100) / 100);
+      showPreview(Math.round(ir * (window.TETO_FRACAO || 0.06) * 100) / 100);
     });
 
     // Calculadora Rápida

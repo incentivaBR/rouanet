@@ -1,5 +1,6 @@
 import express from 'express';
 import pool from '../../config/database.js';
+import { tetoDoMecanismo } from '../lib/tetos.js';
 
 const router = express.Router();
 
@@ -96,8 +97,19 @@ router.get('/organizations', async (req, res) => {
  * Retorna configurações de marca para o frontend (white-label).
  * Prioridade: organização do tenant → variáveis de ambiente → padrão.
  */
-router.get('/brand', (req, res) => {
+router.get('/brand', async (req, res) => {
   const org = req.organization;
+
+  // O teto acompanha a marca porque tenant.js já busca esta rota em toda
+  // página. Sem isso, cada tela guardava a própria cópia do 6% — havia oito
+  // delas no frontend — e mover o número para o banco não adiantaria: o banco
+  // diria uma coisa e a calculadora mostraria outra.
+  let teto = null;
+  try {
+    teto = await tetoDoMecanismo(org?.incentive_group_code || 'ROUANET');
+  } catch (erro) {
+    console.error('[config] falha ao ler o teto:', erro.message);
+  }
 
   const brand = {
     name:          org?.name          || process.env.BRAND_NAME          || 'IncentivaBR',
@@ -106,6 +118,11 @@ router.get('/brand', (req, res) => {
     color_accent:  org?.secondary_color || process.env.BRAND_COLOR_ACCENT || '#EE985C',
     domain:        process.env.BRAND_DOMAIN || 'incentivabr.com.br',
     simulation_mode: process.env.SIMULATION_MODE === 'true',
+
+    // Percentual sobre o IMPOSTO DEVIDO apurado na declaração — não sobre a
+    // renda, nem sobre o imposto a pagar depois de retenções.
+    teto_percentual: teto?.percentual ?? null,
+    teto_base_legal: teto?.base_legal ?? null
   };
 
   res.json(brand);
