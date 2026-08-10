@@ -53,6 +53,48 @@ function aplicaAcento(cor) {
   });
 }
 
+/**
+ * Qual organização esta aba está mostrando.
+ *
+ * Fora de produção a white label é alcançada por `?org=casa-azul` — o
+ * subdomínio exige DNS, e numa demonstração ninguém vai esperar propagação.
+ * Só que um parâmetro de URL morre no primeiro link clicado: a pessoa abre a
+ * página com a marca do cliente, clica em "Simular", e cai numa tela
+ * IncentivaBR. Guardar na sessão faz a escolha durar a visita inteira.
+ */
+function orgDaSessao() {
+  const daUrl = new URLSearchParams(window.location.search).get('org');
+  if (daUrl) {
+    try { sessionStorage.setItem('incentivabr_org', daUrl); } catch { /* modo privado */ }
+    return daUrl;
+  }
+  try { return sessionStorage.getItem('incentivabr_org') || ''; } catch { return ''; }
+}
+
+/** Acrescenta `?org=` a um endereço, preservando o que já houver de query. */
+function comOrg(endereco) {
+  const org = orgDaSessao();
+  if (!org) return endereco;
+  return endereco + (endereco.includes('?') ? '&' : '?') + 'org=' + encodeURIComponent(org);
+}
+
+/**
+ * Faz os links internos carregarem a organização.
+ *
+ * Sem isto a marca do cliente dura uma tela. Só mexe em links do próprio site:
+ * âncoras, `mailto:`, `tel:` e endereços externos ficam intactos.
+ */
+function propagaOrgNosLinks() {
+  const org = orgDaSessao();
+  if (!org) return;
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || /^(#|mailto:|tel:|javascript:|https?:\/\/)/i.test(href)) return;
+    if (/[?&]org=/.test(href)) return;
+    a.setAttribute('href', comOrg(href));
+  });
+}
+
 const tenant = {
   // Cache da organização
   _organization: null,
@@ -63,13 +105,8 @@ const tenant = {
   async loadOrganizationConfig() {
     try {
       // Pega org da URL (para desenvolvimento)
-      const urlParams = new URLSearchParams(window.location.search);
-      const orgParam = urlParams.get('org') || '';
-
       const baseUrl = typeof api !== 'undefined' && api.baseUrl ? api.baseUrl : '';
-      const url = orgParam
-        ? `${baseUrl}/api/config/organization?org=${orgParam}`
-        : `${baseUrl}/api/config/organization`;
+      const url = comOrg(`${baseUrl}/api/config/organization`);
 
       const response = await fetch(url);
       const data = await response.json();
@@ -210,7 +247,9 @@ const tenant = {
   async loadBrand() {
     try {
       const baseUrl = typeof api !== 'undefined' && api.baseUrl ? api.baseUrl : '';
-      const response = await fetch(`${baseUrl}/api/config/brand`);
+      // Sem o `org` aqui, a página saía com as CORES do cliente e o NOME e a
+      // LOGO da IncentivaBR — identidade misturada na mesma tela.
+      const response = await fetch(comOrg(`${baseUrl}/api/config/brand`));
       if (!response.ok) return;
       const brand = await response.json();
       this._applyBrand(brand);
@@ -341,6 +380,9 @@ window.tenant = tenant;
 // Carregar automaticamente ao iniciar a página
 // loadBrand primeiro (rápido, usa .env) → loadOrganizationConfig depois (org sobrescreve se tiver cores próprias)
 document.addEventListener('DOMContentLoaded', async () => {
+  // Antes de qualquer coisa: a organização escolhida tem que sobreviver ao
+  // primeiro clique, senão a marca do cliente dura uma tela só.
+  propagaOrgNosLinks();
   await tenant.loadBrand();
   tenant.loadOrganizationConfig();
   preencheProjeto();
