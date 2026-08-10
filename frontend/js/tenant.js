@@ -326,7 +326,9 @@ async function preencheProjeto() {
   let projeto = null;
   try {
     const baseUrl = typeof api !== 'undefined' && api.baseUrl ? api.baseUrl : '';
-    const resp = await fetch(`${baseUrl}/api/salic/org-project`);
+    // Sem o `org`, isto resolve para a IncentivaBR e os botões "Destinar"
+    // levam ao projeto de outra instituição — na página do cliente.
+    const resp = await fetch(comOrg(`${baseUrl}/api/salic/org-project`));
     if (resp.ok) {
       const dados = await resp.json();
       projeto = dados.projeto || null;
@@ -354,7 +356,10 @@ async function preencheProjeto() {
     const extra = a.getAttribute('data-destinar');
     const params = new URLSearchParams({ pronac: projeto.pronac, titulo });
     if (extra) new URLSearchParams(extra).forEach((v, k) => params.set(k, v));
-    a.href = `destinar-rouanet.html?${params}`;
+    // Estes links nascem depois do DOMContentLoaded, então o reescritor de
+    // links já passou. Sem o `org` aqui, o destinador atravessa a fronteira
+    // para a IncentivaBR bem no clique que mais importa.
+    a.href = comOrg(`destinar-rouanet.html?${params}`);
   });
 
   document.querySelectorAll('[data-projeto]').forEach(el => {
