@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import pool, { testConnection } from './config/database.js';
 import { runMigrations, statusDasMigracoes } from './src/config/migrate.js';
@@ -140,6 +141,26 @@ app.get('/db-test', async (req, res) => {
 });
 
 /**
+ * Quem pode ver o diagnóstico inteiro.
+ *
+ * Fora de produção, qualquer um — é uma máquina de desenvolvimento. Em
+ * produção, só quem apresenta o DIAG_TOKEN. A comparação é feita em tempo
+ * constante: comparar segredo com `===` vaza, pelo tempo de resposta, quantos
+ * caracteres iniciais estavam certos.
+ */
+function temAcessoAoDetalhe(req) {
+  if (process.env.NODE_ENV !== 'production') return true;
+
+  const esperado = (process.env.DIAG_TOKEN || '').trim();
+  if (!esperado) return false;   // sem token configurado, ninguém vê o detalhe
+
+  const recebido = String(req.get('x-diagnostico-token') || '').trim();
+  const a = Buffer.from(recebido);
+  const b = Buffer.from(esperado);
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
+/**
  * Descreve a DATABASE_URL sem revelar a senha.
  *
  * Devolve para onde a conexão aponta e duas características do valor da senha
@@ -264,7 +285,27 @@ app.get('/diagnostico', async (req, res) => {
     DATABASE_URL: process.env.DATABASE_URL ? '✅ configurado' : '❌ não configurado'
   };
 
-  res.json(diagnostico);
+  // Quem pergunta tem direito a saber se está no ar. Não a saber como.
+  //
+  // Esta rota nunca teve autenticação, e hoje ela ganhou o host interno do
+  // banco, o nome do banco, o usuário e a mensagem do commit — desenho de
+  // dentro de casa, servido a qualquer um que soubesse a URL. Junto com uma
+  // DATABASE_URL vazada, é a diferença entre ter a senha e saber onde usá-la.
+  //
+  // O detalhe continua existindo, e continua acessível durante uma queda
+  // (não depende do banco nem de login, que é justamente quando falta). Só
+  // que agora pede o DIAG_TOKEN.
+  if (temAcessoAoDetalhe(req)) return res.json(diagnostico);
+
+  res.json({
+    status: 'ok',
+    uptime: diagnostico.uptime,
+    commit: diagnostico.build.commit,
+    services: Object.fromEntries(
+      Object.entries(diagnostico.services).map(([nome, s]) => [nome, { status: s.status }])
+    ),
+    detalhe: 'restrito — envie o cabecalho x-diagnostico-token'
+  });
 });
 
 // Rotas da API
