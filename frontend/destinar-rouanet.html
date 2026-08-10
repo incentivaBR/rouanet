@@ -428,7 +428,7 @@
       <!-- Contexto da demonstração -->
       <div style="display:flex;align-items:center;gap:10px">
         <span style="color:rgba(255,255,255,0.35);font-size:11px;font-family:'Montserrat',sans-serif;font-weight:600">Etapa 2 de 3</span>
-        <span style="color:var(--secondary-color,#EE985C);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;border:1px solid ;background:;border-radius:999px;padding:3px 10px">Simulação</span>
+        <span data-modo="simulacao" hidden style="color:var(--secondary-color,#EE985C);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;border:1px solid ;background:;border-radius:999px;padding:3px 10px">Simulação</span>
       </div>
     </div>
   </nav>
@@ -437,8 +437,13 @@
   <div style="padding-top:56px"></div>
 
   <!-- Faixa de simulação — visível só a partir do step1 -->
-  <div id="simStrip" style="display:none;background:#FFFBEB;border-bottom:1px solid #FDE68A;padding:8px 20px;text-align:center;font-size:12px;color:#92400E;font-family:'Montserrat',sans-serif;line-height:1.5">
+  <div id="simStrip" data-modo="simulacao" hidden style="display:none;background:#FFFBEB;border-bottom:1px solid #FDE68A;padding:8px 20px;text-align:center;font-size:12px;color:#92400E;font-family:'Montserrat',sans-serif;line-height:1.5">
     🧪 <strong style="color:#78350F">Este é um fluxo de simulação desenvolvido para fins de pesquisa.</strong> Nenhum valor será transferido e nada muda na sua declaração de IR real.
+  </div>
+  <!-- Em produção a faixa não some: o que muda é o que ela avisa. Some seria
+       pior — o destinador perderia a única linha que diz onde o dinheiro cai. -->
+  <div id="prodStrip" data-modo="producao" hidden style="display:none;background:#EFF6FF;border-bottom:1px solid #BFDBFE;padding:8px 20px;text-align:center;font-size:12px;color:#1E3A8A;font-family:'Montserrat',sans-serif;line-height:1.5">
+    <strong style="color:#1E40AF">Esta é uma destinação real.</strong> A transferência é feita por você, direto para a Conta de Captação do projeto — o IncentivaBR não recebe nem movimenta o valor.
   </div>
 
   <!-- ── Progress steps (oculto até confirmar o projeto) ──────── -->
@@ -527,12 +532,17 @@
       <button onclick="confirmarProjeto()" style="width:100%;background:var(--secondary-color,#EE985C);color:#0F1E3D;border:none;border-radius:14px;padding:16px 24px;font-size:16px;font-weight:800;font-family:'Montserrat',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s;margin-bottom:10px">
         Ver quanto posso destinar <i class="fas fa-arrow-right"></i>
       </button>
-      <p style="text-align:center;font-size:12px;color:#9CA3AF;margin:0 0 8px">
+      <p data-modo="simulacao" hidden style="text-align:center;font-size:12px;color:#9CA3AF;margin:0 0 8px">
         Simulação completa · nenhum valor transferido
       </p>
-      <p style="text-align:center;font-size:11px;color:#C4C9D4;line-height:1.6;margin:0;padding:0 8px">
+      <p data-modo="simulacao" hidden style="text-align:center;font-size:11px;color:#C4C9D4;line-height:1.6;margin:0;padding:0 8px">
         Este fluxo está em modo de simulação: nenhum valor é transferido e nada muda na sua declaração.<br>
         Os dados são de simulação e têm finalidade de pesquisa e educação fiscal.
+      </p>
+      <p data-modo="producao" hidden style="text-align:center;font-size:11px;color:#C4C9D4;line-height:1.6;margin:0;padding:0 8px">
+        Válido para quem entrega a declaração pelo <strong style="color:#6B7280">modelo completo</strong> —
+        no simplificado não há como deduzir.<br>
+        O Recibo de Mecenato é emitido pelo proponente do projeto, não por esta plataforma.
       </p>
 
 
@@ -590,7 +600,7 @@
 
           <!-- Microexplicação dos valores grandes -->
           <div id="valoresNote" style="display:none;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#0369A1;line-height:1.6">
-            Este é o valor total aprovado para o projeto. Na simulação você verá quanto a <strong>sua destinação individual</strong> representa dentro dessa meta.
+            Este é o valor total aprovado para o projeto. <span data-modo="simulacao" hidden>Na simulação você verá</span><span data-modo="producao" hidden>A seguir você vê</span> quanto a <strong>sua destinação individual</strong> representa dentro dessa meta.
           </div>
 
           <!-- Situação + link SALIC oculto mas mantido para o JS -->
@@ -618,7 +628,7 @@
 
           <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#92400e;line-height:1.6">
             <strong>⚠️ Atenção:</strong> a destinação de IR para projetos sociais só é possível para quem faz a declaração no <strong>modelo completo</strong> (com deduções).<br>
-            Se você usa o modelo simplificado, não tem problema: continue a simulação normalmente — ela vai te ajudar a entender como funciona e avaliar se, no futuro, vale a pena migrar para o modelo completo.
+            <span data-modo="simulacao" hidden>Se você usa o modelo simplificado, não tem problema: continue a simulação normalmente — ela vai te ajudar a entender como funciona e avaliar se, no futuro, vale a pena migrar para o modelo completo.</span><span data-modo="producao" hidden>Se você entrega pelo modelo simplificado, <strong>não é possível destinar</strong>: o desconto padrão substitui todas as deduções, inclusive esta. Vale seguir para ver o cálculo e avaliar a migração para o modelo completo na próxima declaração.</span>
           </div>
 
           <div class="calc-tabs">
@@ -718,7 +728,7 @@
 
           <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
             <p style="font-size:13px;color:var(--text-secondary);margin:0;line-height:1.5" id="transitionNote" style="display:none">
-              No próximo passo, você vai escolher quanto desse limite quer destinar na simulação.
+              No próximo passo, você vai escolher quanto desse limite quer destinar<span data-modo="simulacao" hidden> na simulação</span>.
             </p>
             <div style="display:flex;gap:10px">
               <button class="btn-secondary" style="margin-top:0" onclick="goTo(1)">
@@ -731,7 +741,7 @@
                 Escolher quanto quero destinar <i class="fas fa-arrow-right"></i>
               </button>
             </div>
-            <p id="simNoteCalc" style="display:none;text-align:center;font-size:11px;color:#9CA3AF;margin:0;line-height:1.5">
+            <p id="simNoteCalc" data-modo="simulacao" hidden style="display:none;text-align:center;font-size:11px;color:#9CA3AF;margin:0;line-height:1.5">
               Esta é uma simulação. Nenhum valor será transferido agora e nada muda na sua declaração real.
             </p>
           </div>
@@ -785,7 +795,7 @@
               <span class="val" id="resumoLimite">—</span>
             </div>
             <div class="resumo-row highlight">
-              <span class="lbl">Valor que você está destinando na simulação</span>
+              <span class="lbl"><span data-modo="simulacao" hidden>Valor que você está destinando na simulação</span><span data-modo="producao" hidden>Valor que você está destinando</span></span>
               <span class="val" id="resumoValor">R$ 0,00</span>
             </div>
             <div class="resumo-row zero">
@@ -796,15 +806,34 @@
             </div>
           </div>
 
+          <!-- O aceite começa desabilitado de propósito.
+               Um consentimento só vale se a pessoa souber ao que está
+               consentindo (LGPD, art. 5º XII: livre, INFORMADO e inequívoco).
+               Enquanto a página não souber se está em simulação ou em operação
+               real, ela não tem como descrever com honestidade o que vai
+               acontecer — então não pede o aceite. Se a configuração não
+               carregar, o caminho fica fechado, e isso é o certo: melhor não
+               destinar do que destinar sob descrição falsa. -->
           <div class="terms-check">
-            <input type="checkbox" id="termsCheck">
+            <input type="checkbox" id="termsCheck" disabled>
             <label for="termsCheck">
-              Declaro que sou contribuinte de Imposto de Renda (Pessoa Física) e que as informações prestadas são verdadeiras para fins desta demonstração. Autorizo o registro desta simulação para que a plataforma calcule meu limite e gere o comprovante, conforme a <a href="politica-privacidade.html" target="_blank" style="text-decoration:underline">Política de Privacidade</a>.
+              <span data-modo="simulacao" hidden>
+                Declaro que sou contribuinte de Imposto de Renda (Pessoa Física) e que as informações prestadas são verdadeiras para fins desta demonstração. Autorizo o registro desta simulação para que a plataforma calcule meu limite e gere o comprovante, conforme a <a href="politica-privacidade.html" target="_blank" style="text-decoration:underline">Política de Privacidade</a>.
+              </span>
+              <span data-modo="producao" hidden>
+                Declaro que sou contribuinte de Imposto de Renda Pessoa Física, que entrego a declaração pelo <strong>modelo completo</strong> e que as informações prestadas são verdadeiras. Autorizo o IncentivaBR a enviar meu nome, CPF, e-mail e o valor desta destinação ao proponente do projeto, para que ele emita em meu nome o <strong>Recibo de Mecenato</strong> — documento que só ele pode emitir, e que é o que vale na declaração. Tudo conforme a <a href="politica-privacidade.html" target="_blank" style="text-decoration:underline">Política de Privacidade</a>.
+              </span>
+              <span id="modoIndefinido" style="color:#B45309">
+                Carregando as condições desta destinação…
+              </span>
             </label>
           </div>
 
-          <p style="font-size:12px;color:#6B7280;margin:0 0 12px;line-height:1.6">
+          <p data-modo="simulacao" hidden style="font-size:12px;color:#6B7280;margin:0 0 12px;line-height:1.6">
             Na próxima etapa você verá como seriam os dados de pagamento e o comprovante, sem cobrança real de valores.
+          </p>
+          <p data-modo="producao" hidden style="font-size:12px;color:#6B7280;margin:0 0 12px;line-height:1.6">
+            Na próxima etapa aparecem os dados da Conta de Captação do projeto. A transferência é feita por você, no seu banco — depois é só anexar o comprovante aqui.
           </p>
 
           <div style="display:flex;gap:10px">
@@ -913,8 +942,11 @@
             <i class="fas fa-arrow-left"></i> Voltar
           </button>
 
-          <p style="text-align:center;font-size:11px;color:#9CA3AF;margin:16px 0 0;line-height:1.6;padding:0 8px">
+          <p data-modo="simulacao" hidden style="text-align:center;font-size:11px;color:#9CA3AF;margin:16px 0 0;line-height:1.6;padding:0 8px">
             No futuro, podemos ajudar você a transformar esta simulação em uma destinação real, com segurança jurídica e suporte em todas as etapas.
+          </p>
+          <p data-modo="producao" hidden style="text-align:center;font-size:11px;color:#9CA3AF;margin:16px 0 0;line-height:1.6;padding:0 8px">
+            Confira a agência e a conta antes de transferir. O depósito precisa cair na Conta de Captação deste PRONAC — em outra conta não há recibo, e sem recibo não há dedução.
           </p>
 
         </div>
@@ -1136,10 +1168,11 @@
     function confirmarProjeto() {
       document.getElementById('step0').style.display = 'none';
       document.getElementById('progressWrap').style.display = '';
-      if (state.simulationMode) {
-        const strip = document.getElementById('simStrip');
-        if (strip) strip.style.display = '';
-      }
+      // A faixa existe nos dois modos — o que muda é o aviso. `hidden`, posto
+      // por aplicaModo(), é quem decide qual das duas aparece; aqui só se
+      // libera o display, que as mantinha fora do step0.
+      const faixa = document.getElementById(state.simulationMode ? 'simStrip' : 'prodStrip');
+      if (faixa) faixa.style.display = '';
       goTo(1);
     }
 
@@ -1614,8 +1647,9 @@
 
         // Mensagem personalizada com valor
         const valorFmt = BRL(state.valor);
-        document.getElementById('successMsg').textContent =
-          `Nesta simulação, você redirecionou ${valorFmt} para a Orquestra das Periferias do DF.`;
+        document.getElementById('successMsg').textContent = state.simulationMode
+          ? `Nesta simulação, você redirecionou ${valorFmt} para a Orquestra das Periferias do DF.`
+          : `Você destinou ${valorFmt}. Assim que a transferência for conferida, o proponente emite o seu Recibo de Mecenato.`;
 
         // Impacto estimado (R$ 100 ≈ 1 ensaio para 80 jovens)
         const ensaios = Math.max(1, Math.round((state.valor || 0) / 100));
@@ -1626,8 +1660,9 @@
         if (dl) dl.style.display = 'flex';
 
         // WhatsApp share
-        const waText = encodeURIComponent(
-          `Vi como funciona a destinação do Imposto de Renda para projetos culturais — sem nenhum custo extra.\n\nÉ uma demonstração de como parte do IR pode ser redirecionada para a cultura, em vez de ir inteira para a Receita.\n\nVocê também pode testar em menos de 10 minutos:\n👉 www.incentivabr.com.br/destinar-rouanet.html`
+        const waText = encodeURIComponent(state.simulationMode
+          ? `Vi como funciona a destinação do Imposto de Renda para projetos culturais — sem nenhum custo extra.\n\nÉ uma demonstração de como parte do IR pode ser redirecionada para a cultura, em vez de ir inteira para a Receita.\n\nVocê também pode testar em menos de 10 minutos:\n👉 www.incentivabr.com.br/destinar-rouanet.html`
+          : `Destinei parte do meu Imposto de Renda para um projeto cultural — sem custo nenhum a mais para mim.\n\nEm vez de ir inteiro para a Receita, o valor foi para o projeto. Vale para quem declara pelo modelo completo.\n\nVeja como funciona:\n👉 www.incentivabr.com.br/destinar-rouanet.html`
         );
         document.getElementById('btnWhatsapp').href = `https://api.whatsapp.com/send?text=${waText}`;
 
@@ -1719,8 +1754,9 @@
 
     function pularComprovante() {
       document.getElementById('successDonationId').textContent = state.donationId || '—';
-      document.getElementById('successMsg').textContent =
-        `Nesta simulação, você redirecionou ${BRL(state.valor)} para a Orquestra das Periferias do DF.`;
+      document.getElementById('successMsg').textContent = state.simulationMode
+        ? `Nesta simulação, você redirecionou ${BRL(state.valor)} para a Orquestra das Periferias do DF.`
+        : `Sua destinação de ${BRL(state.valor)} está registrada. Falta anexar o comprovante da transferência para que o proponente emita o Recibo de Mecenato.`;
       goTo(6);
     }
 
@@ -1899,11 +1935,39 @@
       }
     }
 
+    /**
+     * Revela os textos do modo em que estamos e libera o aceite.
+     *
+     * Esta página fala em dois idiomas. Num deles nada é real e é preciso
+     * repetir isso o tempo todo; no outro há dinheiro de servidor público
+     * saindo de uma conta, e a mesma frase vira mentira. A troca não pode
+     * depender de alguém lembrar de reescrever quinze parágrafos no dia da
+     * virada — é assim que se esquece um.
+     *
+     * Então cada trecho carrega `data-modo` e chega escondido. Quem decide é
+     * a resposta do servidor, e só ela.
+     */
+    function aplicaModo(simulacao) {
+      state.simulationMode = simulacao;
+      const querido = simulacao ? 'simulacao' : 'producao';
+      document.querySelectorAll('[data-modo]').forEach(el => {
+        el.hidden = el.dataset.modo !== querido;
+      });
+
+      // O aceite só existe depois que há o que declarar. Antes disso o rótulo
+      // estaria em branco e a caixa, marcável.
+      const indefinido = document.getElementById('modoIndefinido');
+      if (indefinido) indefinido.remove();
+      const check = document.getElementById('termsCheck');
+      if (check) check.disabled = false;
+    }
+
     // ── Brand dinâmica + Modo Teste ────────────────────────────
     fetch('/api/config/brand').then(r => r.json()).then(cfg => {
-      if (!cfg || cfg.status === 'error') return;
+      if (!cfg || cfg.status === 'error') throw new Error('config indisponivel');
+      aplicaModo(cfg.simulation_mode === true);
+
       if (cfg.simulation_mode) {
-        state.simulationMode = true;
         const banner  = document.getElementById('testModeBanner');
         const simBadge = document.getElementById('step0SimBadge');
         if (banner)   banner.style.display  = 'flex';
@@ -1916,7 +1980,16 @@
         const s4note = document.getElementById('step4SimNote');
         if (s4note) s4note.style.display = '';
       }
-    }).catch(() => {});
+    }).catch(() => {
+      // Sem resposta do servidor não dá para dizer com honestidade o que vai
+      // acontecer com o dinheiro. O caminho fica fechado, de propósito: um
+      // aceite colhido sob descrição errada não é aceite (LGPD, art. 5º XII).
+      const indefinido = document.getElementById('modoIndefinido');
+      if (indefinido) {
+        indefinido.textContent = 'Não foi possível confirmar as condições desta destinação. ' +
+          'Recarregue a página — enquanto isso, o aceite fica bloqueado.';
+      }
+    });
 
     init();
   </script>
