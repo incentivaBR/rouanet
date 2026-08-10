@@ -12,7 +12,7 @@ import { initEmailService, getEmailStatus } from './src/services/emailService.js
 import { escopoDaChaveResend } from './src/lib/resendEscopo.js';
 import { consumoDeHoje } from './src/lib/consumoIA.js';
 import { semeiaCasaAzul } from './src/config/semeiaCasaAzul.js';
-import { promoveSuperadmin } from './src/config/promoveSuperadmin.js';
+import { promoveSuperadmin, estadoDoSuperadmin } from './src/config/promoveSuperadmin.js';
 
 // ES modules: criar __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -314,6 +314,10 @@ app.get('/diagnostico', async (req, res) => {
       // se o custo cabe no setup ou vira linha na proposta.
       consumo: consumoDeHoje()
     };
+    // Sem isto, um login que nao funciona e indistinguivel de senha errada,
+    // conta inexistente, variavel nao lida e promocao que falhou — quatro
+    // causas com quatro consertos diferentes.
+    diagnostico.services.superadmin = estadoDoSuperadmin();
     return res.json(diagnostico);
   }
 
