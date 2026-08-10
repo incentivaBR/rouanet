@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import pool, { testConnection } from './config/database.js';
 import { runMigrations, statusDasMigracoes } from './src/config/migrate.js';
 import { initEmailService, getEmailStatus } from './src/services/emailService.js';
+import { escopoDaChaveResend } from './src/lib/resendEscopo.js';
 
 // ES modules: criar __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -295,7 +296,11 @@ app.get('/diagnostico', async (req, res) => {
   // O detalhe continua existindo, e continua acessível durante uma queda
   // (não depende do banco nem de login, que é justamente quando falta). Só
   // que agora pede o DIAG_TOKEN.
-  if (temAcessoAoDetalhe(req)) return res.json(diagnostico);
+  if (temAcessoAoDetalhe(req)) {
+    // Só aqui: é chamada de rede, e a resposta diz respeito à segurança da conta.
+    diagnostico.services.email.chave = await escopoDaChaveResend();
+    return res.json(diagnostico);
+  }
 
   res.json({
     status: 'ok',
