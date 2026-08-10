@@ -75,6 +75,25 @@ export async function promoveSuperadmin(conexao = pool) {
 
     await cliente.query('UPDATE users SET is_superadmin = true WHERE id = $1', [userId]);
 
+    // SUPERADMIN_SENHA define a senha, exista a conta ou não.
+    //
+    // Antes ela só valia na criação. O efeito prático era o pior possível: o
+    // dono definia a variável, a conta já existia, nada acontecia — e ele
+    // ficava tentando entrar com uma senha que o banco nunca recebeu, sem nada
+    // na tela explicando. A variável prometia mais do que fazia.
+    //
+    // Isto é uma redefinição de senha por variável de ambiente, e é assim que
+    // deve ser lida: quem controla o Railway já pode tudo. Depois de entrar,
+    // apague a variável — senão todo deploy volta a impor este valor, e a
+    // senha deixa de poder ser trocada pela tela.
+    let senhaAplicada = false;
+    if (!criouAgora && process.env.SUPERADMIN_SENHA) {
+      await cliente.query('UPDATE users SET senha_hash = $2 WHERE id = $1',
+        [userId, await bcrypt.hash(process.env.SUPERADMIN_SENHA, 10)]);
+      senhaAplicada = true;
+      console.log('👑 Senha do superadmin redefinida por SUPERADMIN_SENHA');
+    }
+
     // O vínculo precisa de uma organização, e a `www` é a da própria
     // IncentivaBR. O papel `superadmin` não é escopado a ela — `permissoes.js`
     // aceita esse vínculo para qualquer organização.
@@ -93,9 +112,13 @@ export async function promoveSuperadmin(conexao = pool) {
       situacao: 'ok', email,
       conta_criada_agora: criouAgora,
       ja_era_superadmin: jaEra,
-      recado: criouAgora
-        ? 'Conta criada. Entre com este e-mail e a senha de SUPERADMIN_SENHA.'
-        : 'Conta existente promovida. Entre com este e-mail e a senha que você já usava.'
+      senha_aplicada_agora: senhaAplicada,
+      recado: (criouAgora || senhaAplicada)
+        ? 'Entre com este e-mail e a senha de SUPERADMIN_SENHA. ' +
+          'Depois de entrar, apague essa variável no Railway — enquanto ela existir, ' +
+          'todo deploy volta a impor esse valor e a senha não pode ser trocada pela tela.'
+        : 'Conta existente promovida. Entre com este e-mail e a senha que você já usava. ' +
+          'Se não lembra, defina SUPERADMIN_SENHA no Railway e faça um deploy.'
     };
     if (!jaEra) console.log(`👑 ${email} agora é superadmin`);
   } catch (erro) {
