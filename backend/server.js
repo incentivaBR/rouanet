@@ -10,6 +10,7 @@ import pool, { testConnection } from './config/database.js';
 import { runMigrations, statusDasMigracoes } from './src/config/migrate.js';
 import { initEmailService, getEmailStatus } from './src/services/emailService.js';
 import { escopoDaChaveResend } from './src/lib/resendEscopo.js';
+import { consumoDeHoje } from './src/lib/consumoIA.js';
 
 // ES modules: criar __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -303,7 +304,12 @@ app.get('/diagnostico', async (req, res) => {
     diagnostico.services.assistente = {
       status: ultimaFalhaDaIA() ? 'error' : 'ok',
       chave: process.env.ANTHROPIC_API_KEY ? 'configurada' : 'ausente',
-      ultima_falha: ultimaFalhaDaIA()
+      ultima_falha: ultimaFalhaDaIA(),
+      // A chave é uma só, da IncentivaBR: toda pergunta em qualquer white label
+      // sai da mesma conta. Sem esta quebra por organização não há como
+      // responder "quanto me custa este cliente?" — que é a pergunta que decide
+      // se o custo cabe no setup ou vira linha na proposta.
+      consumo: consumoDeHoje()
     };
     return res.json(diagnostico);
   }

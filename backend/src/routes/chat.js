@@ -1,7 +1,9 @@
 import express from 'express';
 import Anthropic from '@anthropic-ai/sdk';
 import { NUCLEO, blocoDoTenant } from '../knowledge/index.js';
+import rateLimit from 'express-rate-limit';
 import { leErroDoSdk } from '../lib/erroIA.js';
+import { registraConsumo, estourouOTeto } from '../lib/consumoIA.js';
 
 const router = express.Router();
 
@@ -230,12 +232,40 @@ A destinação abate diretamente do IR Devido:
 - **Malha fina:** auditoria da Receita — risco zero com documentação correta e limites respeitados
 - **Custo líquido zero:** o valor destinado abate integralmente do IR Devido — sem gasto adicional`;
 
+// Uma pergunta a cada poucos segundos é conversa; sessenta em quinze minutos
+// não é gente. O limitador global (300/15min) foi desenhado para rotas que
+// custam CPU, não dinheiro por chamada — nele cabiam 1.200 perguntas por hora
+// vindas de um único IP, cerca de US$ 86 por dia saindo da conta da IncentivaBR.
+const limiteDaTina = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: () => process.env.NODE_ENV === 'test',
+  message: {
+    status: 'error',
+    message: 'Você fez muitas perguntas em pouco tempo. Aguarde alguns minutos.'
+  }
+});
+
 // POST /api/chat/tina
-router.post('/tina', async (req, res) => {
+router.post('/tina', limiteDaTina, async (req, res) => {
   if (!anthropic) {
     return res.status(503).json({
       status: 'error',
       message: 'Assistente IA temporariamente indisponível.'
+    });
+  }
+
+  // Teto diário por organização, conferido ANTES da chamada — depois seria
+  // tarde, porque o gasto que estoura o teto é justamente o que não deveria
+  // ter acontecido. Um cliente que abusa não derruba a TINA dos outros.
+  if (estourouOTeto(req.tenantSlug)) {
+    console.warn(`[TINA] teto diario atingido por org=${req.tenantSlug || 'www'}`);
+    return res.status(429).json({
+      status: 'error',
+      message: 'A assistente atingiu o limite de uso de hoje. Ela volta amanhã — ' +
+               'enquanto isso, fale com a instituição pelos canais da página.'
     });
   }
 
@@ -299,6 +329,7 @@ router.post('/tina', async (req, res) => {
     // Cache silencioso: se cache_read vier zero em chamadas repetidas, algo está
     // invalidando o prefixo (valor dinâmico no núcleo, prefixo curto demais).
     const u = response.usage;
+    registraConsumo(req.tenantSlug, u);
     console.log(
       `[TINA] org=${req.tenantSlug || 'www'} ` +
       `cache_write=${u.cache_creation_input_tokens ?? 0} ` +
