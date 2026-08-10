@@ -122,6 +122,29 @@ await teste('a fila de conferencia nao esta vazia', async () => {
   if (linhas.some(l => !l.receipt_url)) throw new Error('destinacao sem comprovante para conferir');
 });
 
+await teste('corrige uma marca que ficou errada num deploy anterior', async () => {
+  // Foi o que aconteceu de verdade: a organizacao nasceu com o lockup vertical
+  // no cabeçalho, e nenhum deploy seguinte corrigia — semeador idempotente que
+  // nao converge deixa o erro cristalizado no banco, mais dificil de ver que no
+  // codigo.
+  await q(`UPDATE organizations
+              SET logo_url = '/assets/errado.png', primary_color = '#000000', name = 'Nome Velho'
+            WHERE slug = 'casa-azul'`);
+  await semeiaCasaAzul(poolReal);
+
+  const [org] = await q(`SELECT * FROM organizations WHERE slug = 'casa-azul'`);
+  if (org.logo_url === '/assets/errado.png') throw new Error('nao corrigiu a logo');
+  if (org.primary_color !== '#1E346B') throw new Error('nao corrigiu a cor: ' + org.primary_color);
+  if (org.name !== 'Casa Azul Felipe Augusto') throw new Error('nao corrigiu o nome');
+});
+
+await teste('a logo do cabecalho e o simbolo, nao o lockup vertical', async () => {
+  // O lockup e 1122x1520; renderizado a 18px de ALTURA vira uma lasca de 13px
+  // de largura, com o nome do cliente ilegivel na tela dele.
+  const [org] = await q(`SELECT logo_url FROM organizations WHERE slug = 'casa-azul'`);
+  if (!/simbolo/.test(org.logo_url)) throw new Error('logo do cabecalho: ' + org.logo_url);
+});
+
 await teste('rodar de novo nao duplica nada', async () => {
   await semeiaCasaAzul(poolReal);
   await semeiaCasaAzul(poolReal);

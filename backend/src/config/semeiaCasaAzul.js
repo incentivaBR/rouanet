@@ -45,7 +45,26 @@ const RAZAO_SOCIAL = 'ASSISTENCIA SOCIAL CASA AZUL';
 
 async function organizacao(cliente) {
   const achou = await cliente.query('SELECT id FROM organizations WHERE slug = $1', [SLUG]);
-  if (achou.rows.length) return achou.rows[0].id;
+
+  if (achou.rows.length) {
+    // Converge a marca, em vez de só não duplicar.
+    //
+    // A primeira versão daqui apenas devolvia o id quando a linha existia. O
+    // resultado foi que a Casa Azul nasceu com o lockup vertical no cabeçalho —
+    // valor de um deploy anterior — e nenhum deploy seguinte corrigia. Semeador
+    // idempotente que não converge deixa o erro cristalizado no banco, onde é
+    // mais difícil de ver do que no código.
+    //
+    // Só a identidade visual é atualizada, e só enquanto SIMULATION_MODE está
+    // ligado. Quando a chave virar, este arquivo para de agir e o que o cliente
+    // ajustar pela tela fica de pé.
+    await cliente.query(`
+      UPDATE organizations
+         SET name = $2, primary_color = $3, secondary_color = $4, logo_url = $5
+       WHERE id = $1`,
+      [achou.rows[0].id, MARCA, CORES.primaria, CORES.secundaria, LOGO]);
+    return achou.rows[0].id;
+  }
 
   const { rows } = await cliente.query(`
     INSERT INTO organizations (name, slug, cnpj, plan_type, fund_type, fund_name,
