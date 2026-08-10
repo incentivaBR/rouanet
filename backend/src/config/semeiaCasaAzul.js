@@ -27,8 +27,14 @@ const PRONAC = '2511274';
 // O azul-marinho da marca da Casa Azul. O laranja segue o da IncentivaBR: a
 // marca deles é monocromática, e a cor de destaque precisa contrastar com o
 // azul — usar o mesmo azul nos dois papéis apaga botões contra o fundo.
-const CORES = { primaria: '#26386B', secundaria: '#EE985C' };
-const LOGO = '/assets/casa-azul-felipe-augusto.png';
+const CORES = { primaria: '#1E346B', secundaria: '#EE985C' };
+// A marca da Casa Azul é um lockup vertical: símbolo em cima, "Casa Azul /
+// Felipe Augusto" embaixo, 1122×1520. Os cabeçalhos do sistema renderizam a
+// logo entre 18 e 36 pixels de ALTURA — nessa altura o lockup inteiro vira uma
+// lasca de 13px de largura, com o nome ilegível. Por isso o cabeçalho usa só o
+// símbolo (a casa com as mãos), que é quase quadrado e lê bem pequeno.
+// A marca completa fica em `casa-azul-felipe-augusto.png`, para usos grandes.
+const LOGO = '/assets/casa-azul-simbolo.png';
 
 // Duas identidades, e confundi-las custa caro: a MARCA é o que aparece na tela
 // do destinador; a RAZÃO SOCIAL é o que precisa constar no Recibo de Mecenato
