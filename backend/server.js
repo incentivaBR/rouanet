@@ -21,7 +21,7 @@ import uploadsRoutes from './src/routes/uploads.js';
 import configRoutes from './src/routes/config.js';
 import salicRoutes from './src/routes/salic.js';
 import adminRoutes from './src/routes/admin.js';
-import chatRoutes from './src/routes/chat.js';
+import chatRoutes, { ultimaFalhaDaIA } from './src/routes/chat.js';
 import mecenatoRoutes from './src/routes/mecenato.js';
 import interessadosRoutes from './src/routes/interessados.js';
 import tenantMiddleware from './src/middleware/tenant.js';
@@ -299,6 +299,12 @@ app.get('/diagnostico', async (req, res) => {
   if (temAcessoAoDetalhe(req)) {
     // Só aqui: é chamada de rede, e a resposta diz respeito à segurança da conta.
     diagnostico.services.email.chave = await escopoDaChaveResend();
+    // Uma assistente morta é indistinguível de uma ociosa até alguém reclamar.
+    diagnostico.services.assistente = {
+      status: ultimaFalhaDaIA() ? 'error' : 'ok',
+      chave: process.env.ANTHROPIC_API_KEY ? 'configurada' : 'ausente',
+      ultima_falha: ultimaFalhaDaIA()
+    };
     return res.json(diagnostico);
   }
 
