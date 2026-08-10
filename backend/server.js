@@ -11,6 +11,7 @@ import { runMigrations, statusDasMigracoes } from './src/config/migrate.js';
 import { initEmailService, getEmailStatus } from './src/services/emailService.js';
 import { escopoDaChaveResend } from './src/lib/resendEscopo.js';
 import { consumoDeHoje } from './src/lib/consumoIA.js';
+import { semeiaCasaAzul } from './src/config/semeiaCasaAzul.js';
 
 // ES modules: criar __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -385,6 +386,10 @@ app.listen(PORT, async () => {
 
   // Aplicar migrations pendentes automaticamente
   await runMigrations().catch(err => console.error('Erro nas migrations:', err));
+
+  // Deixa a Casa Azul demonstrável. Só age com SIMULATION_MODE=true, e é
+  // idempotente — roda em todo boot sem duplicar nada.
+  await semeiaCasaAzul().catch(err => console.error('Erro na semeadura:', err));
 
   // Inicializar serviço de email
   initEmailService().catch(err => console.error('Erro ao inicializar email:', err));
