@@ -110,26 +110,40 @@ que a apresentação comercial afirma.
 
 ---
 
-## 4. Texto de consentimento — hoje fala em "demonstração"
+## 4. ~~Texto de consentimento~~ — RESOLVIDO em 10 de agosto de 2026
 
-`destinar-rouanet.html` pede o aceite com este texto:
+O aceite dizia "para fins desta demonstração" e "autorizo o registro desta
+simulação". Com dinheiro real esse texto fica falso, e um consentimento colhido
+sob descrição falsa não é consentimento (LGPD, art. 5º XII: livre, **informado**
+e inequívoco).
 
-> "Declaro que sou contribuinte de Imposto de Renda (Pessoa Física) e que as
-> informações prestadas são verdadeiras **para fins desta demonstração**.
-> Autorizo o registro **desta simulação** para que a plataforma calcule meu
-> limite e gere o comprovante (...)"
+O que se descobriu ao mexer: não era um texto, eram **vinte** — a página inteira
+fala em simulação, de ponta a ponta. Trocar tudo à mão no dia da virada é
+exatamente como se esquece um.
 
-Com dinheiro real, esse texto fica falso — e um consentimento colhido sob
-descrição falsa não é consentimento (LGPD, art. 5º XII: livre, **informado** e
-inequívoco).
+Então o texto passou a seguir a chave. Cada trecho carrega `data-modo` e chega
+escondido; `aplicaModo()` lê `simulation_mode` de `/api/config/brand` e revela
+só o lado certo. Verificado no navegador nos dois modos: 8 trechos em produção,
+12 em simulação, zero vazamento cruzado.
 
-- [ ] Reescrever o texto para a operação real, dizendo o que de fato acontece:
-      os dados vão ao proponente, é ele quem emite o Recibo de Mecenato
-- [ ] Versionar a Política de Privacidade junto (`POLITICA_VERSAO` em
-      `backend/src/config/lgpd.js` e a data em `politica-privacidade.html` —
-      os dois andam juntos, senão a prova do consentimento aponta para um
-      texto que já não existe)
-- [ ] Guardar o texto do aceite como já fazemos no cadastro de interessados
+**A parte que importa mais do que a troca:** se `/api/config/brand` não
+responder, a página não escolhe um lado — ela **bloqueia o aceite** e diz por
+quê. Sem saber o modo, não há como descrever com honestidade o que vai
+acontecer com o dinheiro, e melhor não destinar do que destinar sob descrição
+errada.
+
+O aceite de produção também fechou dois buracos que a auditoria dos contadores
+apontou: diz que vale **só para quem declara pelo modelo completo**, e diz que
+quem emite o Recibo de Mecenato é o **proponente**, não a plataforma.
+
+Guardado em `backend/tests/modo-texto.test.mjs` (7 testes, na suíte).
+
+- [ ] Versionar a Política de Privacidade junto quando o texto for revisado
+      (`POLITICA_VERSAO` em `backend/src/config/lgpd.js` e a data em
+      `politica-privacidade.html` — os dois andam juntos, senão a prova do
+      consentimento aponta para um texto que já não existe)
+- [ ] Guardar o texto do aceite junto da destinação, como já se faz no cadastro
+      de interessados
 
 ---
 

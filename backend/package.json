@@ -13,8 +13,9 @@
     "test:conferencia-http": "node tests/conferencia-http.test.mjs",
     "test:remetente": "node tests/remetente.test.mjs",
     "test:tetos": "node tests/tetos.test.mjs",
-    "test": "npm run test:lgpd && npm run test:conferencia && npm run test:conferencia-http && npm run test:remetente && npm run test:tetos",
-    "dev:memoria": "node tests/servidor-memoria.mjs"
+    "test": "npm run test:lgpd && npm run test:conferencia && npm run test:conferencia-http && npm run test:remetente && npm run test:tetos && npm run test:modo",
+    "dev:memoria": "node tests/servidor-memoria.mjs",
+    "test:modo": "node tests/modo-texto.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
