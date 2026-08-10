@@ -26,6 +26,7 @@ import adminRoutes from './src/routes/admin.js';
 import chatRoutes, { ultimaFalhaDaIA } from './src/routes/chat.js';
 import mecenatoRoutes from './src/routes/mecenato.js';
 import interessadosRoutes from './src/routes/interessados.js';
+import convitesRoutes from './src/routes/convites.js';
 import tenantMiddleware from './src/middleware/tenant.js';
 
 dotenv.config();
@@ -334,6 +335,7 @@ app.use('/api/uploads', uploadsRoutes);
 app.use('/api/config', configRoutes);
 app.use('/api/salic', salicRoutes);   // Lei Rouanet — proxy SALIC API
 app.use('/api/admin', adminRoutes);   // Super-admin IncentivaBR
+app.use('/api/convites', convitesRoutes);   // acesso de gestor a uma organização
 app.use('/api/chat', chatRoutes);     // TINA — assistente virtual IA
 app.use('/api/mecenato', mecenatoRoutes); // Recibo de Mecenato — emitido pelo proponente
 app.use('/api/interessados', interessadosRoutes); // Cadastro de comunicação — consentimento LGPD

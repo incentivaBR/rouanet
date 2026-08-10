@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aceitar convite</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="js/tenant.js"></script>
+  <style>
+    :root { --primary-color:#273F77; --secondary-color:#EE985C; --shadow-md:0 4px 16px rgba(13,27,62,.14); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#F6F8FC; font-family:'Montserrat',system-ui,sans-serif; }
+    .wrap { max-width:520px; margin:0 auto; padding:48px 20px 60px; }
+    .card { background:#fff; border-radius:16px; padding:36px 32px; box-shadow:var(--shadow-md); }
+    .marca-topo { text-align:center; margin-bottom:22px; }
+    .marca-topo img { height:52px; width:auto; }
+    h1 { font-size:22px; font-weight:800; color:#1a1a2e; margin:0 0 8px; text-align:center; }
+    .sub { color:#5A6784; font-size:14.5px; line-height:1.65; text-align:center; margin:0 0 24px; }
+    .poderes { background:#F0F4FB; border-radius:12px; padding:16px 18px; margin-bottom:24px; }
+    .poderes p { margin:0 0 8px; font-size:13px; font-weight:700; color:var(--primary-color); }
+    .poderes ul { margin:0; padding-left:18px; color:#4A5670; font-size:13px; line-height:1.75; }
+    label { display:block; font-size:13px; font-weight:700; color:#33415C; margin:14px 0 6px; }
+    input { width:100%; padding:12px 14px; border:1.5px solid #DCE3F0; border-radius:10px;
+            font-size:15px; font-family:inherit; }
+    input:focus { outline:none; border-color:var(--primary-color); }
+    .dica { font-size:12px; color:#8B96A8; margin-top:5px; }
+    .btn { width:100%; margin-top:22px; padding:14px; border:none; border-radius:10px;
+           background:var(--primary-color); color:#fff; font-size:15px; font-weight:700;
+           font-family:inherit; cursor:pointer; }
+    .btn[disabled] { opacity:.55; cursor:not-allowed; }
+    .aviso { border-radius:10px; padding:13px 15px; font-size:13.5px; line-height:1.6; margin-top:16px; }
+    .aviso.erro { background:#FEF2F2; border:1px solid #FECACA; color:#991B1B; }
+    .aviso.ok   { background:#F0FDF4; border:1px solid #BBF7D0; color:#166534; }
+    .centro { text-align:center; }
+    .prazo { font-size:12.5px; color:#8B96A8; margin-top:18px; text-align:center; line-height:1.6; }
+    a { color:var(--primary-color); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="marca-topo"><img class="brand-logo" src="assets/logo-incentivabr.png" alt=""></div>
+
+    <div class="card">
+      <div id="carregando" class="centro">
+        <p class="sub" style="margin:0">Verificando o convite…</p>
+      </div>
+
+      <!-- Convite inválido, expirado, revogado ou já usado. O motivo real fica
+           no log do servidor: dizer "já foi aceito" a quem tem o link revela
+           que ele é válido e que alguém entrou. -->
+      <div id="invalido" hidden>
+        <h1>Convite indisponível</h1>
+        <p class="sub" id="msgInvalido"></p>
+        <p class="centro"><a href="index.html">Ir para a página inicial</a></p>
+      </div>
+
+      <div id="formulario" hidden>
+        <h1 id="titulo"></h1>
+        <p class="sub" id="subtitulo"></p>
+
+        <div class="poderes">
+          <p>Com este acesso você poderá:</p>
+          <ul>
+            <li>ver quem destinou para o projeto e quanto;</li>
+            <li>conferir os comprovantes de transferência;</li>
+            <li><strong>confirmar</strong> cada destinação — é o que dispara a
+                emissão do Recibo de Mecenato em nome do destinador.</li>
+          </ul>
+        </div>
+
+        <form id="form">
+          <div id="camposNovos">
+            <label for="nome">Seu nome completo</label>
+            <input id="nome" name="nome" autocomplete="name" required>
+
+            <label for="cpf">CPF</label>
+            <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off"
+                   placeholder="000.000.000-00" required>
+          </div>
+
+          <label for="senha" id="rotuloSenha">Crie uma senha</label>
+          <input id="senha" name="senha" type="password" autocomplete="new-password" required>
+          <p class="dica" id="dicaSenha">Ao menos 8 caracteres.</p>
+
+          <button class="btn" id="botao" type="submit">Aceitar convite</button>
+        </form>
+
+        <div id="aviso" class="aviso erro" hidden></div>
+        <p class="prazo" id="prazo"></p>
+      </div>
+
+      <div id="pronto" hidden class="centro">
+        <h1>Acesso liberado</h1>
+        <p class="sub">Agora é só entrar com o seu e-mail e a senha que você definiu.</p>
+        <p><a id="linkLogin" href="login.html">Ir para o login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const token = new URLSearchParams(location.search).get('t') || '';
+    const el = id => document.getElementById(id);
+    const mostrar = (id, sim = true) => { el(id).hidden = !sim; };
+
+    function erro(texto) {
+      el('aviso').textContent = texto;
+      el('aviso').className = 'aviso erro';
+      el('aviso').hidden = false;
+    }
+
+    async function carrega() {
+      if (!token) {
+        mostrar('carregando', false);
+        el('msgInvalido').textContent = 'O endereço não traz um convite.';
+        return mostrar('invalido');
+      }
+      try {
+        const r = await fetch(`/api/convites/token/${encodeURIComponent(token)}`);
+        const d = await r.json();
+        mostrar('carregando', false);
+
+        if (d.status !== 'success') {
+          el('msgInvalido').textContent = d.message || 'Este convite não é mais válido.';
+          return mostrar('invalido');
+        }
+
+        const c = d.convite;
+        el('titulo').textContent = `Acesso a ${c.organizacao}`;
+        el('subtitulo').textContent = `O convite foi enviado para ${c.email}.`;
+        el('prazo').textContent =
+          `Este convite vale até ${new Date(c.expira_em).toLocaleString('pt-BR')} e só pode ser usado uma vez.`;
+
+        // Quem já tem conta não cria outra — confirma a senha que já usa. Sem
+        // isso, quem interceptasse o e-mail trocaria a senha de uma conta
+        // existente pelo link do convite.
+        if (c.ja_tem_conta) {
+          mostrar('camposNovos', false);
+          el('nome').required = el('cpf').required = false;
+          el('rotuloSenha').textContent = 'Sua senha atual';
+          el('senha').setAttribute('autocomplete', 'current-password');
+          el('dicaSenha').textContent = 'Já existe uma conta com este e-mail. Confirme a senha dela.';
+        } else if (c.nome) {
+          el('nome').value = c.nome;
+        }
+
+        mostrar('formulario');
+      } catch {
+        mostrar('carregando', false);
+        el('msgInvalido').textContent = 'Não foi possível verificar o convite agora. Tente de novo em instantes.';
+        mostrar('invalido');
+      }
+    }
+
+    el('form').addEventListener('submit', async evento => {
+      evento.preventDefault();
+      el('aviso').hidden = true;
+      el('botao').disabled = true;
+      el('botao').textContent = 'Confirmando…';
+
+      try {
+        const r = await fetch(`/api/convites/token/${encodeURIComponent(token)}/aceitar`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            senha: el('senha').value,
+            nome: el('nome').value,
+            cpf: el('cpf').value
+          })
+        });
+        const d = await r.json();
+
+        if (d.status === 'success') {
+          mostrar('formulario', false);
+          const org = new URLSearchParams(location.search).get('org');
+          el('linkLogin').href = 'login.html' + (org ? `?org=${encodeURIComponent(org)}` : '');
+          return mostrar('pronto');
+        }
+        erro(d.message || 'Não foi possível aceitar o convite.');
+      } catch {
+        erro('Falha de conexão. Tente de novo.');
+      } finally {
+        el('botao').disabled = false;
+        el('botao').textContent = 'Aceitar convite';
+      }
+    });
+
+    el('cpf').addEventListener('input', e => {
+      const d = e.target.value.replace(/\D/g, '').slice(0, 11);
+      e.target.value = d
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+    });
+
+    carrega();
+  </script>
+</body>
+</html>

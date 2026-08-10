@@ -13,14 +13,15 @@
     "test:conferencia-http": "node tests/conferencia-http.test.mjs",
     "test:remetente": "node tests/remetente.test.mjs",
     "test:tetos": "node tests/tetos.test.mjs",
-    "test": "npm run test:lgpd && npm run test:conferencia && npm run test:conferencia-http && npm run test:remetente && npm run test:tetos && npm run test:modo && npm run test:diagnostico && npm run test:resend && npm run test:erro-ia && npm run test:consumo-ia && npm run test:semeia",
+    "test": "npm run test:lgpd && npm run test:conferencia && npm run test:conferencia-http && npm run test:remetente && npm run test:tetos && npm run test:modo && npm run test:diagnostico && npm run test:resend && npm run test:erro-ia && npm run test:consumo-ia && npm run test:semeia && npm run test:convites",
     "dev:memoria": "node tests/servidor-memoria.mjs",
     "test:modo": "node tests/modo-texto.test.mjs",
     "test:diagnostico": "node tests/diagnostico.test.mjs",
     "test:resend": "node tests/resend-escopo.test.mjs",
     "test:erro-ia": "node tests/erro-ia.test.mjs",
     "test:consumo-ia": "node tests/consumo-ia.test.mjs",
-    "test:semeia": "node tests/semeia-casa-azul.test.mjs"
+    "test:semeia": "node tests/semeia-casa-azul.test.mjs",
+    "test:convites": "node tests/convites.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

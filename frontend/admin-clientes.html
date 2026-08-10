@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes — IncentivaBR</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="js/auth.js"></script>
+  <style>
+    :root { --azul:#273F77; --borda:#E3E9F4; --texto:#33415C; --fraco:#8B96A8; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#F6F8FC; font-family:'Montserrat',system-ui,sans-serif; color:var(--texto); }
+    .topo { background:var(--azul); color:#fff; padding:14px 24px; display:flex;
+            justify-content:space-between; align-items:center; }
+    .topo strong { font-size:15px; font-weight:800; }
+    .topo a { color:rgba(255,255,255,.75); font-size:13px; text-decoration:none; }
+    .wrap { max-width:1060px; margin:0 auto; padding:28px 20px 70px; }
+    h1 { font-size:22px; font-weight:800; color:#1a1a2e; margin:0 0 4px; }
+    .sub { color:var(--fraco); font-size:14px; margin:0 0 24px; }
+    .cartao { background:#fff; border:1px solid var(--borda); border-radius:14px; padding:22px; margin-bottom:18px; }
+    .cartao h2 { font-size:15px; font-weight:800; color:var(--azul); margin:0 0 4px; }
+    .cartao .nota { font-size:12.5px; color:var(--fraco); margin:0 0 16px; line-height:1.6; }
+    .grade { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+    label { display:block; font-size:12px; font-weight:700; margin:0 0 5px; }
+    input, select { width:100%; padding:10px 12px; border:1.5px solid var(--borda);
+                    border-radius:9px; font-size:14px; font-family:inherit; }
+    input:focus, select:focus { outline:none; border-color:var(--azul); }
+    .dica { font-size:11.5px; color:var(--fraco); margin-top:4px; line-height:1.5; }
+    .btn { border:none; border-radius:9px; padding:11px 20px; font-size:13.5px; font-weight:700;
+           font-family:inherit; cursor:pointer; background:var(--azul); color:#fff; }
+    .btn.leve { background:none; border:1.5px solid var(--borda); color:var(--azul); }
+    .btn.perigo { background:none; border:1.5px solid #FCA5A5; color:#B91C1C; padding:6px 12px; font-size:12px; }
+    .btn[disabled] { opacity:.5; cursor:not-allowed; }
+    table { width:100%; border-collapse:collapse; font-size:13.5px; }
+    th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+         color:var(--fraco); padding:0 10px 8px; }
+    td { padding:11px 10px; border-top:1px solid var(--borda); vertical-align:middle; }
+    .selo { display:inline-block; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; }
+    .selo.pendente { background:#FEF3C7; color:#92400E; }
+    .selo.aceito   { background:#DCFCE7; color:#166534; }
+    .selo.expirado, .selo.revogado { background:#F1F5F9; color:#64748B; }
+    .aviso { border-radius:9px; padding:12px 14px; font-size:13px; line-height:1.6; margin-top:14px; }
+    .aviso.erro { background:#FEF2F2; border:1px solid #FECACA; color:#991B1B; }
+    .aviso.ok   { background:#F0FDF4; border:1px solid #BBF7D0; color:#166534; }
+    .linha-acoes { display:flex; gap:10px; align-items:center; margin-top:16px; flex-wrap:wrap; }
+    .vazio { color:var(--fraco); font-size:13px; padding:16px 0; }
+  </style>
+</head>
+<body>
+  <div class="topo">
+    <strong>IncentivaBR · Clientes</strong>
+    <a href="dashboard.html">← voltar</a>
+  </div>
+
+  <div class="wrap">
+    <h1>Clientes</h1>
+    <p class="sub">Cada cliente é uma white label: marca, projeto e uma fila de conferência própria.</p>
+
+    <div id="semAcesso" class="cartao" hidden>
+      <h2>Acesso restrito</h2>
+      <p class="nota">Esta tela é do super-administrador da IncentivaBR.
+        <a href="login.html">Entrar com outra conta</a>.</p>
+    </div>
+
+    <div id="conteudo" hidden>
+      <!-- ── Novo cliente ─────────────────────────────────────────── -->
+      <div class="cartao">
+        <h2>Novo cliente</h2>
+        <p class="nota">
+          O <strong>identificador</strong> é o que aparece no endereço:
+          <code>?org=casa-azul</code> ou <code>casa-azul.incentivabr.com.br</code>.
+          Depois de criado ele não muda — links já enviados quebrariam.
+        </p>
+        <form id="formCliente">
+          <div class="grade">
+            <div>
+              <label for="cName">Nome da instituição</label>
+              <input id="cName" required placeholder="Casa Azul Felipe Augusto">
+              <p class="dica">O nome de fantasia — é o que o destinador vê na tela.</p>
+            </div>
+            <div>
+              <label for="cSlug">Identificador</label>
+              <input id="cSlug" required pattern="[a-z0-9-]+" placeholder="casa-azul">
+              <p class="dica">Minúsculas, números e hífens.</p>
+            </div>
+            <div>
+              <label for="cEmail">E-mail de contato</label>
+              <input id="cEmail" type="email" placeholder="contato@instituicao.org.br">
+            </div>
+            <div>
+              <label for="cPrim">Cor principal</label>
+              <input id="cPrim" type="color" value="#273F77" style="height:42px;padding:4px">
+            </div>
+            <div>
+              <label for="cSec">Cor de destaque</label>
+              <input id="cSec" type="color" value="#EE985C" style="height:42px;padding:4px">
+              <p class="dica">Precisa contrastar com a principal — é a cor dos botões.</p>
+            </div>
+          </div>
+          <div class="linha-acoes">
+            <button class="btn" type="submit">Criar cliente</button>
+          </div>
+          <div id="avisoCliente" class="aviso erro" hidden></div>
+        </form>
+      </div>
+
+      <!-- ── Cliente selecionado ──────────────────────────────────── -->
+      <div class="cartao">
+        <h2>Configurar</h2>
+        <p class="nota">Escolha o cliente para vincular o projeto e convidar quem vai operar.</p>
+        <label for="selOrg">Cliente</label>
+        <select id="selOrg"></select>
+      </div>
+
+      <!-- ── Projeto ──────────────────────────────────────────────── -->
+      <div class="cartao">
+        <h2>Projeto incentivado</h2>
+        <p class="nota">
+          O PRONAC é conferido no SALIC do Ministério da Cultura. A
+          <strong>conta de captação</strong> pode ficar em branco por enquanto: depósito
+          na conta errada não gera recibo, e o destinador perde a dedução — informe só
+          quando o proponente confirmar.
+        </p>
+        <form id="formProjeto">
+          <div class="grade">
+            <div>
+              <label for="pPronac">PRONAC</label>
+              <input id="pPronac" required placeholder="2511274">
+              <div class="linha-acoes" style="margin-top:8px">
+                <button class="btn leve" type="button" id="btnSalic">Consultar no SALIC</button>
+              </div>
+            </div>
+            <div>
+              <label for="pTitulo">Título do projeto</label>
+              <input id="pTitulo" required>
+            </div>
+            <div>
+              <label for="pProponente">Proponente (razão social)</label>
+              <input id="pProponente">
+              <p class="dica">Como consta no SALIC — é o nome que vai no Recibo de Mecenato.</p>
+            </div>
+            <div>
+              <label for="pUf">UF</label>
+              <input id="pUf" maxlength="2" placeholder="DF">
+            </div>
+          </div>
+          <div class="linha-acoes">
+            <button class="btn" type="submit">Vincular projeto</button>
+          </div>
+          <div id="avisoProjeto" class="aviso erro" hidden></div>
+        </form>
+      </div>
+
+      <!-- ── Convites ─────────────────────────────────────────────── -->
+      <div class="cartao">
+        <h2>Quem opera este cliente</h2>
+        <p class="nota">
+          Sem alguém aqui, a fila de conferência do cliente não abre — as destinações
+          chegam e ninguém pode confirmá-las. O convite vale 48 horas e serve uma vez só.
+        </p>
+        <form id="formConvite">
+          <div class="grade">
+            <div>
+              <label for="vNome">Nome</label>
+              <input id="vNome" placeholder="Felipe Augusto">
+            </div>
+            <div>
+              <label for="vEmail">E-mail</label>
+              <input id="vEmail" type="email" required placeholder="felipe@casazul.org.br">
+            </div>
+            <div>
+              <label for="vRole">Acesso</label>
+              <select id="vRole">
+                <option value="org_admin">Gestor — confere e confirma destinações</option>
+                <option value="org_viewer">Visualizador — só acompanha</option>
+              </select>
+            </div>
+          </div>
+          <div class="linha-acoes">
+            <button class="btn" type="submit">Enviar convite</button>
+          </div>
+          <div id="avisoConvite" class="aviso erro" hidden></div>
+        </form>
+
+        <div style="margin-top:22px">
+          <table>
+            <thead><tr><th>Pessoa</th><th>Acesso</th><th>Situação</th><th></th></tr></thead>
+            <tbody id="listaConvites"></tbody>
+          </table>
+          <p class="vazio" id="semConvites" hidden>Nenhum convite ainda.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const el = id => document.getElementById(id);
+    const cabecalho = () => ({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + (auth.getToken() || '')
+    });
+
+    function avisar(id, texto, bom = false) {
+      const a = el(id);
+      a.textContent = texto;
+      a.className = 'aviso ' + (bom ? 'ok' : 'erro');
+      a.hidden = false;
+      if (bom) setTimeout(() => { a.hidden = true; }, 6000);
+    }
+
+    async function chamar(url, opcoes = {}) {
+      const r = await fetch(url, { headers: cabecalho(), ...opcoes });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || d.status === 'error') throw new Error(d.message || `Falha (${r.status})`);
+      return d;
+    }
+
+    // ── Clientes ────────────────────────────────────────────────────
+    async function carregaClientes(selecionar) {
+      const d = await chamar('/api/admin/orgs');
+      const sel = el('selOrg');
+      sel.innerHTML = d.orgs.map(o =>
+        `<option value="${o.id}">${o.name} — ${o.slug}</option>`).join('');
+      if (selecionar) sel.value = selecionar;
+      await carregaConvites();
+    }
+
+    el('formCliente').addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        const d = await chamar('/api/admin/orgs', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: el('cName').value.trim(),
+            slug: el('cSlug').value.trim(),
+            contact_email: el('cEmail').value.trim() || null,
+            primary_color: el('cPrim').value,
+            secondary_color: el('cSec').value
+          })
+        });
+        avisar('avisoCliente', d.message || 'Cliente criado.', true);
+        el('formCliente').reset();
+        await carregaClientes(d.org?.id);
+      } catch (erro) { avisar('avisoCliente', erro.message); }
+    });
+
+    // Sugere o identificador a partir do nome, sem impedir a edição.
+    el('cName').addEventListener('input', e => {
+      if (el('cSlug').dataset.tocado) return;
+      el('cSlug').value = e.target.value.toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+    });
+    el('cSlug').addEventListener('input', e => { e.target.dataset.tocado = '1'; });
+
+    // ── Projeto ─────────────────────────────────────────────────────
+    el('btnSalic').addEventListener('click', async () => {
+      const pronac = el('pPronac').value.trim();
+      if (!pronac) return;
+      try {
+        const d = await chamar(`/api/salic/projetos/${encodeURIComponent(pronac)}`);
+        const p = d.projeto || d;
+        el('pTitulo').value = p.nome || '';
+        el('pProponente').value = p.proponente?.nome || '';
+        el('pUf').value = p.uf || '';
+        avisar('avisoProjeto', `Encontrado: ${p.nome} — ${p.situacao || 'situação não informada'}`, true);
+      } catch (erro) { avisar('avisoProjeto', 'Não encontrei este PRONAC no SALIC. ' + erro.message); }
+    });
+
+    el('formProjeto').addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        await chamar(`/api/admin/orgs/${el('selOrg').value}/projects`, {
+          method: 'POST',
+          body: JSON.stringify({
+            pronac: el('pPronac').value.trim(),
+            titulo: el('pTitulo').value.trim(),
+            proponente_nome: el('pProponente').value.trim() || null,
+            uf: el('pUf').value.trim().toUpperCase() || null,
+            is_featured: true
+          })
+        });
+        avisar('avisoProjeto', 'Projeto vinculado.', true);
+      } catch (erro) { avisar('avisoProjeto', erro.message); }
+    });
+
+    // ── Convites ────────────────────────────────────────────────────
+    const rotulo = { org_admin:'Gestor', org_viewer:'Visualizador', member:'Destinador' };
+
+    async function carregaConvites() {
+      const orgId = el('selOrg').value;
+      if (!orgId) return;
+      try {
+        const d = await chamar(`/api/convites?organization_id=${orgId}`);
+        const corpo = el('listaConvites');
+        corpo.innerHTML = d.convites.map(c => `
+          <tr>
+            <td><strong>${c.nome || '—'}</strong><br><span style="color:#8B96A8">${c.email}</span></td>
+            <td>${rotulo[c.role] || c.role}</td>
+            <td><span class="selo ${c.situacao}">${c.situacao}</span></td>
+            <td>${c.situacao === 'pendente'
+              ? `<button class="btn perigo" data-revogar="${c.id}">Revogar</button>` : ''}</td>
+          </tr>`).join('');
+        el('semConvites').hidden = d.convites.length > 0;
+      } catch (erro) { avisar('avisoConvite', erro.message); }
+    }
+
+    el('listaConvites').addEventListener('click', async e => {
+      const id = e.target.dataset?.revogar;
+      if (!id) return;
+      try {
+        await chamar(`/api/convites/${id}/revogar`, { method: 'POST' });
+        await carregaConvites();
+      } catch (erro) { avisar('avisoConvite', erro.message); }
+    });
+
+    el('formConvite').addEventListener('submit', async e => {
+      e.preventDefault();
+      try {
+        const d = await chamar('/api/convites', {
+          method: 'POST',
+          body: JSON.stringify({
+            organization_id: el('selOrg').value,
+            email: el('vEmail').value.trim(),
+            nome: el('vNome').value.trim() || null,
+            role: el('vRole').value
+          })
+        });
+        avisar('avisoConvite', d.message, true);
+        el('vNome').value = el('vEmail').value = '';
+        await carregaConvites();
+      } catch (erro) { avisar('avisoConvite', erro.message); }
+    });
+
+    el('selOrg').addEventListener('change', carregaConvites);
+
+    // ── Início ──────────────────────────────────────────────────────
+    (async () => {
+      if (!auth.getToken()) return location.href = 'login.html';
+      try {
+        await carregaClientes();
+        el('conteudo').hidden = false;
+      } catch {
+        // 403 aqui significa conta sem superadmin — dizer isso é melhor que
+        // uma tela vazia sem explicação.
+        el('semAcesso').hidden = false;
+      }
+    })();
+  </script>
+</body>
+</html>
