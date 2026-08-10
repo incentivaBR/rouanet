@@ -63,6 +63,7 @@
     #alert.alert-error { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; border-radius: 10px; }
     #alert.alert-success { background: #F0FDF4; color: #166534; border: 1px solid #BBF7D0; border-radius: 10px; }
   </style>
+  <script src="js/tenant.js"></script>
 </head>
 <body class="min-h-screen bg-[#0F1E3D] flex items-center justify-center p-5">
 
@@ -404,8 +405,7 @@
   </script>
   <script src="js/layout.js"></script>
   <script>Layout.init('', { skipNav: true, skipFooter: true });</script>
-  <script src="js/tenant.js"></script>
-  <script>
+    <script>
     // Modo demo: esconde o formulário imediatamente e mostra tela de transição
     if (utils.getQueryParam('demo') === 'true') {
       const card = document.querySelector('.bg-white.rounded-2xl');
