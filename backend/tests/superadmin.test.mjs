@@ -98,6 +98,34 @@ await teste('cria a conta quando nao existe e ha senha', async () => {
   if (!(await bcrypt.compare('uma-senha-longa', u.senha_hash))) throw new Error('senha nao confere');
 });
 
+await teste('a senha vale para conta que ja existe, nao so na criacao', async () => {
+  // Era o defeito que travou o acesso de verdade: o dono definia a variavel, a
+  // conta ja existia, nada acontecia — e ele tentava entrar com uma senha que
+  // o banco nunca recebeu, sem nada na tela explicando.
+  const antes = await bcrypt.hash('senha-antiga-esquecida', 10);
+  await q(`INSERT INTO users (cpf, nome, email, senha_hash) VALUES ('4','C','c@x.com',$1)`, [antes]);
+
+  process.env.SUPERADMIN_EMAIL = 'c@x.com';
+  process.env.SUPERADMIN_SENHA = 'senha-nova-que-eu-sei';
+  await promoveSuperadmin(poolReal);
+
+  const [u] = await q(`SELECT senha_hash FROM users WHERE email = 'c@x.com'`);
+  if (!(await bcrypt.compare('senha-nova-que-eu-sei', u.senha_hash))) {
+    throw new Error('a senha da variavel nao foi aplicada a conta existente');
+  }
+});
+
+await teste('sem SUPERADMIN_SENHA, a senha existente nao e tocada', async () => {
+  const antes = await bcrypt.hash('minha-senha', 10);
+  await q(`INSERT INTO users (cpf, nome, email, senha_hash) VALUES ('5','D','d@x.com',$1)`, [antes]);
+  process.env.SUPERADMIN_EMAIL = 'd@x.com';
+  await promoveSuperadmin(poolReal);
+  const [u] = await q(`SELECT senha_hash FROM users WHERE email = 'd@x.com'`);
+  if (!(await bcrypt.compare('minha-senha', u.senha_hash))) {
+    throw new Error('apagou a senha de quem nao pediu');
+  }
+});
+
 await teste('sem conta e sem senha, nao inventa nada', async () => {
   process.env.SUPERADMIN_EMAIL = 'fantasma@incentivabr.com.br';
   await promoveSuperadmin(poolReal);
