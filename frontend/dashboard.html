@@ -345,6 +345,9 @@
           a fila de conferência existe e ninguém a encontra — e é ela que faz a
           destinação sair de "aguardando" e virar recibo.
         -->
+        <a href="admin-clientes.html" id="linkClientes" class="btn-conferencia" style="display:none">
+          <i class="fas fa-building"></i> Clientes
+        </a>
         <a href="conferencia.html" id="linkConferencia" class="btn-conferencia" style="display:none">
           <i class="fas fa-clipboard-check"></i> <span id="qtdConferencia">Conferência</span>
         </a>
@@ -777,6 +780,29 @@
           r.total ? `Conferência (${r.total})` : 'Conferência';
       } catch (_) { /* silencioso: é um atalho, não uma funcionalidade */ }
     }
+
+    /**
+     * Mostra "Clientes" a quem é superadmin.
+     *
+     * A tela de cadastro de clientes existia sem porta nenhuma na interface:
+     * só se chegava nela digitando o endereço. Numa reunião isso é o mesmo que
+     * não existir — ninguém abre a barra de endereços na frente do cliente.
+     *
+     * Quem decide é a própria rota: ela responde 403 para quem não é
+     * superadmin, e é essa resposta que acende o atalho. Assim não há uma
+     * segunda cópia da regra de permissão aqui, livre para divergir da de lá.
+     */
+    async function verificaAcessoClientes() {
+      const token = localStorage.getItem('incentivabr_token');
+      if (!token) return;
+      try {
+        const resp = await fetch('/api/admin/orgs',
+          { headers: { 'Authorization': 'Bearer ' + token } });
+        if (!resp.ok) return;
+        document.getElementById('linkClientes').style.display = 'inline-flex';
+      } catch (_) { /* atalho, não funcionalidade */ }
+    }
+    verificaAcessoClientes();
 
     /**
      * Liga os links [data-destinar] que nascem depois do carregamento.
