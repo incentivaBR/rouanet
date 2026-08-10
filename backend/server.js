@@ -12,6 +12,7 @@ import { initEmailService, getEmailStatus } from './src/services/emailService.js
 import { escopoDaChaveResend } from './src/lib/resendEscopo.js';
 import { consumoDeHoje } from './src/lib/consumoIA.js';
 import { semeiaCasaAzul } from './src/config/semeiaCasaAzul.js';
+import { promoveSuperadmin } from './src/config/promoveSuperadmin.js';
 
 // ES modules: criar __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -391,6 +392,10 @@ app.listen(PORT, async () => {
 
   // Deixa a Casa Azul demonstrável. Só age com SIMULATION_MODE=true, e é
   // idempotente — roda em todo boot sem duplicar nada.
+  // Sem um superadmin nao ha como cadastrar cliente pela tela — e criar o
+  // primeiro exigiria outro superadmin. Esta e a porta de entrada.
+  await promoveSuperadmin().catch(err => console.error('Erro ao promover superadmin:', err));
+
   await semeiaCasaAzul().catch(err => console.error('Erro na semeadura:', err));
 
   // Inicializar serviço de email
