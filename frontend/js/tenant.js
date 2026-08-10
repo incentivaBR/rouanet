@@ -78,22 +78,68 @@ function comOrg(endereco) {
   return endereco + (endereco.includes('?') ? '&' : '?') + 'org=' + encodeURIComponent(org);
 }
 
-/**
- * Faz os links internos carregarem a organização.
- *
- * Sem isto a marca do cliente dura uma tela. Só mexe em links do próprio site:
- * âncoras, `mailto:`, `tel:` e endereços externos ficam intactos.
- */
-function propagaOrgNosLinks() {
-  const org = orgDaSessao();
-  if (!org) return;
-  document.querySelectorAll('a[href]').forEach(a => {
-    const href = a.getAttribute('href');
-    if (!href || /^(#|mailto:|tel:|javascript:|https?:\/\/)/i.test(href)) return;
-    if (/[?&]org=/.test(href)) return;
-    a.setAttribute('href', comOrg(href));
-  });
+/** Um endereço interno do próprio site, que ainda não leva a organização. */
+function precisaDeOrg(href) {
+  if (!href) return false;
+  if (/^(#|mailto:|tel:|javascript:|data:)/i.test(href)) return false;
+  if (/[?&]org=/.test(href)) return false;
+  if (/^https?:\/\//i.test(href)) {
+    try { return new URL(href).origin === window.location.origin; } catch { return false; }
+  }
+  return true;
 }
+
+/**
+ * Toda chamada de API leva a organização, sem a página precisar saber disso.
+ *
+ * Este é o ponto em que a multi-tenância deixa de ser responsabilidade de cada
+ * tela. Antes, cada página lembrava (ou esquecia) de anexar `?org=` na mão —
+ * e `projetos-rouanet.html` esquecia, com a própria cópia de `carregarProjeto()`
+ * buscando `/api/salic/org-project` sem organização. O resultado era o botão
+ * "Destinar" da Casa Azul apontando para o projeto da Orquestra das Periferias.
+ *
+ * Consertar aquela cópia resolveria uma tela. Envolver o `fetch` resolve todas
+ * as telas que existem e todas as que vierem — que é o que um núcleo
+ * multi-cliente precisa fazer.
+ */
+function apiSempreComOrg() {
+  if (window.__fetchComOrg) return;
+  const original = window.fetch;
+  window.fetch = function (recurso, opcoes) {
+    try {
+      const url = typeof recurso === 'string' ? recurso : recurso?.url;
+      // Só rotas de API deste mesmo servidor. Recursos externos ficam intactos.
+      if (typeof url === 'string' && /(^|\/)api\//.test(url) && precisaDeOrg(url)) {
+        return original.call(this, comOrg(url), opcoes);
+      }
+    } catch { /* qualquer dúvida, segue o original */ }
+    return original.call(this, recurso, opcoes);
+  };
+  window.__fetchComOrg = true;
+}
+
+/**
+ * Todo clique interno leva a organização — inclusive em links criados depois.
+ *
+ * Reescrever os links no carregamento não bastava: os botões que mais importam
+ * nascem de `innerHTML` já com a página montada, então o reescritor passava
+ * antes deles existirem. Decidir no clique não tem esse problema, porque aí o
+ * link já existe, seja qual for o código que o criou.
+ */
+function navegacaoSempreComOrg() {
+  document.addEventListener('click', evento => {
+    if (!orgDaSessao()) return;
+    const link = evento.target?.closest?.('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (precisaDeOrg(href)) link.setAttribute('href', comOrg(href));
+  }, true);   // fase de captura: antes de qualquer handler da página
+}
+
+// Instalado no instante em que este arquivo roda, não no DOMContentLoaded:
+// páginas que disparam fetch durante a montagem precisam já encontrar o
+// envelope no lugar.
+apiSempreComOrg();
 
 const tenant = {
   // Cache da organização
@@ -385,9 +431,7 @@ window.tenant = tenant;
 // Carregar automaticamente ao iniciar a página
 // loadBrand primeiro (rápido, usa .env) → loadOrganizationConfig depois (org sobrescreve se tiver cores próprias)
 document.addEventListener('DOMContentLoaded', async () => {
-  // Antes de qualquer coisa: a organização escolhida tem que sobreviver ao
-  // primeiro clique, senão a marca do cliente dura uma tela só.
-  propagaOrgNosLinks();
+  navegacaoSempreComOrg();
   await tenant.loadBrand();
   tenant.loadOrganizationConfig();
   preencheProjeto();
