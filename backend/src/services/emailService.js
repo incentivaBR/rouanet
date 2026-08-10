@@ -483,3 +483,57 @@ export async function sendGerenciarPreferenciasEmail(org, user, accessToken) {
     return null;
   }
 }
+
+/**
+ * Convite para operar uma organização.
+ *
+ * Não é o mesmo que confirmar um cadastro. Quem aceita este link passa a poder
+ * conferir comprovantes e confirmar destinações — dinheiro de terceiros. Por
+ * isso o texto diz explicitamente qual é o poder que está sendo entregue, e o
+ * prazo é curto o bastante para que um convite esquecido não fique aberto.
+ */
+export async function sendConviteGestorEmail(org, convite, tokenClaro, quemConvidou) {
+  if (!resendClient && !transporter) return null;
+  if (!convite?.email) return null;
+
+  const link = `${getAppUrl()}/aceitar-convite.html?t=${encodeURIComponent(tokenClaro)}` +
+               (org?.slug ? `&org=${encodeURIComponent(org.slug)}` : '');
+  const marca = org?.name || 'a instituição';
+  const saudacao = convite.nome ? `Olá, ${convite.nome}!` : 'Olá!';
+  const porQuem = quemConvidou ? ` por ${quemConvidou}` : '';
+
+  const content = `
+    <h2>Você foi convidado a gerenciar ${marca}</h2>
+    <p>${saudacao}</p>
+    <p>Você recebeu${porQuem} um acesso de gestor à plataforma de destinação de
+    Imposto de Renda de <strong>${marca}</strong>.</p>
+    <p>Com esse acesso você vai:</p>
+    <ul style="color:#333;line-height:1.7">
+      <li>ver quem destinou para o projeto e quanto;</li>
+      <li>conferir os comprovantes de transferência;</li>
+      <li><strong>confirmar</strong> cada destinação, o que dispara a emissão do
+          Recibo de Mecenato em nome do destinador.</li>
+    </ul>
+    <a href="${link}" class="button">Criar minha senha e entrar</a>
+    <p style="margin-top:18px;color:#666;font-size:13px">
+      Este link vale por 48 horas e só pode ser usado uma vez. Depois disso,
+      peça um novo a quem te convidou.
+    </p>
+    <p style="color:#666;font-size:13px">
+      Não esperava este convite? Ignore esta mensagem e avise quem te enviou —
+      sem o clique, nenhum acesso é criado.
+    </p>
+  `;
+
+  try {
+    await doSend({
+      to: convite.email,
+      subject: `Seu acesso de gestor — ${marca}`,
+      html: getEmailTemplate(content, org)
+    });
+    return true;
+  } catch (error) {
+    console.error('Erro ao enviar convite de gestor:', error.message);
+    return null;
+  }
+}
