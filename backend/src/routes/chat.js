@@ -1,6 +1,7 @@
 import express from 'express';
 import Anthropic from '@anthropic-ai/sdk';
 import { NUCLEO, blocoDoTenant } from '../knowledge/index.js';
+import { leErroDoSdk } from '../lib/erroIA.js';
 
 const router = express.Router();
 
@@ -328,12 +329,31 @@ router.post('/tina', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Erro TINA:', error.message);
-    res.status(500).json({
+    // "Tente novamente" era a resposta para tudo. Com a chave revogada ou o
+    // crédito no fim isso é conselho falso: o destinador insiste numa tela que
+    // não vai mudar, e do lado de cá ninguém fica sabendo.
+    const causa = leErroDoSdk(error);
+    console.error(`[TINA] ${causa.causa}: ${causa.operador}`, error.message);
+    ultimaFalha = { ...causa, quando: new Date().toISOString() };
+
+    res.status(causa.passageiro ? 503 : 500).json({
       status: 'error',
-      message: 'Erro ao processar sua mensagem. Tente novamente.'
+      message: causa.usuario,
+      passageiro: causa.passageiro
     });
   }
 });
+
+/**
+ * A última falha da TINA, para o diagnóstico.
+ *
+ * Sem isso, uma assistente morta é indistinguível de uma assistente ociosa:
+ * ninguém abre o chat para conferir, e a falha só aparece quando um destinador
+ * reclama — se reclamar.
+ */
+let ultimaFalha = null;
+export function ultimaFalhaDaIA() {
+  return ultimaFalha;
+}
 
 export default router;
