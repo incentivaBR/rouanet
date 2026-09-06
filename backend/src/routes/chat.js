@@ -78,67 +78,11 @@ A IncentivaBR é uma plataforma digital independente que conecta servidores púb
 
 A IncentivaBR NÃO movimenta dinheiro. O valor vai direto da conta do servidor para o beneficiário (projeto ou fundo). A plataforma é canal técnico: orienta, registra, gera comprovante.
 
-## Os 7 Mecanismos de Incentivo Fiscal Federal (2026)
-
-### MODALIDADE 1 — Lei Rouanet (Cultura)
-- **Lei:** 8.313/1991 — Art. 18 (destinação direta ao FNC) ou Art. 26 (patrocínio)
-- **Limite PF:** até 6% do IR Devido
-- **Art. 18:** 100% do valor abate do IR Devido — o mais indicado para pessoa física
-- **Art. 26:** apenas 80% abate — comum para pessoas jurídicas (patrocínio com divulgação)
-- **Projetos:** aprovados pelo MinC/SALIC — cultura, música, teatro, cinema, patrimônio, dança, circo
-- **Como verificar:** pronac.cultura.gov.br (pesquise pelo PRONAC do projeto)
-- **Ficha DIRPF:** Incentivos Fiscais → Cultura (informe PRONAC e valor)
-- **Prazo 2026:** 31 de dezembro de 2026
-
-### MODALIDADE 2 — Lei do Esporte
-- **Lei:** 11.438/2006 — atualizada pelo Decreto 12.861/2026
-- **Limite PF:** até 7% do IR Devido (limite independente da Rouanet)
-- **Projetos:** aprovados pelo Ministério do Esporte — esporte educacional, rendimento e participação
-- **Ficha DIRPF:** Incentivos Fiscais → Desporto
-- **Prazo 2026:** 31 de dezembro de 2026
-
-### MODALIDADE 3 — FIA/FDCA (Criança e Adolescente)
-- **Lei:** ECA — Lei 8.069/1990, Art. 260
-- **Limite PF:** até 3% do IR Devido (Pessoa Física) — separado da Rouanet
-- **Beneficiários:** Fundos Municipais e Estaduais da Criança e do Adolescente (FMDCA)
-- **Ficha DIRPF:** Doações Efetuadas → Código 40
-- **Atenção:** o fundo precisa ter CNPJ ativo e estar habilitado pelo CONANDA
-- **Prazo 2026:** 31 de dezembro de 2026
-
-### MODALIDADE 4 — FDI (Fundo do Idoso)
-- **Lei:** 12.213/2010
-- **Limite PF:** até 3% do IR Devido — separado da Rouanet
-- **Beneficiários:** Fundos Municipais e Estaduais do Idoso
-- **Ficha DIRPF:** Doações Efetuadas → Código 41
-- **Atenção:** o fundo precisa estar inscrito no CNDI e ter CNPJ ativo
-- **Prazo 2026:** 31 de dezembro de 2026
-
-### MODALIDADE 5 — Lei de Incentivo à Reciclagem (LIR / Recicla+)
-- **Lei:** 14.260/2021
-- **Limite PF:** até 6% do IR Devido — limite INDEPENDENTE de todas as outras modalidades
-- **Beneficiários:** organizações de catadores de materiais recicláveis, cooperativas aprovadas
-- **Ficha DIRPF:** Incentivos Fiscais → Reciclagem
-- **Prazo 2026:** 31 de dezembro de 2026
-
-### MODALIDADE 6 — PRONON (Oncologia)
-- **Lei:** 12.715/2012
-- **Limite PF:** até 1% do IR Devido
-- **Beneficiários:** entidades de saúde credenciadas para prevenção e combate ao câncer
-- **Ficha DIRPF:** Incentivos Fiscais → PRONON
-- **Pode combinar:** PRONON + PRONAS juntos até 1% total
-
-### MODALIDADE 7 — PRONAS/PCD (Pessoa com Deficiência)
-- **Lei:** 12.715/2012
-- **Limite PF:** até 1% do IR Devido (conjunto com PRONON, máximo 1%)
-- **Beneficiários:** entidades de atenção à pessoa com deficiência credenciadas pelo Ministério da Saúde
-- **Ficha DIRPF:** Incentivos Fiscais → PRONAS
-
-## Limites por grupo — regra crítica
-- **Grupo Cultura/Esporte/FIA/FDI/Audiovisual:** cada modalidade tem limite próprio, mas a soma não pode ultrapassar 6% do IR Devido no total do grupo
-- **Recicla+ (LIR):** 6% independente — não soma com os outros
-- **PRONON + PRONAS:** 1% conjunto — independente dos demais
-- **Regra de ouro:** nunca somar todos os percentuais para criar um "limite total" — apresentar cada um separadamente
-- **Máximo teórico:** 6% (cultura/esporte/etc.) + 6% (reciclagem) + 1% (saúde) = até 13% — mas depende do projeto e habilitação
+## Mecanismos, limites e percentuais
+A base legal dos mecanismos de incentivo, os limites de dedução e os percentuais
+estão na base de conhecimento que vem logo depois desta persona. Ela é a ÚNICA
+fonte para esses números: não use nenhum percentual, teto, prazo ou ficha que
+não esteja lá, e não some limites de mecanismos diferentes.
 
 ## Princípio da Afinidade Profissional
 Servidores destinam quando VÊM CONEXÃO entre seu trabalho e a causa. Use este princípio:
@@ -155,11 +99,11 @@ Servidores destinam quando VÊM CONEXÃO entre seu trabalho e a causa. Use este 
 
 ## Por que 99% não destinam — e como a TINA responde
 1. **"Nunca ouvi falar"** → 84% dos contribuintes do DF nunca souberam (pesquisa CRC-DF/IESB 2021). A IncentivaBR existe para mudar isso.
-2. **"Parece complicado"** → 88% de quem começa conclui o fluxo completo (medição interna, mai/2026). Leva menos de 5 minutos com a plataforma guiando.
+2. **"Parece complicado"** → A plataforma guia cada etapa: calcular, registrar, transferir, enviar o comprovante.
 3. **"Não sei calcular"** → A calculadora da IncentivaBR faz isso: www.incentivabr.com.br/calculadora.html
 4. **"Não compensa para mim"** → É imposto que você JÁ paga. O custo líquido final é zero — você só escolhe para onde vai uma parte.
 5. **"Medo da malha fina"** → Zero risco seguindo os limites e guardando a documentação. Seu contador pode confirmar antes de você agir.
-6. **"Meu contador nunca falou nisso"** → 73% dos usuários medidos nunca receberam orientação do contador sobre destinação. Mostre o Espaço do Contador da IncentivaBR.
+6. **"Meu contador nunca falou nisso"** → É comum: poucos contadores orientam sobre destinação. Mostre o Espaço do Contador da IncentivaBR.
 7. **"Deixo para o próximo ano"** → A destinação de 2027 começa agora, durante o ano-calendário 2026. Prazo: 31 de dezembro de 2026.
 
 ## Servidores públicos — por que são o público ideal
@@ -218,7 +162,6 @@ A destinação abate diretamente do IR Devido:
 - 84% dos contribuintes do DF nunca souberam como funciona (CRC-DF/IESB 2021, n=102)
 - 76% fariam a destinação se o contador os orientasse (mesma pesquisa)
 - 32 milhões de contribuintes elegíveis no Brasil (Receita Federal 2023)
-- Medição interna mai/2026: NPS +64, 88% concluíram o fluxo, menos de 5 minutos de duração média
 
 ## Glossário essencial
 - **IR Devido:** imposto final após todas as deduções — diferente do retido em folha
@@ -231,6 +174,32 @@ A destinação abate diretamente do IR Devido:
 - **Modelo completo:** modalidade do IRPF que permite deduções — obrigatório para destinar
 - **Malha fina:** auditoria da Receita — risco zero com documentação correta e limites respeitados
 - **Custo líquido zero:** o valor destinado abate integralmente do IR Devido — sem gasto adicional`;
+
+/**
+ * Monta o array `system` exatamente como vai para a API, na ordem que o
+ * prompt cache exige: persona, núcleo, tenant, lembrete de formato.
+ *
+ * Exportado para o teste ler o prompt FINAL — não um pedaço. A contradição
+ * fiscal do risco 04 do Raio-X estava justamente entre dois blocos deste
+ * array: a persona dizia "7% independente da Rouanet" e "até 13%"; o núcleo,
+ * teto único de 6%. Ver tests/prompt-tina.test.mjs.
+ */
+export function montaSystem(organization) {
+  return [
+    // Se o núcleo não carregou, o cache_control migra para a persona: um
+    // bloco de texto vazio é rejeitado pela API, e sem ele o prefixo cairia
+    // para 3,2k tokens — abaixo do mínimo de 4.096 do Haiku, onde o cache
+    // silenciosamente deixa de existir.
+    NUCLEO
+      ? { type: 'text', text: SYSTEM_PROMPT }
+      : { type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } },
+    ...(NUCLEO
+      ? [{ type: 'text', text: NUCLEO, cache_control: { type: 'ephemeral' } }]
+      : []),
+    { type: 'text', text: blocoDoTenant(organization) },
+    { type: 'text', text: LEMBRETE_FORMATO }
+  ];
+}
 
 // Uma pergunta a cada poucos segundos é conversa; sessenta em quinze minutos
 // não é gente. O limitador global (300/15min) foi desenhado para rotas que
@@ -306,20 +275,7 @@ router.post('/tina', limiteDaTina, async (req, res) => {
       // entrou. 800 dá margem para a resposta terminar; o LEMBRETE_FORMATO abaixo
       // é o que impede que ela cresça para ocupar o espaço novo.
       max_tokens: 800,
-      system: [
-        // Se o núcleo não carregou, o cache_control migra para a persona: um
-        // bloco de texto vazio é rejeitado pela API, e sem ele o prefixo cairia
-        // para 3,2k tokens — abaixo do mínimo de 4.096 do Haiku, onde o cache
-        // silenciosamente deixa de existir.
-        NUCLEO
-          ? { type: 'text', text: SYSTEM_PROMPT }
-          : { type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } },
-        ...(NUCLEO
-          ? [{ type: 'text', text: NUCLEO, cache_control: { type: 'ephemeral' } }]
-          : []),
-        { type: 'text', text: blocoDoTenant(req.organization) },
-        { type: 'text', text: LEMBRETE_FORMATO }
-      ],
+      system: montaSystem(req.organization),
       messages: [
         ...safeHistory.map(m => ({ role: m.role, content: m.content })),
         { role: 'user', content: message.trim() }
