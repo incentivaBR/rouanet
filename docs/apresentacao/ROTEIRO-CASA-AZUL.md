@@ -171,5 +171,5 @@ O que pedir antes de sair:
 3. **O CNPJ do proponente**, para o cadastro ficar completo.
 
 Com esses três, o que falta para desligar a simulação está em
-[`VIRADA-PRODUCAO.md`](VIRADA-PRODUCAO.md) — e o que ainda depende de
-tributarista, em [`CONSULTA-TRIBUTARISTA.md`](CONSULTA-TRIBUTARISTA.md).
+[`VIRADA-PRODUCAO.md`](../operacao/VIRADA-PRODUCAO.md) — e o que ainda depende de
+tributarista, em [`CONSULTA-TRIBUTARISTA.md`](../juridico/CONSULTA-TRIBUTARISTA.md).
