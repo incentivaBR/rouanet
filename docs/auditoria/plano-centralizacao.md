@@ -15,9 +15,9 @@ o que se arquiva e como fazer isso sem perder histórico nem derrubar a produç�
 | 2. Renomear `rouanet` para `incentivabr` | Feito em 06/09/2026 |
 | 3. Trazer o GDF com histórico para `archive/` | Feito no branch `centralizacao` (105 commits preservados, tag local `mvp-2025`) |
 | 4. Trazer os dois privados | Feito no branch `centralizacao`: ambos em `archive/`, com histórico (20 e 26 commits). Nada deles vai para o produto; ver "Os dois privados, lidos" abaixo |
-| 5. Remover PDFs, relatório do Playwright e CPF | Feito na árvore; a reescrita do histórico está preparada em `scripts/limpar-historico.sh` e aguarda confirmação para o force-push |
+| 5. Remover PDFs, relatório do Playwright e CPF | Feito. Histórico reescrito e publicado com force-push em 06/09/2026 (branches `main` e `dev`). Pendências: apagar as três tags antigas no GitHub e pedir ao suporte a limpeza dos commits soltos; ver `docs/operacao/limpeza-historico.md` |
 | 6. Organizar docs/, archive/, README e CLAUDE.md únicos | Feito no branch `centralizacao` |
-| 7. Arquivar os três repositórios antigos no GitHub | Pendente, decisão do proprietário |
+| 7. Arquivar os três repositórios antigos no GitHub | Feito em 06/09/2026, com README de arquivamento em cada um |
 | 8. Segundo mecanismo (FDI/FDCA como dado) | Depende das Ondas 0 e 1 do Raio-X |
 
 ## A decisão
