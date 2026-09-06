@@ -85,6 +85,8 @@ incentivabr/                   ← antigo rouanet, renomeado em set/2026
 | Mecanismo de incentivo é dado (catálogo `laws`, migration 018), não um repositório por lei | set/2026 | `docs/auditoria/plano-centralizacao.md` |
 | Um só repositório; GDF vai para `archive/` com histórico; três repositórios antigos serão arquivados | set/2026 | `docs/auditoria/plano-centralizacao.md` |
 | Recibo de Mecenato é do proponente; o PDF da plataforma é registro de operação | ago/2026 | `backend/src/routes/mecenato.js` |
+| Conta de captação só de `org_projects` ativo; fora da simulação, sem conta a destinação não é registrada | set/2026 | migration 034, `backend/src/routes/donations.js`, `backend/tests/conta-captacao.test.mjs` |
+| Percentuais e limites da TINA só no `nucleo.md`; a persona não tem tabela própria | set/2026 | `backend/src/routes/chat.js`, `backend/tests/prompt-tina.test.mjs` |
 
 ## Endpoints principais
 
@@ -109,9 +111,10 @@ descrita em `docs/operacao/VIRADA-PRODUCAO.md`; as pendências, no Raio-X.
 ## Pendências conhecidas
 
 Ver `docs/auditoria/raio-x-2026-09.md`, seção "Os 12 riscos que importam".
-Os itens da Onda 0 (conta bancária errada em páginas públicas, usuários de
-teste no seed, prompt da TINA com limites contraditórios) são a próxima frente
-de trabalho e não fazem parte da centralização.
+A Onda 0 (riscos 01, 03, 04, 06 e 10) foi executada em setembro de 2026:
+migrations 034 e 035, `POST /api/donations/rouanet` exigindo conta de captação
+fora da simulação, login sem sessão fabricada nem `?demo=true`, prompt da TINA
+sem tabela própria de limites, histórico reescrito. A próxima frente é a Onda 1.
 
 ## Contas de teste
 

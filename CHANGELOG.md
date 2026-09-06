@@ -1,10 +1,30 @@
 # CHANGELOG — IncentivaBR Rouanet
 
+## [Não lançado] — 2026-09 — Onda 0 do Raio-X: para de sangrar
+
+### Removido
+- Blocos com conta bancária (Ag. 1419-2 / Conta 36.068-6 / FNC) de `como-funciona.html`, `faq.html` e `passo-a-passo.html`. No lugar, aviso: os dados bancários aparecem na etapa de pagamento, vindos do cadastro do projeto.
+- Admin de teste do `seeds.sql` (recriado a cada boot) e conta demo do piloto FGV. Migration 035 apaga as duas do banco, ou só desativa quando há destinação vinculada.
+- Fallback do `login.html` que fabricava sessão quando a API falhava, e o modo `?demo=true`.
+- Seção de mecanismos, limites e percentuais do `SYSTEM_PROMPT` da TINA ("7% independente", "até 13%") e métricas internas sem fonte ("88%", "NPS +64"). O `nucleo.md` é a única fonte de percentuais.
+
+### Alterado
+- Migration 034 zera `bank_*`/`pix_*` da organização `www` e desativa o PRONAC fictício 261847.
+- `POST /api/donations/rouanet` exige projeto ativo com conta de captação preenchida fora da simulação; responde 409 com mensagem clara e não grava. Não há mais fallback para conta da organização nem para "Banco do Brasil / 001 / —" escritos no código.
+- `GET /api/salic/org-project` usa só `org_projects` como fonte de dados bancários, inclusive no fallback sem SALIC.
+- CTA "Criar Conta Grátis" da calculadora aponta para `login.html?tab=register&redirect=destinar-rouanet.html` (antes, `cadastro.html`, inexistente).
+
+### Adicionado
+- `backend/tests/prompt-tina.test.mjs` — falha se o prompt final contiver "13%" ou "independente da Rouanet".
+- `backend/tests/conta-captacao.test.mjs` — cobre a recusa sem conta, a resposta sem fallback e a migration 034.
+
+---
+
 ## [1.3.1] — 2026-05-16 — Piloto FGV: piloto-start.html + demo account
 
 ### Adicionado
 - `frontend/piloto-start.html` — landing page do piloto com fluxo 3 etapas
-- `backend/src/migrations/024_demo_user_piloto.sql` — conta demo@destineai.com.br
+- `backend/src/migrations/024_demo_user_piloto.sql` — conta demo compartilhada do piloto (removida pela migration 035, set/2026)
 - OG tags no piloto-start.html para preview rico no WhatsApp
 - Trust block (nenhum dado bancário / FGV / anônimo)
 - Demo auto-login via `?demo=true` em login.html (MAR15)
