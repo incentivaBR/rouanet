@@ -32,7 +32,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -938,7 +937,7 @@
             <i class="fas fa-upload"></i> Já fiz a transferência — enviar comprovante
           </button>
 
-          <p id="step4SimNote" style="display:none;text-align:center;font-size:11px;color:#9CA3AF;margin:6px 0 0;line-height:1.5">
+          <p data-modo="simulacao" hidden style="text-align:center;font-size:11px;color:#9CA3AF;margin:6px 0 0;line-height:1.5">
             Nenhum valor será transferido nesta simulação. Você verá apenas como seria o comprovante de uma destinação real.
           </p>
 
@@ -1007,39 +1006,51 @@
               <span data-projeto="titulo">Projeto</span> · PRONAC <span data-projeto="pronac">—</span> · Art. 18 (100% dedutível)
             </p>
 
-            <!-- Card de impacto -->
+            <!-- Resumo da destinação. Os números de impacto ("80 jovens",
+                 "ensaios patrocinados") eram do projeto do piloto, escritos à
+                 mão, e apareciam para qualquer projeto. Sem dado do tenant, não
+                 há número honesto para mostrar; fica o que é certo. -->
             <div style="background:linear-gradient(135deg,#0F1E3D 0%,#1a2f5a 100%);border-radius:16px;padding:20px;margin:0 0 20px;color:white;width:100%;box-sizing:border-box">
-              <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--secondary-color,#EE985C);font-weight:700;margin-bottom:14px">Seu impacto estimado</div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+              <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--secondary-color,#EE985C);font-weight:700;margin-bottom:10px">Resumo</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
                 <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center">
-                  <div id="impactEnsaios" style="font-size:28px;font-weight:900;color:var(--secondary-color,#EE985C);line-height:1">—</div>
-                  <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px">ensaios patrocinados</div>
+                  <div id="resumoValorFinal" style="font-size:22px;font-weight:900;color:var(--secondary-color,#EE985C);line-height:1">—</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px">valor destinado</div>
                 </div>
                 <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center">
-                  <div style="font-size:28px;font-weight:900;color:var(--secondary-color,#EE985C);line-height:1">80</div>
-                  <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px">jovens alcançados</div>
+                  <div style="font-size:22px;font-weight:900;color:var(--secondary-color,#EE985C);line-height:1">100%</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px">dedutível (art. 18)</div>
                 </div>
               </div>
-              <p style="font-size:11px;color:rgba(255,255,255,0.4);margin:0;font-style:italic;text-align:center">Este é o impacto potencial de uma destinação desse valor em condições reais.</p>
             </div>
 
             <div class="donation-id-box">Protocolo: <span id="successDonationId">—</span></div>
 
-            <!-- Comprovante PDF -->
+            <!-- Registro da destinação em PDF, gerado pelo servidor
+                 (GET /api/donations/:id/comprovante). O PDF gerado no navegador
+                 saiu: marcava "simulação" sempre e citava dados do projeto
+                 escritos à mão. O do servidor sabe o modo e o projeto. -->
             <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:14px 16px;margin:12px 0 20px;text-align:left;width:100%;box-sizing:border-box">
               <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">
                 <span style="font-size:20px;line-height:1.3">📄</span>
                 <div>
-                  <p style="margin:0 0 3px;font-size:13px;font-weight:700;color:#166534">Comprovante de mecenato disponível</p>
-                  <p style="margin:0;font-size:12px;color:#15803D;line-height:1.5">Em uma destinação real, este recibo seria enviado para o seu e-mail e usado na sua próxima declaração de IR.</p>
+                  <p style="margin:0 0 3px;font-size:13px;font-weight:700;color:#166534">Registro da destinação (PDF)</p>
+                  <p data-modo="simulacao" hidden style="margin:0;font-size:12px;color:#15803D;line-height:1.5">Nesta simulação, o PDF mostra como fica o registro. Em uma destinação real, o documento com valor fiscal é o Recibo de Mecenato, emitido pelo proponente.</p>
+                  <p data-modo="producao" hidden style="margin:0;font-size:12px;color:#15803D;line-height:1.5">Este PDF é o registro da operação na plataforma. Não é o Recibo de Mecenato: esse é emitido pelo proponente depois da conferência e aparece no seu painel.</p>
                 </div>
               </div>
-              <button onclick="gerarComprovantePDF()"
+              <button id="btnDownloadComprovante" onclick="baixarComprovanteWizard()"
                 style="display:flex;align-items:center;justify-content:center;gap:8px;background:#166534;color:white;font-weight:700;font-size:14px;padding:12px 20px;border-radius:10px;border:none;cursor:pointer;width:100%;box-sizing:border-box">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,19L12,15H9V10H15V15L13,19H10Z"/></svg>
-                Baixar Comprovante (PDF)
+                Baixar registro (PDF)
               </button>
             </div>
+
+            <!-- O caminho de volta. Sem isto o wizard terminava sem porta para o
+                 painel, onde ficam a situação da conferência e o recibo. -->
+            <a href="dashboard.html" id="btnIrPainel" class="btn-primary-rouanet" style="display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin:0 0 16px;width:100%;box-sizing:border-box">
+              <i class="fas fa-columns"></i> Ir para meu painel
+            </a>
 
             <!-- Sobre o IncentivaBR -->
             <div style="background:#F8FAFF;border:1px solid #E0E7FF;border-radius:12px;padding:14px 16px;margin:4px 0 20px;text-align:left">
@@ -1416,225 +1427,6 @@
       }
     }
 
-    // ── Gerar comprovante PDF (client-side, jsPDF) ──────────────
-    function gerarComprovantePDF() {
-      try {
-        if (!window.jspdf || !window.jspdf.jsPDF) {
-          toast('Biblioteca PDF nao carregada. Recarregue a pagina.', 'error'); return;
-        }
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-
-        // ── Dados ──────────────────────────────────────────────
-        const user          = auth.getUser();
-        const doadorNome    = user?.nome || 'Participante';
-        const doadorCPF     = user?.cpf  ? formatCPF(user.cpf) : '—';
-        const valorFmt      = BRL(state.valor || 0);
-        const protocolo     = state.donationId ? state.donationId.substring(0, 8).toUpperCase() : 'DEMO';
-        const hoje          = new Date().toLocaleDateString('pt-BR');
-        // O fallback aqui era um PRONAC fictício escrito à mão. Se o parâmetro
-        // faltasse, o comprovante saía apontando para um projeto que não era o
-        // da destinação — documento errado na mão de quem transferiu dinheiro.
-        const pronac        = urlParams.get('pronac') || state.projeto?.pronac
-                              || window.__projeto?.pronac || '';
-        const nomeProjeto   = state.projeto?.nome || urlParams.get('titulo')
-                              || window.__projeto?.nome || 'Projeto não identificado';
-        const proponenteNome = (document.getElementById('pgBeneficiario')?.textContent || 'Associacao Cultural').trim();
-        const proponenteCNPJ = (document.getElementById('pgCNPJ')?.textContent || '—').trim();
-        const proponenteBanco  = (document.getElementById('pgBanco')?.textContent   || '').trim();
-        const proponenteAg     = (document.getElementById('pgAgencia')?.textContent || '').trim();
-        const proponenteConta  = (document.getElementById('pgConta')?.textContent   || '').trim();
-        const proponentePix    = (document.getElementById('pgPix')?.textContent     || '').trim();
-
-        const W = 210, M = 18, CW = W - 2 * M;
-        const navy   = [13, 27, 62];
-        const gold   = [255, 215, 0];
-        const green  = [5, 150, 105];
-        const slate  = [71, 85, 105];
-        const border = [203, 213, 225];
-
-        // ── Cabeçalho navy ────────────────────────────────────
-        doc.setFillColor(...navy);
-        doc.rect(0, 0, W, 44, 'F');
-        doc.setFillColor(...gold);
-        doc.rect(0, 44, W, 1.5, 'F');
-
-        doc.setFillColor(253, 224, 71);
-        doc.roundedRect(W - M - 36, 9, 36, 9, 1.5, 1.5, 'F');
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(7.5);
-        doc.setTextColor(13, 27, 62);
-        doc.text('SIMULACAO', W - M - 18, 14.5, { align: 'center' });
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(15);
-        doc.setTextColor(255, 215, 0);
-        doc.text('COMPROVANTE DE MECENATO', M, 18);
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9.5);
-        doc.setTextColor(148, 163, 184);
-        doc.text('IncentivaBR  |  Plataforma IncentivaBR', M, 27);
-
-        doc.setFontSize(7.5);
-        doc.setTextColor(100, 116, 139);
-        doc.text('INPI no BR512025000647-0  |  www.IncentivaBR.com.br', M, 37);
-
-        // ── Projeto ───────────────────────────────────────────
-        let y = 56;
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(7);
-        doc.setTextColor(...slate);
-        doc.text('PROJETO CULTURAL', M, y);
-        y += 6;
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(13);
-        doc.setTextColor(...navy);
-        doc.text(nomeProjeto, M, y);
-        y += 5.5;
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        doc.setTextColor(...slate);
-        doc.text('PRONAC ' + pronac + '   |   Art. 18 - Lei 8.313/1991   |   100% dedutivel do IR', M, y);
-        y += 9;
-
-        doc.setDrawColor(...border);
-        doc.setLineWidth(0.25);
-        doc.line(M, y, W - M, y);
-        y += 8;
-
-        // ── Doador / Proponente lado a lado ───────────────────
-        const col2 = M + CW / 2 + 4;
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(7);
-        doc.setTextColor(...slate);
-        doc.text('DOADOR', M, y);
-        doc.text('PROPONENTE', col2, y);
-        y += 5;
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        doc.setTextColor(...navy);
-        doc.text(doadorNome, M, y);
-        doc.text(proponenteNome, col2, y);
-        y += 5;
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        doc.setTextColor(...slate);
-        doc.text('CPF: ' + doadorCPF, M, y);
-        doc.text('CNPJ: ' + proponenteCNPJ, col2, y);
-        y += 6;
-
-        // Dados bancários do proponente
-        if (proponenteBanco || proponenteAg || proponenteConta) {
-          const bancoParts = [];
-          if (proponenteBanco)  bancoParts.push(proponenteBanco);
-          if (proponenteAg)     bancoParts.push('Ag: ' + proponenteAg);
-          if (proponenteConta)  bancoParts.push('Conta: ' + proponenteConta);
-          doc.setFont('helvetica', 'normal');
-          doc.setFontSize(8.5);
-          doc.setTextColor(...slate);
-          doc.text(bancoParts.join('  |  '), col2, y);
-          y += 5;
-        }
-        if (proponentePix && proponentePix !== '—') {
-          doc.setFont('helvetica', 'normal');
-          doc.setFontSize(8.5);
-          doc.setTextColor(...slate);
-          doc.text('PIX: ' + proponentePix, col2, y);
-          y += 5;
-        }
-        y += 4;
-
-        doc.setDrawColor(...border);
-        doc.line(M, y, W - M, y);
-        y += 8;
-
-        // ── Valor em destaque ─────────────────────────────────
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(7);
-        doc.setTextColor(...slate);
-        doc.text('VALOR DESTINADO', M, y);
-        y += 5;
-
-        doc.setFillColor(240, 253, 244);
-        doc.setDrawColor(134, 239, 172);
-        doc.roundedRect(M, y - 3, CW, 20, 2.5, 2.5, 'FD');
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(22);
-        doc.setTextColor(...green);
-        doc.text(valorFmt, M + CW / 2, y + 12, { align: 'center' });
-        y += 26;
-
-        // ── Data / Protocolo ──────────────────────────────────
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(7);
-        doc.setTextColor(...slate);
-        doc.text('DATA DA SIMULACAO', M, y);
-        doc.text('PROTOCOLO', col2, y);
-        y += 5;
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(11);
-        doc.setTextColor(...navy);
-        doc.text(hoje, M, y);
-        doc.text(protocolo, col2, y);
-        y += 10;
-
-        doc.setDrawColor(...border);
-        doc.line(M, y, W - M, y);
-        y += 8;
-
-        // ── Como usar na declaracao ───────────────────────────
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(7);
-        doc.setTextColor(...slate);
-        doc.text('COMO USAR NA DECLARACAO DO IR', M, y);
-        y += 6;
-
-        const passos = [
-          '1.  Abra sua declaracao no modelo completo (IRPF)',
-          '2.  Acesse "Doacoes Efetuadas" > Codigo 41 (Incentivo a Cultura)',
-          '3.  Informe o valor e o CNPJ do proponente acima',
-          '4.  Guarde este comprovante por 6 anos (exigencia da Receita Federal)',
-        ];
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9.5);
-        doc.setTextColor(...navy);
-        passos.forEach(p => { doc.text(p, M, y); y += 6; });
-        y += 4;
-
-        doc.setDrawColor(...border);
-        doc.line(M, y, W - M, y);
-
-        // ── Marca d'agua (sem GState — texto cinza claro) ─────
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(34);
-        doc.setTextColor(228, 232, 240);
-        doc.text('DEMONSTRACAO', W / 2, 210, { align: 'center', angle: 32 });
-
-        // ── Rodapé navy ───────────────────────────────────────
-        doc.setFillColor(...navy);
-        doc.rect(0, 275, W, 22, 'F');
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(9);
-        doc.setTextColor(255, 215, 0);
-        doc.text('IncentivaBR', M, 284);
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(7.5);
-        doc.setTextColor(148, 163, 184);
-        doc.text('Demonstracao do fluxo de destinacao. Nenhum valor foi transferido e este documento nao possui valor fiscal.', M, 291);
-
-        doc.save('comprovante-simulacao-IncentivaBR.pdf');
-      } catch (e) {
-        toast('Erro ao gerar PDF: ' + e.message, 'error');
-      }
-    }
-
     // ── Simular pagamento (modo teste) ──────────────────────────
     async function simularPagamento() {
       if (!state.donationId) { toast('Destinação não encontrada', 'error'); return; }
@@ -1652,12 +1444,9 @@
         // Mensagem personalizada com valor
         const valorFmt = BRL(state.valor);
         document.getElementById('successMsg').textContent = state.simulationMode
-          ? `Nesta simulação, você redirecionou ${valorFmt} para a Orquestra das Periferias do DF.`
+          ? `Nesta simulação, você redirecionou ${valorFmt} para ${nomeDoProjeto()}.`
           : `Você destinou ${valorFmt}. Assim que a transferência for conferida, o proponente emite o seu Recibo de Mecenato.`;
-
-        // Impacto estimado (R$ 100 ≈ 1 ensaio para 80 jovens)
-        const ensaios = Math.max(1, Math.round((state.valor || 0) / 100));
-        document.getElementById('impactEnsaios').textContent = ensaios;
+        document.getElementById('resumoValorFinal').textContent = valorFmt;
 
         // Comprovante PDF
         const dl = document.getElementById('btnDownloadComprovante');
@@ -1746,6 +1535,7 @@
         if (data.status !== 'success') throw new Error(data.message);
 
         document.getElementById('successDonationId').textContent = state.donationId;
+        document.getElementById('resumoValorFinal').textContent = BRL(state.valor);
         goTo(6);
         toast('Comprovante enviado com sucesso!', 'success');
 
@@ -1759,9 +1549,15 @@
     function pularComprovante() {
       document.getElementById('successDonationId').textContent = state.donationId || '—';
       document.getElementById('successMsg').textContent = state.simulationMode
-        ? `Nesta simulação, você redirecionou ${BRL(state.valor)} para a Orquestra das Periferias do DF.`
+        ? `Nesta simulação, você redirecionou ${BRL(state.valor)} para ${nomeDoProjeto()}.`
         : `Sua destinação de ${BRL(state.valor)} está registrada. Falta anexar o comprovante da transferência para que o proponente emita o Recibo de Mecenato.`;
+      document.getElementById('resumoValorFinal').textContent = BRL(state.valor);
       goTo(6);
+    }
+
+    /** Nome do projeto vindo do tenant; nunca escrito à mão nesta página. */
+    function nomeDoProjeto() {
+      return state.projeto?.nome || state.org?.pronac_titulo || 'o projeto';
     }
 
     // ── Auth helper ─────────────────────────────────────────────
@@ -1838,6 +1634,10 @@
         state.projeto     = projData.projeto;
         const p           = projData.projeto;
         const org         = projData.organizacao;
+
+        // Placeholders [data-projeto] (tela final): nome e PRONAC do tenant.
+        document.querySelectorAll('[data-projeto="titulo"]').forEach(el => { el.textContent = p.nome || 'Projeto'; });
+        document.querySelectorAll('[data-projeto="pronac"]').forEach(el => { el.textContent = p.pronac || '—'; });
 
         Object.assign(state.org, {
           bank_name:        org.bank_name,
@@ -1981,8 +1781,6 @@
         const btnReal = document.getElementById('btnJaFizTransferencia');
         if (btnSim)  btnSim.style.display  = '';
         if (btnReal) btnReal.style.display = 'none';
-        const s4note = document.getElementById('step4SimNote');
-        if (s4note) s4note.style.display = '';
       }
     }).catch(() => {
       // Sem resposta do servidor não dá para dizer com honestidade o que vai

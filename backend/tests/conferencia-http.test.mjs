@@ -90,7 +90,11 @@ const { default: poolReal } = await import('../config/database.js');
 poolReal.query = (...a) => poolFalso.query(...a);
 poolReal.connect = async () => ({ query: (...a) => poolFalso.query(...a), release() {} });
 
-const { default: donationsRoutes } = await import('../src/routes/donations.js');
+const { default: donationsRoutes, notificadores } = await import('../src/routes/donations.js');
+
+// Troca o e-mail de confirmacao por um falso que so anota quem seria avisado.
+const avisados = [];
+notificadores.destinadorConfirmado = async (user, donation, project) => { avisados.push({ user, donation, project }); };
 
 // ── dados ──────────────────────────────────────────────────────────────────
 const q = async (sql) => (await poolFalso.query(sql)).rows;
@@ -189,6 +193,18 @@ await teste('confirma e devolve a destinacao', async () => {
   if (!['confirmed', 'awaiting_mecenato'].includes(d.status))
     throw new Error('estado final inesperado: ' + d.status);
   if (d.confirmed_by !== gestorId) throw new Error('nao registrou quem confirmou');
+});
+
+await teste('confirmar avisa o destinador por e-mail, com valor e projeto', async () => {
+  avisados.length = 0;
+  const id = await novaDestinacao();
+  await chamar('POST', `/api/donations/${id}/confirmar`, tokenGestor);
+  // A notificacao nao e aguardada pela rota; da um tempo para ela rodar.
+  for (let i = 0; i < 20 && !avisados.length; i++) await new Promise(r => setTimeout(r, 25));
+  igual(avisados.length, 1, 'avisos');
+  igual(avisados[0].user.email, 'm@x.gov.br', 'e-mail do destinador');
+  igual(Number(avisados[0].donation.amount), 3200, 'valor');
+  igual(avisados[0].project.title, 'Mostra Casa Azul', 'projeto');
 });
 
 await teste('confirmar duas vezes responde ja_confirmada, sem reprocessar', async () => {

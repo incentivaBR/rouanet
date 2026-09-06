@@ -89,6 +89,45 @@ teste('nenhuma mensagem de sucesso fala em simulacao sem checar o modo', () => {
   });
 });
 
+// ── Onda 1: o PDF vem do servidor, e o wizard tem porta de saída ────────────
+teste('o PDF do navegador (jsPDF) saiu da pagina', () => {
+  if (/jspdf/i.test(html)) throw new Error('jsPDF ainda e carregado');
+  if (/gerarComprovantePDF/.test(html)) throw new Error('gerarComprovantePDF ainda existe');
+  if (/SIMULACAO/.test(html)) throw new Error('a palavra SIMULACAO gravada a mao ainda esta na pagina');
+});
+
+teste('o botao de PDF existe e chama a rota autenticada do servidor', () => {
+  const m = html.match(/<button[^>]*id="btnDownloadComprovante"[^>]*>/i);
+  if (!m) throw new Error('btnDownloadComprovante nao existe — a funcao baixarComprovanteWizard nunca seria acionada');
+  if (!/baixarComprovanteWizard\(\)/.test(m[0])) throw new Error('o botao nao chama baixarComprovanteWizard');
+  if (!/\/api\/donations\/\$\{state\.donationId\}\/comprovante/.test(html)) throw new Error('a rota do PDF do servidor sumiu');
+});
+
+teste('a tela final tem "Ir para meu painel"', () => {
+  const m = html.match(/<a[^>]*id="btnIrPainel"[^>]*>/i);
+  if (!m) throw new Error('sem link para o painel');
+  if (!/href="dashboard\.html"/.test(m[0])) throw new Error('o link nao vai para dashboard.html');
+});
+
+teste('o texto do registro em PDF tem os dois modos', () => {
+  const bloco = html.split('id="btnDownloadComprovante"')[0].slice(-1600);
+  if (!/data-modo="simulacao"/.test(bloco) || !/data-modo="producao"/.test(bloco)) {
+    throw new Error('o texto sobre o PDF nao esta gateado por modo');
+  }
+  if (/Comprovante de mecenato dispon/i.test(html)) throw new Error('a pagina ainda chama o PDF de "comprovante de mecenato"');
+});
+
+teste('nenhum nome de projeto escrito a mao nas mensagens de sucesso', () => {
+  // So as atribuicoes de successMsg: a foto do hero ainda e do projeto do
+  // piloto (fica para a Onda 2, textos e imagens vindos do tenant).
+  const trechos = html.split("getElementById('successMsg')").slice(1).map(t => t.split(';')[0]);
+  if (!trechos.length) throw new Error('successMsg sumiu');
+  for (const t of trechos) {
+    if (/Orquestra|Casa Azul|Circuito do Forr/.test(t)) throw new Error('successMsg cita um projeto pelo nome: ' + t.slice(0, 80));
+  }
+  if (!trechos.some(t => /nomeDoProjeto\(\)/.test(t))) throw new Error('as mensagens nao usam nomeDoProjeto()');
+});
+
 console.log('\n================================================================');
 ok.forEach(n => console.log('  ok   ', n));
 falhas.forEach(([n, e]) => console.log('  FALHA', n, '\n          ' + e));
