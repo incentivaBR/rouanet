@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espaço do Contador — IncentivaBR</title>
+  <meta name="description" content="Ferramentas e informações para contadores orientarem clientes sobre destinação de IR. Calculadora, base legal, programa de parceria CRC/CFC.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/incentivabr-theme.css">
+  <style>
+    .hero-contador {
+      background: linear-gradient(135deg, #1E3A5F 0%, #2B5A9E 100%);
+      color: white;
+      padding: 140px 24px 80px;
+      text-align: center;
+    }
+
+    .hero-contador h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .hero-contador p {
+      font-size: 20px;
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-contador .badge {
+      display: inline-block;
+      background: rgba(247, 148, 29, 0.9);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .value-props {
+      padding: 80px 24px;
+      background: white;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .value-card {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .value-card .icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #F7941D, #ff6b35);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .value-card h3 {
+      color: #1E3A5F;
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .value-card p {
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .legal-section {
+      padding: 80px 24px;
+      background: #f8f9fa;
+    }
+
+    .legal-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .legal-box {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #1E3A5F;
+    }
+
+    .legal-box h3 {
+      color: #1E3A5F;
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .legal-box h3 i {
+      color: #F7941D;
+    }
+
+    .legal-box p {
+      color: #555;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .legal-box code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .limits-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .limits-table th, .limits-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .limits-table th {
+      background: #1E3A5F;
+      color: white;
+      font-weight: 600;
+    }
+
+    .limits-table td:last-child {
+      text-align: center;
+      font-weight: 600;
+      color: #F7941D;
+    }
+
+    .limits-table tr.total-row td {
+      background: #f0f4ff;
+      font-weight: 700;
+      font-size: 15px;
+      color: #1E3A5F;
+    }
+
+    .limits-table tr.total-row td:last-child {
+      color: #1E3A5F;
+      font-size: 17px;
+    }
+
+    .partner-section {
+      padding: 80px 24px;
+      background: white;
+    }
+
+    .partner-levels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .partner-card {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .partner-card:hover {
+      border-color: #F7941D;
+      transform: translateY(-5px);
+    }
+
+    .partner-card.featured {
+      background: linear-gradient(135deg, #1E3A5F, #2B5A9E);
+      color: white;
+    }
+
+    .partner-card .medal {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .partner-card h3 {
+      margin-bottom: 1rem;
+    }
+
+    .partner-card.featured h3 {
+      color: #F7941D;
+    }
+
+    .partner-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem;
+      text-align: left;
+    }
+
+    .partner-card li {
+      padding: 8px 0;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .partner-card li i {
+      color: #00A859;
+    }
+
+    .partner-card.featured li i {
+      color: #F7941D;
+    }
+
+    .partner-card li.em-breve {
+      opacity: 0.55;
+    }
+
+    .partner-card li.em-breve i {
+      color: #aaa !important;
+    }
+
+    .tools-section {
+      padding: 80px 24px;
+      background: #1E3A5F;
+      color: white;
+      text-align: center;
+    }
+
+    .tools-grid {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .tool-item {
+      text-align: center;
+    }
+
+    .tool-item i {
+      font-size: 3rem;
+      color: #F7941D;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .tool-item h4 {
+      margin: 0 0 0.5rem;
+    }
+
+    .tool-item p {
+      opacity: 0.8;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .cta-contador {
+      padding: 80px 24px;
+      background: linear-gradient(135deg, #F7941D 0%, #ff6b35 100%);
+      color: white;
+      text-align: center;
+    }
+
+    .cta-contador h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-contador p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .crc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-contador h1 {
+        font-size: 28px;
+      }
+      .value-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .value-card .icon {
+        margin: 0 auto;
+      }
+      .limits-table {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="logo-link">
+      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img">
+    </a>
+    <nav>
+      <a href="projetos.html">Projetos</a>
+      <a href="calculadora-escolha.html">Calculadora IR</a>
+      <a href="#" id="navAuth" class="btn btn-primary btn-sm">Entrar</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-contador">
+    <div class="crc-badge"><i class="fas fa-id-badge"></i> CRC / CFC — Profissionais Habilitados</div>
+    <div class="badge"><i class="fas fa-calculator"></i> Espaço do Contador</div>
+    <h1>Ajude Seus Clientes a Destinar o IR</h1>
+    <p>
+      Ferramentas gratuitas para você orientar clientes sobre destinação de Imposto de Renda
+      e se diferenciar no mercado contábil.
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="#parceiro" class="btn btn-white" style="color: #1E3A5F;">
+        <i class="fas fa-handshake"></i> Quero ser Parceiro
+      </a>
+      <a href="calculadora-escolha.html" class="btn btn-outline-white">
+        <i class="fas fa-calculator"></i> Usar Calculadora
+      </a>
+    </div>
+  </section>
+
+  <!-- Value Props -->
+  <section class="value-props">
+    <div class="container">
+      <div class="section-header">
+        <h2>Por Que Indicar Destinação de IR?</h2>
+        <p>Benefícios para você e seus clientes</p>
+      </div>
+
+      <div class="value-grid">
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-star"></i></div>
+          <div>
+            <h3>Diferencial Competitivo</h3>
+            <p>Poucos contadores orientam sobre destinação. Destaque-se oferecendo esse serviço que agrega valor sem custo para o cliente.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-wallet"></i></div>
+          <div>
+            <h3>Sem Custo para o Cliente</h3>
+            <p>O valor destinado retorna integralmente na restituição ou abate o imposto a pagar. O cliente não paga nada a mais.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-heart"></i></div>
+          <div>
+            <h3>Impacto Social</h3>
+            <p>Direcione recursos para projetos de crianças, idosos, cultura, esporte e meio ambiente aprovados pelo governo federal.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-chart-line"></i></div>
+          <div>
+            <h3>Fidelização de Clientes</h3>
+            <p>Clientes valorizam contadores que vão além do básico e trazem oportunidades fiscais concretas e seguras.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Base Legal -->
+  <section class="legal-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Base Legal e Técnica</h2>
+        <p>Informações para sua segurança profissional (CRC/CFC)</p>
+      </div>
+
+      <div class="legal-content">
+        <div class="legal-box">
+          <h3><i class="fas fa-gavel"></i> Fundamentação Legal</h3>
+          <p>
+            A destinação de parte do IR devido para fundos de incentivo está prevista na
+            <strong>Lei 9.532/1997 (arts. 22 e 22-A)</strong> e regulamentada pelo
+            <strong>RIR/2018 (Decreto 9.580/2018)</strong>. A Receita Federal detalha os
+            procedimentos na <strong>IN RFB 1.131/2011</strong> e atualizações.
+            Os percentuais abaixo são vigentes para o ano-calendário <strong>2025</strong>.
+          </p>
+        </div>
+
+        <div class="legal-box">
+          <h3><i class="fas fa-percentage"></i> Limites de Dedução — Quadro Correto 2025</h3>
+          <p style="margin-bottom: 1rem;">
+            Os limites são calculados sobre o <strong>IR devido apurado na declaração</strong>,
+            antes das deduções do IR retido na fonte. Os grupos operam com teto conjunto:
+          </p>
+          <table class="limits-table">
+            <thead>
+              <tr>
+                <th>Grupo / Fundo</th>
+                <th>Leis de Referência</th>
+                <th>Teto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Grupo 1 — teto conjunto</strong><br>
+                  <span style="font-size:13px;color:#666">Rouanet · Esporte · FIA (Criança/Adolescente) · Idoso · Reciclagem</span>
+                </td>
+                <td style="font-size:12px;color:#888">Lei 8.313/91 · 11.438/06 · 8.069/90 · 12.213/10 · 14.260/21</td>
+                <td>6%</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Grupo 2 — teto conjunto</strong><br>
+                  <span style="font-size:13px;color:#666">PRONON (Oncologia) · PRONAS/PCD (Deficiência)</span>
+                </td>
+                <td style="font-size:12px;color:#888">Lei 12.715/12</td>
+                <td>2%</td>
+              </tr>
+              <tr class="total-row">
+                <td colspan="2"><strong>TOTAL MÁXIMO (Grupos 1 + 2)</strong></td>
+                <td><strong>8%</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:13px;color:#888;margin-top:12px">
+            <i class="fas fa-info-circle"></i>
+            Dentro do Grupo 1, o cliente pode distribuir os 6% entre os fundos como preferir — Rouanet, Esporte, FIA etc. — mas o total do grupo não pode ultrapassar 6%. O mesmo vale para o Grupo 2 (PRONON + PRONAS juntos ≤ 2%).
+          </p>
+        </div>
+
+        <div class="legal-box">
+          <h3><i class="fas fa-calendar-check"></i> Prazos Importantes</h3>
+          <p>
+            <strong>Destinação durante o ano:</strong> Até 31/12 do ano-calendário para dedução na declaração do ano seguinte.<br><br>
+            <strong>Destinação na declaração:</strong> Até a data limite de entrega da DIRPF (geralmente abril/maio),
+            com pagamento do DARF até o último dia do prazo.<br><br>
+            <strong>Atenção:</strong> A destinação só é possível na <strong>declaração completa</strong> (modelo completo, não simplificado).
+          </p>
+        </div>
+
+        <div class="legal-box">
+          <h3><i class="fas fa-file-invoice"></i> Documentação e Comprovantes</h3>
+          <p>
+            Para fins de DIRPF, o que vale é o <strong>DARF pago</strong> e o lançamento correto na declaração.
+            A plataforma IncentivaBR emite um <strong>comprovante de destinação</strong> que confirma a operação realizada,
+            servindo como documento de controle para você e seu cliente. Os fundos também emitem confirmações de depósito
+            em seus próprios modelos. Ambos servem para tranquilidade e rastreabilidade da destinação.
+            <br><br>
+            <strong>Onde lançar na DIRPF:</strong> Ficha "Doações Efetuadas" — código 40 (FCA/FDI/FIA) ou código 41 (Incentivo à Cultura via Rouanet). A plataforma gera relatório com todos os dados para preenchimento.
+          </p>
+        </div>
+
+        <div class="legal-box" style="border-left-color:#F7941D">
+          <h3><i class="fas fa-user-tie"></i> Script para Abordar seu Cliente</h3>
+          <p>
+            <strong>"[Nome], você sabia que parte do imposto que você já vai pagar pode ser direcionada para projetos sociais — e retorna 100% para você na restituição? É um direito que 99% dos contribuintes não conhece. Posso te mostrar como funciona em 5 minutos?"</strong>
+          </p>
+          <p style="margin-top:12px;font-size:14px;color:#888">
+            Esse script funciona especialmente bem com <strong>servidores públicos</strong> (IR retido na fonte, declaração completa, renda previsível) e <strong>profissionais liberais</strong> com IRPF elevado.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programa Parceiro -->
+  <section class="partner-section" id="parceiro">
+    <div class="container">
+      <div class="section-header">
+        <h2>Programa Contador Parceiro</h2>
+        <p>Três níveis de parceria — gratuito para começar</p>
+      </div>
+
+      <div class="partner-levels">
+        <div class="partner-card">
+          <div class="medal">🥉</div>
+          <h3>Cadastrado</h3>
+          <ul>
+            <li><i class="fas fa-check"></i> Calculadora de IR gratuita</li>
+            <li><i class="fas fa-check"></i> Material explicativo para clientes</li>
+            <li><i class="fas fa-check"></i> Quadro legal atualizado (2025)</li>
+            <li><i class="fas fa-check"></i> Suporte por e-mail</li>
+          </ul>
+          <a href="#cadastro" class="btn btn-primary btn-sm" style="width: 100%;">Cadastrar Grátis</a>
+        </div>
+
+        <div class="partner-card featured">
+          <div class="medal">🥈</div>
+          <h3>Certificado</h3>
+          <ul>
+            <li><i class="fas fa-check"></i> Tudo do Cadastrado</li>
+            <li><i class="fas fa-check"></i> Curso online (2h) — conteúdo CFC</li>
+            <li><i class="fas fa-check"></i> Selo "Contador Parceiro IncentivaBR"</li>
+            <li><i class="fas fa-check"></i> Listagem no diretório do site</li>
+            <li><i class="fas fa-check"></i> Suporte prioritário</li>
+            <li><i class="fas fa-check"></i> Kit de materiais para clientes (PDF)</li>
+          </ul>
+          <a href="#cadastro" class="btn btn-white btn-sm" style="width: 100%; color: #1E3A5F;">Certificar-me</a>
+        </div>
+
+        <div class="partner-card">
+          <div class="medal">🥇</div>
+          <h3>Embaixador</h3>
+          <ul>
+            <li><i class="fas fa-check"></i> Tudo do Certificado</li>
+            <li><i class="fas fa-check"></i> Co-marketing e indicações</li>
+            <li><i class="fas fa-check"></i> Acesso antecipado a novos fundos</li>
+            <li class="em-breve"><i class="fas fa-clock"></i> Dashboard multi-clientes <em>(em breve)</em></li>
+            <li class="em-breve"><i class="fas fa-clock"></i> Relatórios consolidados <em>(em breve)</em></li>
+          </ul>
+          <a href="#cadastro" class="btn btn-primary btn-sm" style="width: 100%;">Candidatar-me</a>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:24px;font-size:13px;color:#888;max-width:600px;margin-left:auto;margin-right:auto">
+        <i class="fas fa-info-circle"></i>
+        O programa é gratuito para contadores registrados no CRC. O nível Embaixador exige número de CRC ativo e carteira mínima de 10 clientes PF.
+      </p>
+    </div>
+  </section>
+
+  <!-- Ferramentas -->
+  <section class="tools-section">
+    <h2>Ferramentas Disponíveis</h2>
+    <p style="opacity: 0.9; max-width: 600px; margin: 0 auto;">Recursos gratuitos para facilitar seu trabalho</p>
+
+    <div class="tools-grid">
+      <div class="tool-item">
+        <i class="fas fa-calculator"></i>
+        <h4>Calculadora IR</h4>
+        <p>Simples e detalhada — por fundo</p>
+      </div>
+      <div class="tool-item">
+        <i class="fas fa-file-pdf"></i>
+        <h4>Relatórios PDF</h4>
+        <p>Dados prontos para a DIRPF</p>
+      </div>
+      <div class="tool-item">
+        <i class="fas fa-graduation-cap"></i>
+        <h4>Curso Online</h4>
+        <p>Certificação gratuita (conteúdo CFC)</p>
+      </div>
+      <div class="tool-item">
+        <i class="fas fa-users" style="opacity:0.45"></i>
+        <h4 style="opacity:0.45">Gestão Multi-clientes</h4>
+        <p style="opacity:0.45">Em desenvolvimento — Embaixador</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding: 80px 24px; background: #f8f9fa;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Perguntas Frequentes</h2>
+        <p>Dúvidas comuns de contadores sobre destinação de IR</p>
+      </div>
+      <div style="max-width: 700px; margin: 0 auto;">
+        <details style="margin-bottom: 1rem; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <summary style="font-weight: 600; cursor: pointer; color: #1E3A5F;">Meu cliente pode destinar mesmo tendo imposto a restituir?</summary>
+          <p style="margin-top: 1rem; color: #666; line-height: 1.6;">
+            Sim! A destinação incide sobre o <strong>IR devido calculado</strong>, não sobre o saldo final.
+            Exemplo: cliente com R$5.000 de IR devido e R$6.000 retidos na fonte pode destinar até 6% dos R$5.000 (R$300).
+            A restituição passa de R$1.000 para R$1.300 — sem nenhum custo adicional.
+          </p>
+        </details>
+        <details style="margin-bottom: 1rem; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <summary style="font-weight: 600; cursor: pointer; color: #1E3A5F;">Por que a declaração precisa ser completa (não simplificada)?</summary>
+          <p style="margin-top: 1rem; color: #666; line-height: 1.6;">
+            Somente o modelo completo permite o lançamento das deduções de incentivos fiscais nas fichas específicas.
+            Na declaração simplificada, o contribuinte usa um desconto padrão de 20% e abre mão de todas as deduções
+            itemizadas — incluindo a destinação cultural, esportiva etc. A IncentivaBR identifica automaticamente
+            se o cliente usa o modelo correto antes de prosseguir.
+          </p>
+        </details>
+        <details style="margin-bottom: 1rem; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <summary style="font-weight: 600; cursor: pointer; color: #1E3A5F;">Qual a diferença entre destinar durante o ano e na declaração?</summary>
+          <p style="margin-top: 1rem; color: #666; line-height: 1.6;">
+            <strong>Durante o ano (até 31/12):</strong> depósito direto na conta do fundo/projeto. Limite de 6% (Grupo 1) + 2% (Grupo 2) = 8% máximo.<br><br>
+            <strong>Na declaração (até o prazo da DIRPF):</strong> via DARF, com limite menor para alguns fundos (3% por fundo individual). Mais prático, mas planeja com o cliente antes para não perder o prazo do depósito direto.
+          </p>
+        </details>
+        <details style="margin-bottom: 1rem; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <summary style="font-weight: 600; cursor: pointer; color: #1E3A5F;">Como lançar a destinação na DIRPF?</summary>
+          <p style="margin-top: 1rem; color: #666; line-height: 1.6;">
+            Na ficha <strong>"Doações Efetuadas"</strong>:
+            <br>— Código <strong>40</strong>: FCA, FDI, FIA, Fundo do Idoso, Reciclagem, PRONON, PRONAS
+            <br>— Código <strong>41</strong>: Incentivo à Cultura (Rouanet — Art. 18)
+            <br>— Código <strong>42</strong>: Incentivo ao Esporte
+            <br><br>A plataforma gera um relatório com todos os dados (CNPJ do fundo, valor, data, número de comprovante) para você copiar direto no PGD.
+          </p>
+        </details>
+        <details style="margin-bottom: 1rem; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <summary style="font-weight: 600; cursor: pointer; color: #1E3A5F;">O programa de parceria tem algum custo?</summary>
+          <p style="margin-top: 1rem; color: #666; line-height: 1.6;">
+            Não. O cadastro e as ferramentas básicas (calculadora, materiais, base legal) são totalmente gratuitos para
+            contadores registrados no CRC. O nível Certificado inclui curso e selo sem custo. O nível Embaixador
+            (com funcionalidades avançadas em desenvolvimento) terá modelo a confirmar — entre em contato para saber mais.
+          </p>
+        </details>
+        <details style="margin-bottom: 1rem; padding: 1.25rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <summary style="font-weight: 600; cursor: pointer; color: #1E3A5F;">Quais tipos de clientes se beneficiam mais?</summary>
+          <p style="margin-top: 1rem; color: #666; line-height: 1.6;">
+            <strong>Servidores públicos federais e estaduais:</strong> renda previsível, IR retido na fonte, quase sempre usam modelo completo. Perfil ideal.<br><br>
+            <strong>Profissionais liberais (médicos, advogados, engenheiros):</strong> carnê-leão ou IRPF elevado, alta capacidade de destinação.<br><br>
+            <strong>Assalariados com renda acima de R$5.000/mês:</strong> IR devido suficiente para destinação relevante.<br><br>
+            <strong>Quem NÃO se beneficia:</strong> contribuintes com declaração simplificada, isentos de IR ou com IR devido muito baixo.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-contador" id="cadastro">
+    <h2>Faça Parte da Rede de Contadores</h2>
+    <p>
+      Cadastre-se gratuitamente. Contador com CRC ativo pode começar hoje
+      a oferecer esse diferencial aos seus clientes.
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="mailto:contadores@incentivabr.com.br" class="btn btn-white" style="color: #F7941D;">
+        <i class="fas fa-envelope"></i> contadores@incentivabr.com.br
+      </a>
+      <a href="https://wa.me/5561999682929?text=Olá! Sou contador(a) registrado(a) no CRC e quero conhecer o programa de parceria IncentivaBR." target="_blank" class="btn btn-outline-white">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <a href="index.html" class="logo-link">
+      <img src="assets/logo-incentivabr.png" alt="IncentivaBR" class="logo-img logo-white">
+    </a>
+    <p class="tagline">Incentivos Fiscais Simplificados</p>
+    <div style="margin: 1.5rem 0;">
+      <a href="index.html" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">Início</a>
+      <a href="para-organizacoes.html" style="color: rgba(255,255,255,0.9); margin: 0 1rem;">Para Organizações</a>
+    </div>
+    <div class="footer-bottom">
+      <p>
+        <a href="politica-privacidade.html" style="color: rgba(255,255,255,0.8);">Política de Privacidade</a> |
+        <a href="termos-uso.html" style="color: rgba(255,255,255,0.8);">Termos de Uso</a>
+      </p>
+      <p style="margin-top: 12px;">&copy; 2026 IncentivaBR. Todos os direitos reservados.</p>
+      <p style="margin-top: 8px; font-size: 12px;">INPI: BR512025000647-0</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/mobile-menu.js"></script>
+  <script src="js/tina.js"></script>
+  <script>
+    const navAuth = document.getElementById('navAuth');
+    if (typeof auth !== 'undefined' && auth.isLoggedIn()) {
+      const user = auth.getUser();
+      navAuth.textContent = user.nome ? user.nome.split(' ')[0] : 'Minha Conta';
+      navAuth.href = 'dashboard.html';
+    } else {
+      navAuth.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

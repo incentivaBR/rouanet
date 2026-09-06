@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncentivaBR — Em Breve</title>
+  <meta name="description" content="Todos os incentivos fiscais do Brasil em um só lugar. Em breve.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#1E3A5F] min-h-screen flex flex-col items-center justify-center px-6 font-['Inter']">
+
+  <!-- LOGO -->
+  <div class="text-center mb-12">
+    <div class="text-4xl font-black text-white tracking-tight mb-1">
+      Incentiva<span class="text-[#F7941D]">BR</span>
+    </div>
+    <div class="text-white/40 text-sm font-medium tracking-widest uppercase">Incentivos Fiscais Simplificados</div>
+  </div>
+
+  <!-- HEADLINE -->
+  <div class="text-center max-w-lg mb-10">
+    <div class="inline-flex items-center gap-2 bg-[#F7941D]/10 border border-[#F7941D]/20 rounded-full px-4 py-1.5 mb-6 text-[#F7941D] text-xs font-bold tracking-widest uppercase">
+      Em breve
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
+      Todos os incentivos fiscais<br>em um só lugar.
+    </h1>
+    <p class="text-white/60 text-base leading-relaxed">
+      Cultura · Esporte · Criança · Idoso · Reciclagem · Saúde.<br>
+      Até <strong class="text-white">8% do seu IR</strong> direcionados para causas que você escolhe —
+      <strong class="text-[#F7941D]">sem custo adicional.</strong>
+    </p>
+  </div>
+
+  <!-- CARDS DE FUNDOS -->
+  <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 max-w-xl w-full mb-10">
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-xl mb-1">🎭</div>
+      <div class="text-white/60 text-xs">Cultura</div>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-xl mb-1">⚽</div>
+      <div class="text-white/60 text-xs">Esporte</div>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-xl mb-1">👶</div>
+      <div class="text-white/60 text-xs">Criança</div>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-xl mb-1">👴</div>
+      <div class="text-white/60 text-xs">Idoso</div>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-xl mb-1">♻️</div>
+      <div class="text-white/60 text-xs">Reciclagem</div>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-xl mb-1">🏥</div>
+      <div class="text-white/60 text-xs">Saúde</div>
+    </div>
+  </div>
+
+  <!-- CTA — AVISE-ME -->
+  <div class="w-full max-w-sm mb-6">
+    <p class="text-white/50 text-sm text-center mb-4">Quer ser avisado quando abrir?</p>
+    <a href="https://wa.me/5561999682929?text=Quero%20ser%20avisado%20quando%20o%20IncentivaBR%20abrir!"
+       target="_blank"
+       class="flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#1ebe59] text-white font-bold py-4 rounded-2xl transition-all hover:scale-[1.02] no-underline text-base">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.1 1.508 5.83L0 24l6.335-1.479A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.499-5.207-1.371l-.374-.217-3.762.877.913-3.651-.24-.384A9.957 9.957 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+      </svg>
+      Avise-me pelo WhatsApp
+    </a>
+    <a href="mailto:contato@incentivabr.com.br?subject=Quero%20ser%20avisado%20quando%20abrir"
+       class="flex items-center justify-center gap-2 w-full text-white/40 hover:text-white/70 text-sm mt-3 transition-colors no-underline">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      ou por e-mail
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="mt-16 text-white/20 text-xs text-center">
+    <p>© 2026 IncentivaBR · INPI BR512025000647-0</p>
+    <p class="mt-1">
+      <a href="politica-privacidade.html" class="hover:text-white/40 transition-colors no-underline">Privacidade</a>
+      <span class="mx-2">·</span>
+      <a href="termos-uso.html" class="hover:text-white/40 transition-colors no-underline">Termos</a>
+    </p>
+  </div>
+
+</body>
+</html>

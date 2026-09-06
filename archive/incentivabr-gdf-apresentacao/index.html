@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IncentivaBR - Apresentação GDF</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #7c3aed, #312e81);
+            color: white;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .titulo { font-size: 3rem; font-weight: bold; margin: 20px 0; }
+        .subtitulo { font-size: 1.5rem; opacity: 0.9; }
+        .slide { 
+            background: rgba(255,255,255,0.1); 
+            backdrop-filter: blur(10px);
+            border-radius: 20px; 
+            padding: 40px; 
+            margin: 30px 0;
+        }
+        .conteudo { 
+            background: white; 
+            color: #333; 
+            border-radius: 15px; 
+            padding: 30px; 
+        }
+        .destaque { 
+            font-size: 4rem; 
+            font-weight: bold; 
+            color: #dc2626; 
+            text-align: center; 
+            margin: 20px 0; 
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+            margin: 30px 0; 
+        }
+        .card { 
+            padding: 20px; 
+            border-radius: 10px; 
+            border-left: 4px solid;
+        }
+        .card-red { background: #fef2f2; border-color: #ef4444; color: #dc2626; }
+        .card-yellow { background: #fffbeb; border-color: #f59e0b; color: #d97706; }
+        .card-green { background: #f0fdf4; border-color: #22c55e; color: #16a34a; }
+        .card-blue { background: #eff6ff; border-color: #3b82f6; color: #2563eb; }
+        .navegacao { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            margin: 30px 0; 
+            flex-wrap: wrap;
+        }
+        .btn { 
+            padding: 12px 20px; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-nav { background: rgba(255,255,255,0.2); color: white; }
+        .btn-nav:hover { background: rgba(255,255,255,0.3); }
+        .btn-active { background: white; color: #1e3a8a; }
+        .numero { font-size: 2rem; font-weight: bold; }
+        .header-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .logo-incentivabr {
+            background: linear-gradient(135deg, #2E5BBA, #E67E22);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .logo-gdf {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            color: #1e40af;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        @media (max-width: 768px) {
+            .titulo { font-size: 2rem; }
+            .destaque { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .header-logos { flex-direction: column; gap: 20px; }
+            .logo-incentivabr { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header com Logos -->
+        <div class="header">
+            <div class="header-logos">
+                <!-- Logo IncentivaBR - Texto Estilizado -->
+                <div class="logo-incentivabr">
+                    💰 <strong>INCENTIVA<span style="background: #E67E22; padding: 2px 8px; border-radius: 5px; margin-left: 5px;">BR</span></strong><br>
+                    <div style="font-size: 0.7em; margin-top: 5px; opacity: 0.9;">INCENTIVOS FISCAIS SIMPLIFICADOS</div>
+                </div>
+                
+                <!-- Logo GDF -->
+                <div class="logo-gdf">
+                    🏛️<br>
+                    <strong>GOVERNO DO<br>DISTRITO FEDERAL</strong>
+                </div>
+            </div>
+            
+            <div style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.1); padding: 15px 30px; border-radius: 50px; margin-bottom: 20px;">
+                🚀
+                <div style="margin-left: 15px;">
+                    <h1 style="font-size: 1.5rem; margin: 0;">Apresentação Estratégica para Gestores</h1>
+                    <p style="margin: 0; opacity: 0.8;">Potencial de R$ 139 Milhões no DF</p>
+                </div>
+            </div>
+            
+            <div style="background: rgba(220,38,38,0.2); border: 1px solid #dc2626; border-radius: 15px; padding: 15px;">
+                <strong>URGENTE:</strong> R$ 139 milhões em oportunidade sendo desperdiçados anualmente no DF
+            </div>
+        </div>
+
+        <!-- Navegação -->
+        <div class="navegacao">
+            <button class="btn btn-nav btn-active" onclick="mostrarSlide(0)">1. OPORTUNIDADE</button>
+            <button class="btn btn-nav" onclick="mostrarSlide(1)">2. PROBLEMA</button>
+            <button class="btn btn-nav" onclick="mostrarSlide(2)">3. DADOS</button>
+            <button class="btn btn-nav" onclick="mostrarSlide(3)">4. SOLUÇÃO</button>
+            <button class="btn btn-nav" onclick="mostrarSlide(4)">5. RESULTADOS</button>
+        </div>
+
+        <!-- Slides -->
+        <div id="slide0" class="slide">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 class="titulo">OPORTUNIDADE ESTRATÉGICA</h2>
+                <p class="subtitulo">R$ 139 Milhões em Recursos Sub-Utilizados no GDF</p>
+            </div>
+            
+            <div class="conteudo">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <div style="display: inline-flex; align-items: center; background: #fef2f2; color: #dc2626; padding: 15px 30px; border-radius: 50px; margin-bottom: 30px;">
+                        ⚠️ <strong style="margin-left: 10px;">OPORTUNIDADE CRÍTICA IDENTIFICADA</strong>
+                    </div>
+                    <div class="destaque">R$ 139 MILHÕES</div>
+                    <p style="font-size: 1.5rem; color: #666; margin-bottom: 20px;">
+                        em recursos de destinação de IR <strong>sub-utilizados</strong> no GDF anualmente
+                    </p>
+                    <p style="color: #888;">*Servidores elegíveis (declaração completa) - dados oficiais validados</p>
+                </div>
+
+                <div class="grid">
+                    <div class="card card-red">
+                        <div class="numero">0.8%</div>
+                        <p>Taxa atual de servidores que destinam</p>
+                    </div>
+                    <div class="card card-yellow">
+                        <div class="numero">Elegíveis</div>
+                        <p>Servidores que fazem declaração completa</p>
+                    </div>
+                    <div class="card card-green">
+                        <div class="numero">25%</div>
+                        <p>Meta realista de engajamento</p>
+                    </div>
+                </div>
+
+                <div class="card card-blue" style="text-align: center; margin-top: 30px;">
+                    <p style="font-size: 1.2rem;">
+                        <strong>IncentivaBR:</strong> A solução tecnológica que pode transformar 
+                        esta oportunidade latente em <strong>impacto social real</strong> para o DF
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide1" class="slide" style="display: none;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 class="titulo">O PROBLEMA CRÍTICO</h2>
+                <p class="subtitulo">Menos de 1% dos servidores destinam seu IR</p>
+            </div>
+            
+            <div class="conteudo">
+                <h3 style="font-size: 2rem; color: #dc2626; text-align: center; margin-bottom: 30px;">O DESPERDÍCIO DE OPORTUNIDADE</h3>
+                
+                <div class="grid">
+                    <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <h4 style="font-size: 1.5rem; margin-bottom: 20px;">Cenário Atual DF</h4>
+                        <div style="margin: 15px 0; padding: 15px; background: #fef2f2; border-radius: 10px; display: flex; justify-content: space-between;">
+                            <span style="color: #dc2626;">Servidores que destinam</span>
+                            <strong style="color: #dc2626; font-size: 1.5rem;">1,440</strong>
+                        </div>
+                        <div style="margin: 15px 0; padding: 15px; background: #f9fafb; border-radius: 10px; display: flex; justify-content: space-between;">
+                            <span>Servidores que NÃO destinam</span>
+                            <strong style="font-size: 1.5rem;">178,560</strong>
+                        </div>
+                        <div style="margin: 15px 0; padding: 15px; background: #fef2f2; border-radius: 10px; display: flex; justify-content: space-between;">
+                            <span style="color: #dc2626;">Recursos perdidos anualmente</span>
+                            <strong style="color: #dc2626; font-size: 1.5rem;">R$ 137.9M</strong>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <h4 style="font-size: 1.5rem; margin-bottom: 20px;">Principais Barreiras</h4>
+                        <div style="margin: 10px 0; padding: 15px; background: #fef2f2; border-radius: 10px; display: flex; align-items: center;">
+                            <div style="width: 30px; height: 30px; background: #dc2626; border-radius: 8px; color: white; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-weight: bold;">1</div>
+                            <span style="color: #dc2626;">Acham que é "doação" (gasto extra)</span>
+                        </div>
+                        <div style="margin: 10px 0; padding: 15px; background: #fff7ed; border-radius: 10px; display: flex; align-items: center;">
+                            <div style="width: 30px; height: 30px; background: #ea580c; border-radius: 8px; color: white; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-weight: bold;">2</div>
+                            <span style="color: #ea580c;">Desconhecem o processo</span>
+                        </div>
+                        <div style="margin: 10px 0; padding: 15px; background: #fffbeb; border-radius: 10px; display: flex; align-items: center;">
+                            <div style="width: 30px; height: 30px; background: #d97706; border-radius: 8px; color: white; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-weight: bold;">3</div>
+                            <span style="color: #d97706;">Acham muito complicado</span>
+                        </div>
+                        <div style="margin: 10px 0; padding: 15px; background: #faf5ff; border-radius: 10px; display: flex; align-items: center;">
+                            <div style="width: 30px; height: 30px; background: #9333ea; border-radius: 8px; color: white; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-weight: bold;">4</div>
+                            <span style="color: #9333ea;">Medo de complicações fiscais</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide2" class="slide" style="display: none;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 class="titulo">IMPACTO FINANCEIRO</h2>
+                <p class="subtitulo">Potencial de Captação para o DF</p>
+            </div>
+            
+            <div class="conteudo">
+                <h3 style="font-size: 2rem; color: #2563eb; text-align: center; margin-bottom: 30px;">POTENCIAL FINANCEIRO DO DF</h3>
+                
+                <div class="grid">
+                    <div style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                        <h4 style="margin-bottom: 10px;">Cenário Atual</h4>
+                        <div style="font-size: 2.5rem; font-weight: bold; margin: 15px 0;">R$ 1.1M</div>
+                        <p style="opacity: 0.9;">0.8% dos servidores destinam</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                        <h4 style="margin-bottom: 10px;">Potencial Total</h4>
+                        <div style="font-size: 2.5rem; font-weight: bold; margin: 15px 0;">R$ 139M</div>
+                        <p style="opacity: 0.9;">100% dos servidores (teórico)</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                        <h4 style="margin-bottom: 10px;">Meta Realista</h4>
+                        <div style="font-size: 2.5rem; font-weight: bold; margin: 15px 0;">R$ 34.7M</div>
+                        <p style="opacity: 0.9;">25% dos servidores destinam</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide3" class="slide" style="display: none;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 class="titulo">SOLUÇÃO INCENTIVABR</h2>
+                <p class="subtitulo">Plataforma Especializada para Servidores Públicos</p>
+            </div>
+            
+            <div class="conteudo">
+                <h3 style="font-size: 2rem; color: #16a34a; text-align: center; margin-bottom: 30px;">Plataforma que remove todas as barreiras</h3>
+                
+                <div class="grid">
+                    <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 30px; border-radius: 15px;">
+                        <h4 style="margin-bottom: 15px;">🧠 IA Especializada</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 8px 0;">• Assistente "TINA" conversacional</li>
+                            <li style="margin: 8px 0;">• Explicações personalizadas</li>
+                            <li style="margin: 8px 0;">• Desmistificação automática</li>
+                            <li style="margin: 8px 0;">• Suporte 24/7</li>
+                        </ul>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #9333ea, #7c3aed); color: white; padding: 30px; border-radius: 15px;">
+                        <h4 style="margin-bottom: 15px;">🎯 Segmentação Inteligente</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 8px 0;">• Projetos por área profissional</li>
+                            <li style="margin: 8px 0;">• Curadoria especializada</li>
+                            <li style="margin: 8px 0;">• Conexão emocional forte</li>
+                            <li style="margin: 8px 0;">• Relevância garantida</li>
+                        </ul>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 30px; border-radius: 15px;">
+                        <h4 style="margin-bottom: 15px;">🛡️ Compliance Total</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 8px 0;">• Registro INPI protegido</li>
+                            <li style="margin: 8px 0;">• Certificação digital</li>
+                            <li style="margin: 8px 0;">• Recibos automáticos</li>
+                            <li style="margin: 8px 0;">• Zero risco fiscal</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #f59e0b, #ea580c); color: white; border-radius: 15px; padding: 30px; text-align: center; margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">🏆 PIONEIRISMO E EXCLUSIVIDADE</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                        A IncentivaBR é a <strong>PRIMEIRA e ÚNICA</strong> plataforma do Brasil especializada 
+                        em destinação de IR para servidores públicos
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+                            <div style="font-size: 1.5rem; font-weight: bold;">1ª</div>
+                            <div style="font-size: 0.9rem;">Plataforma do gênero</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+                            <div style="font-size: 1.5rem; font-weight: bold;">100%</div>
+                            <div style="font-size: 0.9rem;">Focada em servidores</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+                            <div style="font-size: 1.5rem; font-weight: bold;">INPI</div>
+                            <div style="font-size: 0.9rem;">Tecnologia protegida</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide4" class="slide" style="display: none;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 class="titulo">RESULTADOS ESPERADOS</h2>
+                <p class="subtitulo">Projeções baseadas em dados reais</p>
+            </div>
+            
+            <div class="conteudo">
+                <h3 style="font-size: 2rem; color: #16a34a; text-align: center; margin-bottom: 30px;">Crescimento progressivo nos próximos 4 anos</h3>
+                
+                <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h4 style="margin-bottom: 30px; text-align: center;">Evolução da Taxa de Destinação</h4>
+                    <div class="grid">
+                        <div style="text-align: center;">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 50%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold;">5%</div>
+                            <h5 style="margin-bottom: 10px;">Ano 1</h5>
+                            <div style="font-size: 1.2rem; color: #16a34a; font-weight: bold;">R$ 6.9M</div>
+                            <div style="color: #666;">15 projetos</div>
+                            <div style="color: #2563eb;">35,000 beneficiados</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 50%; background: #9333ea; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold;">12%</div>
+                            <h5 style="margin-bottom: 10px;">Ano 2</h5>
+                            <div style="font-size: 1.2rem; color: #16a34a; font-weight: bold;">R$ 16.7M</div>
+                            <div style="color: #666;">35 projetos</div>
+                            <div style="color: #2563eb;">85,000 beneficiados</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 50%; background: #16a34a; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold;">20%</div>
+                            <h5 style="margin-bottom: 10px;">Ano 3</h5>
+                            <div style="font-size: 1.2rem; color: #16a34a; font-weight: bold;">R$ 27.8M</div>
+                            <div style="color: #666;">60 projetos</div>
+                            <div style="color: #2563eb;">140,000 beneficiados</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 50%; background: #f59e0b; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold;">25%</div>
+                            <h5 style="margin-bottom: 10px;">Ano 4</h5>
+                            <div style="font-size: 1.2rem; color: #16a34a; font-weight: bold;">R$ 34.7M</div>
+                            <div style="color: #666;">75 projetos</div>
+                            <div style="color: #2563eb;">175,000 beneficiados</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #16a34a, #2563eb); color: white; border-radius: 15px; padding: 30px; text-align: center; margin-top: 30px;">
+                    <h3 style="margin-bottom: 20px;">🌟 TRANSFORMAÇÃO DO DF</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 25px;">
+                        Em 4 anos, o DF pode ser <strong>referência nacional</strong> em destinação de IR por servidores públicos
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px;">Potencial Atual</h4>
+                            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 5px;">R$ 139M</div>
+                            <div style="opacity: 0.9;">Recursos disponíveis anualmente</div>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px;">Com IncentivaBR</h4>
+                            <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 5px;">R$ 34.7M</div>
+                            <div style="opacity: 0.9;">Meta realística em 4 anos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumo Executivo -->
+        <div style="margin-top: 40px; background: rgba(16,185,129,0.2); backdrop-filter: blur(10px); border-radius: 15px; padding: 30px; border: 1px solid rgba(255,255,255,0.2);">
+            <h3 style="text-align: center; margin-bottom: 20px;">📊 RESUMO EXECUTIVO</h3>
+            <div class="grid">
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #10b981;">R$ 139M</div>
+                    <div style="opacity: 0.8;">Potencial total DF</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #ef4444;">R$ 1.1M</div>
+                    <div style="opacity: 0.8;">Destinação atual</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #3b82f6;">R$ 137.9M</div>
+                    <div style="opacity: 0.8;">Oportunidade perdida/ano</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #f59e0b;">25%</div>
+                    <div style="opacity: 0.8;">Meta de engajamento</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let slideAtual = 0;
+        const slides = ['slide0', 'slide1', 'slide2', 'slide3', 'slide4'];
+        const botoes = document.querySelectorAll('.btn-nav');
+
+        function mostrarSlide(numero) {
+            // Esconder todos os slides
+            slides.forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+            
+            // Mostrar slide selecionado
+            document.getElementById(slides[numero]).style.display = 'block';
+            
+            // Atualizar botões
+            botoes.forEach(btn => btn.classList.remove('btn-active'));
+            botoes[numero].classList.add('btn-active');
+            
+            slideAtual = numero;
+        }
+
+        // Navegação por teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' && slideAtual < slides.length - 1) {
+                mostrarSlide(slideAtual + 1);
+            } else if (e.key === 'ArrowLeft' && slideAtual > 0) {
+                mostrarSlide(slideAtual - 1);
+            }
+        });
+    </script>
+</body>
+</html>
