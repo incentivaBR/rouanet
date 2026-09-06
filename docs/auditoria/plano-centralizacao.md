@@ -12,7 +12,7 @@ o que se arquiva e como fazer isso sem perder histórico nem derrubar a produç�
 | Passo | Situação em 06/09/2026 |
 |---|---|
 | 1. Backup dos quatro repositórios | Pendente, manual (Download ZIP ou `git clone --mirror`) |
-| 2. Renomear `rouanet` para `incentivabr` | Pendente, decisão do proprietário |
+| 2. Renomear `rouanet` para `incentivabr` | Feito em 06/09/2026 |
 | 3. Trazer o GDF com histórico para `archive/` | Feito no branch `centralizacao` (105 commits preservados, tag local `mvp-2025`) |
 | 4. Trazer os dois privados | Feito no branch `centralizacao`: ambos em `archive/`, com histórico (20 e 26 commits). Nada deles vai para o produto; ver "Os dois privados, lidos" abaixo |
 | 5. Remover PDFs, relatório do Playwright e CPF | Feito na árvore; a reescrita do histórico está preparada em `scripts/limpar-historico.sh` e aguarda confirmação para o force-push |
@@ -120,7 +120,7 @@ incentivabr/                 ← antigo rouanet, renomeado
 ## Passo a passo
 
 1. **Backup.** Download ZIP dos quatro repositórios ou `git clone --mirror`. Guardar fora do computador de trabalho.
-2. **Renomear o `rouanet`.** Settings → General → Repository name: `incentivabr`. Conferir na Railway que o serviço continua apontando para o repositório. Trocar a URL em `backend/Dockerfile`, que clona `rouanet.git` para buscar os assets; melhor ainda, parar de clonar no build.
+2. **Renomear o `rouanet`.** Feito em 06/09/2026: o repositório agora é `incentivaBR/incentivabr`; a URL antiga redireciona. Conferir na Railway que o serviço continua apontando para o repositório. Trocar a URL em `backend/Dockerfile`, que clona `rouanet.git` para buscar os assets; melhor ainda, parar de clonar no build.
 3. **Trazer o GDF com histórico.** Feito: merge com `-s ours` + `read-tree --prefix=archive/incentivabr-gdf/`, equivalente ao `git subtree add` sem squash. Tag `mvp-2025` no último commit do MVP original.
 4. **Trazer os dois privados.** Feito, mesmo procedimento, para `archive/incentivabr-gdf-apresentacao/` e `archive/tina-incentivabr/`.
 5. **Limpar o que não pode ficar.** Feito na árvore. A reescrita do histórico está em `scripts/limpar-historico.sh` e `docs/operacao/limpeza-historico.md`; exige force-push e backup prévio.

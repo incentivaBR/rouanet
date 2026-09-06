@@ -23,7 +23,7 @@ uma vez o histórico do `rouanet` e o do `incentivabr-gdf` (que entrou em
 1. **Backup.** Em uma pasta fora do computador de trabalho:
 
    ```bash
-   git clone --mirror https://github.com/incentivaBR/rouanet.git backup-rouanet-$(date +%F).git
+   git clone --mirror https://github.com/incentivaBR/incentivabr.git backup-incentivabr-$(date +%F).git
    ```
 
    Guarde também o ZIP baixado pelo GitHub (Code → Download ZIP).
@@ -32,7 +32,7 @@ uma vez o histórico do `rouanet` e o do `incentivabr-gdf` (que entrou em
 
    ```bash
    pip install git-filter-repo
-   CPF_A_REMOVER=000.000.000-00 scripts/limpar-historico.sh https://github.com/incentivaBR/rouanet.git ../rouanet-limpo
+   CPF_A_REMOVER=000.000.000-00 scripts/limpar-historico.sh https://github.com/incentivaBR/incentivabr.git ../incentivabr-limpo
    ```
 
    Troque `000.000.000-00` pelo CPF que estava em `docs/LEGAL.md`,
@@ -45,7 +45,7 @@ uma vez o histórico do `rouanet` e o do `incentivabr-gdf` (que entrou em
 3. **Conferir à mão** na cópia limpa, antes de qualquer push:
 
    ```bash
-   cd ../rouanet-limpo
+   cd ../incentivabr-limpo
    git log --oneline | head          # os commits recentes continuam lá, com novos ids
    git ls-files | grep -c uploads    # 0
    git tag                           # mvp-2025 deve continuar existindo
@@ -55,8 +55,8 @@ uma vez o histórico do `rouanet` e o do `incentivabr-gdf` (que entrou em
    desative temporariamente a proteção de `main` se houver. Depois:
 
    ```bash
-   cd ../rouanet-limpo
-   git remote add origin https://github.com/incentivaBR/rouanet.git
+   cd ../incentivabr-limpo
+   git remote add origin https://github.com/incentivaBR/incentivabr.git
    git push --force --all origin
    git push --force --tags origin
    ```
