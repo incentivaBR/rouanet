@@ -158,7 +158,17 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
     const fncResult = await client.query(`SELECT id FROM official_funds WHERE code = 'FNC' LIMIT 1`);
     const fncId = fncResult.rows[0]?.id || null;
 
-    // Buscar dados bancários do projeto ativo da organização
+    // Dados bancários: só do projeto ativo da organização, nunca de outro lugar.
+    //
+    // Havia aqui uma cadeia de fallbacks — org_projects, depois organizations,
+    // depois 'Banco do Brasil' / '001' / '—' escritos no código. A migração 022
+    // deixou uma conta inventada na organização padrão, e esta rota a devolvia
+    // como destino da transferência. Quem transferisse para ela não teria
+    // Recibo de Mecenato e perderia a dedução (Raio-X, risco 01).
+    //
+    // Regra: conta de captação vem do banco, por tenant, e só de projeto ativo.
+    // Sem ela, fora da simulação, a destinação não é registrada — a resposta
+    // diz o porquê, para o destinador não transferir para conta nenhuma.
     const opResult = await client.query(
       `SELECT proponente_nome, proponente_cnpj, bank_name, bank_code, bank_agency, bank_account, pix_key, pix_key_type
        FROM org_projects WHERE organization_id = $1 AND is_active = true
@@ -166,6 +176,17 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
       [org?.id]
     );
     const op = opResult.rows[0];
+    const contaPreenchida = Boolean(op && ((op.bank_agency && op.bank_account) || op.pix_key));
+
+    if (!contaPreenchida && process.env.SIMULATION_MODE !== 'true') {
+      return res.status(409).json({
+        status: 'error',
+        codigo: 'conta_captacao_ausente',
+        message: !op
+          ? 'Esta organização não tem projeto ativo cadastrado. A destinação não foi registrada — não faça nenhuma transferência.'
+          : 'A Conta de Captação deste projeto ainda não foi informada pelo proponente. A destinação não foi registrada — não faça nenhuma transferência até a conta aparecer nesta etapa.'
+      });
+    }
 
     await client.query('BEGIN');
 
@@ -208,16 +229,20 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
         fiscal_year,
         status:           'pending',
         created_at:       donation.created_at,
-        // Dados bancários do proponente (vindos do banco de dados)
+        // Dados bancários do projeto ativo, exatamente como estão no cadastro.
+        // Campo vazio vem vazio: em simulação isso é permitido (o projeto
+        // semeado da Casa Azul não tem conta de propósito) e a tela mostra
+        // "—"; fora da simulação a rota já recusou acima.
         banco: {
-          beneficiary_name: op?.proponente_nome || org?.pronac_proponente || '—',
+          beneficiary_name: op?.proponente_nome || null,
           beneficiary_cnpj: op?.proponente_cnpj || null,
-          bank_name:        op?.bank_name   || org?.bank_name   || 'Banco do Brasil',
-          bank_code:        op?.bank_code   || org?.bank_code   || '001',
-          bank_agency:      op?.bank_agency || org?.bank_agency || '—',
-          bank_account:     op?.bank_account|| org?.bank_account|| '—',
-          pix_key:          op?.pix_key     || org?.pix_key     || null,
-          pix_key_type:     op?.pix_key_type|| org?.pix_key_type|| null,
+          bank_name:        op?.bank_name       || null,
+          bank_code:        op?.bank_code       || null,
+          bank_agency:      op?.bank_agency     || null,
+          bank_account:     op?.bank_account    || null,
+          pix_key:          op?.pix_key         || null,
+          pix_key_type:     op?.pix_key_type    || null,
+          conta_preenchida: contaPreenchida,
           instrucoes:       'Identificar no comprovante: nome completo, CPF e PRONAC do projeto.'
         }
       }
