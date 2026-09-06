@@ -69,7 +69,7 @@ brand/       manual da marca, logos e identidade visual
 docs/        estratégia, operação, jurídico, auditoria, apresentação, piloto FGV
 scripts/     utilitários (sync da TINA, limpeza de histórico)
 tests/       testes de API e E2E
-archive/     histórico: repositório ancestral incentivabr-gdf e demos de 2026
+archive/     histórico: os três repositórios anteriores e as demos de 2026
 ```
 
 Detalhes de cada pasta, regras de negócio e decisões tomadas estão em `CLAUDE.md`.

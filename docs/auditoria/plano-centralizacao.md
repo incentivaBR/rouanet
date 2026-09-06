@@ -14,7 +14,7 @@ o que se arquiva e como fazer isso sem perder histórico nem derrubar a produç�
 | 1. Backup dos quatro repositórios | Pendente, manual (Download ZIP ou `git clone --mirror`) |
 | 2. Renomear `rouanet` para `incentivabr` | Pendente, decisão do proprietário |
 | 3. Trazer o GDF com histórico para `archive/` | Feito no branch `centralizacao` (105 commits preservados, tag local `mvp-2025`) |
-| 4. Trazer os dois privados | Bloqueado: o app do Claude não tem acesso a `incentivabr-gdf-apresentacao` nem a `tina-incentivabr` |
+| 4. Trazer os dois privados | Feito no branch `centralizacao`: ambos em `archive/`, com histórico (20 e 26 commits). Nada deles vai para o produto; ver "Os dois privados, lidos" abaixo |
 | 5. Remover PDFs, relatório do Playwright e CPF | Feito na árvore; a reescrita do histórico está preparada em `scripts/limpar-historico.sh` e aguarda confirmação para o force-push |
 | 6. Organizar docs/, archive/, README e CLAUDE.md únicos | Feito no branch `centralizacao` |
 | 7. Arquivar os três repositórios antigos no GitHub | Pendente, decisão do proprietário |
@@ -93,10 +93,14 @@ ficar em repositório nenhum · **verificar** depende de acesso.
 | Documentos de estratégia na raiz | portar para `docs/` (feito) |
 | `CNAME` de `destineai.com.br`, CORS e remetente DestineAI | remover (pendente; mexe em configuração de deploy) |
 
-### Dos dois privados (hipótese, a confirmar)
+### Os dois privados, lidos
 
-- `incentivabr-gdf-apresentacao`: se for site ou deck estático, vai para `site/`; se for slides em outro formato, para `docs/apresentacao/`.
-- `tina-incentivabr`: se tiver base de conhecimento, comparar com `backend/src/knowledge/nucleo.md` e ficar com uma só; se for chatbot separado, descartar o código.
+A hipótese original (deck para `site/`; base de conhecimento da TINA para fundir) não se confirmou. Os dois são protótipos React de julho de 2025, anteriores ao MVP, sem chave de API e sem dados pessoais.
+
+| Repositório | O que é | Decisão |
+|---|---|---|
+| `incentivabr-gdf-apresentacao` | Deck de 5 slides para gestores do GDF ("R$ 139 milhões", "0,8% destinam"), em HTML estático publicado por GitHub Pages e num componente React inacabado. 20 commits, 11 arquivos. Números sem fonte citada. | **arquivar**. Não vai para `site/`: a tese (fundos do DF) e os números (sem fonte) não são os do produto atual. A estrutura da narrativa pode inspirar material novo. |
+| `tina-incentivabr` | Chat React com respostas escritas à mão, sem chamada a modelo de IA. Afirma teto de "7% do IR devido" e percentuais por fundo que contradizem o produto. README com métricas inventadas. 26 commits, 8 arquivos. | **arquivar**, portar nada. Fundir esse conteúdo na TINA real pioraria o risco 04 do Raio-X. |
 
 ## Estrutura final
 
@@ -118,7 +122,7 @@ incentivabr/                 ← antigo rouanet, renomeado
 1. **Backup.** Download ZIP dos quatro repositórios ou `git clone --mirror`. Guardar fora do computador de trabalho.
 2. **Renomear o `rouanet`.** Settings → General → Repository name: `incentivabr`. Conferir na Railway que o serviço continua apontando para o repositório. Trocar a URL em `backend/Dockerfile`, que clona `rouanet.git` para buscar os assets; melhor ainda, parar de clonar no build.
 3. **Trazer o GDF com histórico.** Feito: merge com `-s ours` + `read-tree --prefix=archive/incentivabr-gdf/`, equivalente ao `git subtree add` sem squash. Tag `mvp-2025` no último commit do MVP original.
-4. **Trazer os dois privados.** Mesmo procedimento assim que houver acesso.
+4. **Trazer os dois privados.** Feito, mesmo procedimento, para `archive/incentivabr-gdf-apresentacao/` e `archive/tina-incentivabr/`.
 5. **Limpar o que não pode ficar.** Feito na árvore. A reescrita do histórico está em `scripts/limpar-historico.sh` e `docs/operacao/limpeza-historico.md`; exige force-push e backup prévio.
 6. **Organizar a casa.** Feito: `docs/`, `archive/`, README e CLAUDE.md únicos.
 7. **Arquivar os três antigos.** Em cada um: README de três linhas ("incorporado a `incentivaBR/incentivabr` em <data>") e Settings → Archive this repository. Nunca apagar.
@@ -131,10 +135,8 @@ incentivabr/                 ← antigo rouanet, renomeado
 - **Contas bancárias do FDI/FDCA** datam de janeiro/2026. Reconferir com cada conselho antes de virar seed.
 - **A Railway lê `main`.** Toda a reorganização fica no branch `centralizacao` até o deploy de preview estar de pé.
 
-## Acesso aos dois repositórios privados
+## Os repositórios antigos, depois disto
 
-O app do Claude no GitHub só enxerga `rouanet` e `incentivabr-gdf`. Para
-ler os privados, um administrador da organização precisa incluir
-`incentivabr-gdf-apresentacao` e `tina-incentivabr` na lista de
-repositórios do app (GitHub → Settings → Applications → Claude →
-Repository access), ou marcar "All repositories".
+Com os três incorporados em `archive/`, o passo 7 (arquivar no GitHub) pode
+ser feito a qualquer momento. Nenhum dos três tem branch não mesclado nem
+conteúdo que só exista lá.
