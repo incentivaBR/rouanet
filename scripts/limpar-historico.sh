@@ -18,14 +18,14 @@
 #   CPF_A_REMOVER=000.000.000-00 scripts/limpar-historico.sh [ORIGEM] [DESTINO]
 #
 #   ORIGEM   URL ou caminho do repositório (padrão: o remoto origin daqui)
-#   DESTINO  pasta a criar com a cópia limpa (padrão: ../rouanet-limpo)
+#   DESTINO  pasta a criar com a cópia limpa (padrão: ../incentivabr-limpo)
 #
 # Requer git-filter-repo: pip install git-filter-repo
 
 set -euo pipefail
 
 ORIGEM="${1:-$(git config --get remote.origin.url)}"
-DESTINO="${2:-$(cd "$(dirname "$0")/.." && pwd)/../rouanet-limpo}"
+DESTINO="${2:-$(cd "$(dirname "$0")/.." && pwd)/../incentivabr-limpo}"
 
 if [ -z "${CPF_A_REMOVER:-}" ]; then
   echo "Defina CPF_A_REMOVER=000.000.000-00 (o CPF que deve sair do histórico)." >&2
