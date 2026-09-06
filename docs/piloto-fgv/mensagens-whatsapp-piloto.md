@@ -158,6 +158,6 @@ Quando eu fechar os resultados, te mando um resumo do que a pesquisa mostrou.
 
 - **Link:** `https://destineai.com.br/frontend/piloto-start.html` (GitHub Pages — URL limpa)
 - Pré-teste: `https://forms.gle/aUDyt5AbVL7nW8EA9` | Pós-teste: `https://forms.gle/bGTxUvR39MECNBMC9`
-- Participantes usam **modo demo** (`?demo=true`) — conta `demo@destineai.com.br` / `Piloto2026`
+- Participantes usavam uma conta demo compartilhada, preenchida pelo `login.html` em modo `?demo=true`. A conta e o modo foram removidos em setembro de 2026 (Onda 0 do Raio-X); este documento é registro histórico do piloto.
 - Anonimato da pesquisa garantido pelo código MAR15 (não conectado ao email da plataforma)
 - Prazo do piloto: **15 de junho de 2026**

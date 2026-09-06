@@ -140,9 +140,7 @@ async function initDatabase() {
 
   console.log('\n' + '='.repeat(50));
   console.log('🎉 Banco inicializado com sucesso!');
-  console.log('\n📌 Login de teste:');
-  console.log('   CPF:   11122233344');
-  console.log('   Senha: teste123');
+  console.log('\n📌 Nenhum usuário é criado pelo seed. Cadastre-se pela tela de login.');
   console.log('\n🌐 Iniciar servidor:');
   console.log('   npm run dev  →  http://localhost:3000\n');
 

@@ -192,12 +192,7 @@
   <script>
     // Se já logado, redirecionar
     if (auth.isLoggedIn()) {
-      const isDemo = utils.getQueryParam('demo') === 'true';
-      const defaultRedirect = isDemo
-        ? 'destinar-rouanet.html'
-        : 'dashboard.html';
-      const redirect = utils.getQueryParam('redirect') || defaultRedirect;
-      window.location.href = redirect;
+      window.location.href = utils.getQueryParam('redirect') || 'dashboard.html';
     }
 
     // Tabs
@@ -295,37 +290,16 @@
           ? { email: cpfEmail, senha }
           : { cpf: utils.cleanCPF(cpfEmail), senha };
 
-        let response;
-        try {
-          response = await api.login(credentials);
-        } catch (apiError) {
-          if (apiError.message === 'Erro de conexão com o servidor' || apiError.status === 500) {
-            const isAdminDemo = cpfEmail.toLowerCase().startsWith('admin@');
-            response = {
-              token: 'demo_token_' + Date.now(),
-              user: {
-                id: 1,
-                nome: cpfEmail.includes('@') ? cpfEmail.split('@')[0] : 'Usuário Demo',
-                email: cpfEmail.includes('@') ? cpfEmail : 'demo@IncentivaBR.com.br',
-                cpf: cpfEmail.includes('@') ? '00000000000' : utils.cleanCPF(cpfEmail),
-                total_donated: 0,
-                is_admin: isAdminDemo
-              }
-            };
-          } else {
-            throw apiError;
-          }
-        }
+        // Sem fallback: se a API falhar, o erro vira toast. Antes, erro de rede
+        // ou 500 fabricava aqui uma sessão falsa (token inventado, is_admin
+        // para qualquer e-mail começando com "admin@"). Raio-X, risco 03.
+        const response = await api.login(credentials);
 
         auth.setToken(response.token);
         auth.setUser(response.user);
         Toast.success('Redirecionando...', 'Login realizado!');
 
-        const isDemo = utils.getQueryParam('demo') === 'true';
-        const defaultRedirect = isDemo
-          ? 'destinar-rouanet.html'
-          : 'dashboard.html';
-        const redirect = utils.getQueryParam('redirect') || defaultRedirect;
+        const redirect = utils.getQueryParam('redirect') || 'dashboard.html';
         setTimeout(() => window.location.href = redirect, 1000);
 
       } catch (error) {
@@ -405,29 +379,6 @@
   </script>
   <script src="js/layout.js"></script>
   <script>Layout.init('', { skipNav: true, skipFooter: true });</script>
-    <script>
-    // Modo demo: esconde o formulário imediatamente e mostra tela de transição
-    if (utils.getQueryParam('demo') === 'true') {
-      const card = document.querySelector('.bg-white.rounded-2xl');
-      if (card) card.style.display = 'none';
-
-      const loader = document.createElement('div');
-      loader.style.cssText = 'text-align:center;padding:48px 24px;';
-      loader.innerHTML =
-        '<div style="margin-bottom:28px">' +
-          '<img class="brand-logo" src="assets/logo-incentivabr-compact.png" alt="IncentivaBR" style="height:36px;background:white;padding:6px 12px;border-radius:10px">' +
-        '</div>' +
-        '<div style="width:42px;height:42px;border:3px solid var(--secondary-25);border-top-color:var(--secondary-color,#EE985C);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 22px"></div>' +
-        '<p style="color:rgba(255,255,255,0.75);font-size:14px;font-weight:600;margin:0 0 14px;font-family:Montserrat,sans-serif">Entrando...</p>';
-      document.body.appendChild(loader);
-
-      document.getElementById('loginCpfEmail').value = 'demo@IncentivaBR.com.br';
-      document.getElementById('loginSenha').value = 'Piloto2026';
-      setTimeout(() => {
-        document.getElementById('loginForm').dispatchEvent(new Event('submit'));
-      }, 250);
-    }
-  </script>
 <script src="js/tina.js"></script>
 
 <!-- incentivabr-legal -->
