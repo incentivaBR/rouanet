@@ -3,8 +3,8 @@
 ## Por que
 
 Dois comprovantes bancários reais de servidores (janeiro/2026), o relatório do
-Playwright e o CPF do proprietário foram versionados e ficaram em commits
-públicos. Já saíram da árvore atual (commit "Remove comprovantes bancários,
+Playwright e o CPF do proprietário (em cinco arquivos do GDF) foram versionados
+e ficaram em commits públicos. Já saíram da árvore atual (commit "Remove comprovantes bancários,
 relatório do Playwright e CPF do repositório"), mas continuam acessíveis em
 qualquer commit anterior. Só a reescrita do histórico resolve isso.
 
@@ -32,8 +32,12 @@ uma vez o histórico do `rouanet` e o do `incentivabr-gdf` (que entrou em
 
    ```bash
    pip install git-filter-repo
-   scripts/limpar-historico.sh https://github.com/incentivaBR/rouanet.git ../rouanet-limpo
+   CPF_A_REMOVER=000.000.000-00 scripts/limpar-historico.sh https://github.com/incentivaBR/rouanet.git ../rouanet-limpo
    ```
+
+   Troque `000.000.000-00` pelo CPF que estava em `docs/LEGAL.md`,
+   `LICENSE`, `index.html`, `dashboard.html` e `login-govbr.html` do GDF.
+   O número não fica escrito no script nem neste documento de propósito.
 
    O script termina imprimindo três contadores, todos com valor zero. Se
    algum não for zero, ele avisa e não se deve prosseguir.
@@ -70,7 +74,7 @@ uma vez o histórico do `rouanet` e o do `incentivabr-gdf` (que entrou em
 |---|---|
 | Comprovantes | `*/uploads/receipts/*.pdf` e `backend/uploads/receipts/*.pdf`, em qualquer commit |
 | Relatórios de teste | `tests/playwright-report/index.html`, `tests/test-results/.last-run.json` |
-| CPF | as duas grafias, substituídas por `[CPF removido]` em todos os blobs |
+| CPF | as duas grafias (com e sem máscara), substituídas por `[CPF removido]` em todos os blobs; o número vem de `CPF_A_REMOVER` |
 
 O script foi validado em 06/09/2026 numa cópia local do branch
 `centralizacao`: os três contadores deram zero.
