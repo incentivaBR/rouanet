@@ -33,7 +33,7 @@ O PRD descreve React, Supabase, Auth0 e Vercel. Essa stack nunca existiu; não a
 ## Estrutura
 
 ```
-rouanet/                       ← a ser renomeado para incentivabr
+incentivabr/                   ← antigo rouanet, renomeado em set/2026
 ├── README.md                  ← apresentação única do produto
 ├── CLAUDE.md                  ← este arquivo
 ├── CHANGELOG.md
