@@ -104,6 +104,10 @@ const [{ id: estranhoId }] = await q(
   `INSERT INTO users (nome, email) VALUES ('Estranho','e@outro.org') RETURNING id`);
 await q(`INSERT INTO organization_users (organization_id, user_id, role, is_active)
          VALUES ('${orgId}','${gestorId}','org_admin', true)`);
+// Fora da simulacao, registrar exige projeto ativo com conta de captacao
+// preenchida (ver conta-captacao.test.mjs). Os casos de POST abaixo precisam dela.
+await q(`INSERT INTO org_projects (organization_id, pronac, titulo, proponente_nome, bank_name, bank_code, bank_agency, bank_account, is_active, is_featured)
+         VALUES ('${orgId}','2511274','Mostra Casa Azul','Casa Azul','Banco do Brasil','001','1234-5','98.765-4',true,true)`);
 
 const novaDestinacao = async (status = 'awaiting_confirmation') => (await q(
   `INSERT INTO donations (user_id, organization_id, donation_amount, ir_devido, fiscal_year,

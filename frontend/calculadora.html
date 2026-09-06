@@ -363,7 +363,7 @@
         <h3 class="text-white font-bold text-xl mb-2">Salve seu cálculo e escolha um projeto</h3>
         <p class="text-white/60 text-sm mb-6">Crie sua conta gratuita para acompanhar sua destinação e receber o comprovante fiscal.</p>
         <div class="flex gap-3 justify-center flex-wrap">
-          <a href="cadastro.html"
+          <a href="login.html?tab=register&redirect=destinar-rouanet.html" id="linkCriarConta"
             class="flex items-center gap-2 btn-acento text-[#0F1E3D] font-bold px-6 py-3 rounded-xl transition-all no-underline">
             Criar Conta Grátis
           </a>
@@ -476,6 +476,12 @@
 
       const isLogged = typeof auth !== 'undefined' && auth.isLoggedIn();
       document.getElementById('loginPush').classList.toggle('hidden', isLogged || result.ir_devido <= 0);
+
+      // Mesmo caminho que o wizard usa quando exige login: cadastro e volta
+      // para a destinação. A query desta página (?org=) segue junto, para o
+      // servidor cair no tenant certo depois de criar a conta.
+      document.getElementById('linkCriarConta').href =
+        'login.html?tab=register&redirect=' + encodeURIComponent('destinar-rouanet.html' + window.location.search);
     }
 
     // Tabs

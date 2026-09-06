@@ -1,5 +1,10 @@
 -- DESTINAI — Seeds de produção (Rouanet only)
--- 1 jurisdição federal, 1 grupo, 1 fundo, 1 admin de teste
+-- 1 jurisdição federal, 1 grupo, 1 fundo
+--
+-- Este arquivo roda em TODO boot (migrate.js). Nunca crie usuário aqui: o que
+-- entrar neste arquivo com senha volta a existir a cada deploy, com a senha
+-- escrita no repositório. O admin de teste que vivia aqui foi removido na
+-- Onda 0 do Raio-X (migração 035). Contas de teste ficam fora do repositório.
 
 -- 1. JURISDIÇÃO FEDERAL (Lei Rouanet é lei federal)
 INSERT INTO jurisdictions (id, name, uf, type, is_active) VALUES
@@ -23,15 +28,4 @@ INSERT INTO official_funds (id, jurisdiction_id, incentive_group_id, code, name,
    'culture', 'Lei 8.313/1991', 'annual',
    '001', '3902-5', '170500-8',
    true, true, true)
-ON CONFLICT DO NOTHING;
-
--- 4. USUÁRIO ADMIN DE TESTE
--- CPF: 11122233344 | Senha: teste123
-INSERT INTO users (cpf, nome, email, senha_hash, is_admin, email_verified,
-  jurisdiction_id, accepted_terms_at, accepted_terms_version) VALUES
-  ('11122233344', 'Admin Destinai', 'admin@destinai.com.br',
-   '$2a$10$8rGoktjd/lvxWviNfSJE8u1PCdPdTkt85mijE1cG/r7MMtEDR3F5W',
-   true, true,
-   '11111111-1111-1111-1111-111111111111',
-   NOW(), '1.0')
 ON CONFLICT DO NOTHING;

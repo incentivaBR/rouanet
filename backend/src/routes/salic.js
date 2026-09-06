@@ -314,6 +314,10 @@ const PROJETOS_DEMO = [
 // Usado pelo fluxo white-label: o associado vê o projeto da própria org.
 // ─────────────────────────────────────────────────────────────
 router.get('/org-project', async (req, res) => {
+  // Fora do try: o fallback de erro, lá embaixo, também precisa dele — é a
+  // única fonte de dados bancários desta rota.
+  let orgProject = null;
+
   try {
     const org = req.organization;
 
@@ -341,7 +345,7 @@ router.get('/org-project', async (req, res) => {
       )
     );
 
-    const orgProject = projectResult.rows[0];
+    orgProject = projectResult.rows[0];
     const pronac = orgProject?.pronac || org.pronac; // fallback campo legado
 
     if (!pronac) {
@@ -425,7 +429,12 @@ router.get('/org-project', async (req, res) => {
   } catch (error) {
     console.error('[SALIC] Erro ao buscar projeto da organização:', error.message);
 
-    // Fallback: retorna dados cacheados da org mesmo sem SALIC
+    // Fallback: retorna dados cacheados da org mesmo sem SALIC.
+    //
+    // Os dados bancários vêm do org_projects também aqui. Antes vinham das
+    // colunas bank_* de organizations — as mesmas em que a migração 022 deixou
+    // uma conta fictícia (zerada na 034). Conta de captação é do projeto,
+    // nunca da organização.
     const org = req.organization;
     if (org?.pronac && org?.pronac_titulo) {
       return res.json({
@@ -436,14 +445,14 @@ router.get('/org-project', async (req, res) => {
           slug:             org.slug,
           name:             org.name,
           pronac:           org.pronac,
-          bank_name:        org.bank_name,
-          bank_code:        org.bank_code,
-          bank_agency:      org.bank_agency,
-          bank_account:     org.bank_account,
-          pix_key:          org.pix_key,
-          pix_key_type:     org.pix_key_type,
-          beneficiary_name: org.beneficiary_name,
-          beneficiary_cnpj: org.beneficiary_cnpj,
+          bank_name:        orgProject?.bank_name        || null,
+          bank_code:        orgProject?.bank_code        || null,
+          bank_agency:      orgProject?.bank_agency      || null,
+          bank_account:     orgProject?.bank_account     || null,
+          pix_key:          orgProject?.pix_key          || null,
+          pix_key_type:     orgProject?.pix_key_type     || null,
+          beneficiary_name: orgProject?.proponente_nome  || null,
+          beneficiary_cnpj: orgProject?.proponente_cnpj  || null,
           max_percentage:   parseFloat(org.max_percentage) || 6.00
         },
         projeto: {

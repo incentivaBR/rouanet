@@ -1,6 +1,8 @@
 -- Migration 024: Usuário demo para Piloto FGV (maio–junho 2026)
--- Email: demo@destineai.com.br | Senha: Piloto2026
--- Conta de acesso único para participantes do piloto sem cadastro
+-- Conta de acesso único para participantes do piloto sem cadastro.
+-- REMOVIDA pela migration 035 (set/2026): a senha era pública. Este arquivo
+-- fica só porque migrations não são apagadas nem renumeradas; só o comentário
+-- com a senha em texto foi retirado.
 
 INSERT INTO users (cpf, nome, email, senha_hash, is_admin, email_verified,
   jurisdiction_id, accepted_terms_at, accepted_terms_version)
