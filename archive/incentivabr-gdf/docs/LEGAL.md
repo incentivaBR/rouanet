@@ -8,7 +8,6 @@
 - **🏷️ INPI Marca (Classe 42):** 939403110 - Serviços científicos e tecnológicos
 - **🏛️ Cartório RTD:** 2º Ofício de Registro Civil, Títulos e Documentos de Brasília-DF
 - **Proprietário:** ADACTO ARTUR DORNAS DE OLIVEIRA
-- **CPF:** [CPF removido]
 
 ### **📅 Cronologia de Proteção**
 - **25/02/2025:** Registro INPI Software concedido
