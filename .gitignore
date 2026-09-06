@@ -7,10 +7,13 @@ backend/node_modules/
 backend/.env
 *.env.local
 
-# Uploads gerados (PDFs de comprovantes)
-backend/uploads/receipts/*.pdf
-backend/uploads/documents/*.pdf
-backend/uploads/temp/
+# Uploads gerados (comprovantes e recibos de mecenato).
+# Documento fiscal de servidor nunca entra no git, em nenhuma pasta.
+backend/uploads/
+**/uploads/receipts/
+**/uploads/documents/
+**/uploads/mecenato/
+**/uploads/temp/
 
 # Logs
 *.log
