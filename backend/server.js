@@ -13,6 +13,7 @@ import { escopoDaChaveResend } from './src/lib/resendEscopo.js';
 import { consumoDeHoje } from './src/lib/consumoIA.js';
 import { semeiaCasaAzul } from './src/config/semeiaCasaAzul.js';
 import { promoveSuperadmin, estadoDoSuperadmin } from './src/config/promoveSuperadmin.js';
+import { estadoDoArmazenamento } from './src/services/armazenamento.js';
 
 // ES modules: criar __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -249,6 +250,10 @@ app.get('/diagnostico', async (req, res) => {
     diagnostico.services.migrations = { status: 'error', error: error.message };
   }
 
+  // Onde os documentos fiscais estão guardados. Em produção com backend
+  // local é erro: somem no próximo deploy (Raio-X, risco 02).
+  diagnostico.services.armazenamento = estadoDoArmazenamento();
+
   // Status do serviço de email
   const emailStatus = getEmailStatus();
   diagnostico.services.email = {
@@ -387,6 +392,10 @@ app.use((err, req, res, next) => {
 app.listen(PORT, async () => {
   console.log(`Servidor rodando na porta ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
+
+  const arm = estadoDoArmazenamento();
+  if (arm.status === 'error') console.error(`❌ ARMAZENAMENTO: ${arm.aviso}`);
+  else console.log(`📦 Armazenamento: ${arm.backend}${arm.bucket ? ' (' + arm.bucket + ')' : ''}`);
 
   // Testar conexão com banco na inicialização
   await testConnection();
