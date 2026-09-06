@@ -68,6 +68,15 @@ uma vez o histórico do `rouanet` e o do `incentivabr-gdf` (que entrou em
    - Pedir ao suporte do GitHub que descarte os objetos antigos ainda alcançáveis por URL direta ("remove cached views and references to the sensitive data"). Sem isso, quem guardou o link de um commit antigo ainda o abre por um tempo.
    - Avisar os dois titulares dos comprovantes, se forem identificáveis, que o documento ficou público entre janeiro e setembro de 2026.
 
+## Execução em 06/09/2026
+
+- Script rodado numa cópia clonada direto do GitHub; três contadores em zero; árvore do `main` limpo idêntica à do `main` original; 595 commits nos dois.
+- Force-push feito nos branches `main` e `dev`. Conferido depois por um clone novo: nenhum PDF e nenhum CPF em qualquer commit alcançável pelos branches.
+- **Tags:** as três tags de agosto (`v2026.08.04-*`) continuaram apontando para commits antigos, porque o ambiente usado recusou push de tags. Enquanto existirem, o histórico sujo continua alcançável por elas. Apagar em GitHub → Tags, ou recriá-las a partir de um clone novo. A tag `mvp-2025` deve ser criada no commit `9477e28` ("completo", 29/07/2025) do histórico novo.
+- **Referências de PR:** o GitHub mantém `refs/pull/1/head`, `refs/pull/2/head` e `refs/pull/3/head` apontando para commits antigos. Só o suporte do GitHub remove. Pedido em https://support.github.com/request, categoria "Remove sensitive data", com o texto:
+
+  > The repository incentivaBR/incentivabr had two personal bank receipts (PDF) and the owner's CPF (Brazilian tax id) committed by mistake. The history has been rewritten with git filter-repo and force-pushed on 2026-09-06. Please remove the unreachable objects and the cached views of the old commits, including the pull request refs (refs/pull/1, 2 and 3), so the old files can no longer be accessed by URL.
+
 ## O que o script remove
 
 | Item | Padrão |
