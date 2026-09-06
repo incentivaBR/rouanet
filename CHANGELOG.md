@@ -12,7 +12,7 @@
 ### Alterado
 - `frontend/login.html` — banner piloto + auto-preenchimento demo
 - `frontend/piloto.html` — CTAs direcionam para destinar-rouanet.html diretamente
-- `docs/mensagens-whatsapp-piloto.md` — 5 versões com URL www + data limite 15/jun
+- `docs/piloto-fgv/mensagens-whatsapp-piloto.md` — 5 versões com URL www + data limite 15/jun
 - Copy headline: "Você sabia que parte do seu IR descontado do seu salário..."
 
 ---
