@@ -14,7 +14,8 @@ comprovante, um gestor confere e o proponente emite o Recibo de Mecenato.
 
 Este repositório é a **casa única** do IncentivaBR desde setembro de 2026.
 Os repositórios anteriores (`incentivabr-gdf`, `incentivabr-gdf-apresentacao`,
-`tina-incentivabr`) foram ou serão incorporados aqui e arquivados no GitHub.
+`tina-incentivabr`) estão incorporados em `archive/` com histórico e devem
+ser arquivados no GitHub.
 Ver `docs/auditoria/plano-centralizacao.md`.
 
 ## Stack real
@@ -56,6 +57,8 @@ rouanet/                       ← a ser renomeado para incentivabr
 │   └── piloto-fgv/            ← formulários, guia e mensagens do piloto de maio/2026
 └── archive/                   ← histórico, fora do produto; nada aqui é servido
     ├── incentivabr-gdf/       ← o repositório ancestral inteiro, com 105 commits
+    ├── incentivabr-gdf-apresentacao/ ← deck de jul/2025 para o GDF, com histórico
+    ├── tina-incentivabr/      ← protótipo React da TINA, jul/2025, com histórico
     └── demos-2026/            ← demo-*.html, projeto-detalhes.html, CSS e imagens órfãs
 ```
 

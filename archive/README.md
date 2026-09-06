@@ -28,6 +28,31 @@ antigos até a reescrita do histórico (`docs/operacao/limpeza-historico.md`).
 
 A tag `mvp-2025` marca o último commit do MVP original, antes do backend.
 
+## incentivabr-gdf-apresentacao/
+
+Repositório privado `incentivaBR/incentivabr-gdf-apresentacao`, trazido
+inteiro com seus 20 commits (10 e 11 de julho de 2025). É um deck de cinco
+slides para gestores do GDF ("R$ 139 milhões sub-utilizados", "0,8% dos
+servidores destinam"), em duas versões: `index.html` estático, publicado por
+GitHub Pages, e um componente React nunca concluído.
+
+Os números não têm fonte citada. A estrutura da narrativa (oportunidade,
+problema, dados, solução, resultados) pode servir de esqueleto para um
+material novo, mas nenhum valor deve ser reutilizado sem fonte.
+
+## tina-incentivabr/
+
+Repositório privado `incentivaBR/tina-incentivabr`, trazido inteiro com seus
+26 commits (9 de julho de 2025). É um protótipo React de chat com respostas
+escritas à mão; não chama nenhum modelo de IA. Diz que o teto é "7% do IR
+devido" e lista percentuais por fundo que contradizem a leitura adotada no
+produto (teto único de 6% até o parecer). O README traz afirmações sem lastro
+("99,7% de conformidade", "2.847 servidores atendidos", "R$ 8,2 mi
+destinados").
+
+Nada daqui entra na TINA real (`backend/src/knowledge/nucleo.md`). Fica como
+registro de que a assistente foi pensada antes de existir.
+
 ## demos-2026/
 
 Páginas e imagens que o produto não usa mais:
