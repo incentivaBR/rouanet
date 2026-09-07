@@ -1,5 +1,28 @@
 # CHANGELOG — IncentivaBR Rouanet
 
+## [Não lançado] — 2026-09-07 — Onda 1 do Raio-X: fundações (PRs #7 a #12)
+
+### Adicionado
+- `.github/workflows/ci.yml` — testes do backend a cada push e PR (check "Testes do backend").
+- `.github/workflows/backup.yml` e `scripts/backup-postgres.sh` — dump diário cifrado (gpg) para o bucket, retenção de 30 dias; `scripts/restaurar-postgres.sh` com conferência de contagens. Restore executado e registrado em `docs/operacao/backup-restore.md`.
+- `.github/workflows/uptime.yml` — `/health` e `/diagnostico` a cada 15 minutos; falha vira e-mail do GitHub.
+- `backend/src/services/armazenamento.js` — object storage S3-compatível (R2 recomendado) com fallback local; `lib/validaArquivo.js` decide o tipo pelos primeiros bytes; `lib/recebeArquivo.js` e `lib/entregaArquivo.js`. Migration 037 (`receipt_sha256`, `mecenato_sha256`). `backend/scripts/migrar-uploads-para-storage.mjs`.
+- Migration 036 (`users.updated_at`): `PUT /api/auth/profile` respondia 500.
+- Testes: `migracoes`, `teto-registro`, `armazenamento`, `uploads-http`; garantias novas em `modo-texto` e `conferencia-http`.
+- Documentos: `docs/operacao/ci-e-deploy.md`, `armazenamento.md`, `backup-restore.md`.
+
+### Alterado
+- `backend/src/config/migrate.js` — schema, seeds e a 003 legada só em banco vazio; transação por migration com registro no `migrations_log`; a primeira falha aborta o boot (na Railway, o deploy anterior continua no ar). `PERMITE_BOOT_SEM_MIGRACOES=true` é a saída de emergência. Migrations rodam antes do `listen`.
+- `POST /api/donations/rouanet` — advisory lock por contribuinte, IR devido fixado por ano no menor valor registrado, `saldoDisponivel` dentro da transação, mensagens com o percentual vindo de `tetos_deducao`, bloco `saldo` na resposta. A regra vale também em simulação. `tetosVigentes`/`tetoDoMecanismo`/`saldoDisponivel` aceitam a conexão da transação (evita esgotar o pool sob concorrência).
+- Upload de comprovante e de recibo: em memória, tipo pelo conteúdo, erros do multer viram 400, download por stream. `receipt_url` e `mecenato_url` guardam a chave no bucket; valores antigos continuam lidos.
+- `destinar-rouanet.html` — sem jsPDF; botão chama o PDF do servidor; texto do PDF nos dois modos; "Ir para meu painel"; mensagens com o nome do projeto vindo do servidor; card de impacto do piloto removido; placeholders `[data-projeto]` preenchidos.
+- Confirmação (e simulação) avisa o destinador por e-mail (`notifyDestinationConfirmed`).
+
+### Depende de configuração no painel
+- Railway: "Wait for CI"; GitHub: proteção do `main` com o check. Bucket R2 e cinco variáveis `S3_*`. Seis segredos do backup no GitHub. Monitor externo em `/health`.
+
+---
+
 ## [Não lançado] — 2026-09 — Onda 0 do Raio-X: para de sangrar
 
 ### Removido
