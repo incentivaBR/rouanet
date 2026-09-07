@@ -1,108 +1,85 @@
+/**
+ * Comprovante bancário da transferência — o documento que o gestor confere.
+ *
+ * O arquivo vai para o armazenamento (services/armazenamento.js): S3/R2 em
+ * produção, disco local em desenvolvimento. O banco guarda a chave, o nome
+ * original e o SHA-256 do conteúdo. Nada aqui é servido por caminho estático.
+ */
+
 import express from 'express';
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
 import pool from '../../config/database.js';
 import { authenticateToken } from '../middleware/auth.js';
 import { podeVerDadosDaOrganizacao } from '../lib/permissoes.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { recebeArquivo } from '../lib/recebeArquivo.js';
+import { entregaArquivo } from '../lib/entregaArquivo.js';
+import { armazenamento, novaChave } from '../services/armazenamento.js';
 
 const router = express.Router();
-
-// Criar pasta de uploads se não existir
-const uploadDir = path.join(__dirname, '../../uploads/receipts');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Configuração do multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, 'receipt-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
-  fileFilter: (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|pdf/;
-    const ext = allowed.test(path.extname(file.originalname).toLowerCase());
-    const mime = allowed.test(file.mimetype);
-    if (ext && mime) return cb(null, true);
-    cb(new Error('Apenas JPG, PNG e PDF são permitidos'));
-  }
-});
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // POST /api/uploads/receipt/:donationId - Upload de comprovante
-router.post('/receipt/:donationId', authenticateToken, upload.single('receipt'), async (req, res) => {
+router.post('/receipt/:donationId', authenticateToken, recebeArquivo('receipt'), async (req, res) => {
   try {
     const { donationId } = req.params;
     const userId = req.user.userId;
 
+    if (!UUID.test(donationId)) {
+      return res.status(400).json({ status: 'error', message: 'Identificador inválido.' });
+    }
     if (!req.file) {
       return res.status(400).json({ status: 'error', message: 'Nenhum arquivo enviado' });
     }
 
-    // Verificar se a doação existe e pertence ao usuário
+    // A destinação tem de ser deste usuário. Nada é gravado antes disso.
     const donationResult = await pool.query(
-      'SELECT * FROM donations WHERE id = $1 AND user_id = $2',
+      'SELECT id, status FROM donations WHERE id = $1 AND user_id = $2',
       [donationId, userId]
     );
-
     if (donationResult.rows.length === 0) {
-      // Remover arquivo se doação não encontrada
-      fs.unlinkSync(req.file.path);
       return res.status(404).json({ status: 'error', message: 'Doação não encontrada' });
     }
 
-    const receiptUrl = `/uploads/receipts/${req.file.filename}`;
+    const chave = novaChave('receipts', req.file.tipo.extensao);
+    const gravado = await (await armazenamento()).guarda(chave, req.file.buffer, req.file.tipo.mime);
 
-    // Atualizar doação com URL do comprovante
     await pool.query(`
       UPDATE donations
-      SET receipt_url = $1, receipt_filename = $2, status = 'awaiting_confirmation'
-      WHERE id = $3
-    `, [receiptUrl, req.file.originalname, donationId]);
+         SET receipt_url = $1, receipt_filename = $2, receipt_sha256 = $3,
+             status = 'awaiting_confirmation'
+       WHERE id = $4
+    `, [gravado.chave, req.file.originalname, gravado.sha256, donationId]);
 
-    console.log('Comprovante salvo:', receiptUrl);
+    console.log(`[uploads] comprovante da destinação ${donationId}: ${gravado.chave} (${gravado.bytes} bytes)`);
 
     res.json({
       status: 'success',
       message: 'Comprovante enviado com sucesso',
-      receipt_url: receiptUrl
+      receipt_url: `/api/uploads/receipt/${donationId}/arquivo`,
+      sha256: gravado.sha256,
+      bytes: gravado.bytes
     });
-
   } catch (error) {
     console.error('Erro no upload:', error);
-    // Remover arquivo em caso de erro
-    if (req.file) {
-      try { fs.unlinkSync(req.file.path); } catch (e) {}
-    }
     res.status(500).json({ status: 'error', message: 'Erro ao enviar comprovante' });
   }
 });
 
-// GET /api/uploads/receipt/:donationId - Visualizar comprovante
+// GET /api/uploads/receipt/:donationId - Situação do comprovante
 router.get('/receipt/:donationId', authenticateToken, async (req, res) => {
   try {
     const { donationId } = req.params;
     const userId = req.user.userId;
+    if (!UUID.test(donationId)) {
+      return res.status(400).json({ status: 'error', message: 'Identificador inválido.' });
+    }
 
     const result = await pool.query(
-      'SELECT receipt_url, receipt_filename FROM donations WHERE id = $1 AND user_id = $2',
+      'SELECT receipt_url, receipt_filename, receipt_sha256 FROM donations WHERE id = $1 AND user_id = $2',
       [donationId, userId]
     );
-
     if (result.rows.length === 0) {
       return res.status(404).json({ status: 'error', message: 'Doação não encontrada' });
     }
-
     const donation = result.rows[0];
     if (!donation.receipt_url) {
       return res.status(404).json({ status: 'error', message: 'Comprovante não encontrado' });
@@ -110,10 +87,11 @@ router.get('/receipt/:donationId', authenticateToken, async (req, res) => {
 
     res.json({
       status: 'success',
-      receipt_url: donation.receipt_url,
-      receipt_filename: donation.receipt_filename
+      // Caminho autenticado, nunca a chave do armazenamento.
+      receipt_url: `/api/uploads/receipt/${donationId}/arquivo`,
+      receipt_filename: donation.receipt_filename,
+      sha256: donation.receipt_sha256
     });
-
   } catch (error) {
     console.error('Erro ao buscar comprovante:', error);
     res.status(500).json({ status: 'error', message: 'Erro ao buscar comprovante' });
@@ -123,12 +101,14 @@ router.get('/receipt/:donationId', authenticateToken, async (req, res) => {
 // ───────────────────────────────────────────────────────────────────────────
 // GET /api/uploads/receipt/:donationId/arquivo — entrega o comprovante
 //
-// Substitui o acesso pelo caminho estatico, que era publico. So o dono da
-// destinacao e quem administra a organizacao dela podem baixar.
+// So o dono da destinacao e quem administra a organizacao dela podem baixar.
 // ───────────────────────────────────────────────────────────────────────────
 router.get('/receipt/:donationId/arquivo', authenticateToken, async (req, res) => {
   const { donationId } = req.params;
   try {
+    if (!UUID.test(donationId)) {
+      return res.status(400).json({ status: 'error', message: 'Identificador inválido.' });
+    }
     const { rows } = await pool.query(
       `SELECT d.user_id, d.organization_id, d.receipt_url, d.receipt_filename
          FROM donations d WHERE d.id = $1`,
@@ -147,16 +127,14 @@ router.get('/receipt/:donationId/arquivo', authenticateToken, async (req, res) =
       return res.status(403).json({ status: 'error', message: 'Sem permissão.' });
     }
 
-    // basename impede que um valor manipulado escape da pasta de uploads
-    const arquivo = path.join(uploadDir, path.basename(d.receipt_url));
-    if (!arquivo.startsWith(uploadDir) || !fs.existsSync(arquivo)) {
+    const entregue = await entregaArquivo(res, d.receipt_url, d.receipt_filename || 'comprovante');
+    if (!entregue) {
+      console.error('[uploads] arquivo ausente no armazenamento:', d.receipt_url);
       return res.status(404).json({ status: 'error', message: 'Arquivo não encontrado.' });
     }
-
-    res.download(arquivo, d.receipt_filename || 'comprovante');
   } catch (erro) {
     console.error('Erro ao entregar comprovante:', erro);
-    res.status(500).json({ status: 'error', message: 'Erro ao entregar o comprovante.' });
+    if (!res.headersSent) res.status(500).json({ status: 'error', message: 'Erro ao entregar o comprovante.' });
   }
 });
 
