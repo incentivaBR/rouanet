@@ -2,7 +2,7 @@ import express from 'express';
 import pool from '../../config/database.js';
 import { authenticateToken } from '../middleware/auth.js';
 import { gerarComprovante } from '../services/pdfGenerator.js';
-import { notifyDestinationRegistered, notifyAdminNewDonation, notifyProponenteMecenatoPendente } from '../services/notificationService.js';
+import { notifyDestinationRegistered, notifyDestinationConfirmed, notifyAdminNewDonation, notifyProponenteMecenatoPendente } from '../services/notificationService.js';
 import { podeGerirOrganizacao } from '../lib/permissoes.js';
 import { saldoDisponivel, bloqueiaContribuinte } from '../lib/tetos.js';
 
@@ -73,6 +73,51 @@ async function avisarProponente(donationId) {
     }
   } catch (erro) {
     console.error('[mecenato] falha ao avisar proponente:', erro.message);
+  }
+}
+
+/**
+ * Quem avisa quem. Objeto, e não import direto, para os testes poderem trocar
+ * o notificador por um falso e conferir que a rota chamou — sem e-mail real.
+ */
+export const notificadores = {
+  destinadorConfirmado: notifyDestinationConfirmed
+};
+
+/**
+ * Avisa o DESTINADOR que a transferência dele foi conferida.
+ *
+ * A função de e-mail existia desde o início e nunca foi chamada (Raio-X,
+ * risco 10). Sem este aviso, quem transferiu dinheiro só descobre que deu
+ * certo entrando no painel — e o intervalo até o Recibo de Mecenato, que
+ * depende do proponente, vira silêncio.
+ *
+ * Como avisarProponente(): falha aqui não desfaz a confirmação.
+ */
+async function avisarDestinador(donationId) {
+  try {
+    const { rows } = await pool.query(
+      `SELECT d.donation_amount AS amount, d.projeto_titulo, d.pronac,
+              u.nome, u.email, u.phone,
+              o.name AS org_name, o.primary_color, o.secondary_color, o.logo_url, o.contact_email
+         FROM donations d
+         JOIN users u ON u.id = d.user_id
+         LEFT JOIN organizations o ON o.id = d.organization_id
+        WHERE d.id = $1`,
+      [donationId]
+    );
+    if (!rows.length || !rows[0].email) return;
+    const r = rows[0];
+    await notificadores.destinadorConfirmado(
+      { name: r.nome, nome: r.nome, email: r.email, phone: r.phone },
+      { amount: r.amount, pronac: r.pronac },
+      { title: r.projeto_titulo },
+      r.org_name ? { name: r.org_name, primary_color: r.primary_color, secondary_color: r.secondary_color,
+                     logo_url: r.logo_url, contact_email: r.contact_email } : null
+    );
+    console.log(`[conferência] destinador avisado — destinação ${donationId}`);
+  } catch (erro) {
+    console.error('[conferência] falha ao avisar o destinador:', erro.message);
   }
 }
 
@@ -442,6 +487,7 @@ router.post('/:id/confirmar', authenticateToken, async (req, res) => {
     // Não aguarda: quem confere não deve esperar e-mail sair para ver a fila
     // atualizar. É a mesma função que a rota de simulação usa — ponto único.
     avisarProponente(id);
+    avisarDestinador(id);
 
     res.json({
       status: 'success',
@@ -573,6 +619,7 @@ router.post('/:id/simulate', authenticateToken, async (req, res) => {
 
     // Nao aguarda: o destinador nao deve esperar e-mail sair para ver a tela.
     avisarProponente(id);
+    avisarDestinador(id);
 
     res.json({
       status:  'success',
