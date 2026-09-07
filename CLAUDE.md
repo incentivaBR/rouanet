@@ -22,7 +22,9 @@ Ver `docs/auditoria/plano-centralizacao.md`.
 
 - **Frontend:** HTML5, CSS3, JavaScript vanilla, sem build. Tailwind pelo Play CDN em parte das páginas.
 - **Backend:** Node.js 20 + Express 4 (ES modules), um processo serve API e frontend estático.
-- **Banco:** PostgreSQL. Migrations em `backend/src/migrations/` aplicadas no boot.
+- **Banco:** PostgreSQL. Migrations em `backend/src/migrations/` aplicadas no boot, uma transação por arquivo; falha aborta a subida.
+- **Documentos:** comprovantes e recibos em bucket S3-compatível (`S3_BUCKET`); sem bucket, disco local com aviso.
+- **CI e operação:** `.github/workflows/` (testes a cada push, backup diário, uptime a cada 15 min).
 - **IA:** TINA, sobre a API da Anthropic (`backend/src/routes/chat.js`, base em `backend/src/knowledge/nucleo.md`).
 - **E-mail:** Resend em produção; Ethereal quando falta chave.
 - **Deploy:** Railway, `backend/Dockerfile`, healthcheck em `/health`. Lê o branch `main`.
@@ -87,6 +89,10 @@ incentivabr/                   ← antigo rouanet, renomeado em set/2026
 | Recibo de Mecenato é do proponente; o PDF da plataforma é registro de operação | ago/2026 | `backend/src/routes/mecenato.js` |
 | Conta de captação só de `org_projects` ativo; fora da simulação, sem conta a destinação não é registrada | set/2026 | migration 034, `backend/src/routes/donations.js`, `backend/tests/conta-captacao.test.mjs` |
 | Percentuais e limites da TINA só no `nucleo.md`; a persona não tem tabela própria | set/2026 | `backend/src/routes/chat.js`, `backend/tests/prompt-tina.test.mjs` |
+| Migration que falha aborta o boot; schema e seeds só em banco vazio | set/2026 | `backend/src/config/migrate.js`, `backend/tests/migracoes.test.mjs` |
+| Teto conferido dentro da transação, com lock por contribuinte; IR devido fixado por ano no menor valor; vale também em simulação | set/2026 | `backend/src/lib/tetos.js`, `backend/tests/teto-registro.test.mjs` |
+| Comprovantes e recibos em object storage S3-compatível, com SHA-256 no banco; tipo decidido pelos bytes do arquivo | set/2026 | `backend/src/services/armazenamento.js`, migration 037, `docs/operacao/armazenamento.md` |
+| O PDF de registro é o do servidor; o wizard não gera PDF no navegador | set/2026 | `frontend/destinar-rouanet.html`, `backend/tests/modo-texto.test.mjs` |
 
 ## Endpoints principais
 
@@ -114,7 +120,14 @@ Ver `docs/auditoria/raio-x-2026-09.md`, seção "Os 12 riscos que importam".
 A Onda 0 (riscos 01, 03, 04, 06 e 10) foi executada em setembro de 2026:
 migrations 034 e 035, `POST /api/donations/rouanet` exigindo conta de captação
 fora da simulação, login sem sessão fabricada nem `?demo=true`, prompt da TINA
-sem tabela própria de limites, histórico reescrito. A próxima frente é a Onda 1.
+sem tabela própria de limites, histórico reescrito.
+
+A Onda 1 (riscos 02, 05, 07, 08, 09 e parte do 10) entrou em `main` em 7 de
+setembro de 2026, nos PRs #7 a #12: CI, migrations estritas, teto com lock na
+rota de registro, object storage dos documentos, wizard sem PDF do navegador,
+backup e monitor. O que ficou dependendo de configuração no painel está em
+`docs/operacao/ci-e-deploy.md`, `docs/operacao/armazenamento.md` e
+`docs/operacao/backup-restore.md`. A próxima frente é a Onda 2.
 
 ## Contas de teste
 
