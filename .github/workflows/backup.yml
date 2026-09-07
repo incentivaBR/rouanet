@@ -1,0 +1,59 @@
+# Backup diário do Postgres de produção — Raio-X de set/2026, risco 09
+# ("nenhum script de backup; restore: pendente").
+#
+# Todo dia às 03:00 UTC (00:00 em Brasília) roda scripts/backup-postgres.sh:
+# pg_dump cifrado com gpg e enviado ao bucket S3-compatível, prefixo
+# backups/, com retenção de 30 dias. Pode ser disparado à mão em Actions.
+#
+# O dump NÃO é guardado como artifact do GitHub: tem CPF, nome e e-mail de
+# servidor público, e artifacts de repositório público são baixáveis.
+#
+# Segredos necessários (Settings → Secrets and variables → Actions):
+#   DATABASE_PUBLIC_URL   URL pública do Postgres na Railway
+#   BACKUP_PASSPHRASE     senha longa do gpg; guarde fora do GitHub também,
+#                         sem ela o backup é inútil
+#   S3_BUCKET, S3_ENDPOINT, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY
+#                         os mesmos do armazenamento de documentos
+#
+# Se um segredo faltar, o job falha e o GitHub avisa o dono por e-mail —
+# que é o comportamento desejado: backup que falha em silêncio não é backup.
+name: Backup do Postgres
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      # O pg_dump precisa ser da mesma versão ou mais novo que o servidor.
+      # ubuntu-latest traz o 16; se a Railway estiver em 17, troque abaixo.
+      - name: Cliente Postgres
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-16 >/dev/null
+
+      - name: Backup
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_PUBLIC_URL }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+          S3_REGION: auto
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          RETENCAO_DIAS: '30'
+        run: bash scripts/backup-postgres.sh
+
+      # O runner é descartado ao fim; isto só garante que nada fica no log.
+      - name: Limpeza
+        if: always()
+        run: rm -rf backups

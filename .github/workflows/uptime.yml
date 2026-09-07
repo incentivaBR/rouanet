@@ -1,0 +1,56 @@
+# Monitor de disponibilidade mínimo — Raio-X de set/2026, risco 09
+# ("sem monitor de uptime; sem alerta de 5xx").
+#
+# A cada 15 minutos chama /health e /diagnostico (a parte pública, sem
+# token) do site em produção. Falha se o site não responder 200, se o banco
+# estiver fora, se houver migration pendente ou se o armazenamento estiver
+# no disco do container. Job que falha gera e-mail do GitHub para o dono do
+# repositório — é o alerta.
+#
+# Limites, ditos com clareza: o cron do GitHub não é pontual (atrasos de
+# minutos são normais) e não cobre erros 5xx em rotas específicas. Para
+# alerta de verdade, um serviço de monitor externo (UptimeRobot, Better
+# Stack, ambos com plano gratuito) apontado para /health complementa isto;
+# ver docs/operacao/backup-restore.md.
+name: Uptime
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      URL: https://www.incentivabr.com.br
+    steps:
+      - name: /health responde 200
+        run: |
+          # Três tentativas, para não alarmar por um soluço de rede do runner.
+          for i in 1 2 3; do
+            if curl -fsS --max-time 20 "$URL/health" -o /tmp/health.json; then
+              cat /tmp/health.json; exit 0
+            fi
+            sleep 20
+          done
+          echo "::error::$URL/health não respondeu 200 em três tentativas"; exit 1
+
+      - name: Serviços internos em ordem (banco, migrations, armazenamento)
+        run: |
+          curl -fsS --max-time 20 "$URL/diagnostico" -o /tmp/diag.json
+          cat /tmp/diag.json
+          python3 - <<'PY'
+          import json, sys
+          d = json.load(open('/tmp/diag.json'))
+          servicos = d.get('services', {})
+          ruins = [n for n, s in servicos.items() if isinstance(s, dict) and s.get('status') == 'error']
+          if ruins:
+              print(f"::error::serviços com erro em /diagnostico: {', '.join(ruins)}")
+              sys.exit(1)
+          print('serviços ok:', ', '.join(servicos.keys()))
+          PY
