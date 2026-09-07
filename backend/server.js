@@ -13,6 +13,7 @@ import { escopoDaChaveResend } from './src/lib/resendEscopo.js';
 import { consumoDeHoje } from './src/lib/consumoIA.js';
 import { semeiaCasaAzul } from './src/config/semeiaCasaAzul.js';
 import { promoveSuperadmin, estadoDoSuperadmin } from './src/config/promoveSuperadmin.js';
+import { estadoDoArmazenamento } from './src/services/armazenamento.js';
 
 // ES modules: criar __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -238,9 +239,10 @@ app.get('/diagnostico', async (req, res) => {
     };
   }
 
-  // Estado das migrations. Uma que falha não derruba o boot — só some num log.
-  // `pendentes` não vazio depois de um deploy significa que o banco não tem a
-  // forma que este código supõe.
+  // Estado das migrations. Uma que falha aborta o boot (ver o fim deste
+  // arquivo), então `pendentes` só aparece não vazio se alguém subiu com
+  // PERMITE_BOOT_SEM_MIGRACOES=true — e aí o banco não tem a forma que este
+  // código supõe.
   try {
     diagnostico.services.migrations = await statusDasMigracoes();
     diagnostico.services.migrations.status =
@@ -248,6 +250,10 @@ app.get('/diagnostico', async (req, res) => {
   } catch (error) {
     diagnostico.services.migrations = { status: 'error', error: error.message };
   }
+
+  // Onde os documentos fiscais estão guardados. Em produção com backend
+  // local é erro: somem no próximo deploy (Raio-X, risco 02).
+  diagnostico.services.armazenamento = estadoDoArmazenamento();
 
   // Status do serviço de email
   const emailStatus = getEmailStatus();
@@ -383,16 +389,49 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Iniciar servidor
+// ─────────────────────────────────────────────────────────────────────────
+// Subida do servidor
+//
+// As migrations rodam ANTES de o processo começar a ouvir a porta. Antes
+// rodavam depois, dentro do callback do listen: o healthcheck da Railway
+// passava com o banco ainda por migrar, e uma migration quebrada virava uma
+// linha de log num deploy já publicado (Raio-X, risco 08).
+//
+// Agora, se uma migration FALHA (erro de SQL), o processo sai com código 1.
+// Na Railway isso é o caminho seguro: o healthcheck nunca passa, o deploy é
+// descartado e a versão anterior continua no ar, com o banco como estava. O
+// log do deploy diz qual arquivo falhou e por quê.
+//
+// Banco INACESSÍVEL é outro caso: não há o que migrar, e /diagnostico é
+// justamente a tela que se usa numa queda dessas. O servidor sobe, avisa no
+// log, e as rotas que dependem do banco respondem erro até ele voltar.
+//
+// PERMITE_BOOT_SEM_MIGRACOES=true é a saída de emergência para o primeiro
+// caso: sobe mesmo com migration quebrada, para poder olhar /diagnostico.
+// Não é para ficar ligada.
+// ─────────────────────────────────────────────────────────────────────────
+if (await testConnection()) {
+  try {
+    await runMigrations();
+  } catch (erro) {
+    console.error('❌ Boot abortado —', erro.message);
+    if (process.env.PERMITE_BOOT_SEM_MIGRACOES === 'true') {
+      console.error('⚠️  PERMITE_BOOT_SEM_MIGRACOES=true — subindo mesmo assim. Corrija e desligue a variável.');
+    } else {
+      process.exit(1);
+    }
+  }
+} else {
+  console.error('⚠️  Banco inacessível na subida: migrations não rodaram. Veja /diagnostico.');
+}
+
 app.listen(PORT, async () => {
   console.log(`Servidor rodando na porta ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
 
-  // Testar conexão com banco na inicialização
-  await testConnection();
-
-  // Aplicar migrations pendentes automaticamente
-  await runMigrations().catch(err => console.error('Erro nas migrations:', err));
+  const arm = estadoDoArmazenamento();
+  if (arm.status === 'error') console.error(`❌ ARMAZENAMENTO: ${arm.aviso}`);
+  else console.log(`📦 Armazenamento: ${arm.backend}${arm.bucket ? ' (' + arm.bucket + ')' : ''}`);
 
   // Deixa a Casa Azul demonstrável. Só age com SIMULATION_MODE=true, e é
   // idempotente — roda em todo boot sem duplicar nada.

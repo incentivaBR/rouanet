@@ -13,39 +13,19 @@
  */
 
 import express from 'express';
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
 import pool from '../../config/database.js';
 import { authenticateToken } from '../middleware/auth.js';
 import { podeGerirOrganizacao } from '../lib/permissoes.js';
+import { recebeArquivo } from '../lib/recebeArquivo.js';
+import { entregaArquivo } from '../lib/entregaArquivo.js';
+import { armazenamento, novaChave } from '../services/armazenamento.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
 
-// Pasta separada da de comprovantes bancários: são documentos de direções
-// opostas — um o destinador envia, o outro ele recebe.
-const uploadDir = path.join(__dirname, '../../uploads/mecenato');
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => cb(null, uploadDir),
-    filename: (req, file, cb) => {
-      const sufixo = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      cb(null, 'mecenato-' + sufixo + path.extname(file.originalname));
-    }
-  }),
-  limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    const permitido = /jpeg|jpg|png|pdf/;
-    const ext = permitido.test(path.extname(file.originalname).toLowerCase());
-    const mime = permitido.test(file.mimetype);
-    if (ext && mime) return cb(null, true);
-    cb(new Error('Apenas JPG, PNG e PDF são permitidos'));
-  }
-});
+// O recibo vai para o armazenamento (services/armazenamento.js), com prefixo
+// separado do dos comprovantes bancários: são documentos de direções opostas —
+// um o destinador envia, o outro ele recebe. O banco guarda chave, nome
+// original e SHA-256.
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -99,7 +79,7 @@ router.get('/fila', authenticateToken, async (req, res) => {
 // ───────────────────────────────────────────────────────────────────────────
 // POST /api/mecenato/:donationId — proponente anexa o recibo que emitiu
 // ───────────────────────────────────────────────────────────────────────────
-router.post('/:donationId', authenticateToken, upload.single('mecenato'), async (req, res) => {
+router.post('/:donationId', authenticateToken, recebeArquivo('mecenato'), async (req, res) => {
   const { donationId } = req.params;
   try {
     if (!UUID.test(donationId)) {
@@ -130,15 +110,19 @@ router.post('/:donationId', authenticateToken, upload.single('mecenato'), async 
       });
     }
 
+    const chave = novaChave('mecenato', req.file.tipo.extensao);
+    const gravado = await (await armazenamento()).guarda(chave, req.file.buffer, req.file.tipo.mime);
+
     await pool.query(
       `UPDATE donations
           SET mecenato_url       = $1,
               mecenato_filename  = $2,
+              mecenato_sha256    = $3,
               mecenato_issued_at = NOW(),
-              mecenato_issued_by = $3,
+              mecenato_issued_by = $4,
               status             = 'mecenato_issued'
-        WHERE id = $4`,
-      [`/uploads/mecenato/${req.file.filename}`, req.file.originalname, req.user.userId, donationId]
+        WHERE id = $5`,
+      [gravado.chave, req.file.originalname, gravado.sha256, req.user.userId, donationId]
     );
 
     console.log(`[mecenato] recibo anexado à destinação ${donationId} por ${req.user.userId}`);
@@ -241,17 +225,14 @@ router.get('/:donationId/arquivo', authenticateToken, async (req, res) => {
       return res.status(403).json({ status: 'error', message: 'Sem permissão.' });
     }
 
-    // basename impede que um valor manipulado no banco escape da pasta
-    const arquivo = path.join(uploadDir, path.basename(d.mecenato_url));
-    if (!arquivo.startsWith(uploadDir) || !fs.existsSync(arquivo)) {
-      console.error('[mecenato] arquivo ausente ou fora da pasta:', d.mecenato_url);
+    const entregue = await entregaArquivo(res, d.mecenato_url, d.mecenato_filename || 'recibo-de-mecenato.pdf');
+    if (!entregue) {
+      console.error('[mecenato] arquivo ausente no armazenamento:', d.mecenato_url);
       return res.status(404).json({ status: 'error', message: 'Arquivo não encontrado.' });
     }
-
-    res.download(arquivo, d.mecenato_filename || 'recibo-de-mecenato.pdf');
   } catch (erro) {
     console.error('Erro ao entregar recibo:', erro);
-    res.status(500).json({ status: 'error', message: 'Erro ao entregar o recibo.' });
+    if (!res.headersSent) res.status(500).json({ status: 'error', message: 'Erro ao entregar o recibo.' });
   }
 });
 

@@ -6,7 +6,7 @@
 //
 // O banco e o pg-mem, injetado no lugar do pool via um adaptador minimo. Nao
 // substitui o Postgres real, mas roda em qualquer maquina, sem servico.
-import { newDb } from 'pg-mem';
+import { newDb, DataType } from 'pg-mem';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import http from 'http';
@@ -19,6 +19,12 @@ const db = newDb();
 db.public.registerFunction({
   name: 'gen_random_uuid', returns: 'uuid', impure: true,
   implementation: () => crypto.randomUUID()
+});
+// O lock por contribuinte da rota de registro (ver lib/tetos.js) nao existe
+// no pg-mem: aqui e um no-op. A concorrencia real e conferida num Postgres.
+db.public.registerFunction({
+  name: 'pg_advisory_xact_lock', args: [DataType.bigint], returns: DataType.bool,
+  impure: true, implementation: () => true
 });
 
 db.public.none(`
@@ -62,7 +68,7 @@ db.public.none(`
   );
   CREATE TABLE official_funds (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    code TEXT, name TEXT
+    incentive_group_id UUID, code TEXT, name TEXT
   );
   CREATE TABLE donations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
