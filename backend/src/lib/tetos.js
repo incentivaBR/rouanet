@@ -37,13 +37,21 @@ let cacheEm = 0;
 
 /**
  * Todos os tetos vigentes hoje, indexados por código.
+ *
+ * `executor` é a conexão a usar. Dentro de uma transação que segura o lock
+ * do contribuinte, TEM de ser o client dela: se esta função pedisse outra
+ * conexão ao pool enquanto dez requisições seguram as dez do pool esperando
+ * o lock, ninguém avança — foi exatamente o que aconteceu no teste de
+ * concorrência num Postgres real.
+ *
+ * @param {{query: Function}} [executor]
  * @returns {Promise<Map<string, object>>}
  */
-export async function tetosVigentes() {
+export async function tetosVigentes(executor = pool) {
   if (cache && Date.now() - cacheEm < CACHE_MS) return cache;
 
   try {
-    const { rows } = await pool.query(
+    const { rows } = await executor.query(
       `SELECT codigo, descricao, percentual, base_legal,
               vigencia_inicio, vigencia_fim, confirmado_por_parecer
          FROM tetos_deducao
@@ -69,14 +77,15 @@ export function limpaCache() {
  * O teto que vale para um mecanismo de incentivo.
  *
  * @param {string} [codigoGrupo] - code de incentive_groups (ex.: 'ROUANET')
+ * @param {{query: Function}} [executor] - ver tetosVigentes()
  * @returns {Promise<{codigo: string, percentual: number, base_legal: string}>}
  */
-export async function tetoDoMecanismo(codigoGrupo) {
-  const tetos = await tetosVigentes();
+export async function tetoDoMecanismo(codigoGrupo, executor = pool) {
+  const tetos = await tetosVigentes(executor);
 
   if (codigoGrupo) {
     try {
-      const { rows } = await pool.query(
+      const { rows } = await executor.query(
         'SELECT teto_codigo FROM incentive_groups WHERE code = $1 LIMIT 1',
         [codigoGrupo]
       );
@@ -104,14 +113,16 @@ export async function tetoDoMecanismo(codigoGrupo) {
  * @param {number} irDevido
  * @param {number} anoFiscal
  * @param {string} [codigoGrupo]
+ * @param {{query: Function}} [executor] - conexão a usar; passe o client da
+ *   transação para que a soma enxergue o que já está bloqueado por ela
  */
-export async function saldoDisponivel(userId, irDevido, anoFiscal, codigoGrupo) {
-  const teto = await tetoDoMecanismo(codigoGrupo);
+export async function saldoDisponivel(userId, irDevido, anoFiscal, codigoGrupo, executor = pool) {
+  const teto = await tetoDoMecanismo(codigoGrupo, executor);
   const limite = Math.round(irDevido * (teto.percentual / 100) * 100) / 100;
 
   let jaDestinado = 0;
   try {
-    const { rows } = await pool.query(
+    const { rows } = await executor.query(
       `SELECT COALESCE(SUM(d.donation_amount), 0) AS total
          FROM donations d
          LEFT JOIN official_funds f  ON f.id = d.official_fund_id
@@ -141,4 +152,24 @@ export async function saldoDisponivel(userId, irDevido, anoFiscal, codigoGrupo) 
   };
 }
 
-export default { tetosVigentes, tetoDoMecanismo, saldoDisponivel, limpaCache };
+/**
+ * Serializa os registros de um mesmo contribuinte.
+ *
+ * Dois POSTs simultâneos do mesmo CPF, cada um dentro do teto sozinho, somavam
+ * acima do teto: os dois liam "nada destinado" antes de qualquer um gravar.
+ * O advisory lock transacional faz o segundo esperar o primeiro terminar, e
+ * aí a soma dele já inclui o que o primeiro gravou. Solta no COMMIT/ROLLBACK.
+ *
+ * A chave é derivada do UUID do usuário (60 bits, cabe em bigint com sinal).
+ * Colisão entre dois usuários só faria um esperar o outro — nunca liberaria
+ * a mais.
+ *
+ * @param {{query: Function}} client - o client da transação aberta
+ * @param {string} userId
+ */
+export async function bloqueiaContribuinte(client, userId) {
+  const chave = BigInt('0x' + String(userId).replace(/-/g, '').slice(0, 15)).toString();
+  await client.query('SELECT pg_advisory_xact_lock($1::bigint)', [chave]);
+}
+
+export default { tetosVigentes, tetoDoMecanismo, saldoDisponivel, bloqueiaContribuinte, limpaCache };

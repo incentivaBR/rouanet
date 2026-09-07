@@ -14,7 +14,7 @@
 //     (nunca um banco inventado) e avisa que a conta nao esta preenchida;
 //   - a migracao 034 zera a conta da organizacao 'www' e desativa o PRONAC
 //     ficticio 261847, e depois dela a rota passa a recusar.
-import { newDb } from 'pg-mem';
+import { newDb, DataType } from 'pg-mem';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import http from 'http';
@@ -32,6 +32,12 @@ const db = newDb();
 db.public.registerFunction({
   name: 'gen_random_uuid', returns: 'uuid', impure: true,
   implementation: () => crypto.randomUUID()
+});
+// O lock por contribuinte da rota de registro (ver lib/tetos.js) nao existe
+// no pg-mem: aqui e um no-op. A concorrencia real e conferida num Postgres.
+db.public.registerFunction({
+  name: 'pg_advisory_xact_lock', args: [DataType.bigint], returns: DataType.bool,
+  impure: true, implementation: () => true
 });
 
 db.public.none(`
@@ -67,7 +73,7 @@ db.public.none(`
     VALUES ('irpf_global_6','Teto global',6.00,'Lei 9.532/1997, art. 22','1998-01-01');
   INSERT INTO incentive_groups (code, name, max_percentage, period_type, teto_codigo)
     VALUES ('ROUANET','Lei Rouanet',6.00,'annual','irpf_global_6');
-  CREATE TABLE official_funds (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), code TEXT, name TEXT);
+  CREATE TABLE official_funds (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), incentive_group_id UUID, code TEXT, name TEXT);
   CREATE TABLE donations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID, organization_id UUID, official_fund_id UUID,

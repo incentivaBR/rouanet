@@ -4,7 +4,7 @@ import { authenticateToken } from '../middleware/auth.js';
 import { gerarComprovante } from '../services/pdfGenerator.js';
 import { notifyDestinationRegistered, notifyAdminNewDonation, notifyProponenteMecenatoPendente } from '../services/notificationService.js';
 import { podeGerirOrganizacao } from '../lib/permissoes.js';
-import { tetoDoMecanismo } from '../lib/tetos.js';
+import { saldoDisponivel, bloqueiaContribuinte } from '../lib/tetos.js';
 
 const router = express.Router();
 
@@ -123,36 +123,8 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
       return res.status(400).json({ status: 'error', message: 'Ano fiscal inválido.' });
     }
 
-    // Limite Rouanet: 6% do IR devido
-    const teto = await tetoDoMecanismo(org?.incentive_group_code || 'ROUANET');
-    const limiteMax = Math.round(ir_devido * (teto.percentual / 100) * 100) / 100;
-
-    if (donation_amount > limiteMax) {
-      return res.status(400).json({
-        status: 'error',
-        message: `Valor excede o limite de 6% do IR (R$ ${limiteMax.toFixed(2)}).`
-      });
-    }
-
-
-    // Em simulação, não verifica acúmulo — cada teste é independente
-    if (process.env.SIMULATION_MODE !== 'true') {
-      const existingResult = await client.query(`
-        SELECT COALESCE(SUM(donation_amount), 0) AS total
-        FROM donations
-        WHERE user_id = $1 AND fiscal_year = $2 AND pronac IS NOT NULL AND status != 'cancelled'
-      `, [userId, fiscal_year]);
-
-      const totalJa   = parseFloat(existingResult.rows[0].total);
-      const novoTotal = totalJa + donation_amount;
-
-      if (novoTotal > limiteMax) {
-        return res.status(400).json({
-          status: 'error',
-          message: `Total no ano (R$ ${novoTotal.toFixed(2)}) excederia o limite de 6% do IR (R$ ${limiteMax.toFixed(2)}). Já destinado: R$ ${totalJa.toFixed(2)}.`
-        });
-      }
-    }
+    // O teto e o saldo são conferidos mais abaixo, DENTRO da transação e
+    // depois de bloquear o contribuinte — ver src/lib/tetos.js.
 
     // Buscar fundo FNC (Lei Rouanet)
     const fncResult = await client.query(`SELECT id FROM official_funds WHERE code = 'FNC' LIMIT 1`);
@@ -188,13 +160,72 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
       });
     }
 
+    // ── Teto: dentro da transação, com o contribuinte bloqueado ────────────
+    //
+    // Antes, a rota somava só as destinações Rouanet, sem lock, com o IR devido
+    // que veio nesta requisição, e nem isso em simulação (Raio-X, risco 05).
+    // Agora:
+    //   - o advisory lock serializa dois registros simultâneos do mesmo CPF;
+    //   - o IR devido é FIXADO por ano: vale o menor entre o informado agora e
+    //     os já gravados no ano. É autodeclarado; se mudar entre uma
+    //     destinação e outra, errar para menos é o lado seguro. Quem informou
+    //     a menos cancela a pendente e registra de novo; quem informa a mais
+    //     depois não ganha teto;
+    //   - saldoDisponivel() soma tudo que já conta contra o MESMO teto,
+    //     inclusive por outros mecanismos;
+    //   - a regra vale também em simulação. Um teste que não exercita o teto
+    //     não testa o que importa.
+    const codigoGrupo = org?.incentive_group_code || 'ROUANET';
+    const valor = Number(donation_amount);
+
     await client.query('BEGIN');
+    await bloqueiaContribuinte(client, userId);
+
+    const { rows: [anterior] } = await client.query(
+      `SELECT MIN(ir_devido) AS minimo FROM donations
+        WHERE user_id = $1 AND fiscal_year = $2 AND status <> 'cancelled'`,
+      [userId, fiscal_year]
+    );
+    const irBase = anterior?.minimo != null
+      ? Math.min(Number(ir_devido), parseFloat(anterior.minimo))
+      : Number(ir_devido);
+
+    const saldo = await saldoDisponivel(userId, irBase, fiscal_year, codigoGrupo, client);
+    const pct = saldo.teto.percentual;
+
+    if (saldo.indisponivel) {
+      await client.query('ROLLBACK');
+      return res.status(503).json({
+        status: 'error',
+        message: 'Não foi possível conferir o que você já destinou neste ano. Nada foi registrado; tente novamente em instantes.'
+      });
+    }
+
+    if (valor > saldo.disponivel) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({
+        status: 'error',
+        codigo: 'acima_do_teto',
+        message: saldo.ja_destinado > 0
+          ? `Valor acima do que ainda cabe no teto de ${pct}% do IR devido (R$ ${saldo.limite.toFixed(2)}). ` +
+            `Já destinado em ${fiscal_year}: R$ ${saldo.ja_destinado.toFixed(2)}. Disponível: R$ ${saldo.disponivel.toFixed(2)}.`
+          : `Valor excede o limite de ${pct}% do IR devido (R$ ${saldo.limite.toFixed(2)}).`,
+        saldo: {
+          teto_percentual: pct,
+          base_legal:      saldo.teto.base_legal,
+          ir_devido_base:  irBase,
+          limite:          saldo.limite,
+          ja_destinado:    saldo.ja_destinado,
+          disponivel:      saldo.disponivel
+        }
+      });
+    }
 
     const result = await client.query(`
       INSERT INTO donations (user_id, pronac, projeto_titulo, official_fund_id, organization_id, ir_devido, donation_amount, fiscal_year, status)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'pending')
       RETURNING id, created_at
-    `, [userId, pronac, projeto_titulo || `Projeto PRONAC ${pronac}`, fncId, org?.id || null, ir_devido, donation_amount, fiscal_year]);
+    `, [userId, pronac, projeto_titulo || `Projeto PRONAC ${pronac}`, fncId, org?.id || null, irBase, valor, fiscal_year]);
 
     const donation = result.rows[0];
 
@@ -222,10 +253,19 @@ router.post('/rouanet', authenticateToken, async (req, res) => {
         id:               donation.id,
         pronac,
         projeto_titulo:   projeto_titulo || `Projeto PRONAC ${pronac}`,
-        ir_devido,
-        donation_amount,
-        limite_rouanet:   limiteMax,
-        percentage_of_ir: Math.round((donation_amount / ir_devido) * 10000) / 100,
+        ir_devido:        irBase,
+        donation_amount:  valor,
+        limite_rouanet:   saldo.limite,
+        percentage_of_ir: Math.round((valor / irBase) * 10000) / 100,
+        // O que sobra do teto depois desta destinação, e de onde o teto vem.
+        saldo: {
+          teto_percentual: pct,
+          base_legal:      saldo.teto.base_legal,
+          ir_devido_base:  irBase,
+          limite:          saldo.limite,
+          ja_destinado:    Math.round((saldo.ja_destinado + valor) * 100) / 100,
+          disponivel:      Math.round((saldo.disponivel - valor) * 100) / 100
+        },
         fiscal_year,
         status:           'pending',
         created_at:       donation.created_at,
